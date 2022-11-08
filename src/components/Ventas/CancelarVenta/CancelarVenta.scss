@@ -1,0 +1,37 @@
+@import "../../../scss/index";
+
+.botonSubirProducto {
+  margin-top: 10px;
+  width: 100%;
+  color: $primary-dark;
+
+  .btn.btn-primary {
+    background-color: $primary-light;
+    border-color: $background-transparente;
+    width: 100%;
+
+    &:hover {
+      background-color: $border-primary;
+      border-color: $background-transparente;
+    }
+  }
+  
+  .btn.btn-success {
+    width: 104%;
+    margin-right: 10px;
+
+    &:hover {
+      border-color: $background-transparente;
+    }
+  }
+  
+  .btn.btn-danger {
+    width: 104%;
+    margin-left: 10px;
+
+    &:hover {
+      border-color: $background-transparente;
+    }
+  }
+}
+

@@ -1,0 +1,47 @@
+@import "../../scss/index";
+
+.menu {
+
+  width: 65%;
+  background-color: rgb(32, 32, 32);
+  height: 85vh;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  overflow-y: scroll;
+  //temporary
+  right: 0;
+  margin-left: auto;
+  margin: 20px;
+  //
+
+  .regresarCategorias {
+    color: $font-light !important;
+    svg {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+  }
+  button:hover {
+      -webkit-transform:scale(1.10);
+      -moz-transform:scale(1.10);
+      -ms-transform:scale(1.10);
+      -o-transform:scale(1.10);
+      transform:scale(1.10);
+}
+ .home:hover {
+      -webkit-transform:scale(1.25);
+      -moz-transform:scale(1.25);
+      -ms-transform:scale(1.25);
+      -o-transform:scale(1.25);
+      transform:scale(1.25);
+}
+
+}

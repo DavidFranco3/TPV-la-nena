@@ -1,0 +1,86 @@
+{
+  "name": "t-punto-venta",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@headlessui/react": "^1.7.1",
+    "@heroicons/react": "^1.0.6",
+    "@mui/icons-material": "5.10.3",
+    "@mui/material": "5.10.5",
+    "@mui/styled-engine-sc": "5.10.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "assert": "^2.0.0",
+    "autoprefixer": "^10.4.9",
+    "axios": "^0.27.2",
+    "bootstrap": "5.2.1",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "json-2-csv": "^3.17.1",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "node-sass": "^7.0.3",
+    "postcss": "^8.4.16",
+    "process": "^0.11.10",
+    "query-string": "^7.1.1",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-data-table-component": "7.5.3",
+    "react-datepicker": "4.8.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "14.2.2",
+    "react-json-to-csv": "^1.0.4",
+    "react-lottie-player": "1.4.3",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "9.0.8",
+    "stream-browserify": "^3.0.0",
+    "styled-components": "5.3.5",
+    "tailwindcss": "^3.1.8",
+    "util": "^0.12.4",
+    "web-vitals": "^3.0.1",
+    "workbox-background-sync": "^6.5.4",
+    "workbox-broadcast-update": "^6.5.4",
+    "workbox-cacheable-response": "^6.5.4",
+    "workbox-core": "^6.5.4",
+    "workbox-expiration": "^6.5.4",
+    "workbox-google-analytics": "^6.5.4",
+    "workbox-navigation-preload": "^6.5.4",
+    "workbox-precaching": "^6.5.4",
+    "workbox-range-requests": "^6.5.4",
+    "workbox-routing": "^6.5.4",
+    "workbox-strategies": "^6.5.4",
+    "workbox-streams": "^6.5.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI=false && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

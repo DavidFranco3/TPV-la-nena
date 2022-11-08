@@ -1,0 +1,40 @@
+@import "../../../scss/index";
+
+.btnImprimir {
+  font-size: 35px;
+}
+
+.basic-modal .modal-content .modal-body {
+  //padding: 2px 2px 2px 2px !important;
+}
+
+@media print{
+  .nav {
+    display: none !important;
+  }
+
+  .btnImprimir {
+    display: none;
+  }
+
+  .detalles__tiquet {
+    display: none !important;
+  }
+
+  svg {
+    display: none !important;
+  }
+}
+
+.vistaDetalle {
+  cursor: pointer !important;
+}
+
+.vistaDetalle:hover {
+  -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);
+}
+//Termina estilos para la tabla responsiva

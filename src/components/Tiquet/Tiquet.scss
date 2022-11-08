@@ -1,0 +1,154 @@
+@import "../../scss/index";
+
+.ticket {
+    width: 35%;
+    background-color: #FFF;
+    height: 85vh;
+    padding: 10px;
+    margin: 20px 0 0 10px;
+    border-radius: 10px;
+
+    .logotipo {
+        width: 91px !important;
+        margin: 0 auto;
+        //margin-left: 15px !important;
+        //margin-top: 10px;
+    }
+
+    .ticket__information {
+        border: 1px solid;
+        height: 90%;
+        box-shadow: 3px 3px 5px;
+        font-family: sans-serif;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        .cafe {
+            color: $font-dark !important;
+            margin: 5px auto;
+            text-align: center;
+            font-size: .9rem;
+            font-weight: bold !important;
+
+            .cafe__name {
+                color: $font-dark !important;
+                font-size: 1.5rem;
+            }
+
+            .cafe__direccion {
+                color: $font-dark !important;
+                font-weight: bold;
+            }
+
+            .cafe__number {
+                color: $font-dark !important;
+                font-weight: bold;
+                font-size: 16px !important;
+                margin-top: -5px !important;
+            }
+
+            .invoice__cliente {
+                color: $font-dark !important;
+                font-size: 16px !important;
+                font-weight: bold;
+            }
+        }
+
+        .ticket__table {
+            height: 100%;
+            overflow-y: scroll;
+            table {
+                padding: 5px;
+                font-size: 14px;
+                text-align: left;
+                width: 100%;
+
+                th {
+                    border: 1px solid;
+                    border-left: 0;
+                    border-right: 0;
+                    border-style: dashed;
+                }
+
+                tr {
+                    text-align: center;
+                }
+
+                .items__numeracion {
+                }
+
+                .items__description {
+                    columns: 1;
+                    text-align: left;
+                }
+
+                .remove-icon {
+                    text-align: center;
+                    cursor: pointer;
+                }
+                .remove-icon:hover {
+                    -webkit-transform:scale(1.25);
+                    -moz-transform:scale(1.25);
+                    -ms-transform:scale(1.25);
+                    -o-transform:scale(1.25);
+                    transform:scale(1.25);
+                }
+                .remove-icono {
+                    text-align: center;
+                }
+            }
+        }
+
+        .subtotal {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            margin: 10px 0;
+            hr {
+                border: 1px solid;
+                border-style: dashed;
+            }
+
+            .observaciones__tiquet {
+                //margin-top: -10px !important;
+                text-align: center;
+                color: $font-dark !important;
+                font-size: 14px !important;
+            }
+
+            .subtotal__price {
+                margin: 5px 20px;
+            }
+        }
+    }
+
+    .ticket__actions {
+        width: 100%;
+        border: solid 2px #000;
+        border-radius: 5px;
+        height: 10%;
+        margin: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        Button {
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 1.5rem;
+            color: $primary-dark;
+        }
+    }
+
+    Button:hover {
+        -webkit-transform:scale(1.25);
+        -moz-transform:scale(1.25);
+        -ms-transform:scale(1.25);
+        -o-transform:scale(1.25);
+        transform:scale(1.25);
+    }
+
+}

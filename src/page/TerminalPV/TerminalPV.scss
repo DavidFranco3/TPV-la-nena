@@ -1,0 +1,91 @@
+@import "../../scss/index";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  background-color: rgba(150, 150, 150, 0.16);
+  height: 100vh;
+  overflow: hidden;
+
+  .pos {
+    height: 100vh;
+    display: flex;
+  }
+}
+
+@media print {
+  .menu, .navbar {
+    display: none !important;
+  }
+
+  img {
+    // display: none;
+  }
+
+  nav {
+    display: none;
+  }
+
+
+  .ticket {
+    width: 1000px;
+    padding: -120px 0px 0px 0px;
+    /*margin-top: 0cm;
+    margin-bottom: 21cm;
+    margin-left: 2cm;
+    margin-right: 2cm;*/
+
+    .ticket__information {
+      box-shadow: none;
+      border: none;
+      height: auto;
+      .ticket__table {
+        overflow: visible;
+
+        .items__description {
+          columns: 2!important;
+          display: flex;
+        }
+      }
+    }
+
+
+    .subtotal {
+      box-shadow: none;
+      border: none;
+      height: auto;
+      .subtotal__price {
+        overflow: visible;
+      }
+      .subtotal__cambio {
+        //display: none;
+      }
+    }
+
+    .remove-icon {
+      display: none;
+    }
+
+    .ticket__actions {
+      display: none;
+    }
+  }
+
+  @page {
+    //margin: 0;
+  }
+
+  @page:first {
+    margin: 0cm;
+  }
+  @page:left {
+    margin: 2cm 1.5cm 2cm 2cm;
+  }
+  @page:right {
+    margin: 2cm 2cm 2cm 1.5cm;
+  }
+}

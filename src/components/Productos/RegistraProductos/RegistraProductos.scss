@@ -1,0 +1,63 @@
+@import "../../../scss/index";
+
+.imagenPrincipal {
+  text-align: center !important;
+  //margin-top: -15px !important;
+
+  .textoImagenPrincipal {
+    margin-top: -34px !important;
+  }
+
+  .imagenProducto {
+    margin-top: 27px !important;
+  }
+}
+
+.datosDelProducto {
+  margin-top: -50px !important;
+}
+
+.botonSubirProducto {
+  margin-top: 10px;
+  width: 100%;
+  color: $primary-dark;
+
+  .btn.btn-primary {
+    background-color: $primary-light;
+    border-color: $background-transparente;
+    width: 100%;
+
+    &:hover {
+      background-color: $border-primary;
+      border-color: $background-transparente;
+    }
+  }
+  
+  .btn.btn-success {
+        width: 104%;
+        margin-right: 10px;
+
+        &:hover {
+            border-color: $background-transparente;
+            -webkit-transform:scale(1.08);
+            -moz-transform:scale(1.08);
+            -ms-transform:scale(1.08);
+            -o-transform:scale(1.08);
+            transform:scale(1.08);
+        }
+    }
+
+    .btn.btn-danger {
+        width: 104%;
+        margin-left: 10px;
+
+        &:hover {
+            border-color: $background-transparente;
+            -webkit-transform:scale(1.08);
+            -moz-transform:scale(1.08);
+            -ms-transform:scale(1.08);
+            -o-transform:scale(1.08);
+            transform:scale(1.08);
+        }
+    }
+}

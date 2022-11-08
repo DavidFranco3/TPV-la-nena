@@ -1,0 +1,54 @@
+@import "../../../scss/index";
+
+.vistaDetalles {
+  margin-top: -10px !important;
+
+  img {
+    border-radius: 20px !important;
+    -webkit-transition:all .9s ease; /* Safari y Chrome */
+    -moz-transition:all .9s ease; /* Firefox */
+    -o-transition:all .9s ease; /* IE 9 */
+    -ms-transition:all .9s ease; /* Opera */
+  }
+
+  img:hover {
+    -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);
+  }
+
+  .logoHistorial {
+    margin-left: 5px;
+    width: 60px;
+    cursor: pointer !important;
+
+  }
+}
+
+.iconoExcel{
+  margin-left: 5px !important;
+
+  img {
+    border-radius: 20px !important;
+    -webkit-transition:all .9s ease; /* Safari y Chrome */
+    -moz-transition:all .9s ease; /* Firefox */
+    -o-transition:all .9s ease; /* IE 9 */
+    -ms-transition:all .9s ease; /* Opera */
+  }
+
+  img:hover {
+    -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);
+  }
+
+  .descargaExcel{
+    margin-left: 5px;
+    width: 60px;
+    cursor: pointer !important;
+  }
+}

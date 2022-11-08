@@ -1,0 +1,44 @@
+@import "../../scss/index";
+
+.archivo {
+  position: relative;
+  top: -40px;
+  display: block;
+  margin: auto;
+  background-image: url("../../assets/png/upload-logo.png");
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 140px !important;
+    height: 140px !important;
+    border-radius: 50%;
+  }
+
+  &:hover {
+    cursor: pointer;
+    -webkit-transform:scale(1.25);
+        -moz-transform:scale(1.25);
+        -ms-transform:scale(1.25);
+        -o-transform:scale(1.25);
+        transform:scale(1.25);
+  }
+
+  svg {
+    display: block;
+    margin: auto;
+    //margin-left: 45px;
+    //margin-top: 25px;
+    width: 30px;
+    fill: $font-dark;
+    &:hover {
+      fill: $font-light;
+    }
+  }
+}

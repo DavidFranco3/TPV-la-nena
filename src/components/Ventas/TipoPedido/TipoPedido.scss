@@ -1,0 +1,20 @@
+@import "../../../scss/index";
+
+.modal-content {
+  .modal-body {
+
+    .metodoDePago {
+      margin-bottom: 15px !important;
+    }
+
+    .efectivo {
+      margin-bottom: 15px !important;
+    }
+
+    .botonAgregar {
+      .btn.btn-primary {
+        width: 100% !important;
+      }
+    }
+  }
+}

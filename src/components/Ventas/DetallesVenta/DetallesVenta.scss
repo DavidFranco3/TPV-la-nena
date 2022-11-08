@@ -1,0 +1,16 @@
+@import "../../../scss/index";
+
+.btnImprimirdeNuevo {
+  font-size: 48px !important;
+  float: right;
+  width: 185px;
+  margin-top: -50px !important;
+}
+
+.btnImprimirdeNuevo:hover {
+      -webkit-transform:scale(1.25);
+      -moz-transform:scale(1.25);
+      -ms-transform:scale(1.25);
+      -o-transform:scale(1.25);
+      transform:scale(1.25);
+}

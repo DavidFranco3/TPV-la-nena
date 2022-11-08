@@ -1,0 +1,14 @@
+@import "../../../scss/index";
+
+.modal-content {
+  .modal-body {
+    .observaciones {
+      margin-bottom: 10px !important;
+      .botonAgregar {
+        .btn.btn-primary {
+          width: 80% !important;
+        }
+      }
+    }
+  }
+}

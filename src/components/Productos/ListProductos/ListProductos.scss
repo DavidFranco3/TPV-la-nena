@@ -1,0 +1,299 @@
+@import "../../../scss/index";
+
+//Estilos para la tabla responsiva
+.responsive-table {
+  border-collapse: separate;
+
+  //border: 1px solid $primary-light;
+  //border: 1px solid $font-primary;
+
+  border-radius: 15px;
+  -moz-border-radius: 20px;
+  padding: 2px;
+  -webkit-border-radius: 5px;
+
+  margin-top: 10px;
+  .acciones {
+    .editar.badge.bg-success {
+      cursor: pointer !important;
+      margin-left: -5px !important;
+    }
+    .eliminar.badge.bg-danger {
+      cursor: pointer !important;
+      margin-left: 5px !important;
+    }
+  }
+
+  .admin {
+    svg {
+      display: block !important;
+      margin-left: 20px !important;
+    }
+  }
+
+  .activo {
+    svg {
+      display: block !important;
+      margin-left: 20px !important;
+    }
+  }
+  width: 100%;
+  margin-bottom: 1.5em;
+  border-spacing: 0;
+
+  @media (min-width: 48em) {
+    font-size: .9em;
+  }
+
+  @media (min-width: 48em) {
+    font-size: 1em;
+  }
+
+  thead {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+
+    @media (min-width: 48em) {
+      position: relative;
+      clip: auto;
+      height: auto;
+      width: auto;
+      overflow: auto;
+    }
+
+    th {
+
+      background-color: $tonalidad-azul !important;
+      //border: 1px solid $primary-light;
+      //background-color: $primary;
+      //border: 1px solid $primary;
+
+      font-weight: normal;
+      text-align: center;
+      color: $font-light;
+
+      &:first-of-type {
+        text-align: center;
+      }
+    }
+  }
+
+  tbody,
+  tr,
+  th,
+  td {
+    display: block;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+    border-radius: 10px 10px 0 0 !important;
+  }
+
+  tr {
+    @media (min-width: 48em) {
+      display: table-row;
+    }
+  }
+
+  th,
+  td {
+    padding: .5em;
+    vertical-align: middle;
+
+    @media (min-width: 30em) {
+      padding: .75em .5em;
+    }
+
+    @media (min-width: 48em) {
+      display: table-cell;
+      padding: .5em;
+    }
+
+    @media (min-width: 62em) {
+      padding: .75em .5em;
+    }
+
+    @media (min-width: 75em) {
+      padding: .75em;
+    }
+  }
+
+  caption {
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+
+    @media (min-width: 48em) {
+      font-size: 1.5em;
+    }
+  }
+
+  tfoot {
+    font-size: .8em;
+    font-style: italic;
+
+    @media (min-width: 62em) {
+      font-size: .9em;
+    }
+  }
+
+  tbody {
+    @media (min-width: 48em) {
+      display: table-row-group;
+    }
+
+    tr {
+      margin-bottom: 1em;
+
+      @media (min-width: 48em) {
+        display: table-row;
+        border-width: 1px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &:nth-of-type(even) {
+        @media (min-width: 48em) {
+          background-color: rgba(94,93,82,.1);
+        }
+      }
+    }
+
+    th[scope="row"] {
+      background-color: $tonalidad-azul;
+      //background-color: $primary;
+      color: white;
+      //text-align: center;
+      img {
+        width: 50px;
+        display: block;
+        margin: auto;
+      }
+
+      @media (min-width: 30em) {
+        //border-left: 1px solid  $primary-light;
+        //border-bottom: 1px solid  $primary-light;
+      }
+
+      @media (min-width: 48em) {
+        background-color: transparent;
+        color: rgba(94,93,82,1);
+        text-align: left;
+      }
+    }
+
+    td {
+      text-align: right;
+
+      @media (min-width: 48em) {
+        //border-left: 1px solid  $primary-light;
+        //border-bottom: 1px solid  $primary-light;
+        text-align: center;
+      }
+
+      &:last-of-type {
+        @media (min-width: 48em) {
+          //border-right: 1px solid  $primary-light;
+        }
+      }
+    }
+
+    td[data-type=currency] {
+      text-align: right;
+
+    }
+
+    td[data-title]:before {
+      content: attr(data-title);
+      text-align: right;
+      float: left;
+      font-size: .8em;
+      color: rgba(94,93,82,.75);
+
+      @media (min-width: 30em) {
+        font-size: .9em;
+      }
+
+      @media (min-width: 48em) {
+        content: none;
+      }
+    }
+  }
+}
+//Termina estilos para la tabla responsiva
+
+// Estilos para el boton flotante
+.contenedorBotonFlotante{
+
+  .botonF1{
+    width:60px;
+    height:60px;
+    border-radius:100%;
+    background: $primary-light !important;
+    // Inicia configuración para mantener el boton fijo en la parte de abajo
+    position: fixed;
+    padding: 12px 20px;
+    bottom: 34px;
+    right: 13px;
+    // Termina configuración para mantener el boton en la parte de abajo
+    border:none;
+    text-align: center;
+    color: $font-light;
+    font-size: 45px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition:.3s;
+
+    svg {
+
+      display: block !important;
+      margin-top: -3px !important;
+      margin-left: -13px !important;
+      width: 45px !important;
+      height: 45px !important;
+    }
+  }
+  span{
+    transition:.5s;
+  }
+  .botonF1:hover span{
+    transform:rotate(360deg);
+  }
+  .botonF1:active{
+    transform:scale(1.4);
+  }
+}
+
+.editar {
+  cursor: pointer !important;
+}
+
+.eliminar {
+  cursor: pointer !important;
+}
+
+.editar:hover {
+  -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);
+}
+
+.eliminar:hover {
+  -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);
+}
+
+// Termina estilos para el boton flotante
+
