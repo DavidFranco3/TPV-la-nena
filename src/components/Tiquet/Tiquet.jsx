@@ -5,15 +5,11 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../Modal/BasicModal";
-import NombreCliente from "../Ventas/NombreCliente";
 import { obtenUltimoNoTiquet } from "../../api/ventas";
 import { Col, Button, Row } from "react-bootstrap";
-import DineroIngresado from "../Ventas/DineroIngresado";
-import TipoPedido from "../Ventas/TipoPedido";
-import HacerPedido from "../Ventas/HacerPedido";
 import moment from "moment";
 import "moment/locale/es";
-import Observaciones from "../Ventas/Observaciones";
+import DatosExtraVenta from "../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../assets/base64/logo-tiquet";
 
 function Tiquet(props) {
@@ -23,10 +19,7 @@ function Tiquet(props) {
     const total = products.reduce((amount, item) => (amount + parseInt(item.precio)), 0);
 
     const [determinaBusquedaTiquet, setDeterminaBusquedaTiquet] = useState(false);
-
-    const [nombreCliente, setNombreCliente] = useState("");
     const [numeroTiquet, setNumeroTiquet] = useState("");
-    const [dineroIngresado, setDineroIngresado] = useState("");
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -219,45 +212,21 @@ function Tiquet(props) {
         remove(item);
     }
 
-    // Para el nombre del usuario
-    const nombreUsuario = (content) => {
-        setTitulosModal("Nombre del cliente");
-        setContentModal(content);
-        setShowModal(true);
-    }
-
+    // Para almacenar el nombre del cliente
+    const [nombreCliente, setNombreCliente] = useState("");
+    // Para alamcenar el dinero ingresado
+    const [dineroIngresado, setDineroIngresado] = useState("");
     // Para almacenar el tipo de pago
     const [tipoPago, setTipoPago] = useState("");
-    // Para el modal de efectivo con el que paga
-    const cuantoDinero = (content) => {
-        setTitulosModal("Información del pago");
-        setContentModal(content);
-        setShowModal(true);
-    }
-
     // Para almacenar el tipo de pedido
     const [tipoPedido, setTipoPedido] = useState("");
-    // Para el modal de tipo de pedido
-    const tipoPedidos = (content) => {
-        setTitulosModal("Tipo de pedido");
-        setContentModal(content);
-        setShowModal(true);
-    }
-
     // Para almacenar la forma en la que se hizo el pedido
     const [hacerPedido, setHacerPedido] = useState("");
-    // Para el modal de hacer el pedido
-    const hacerPedidos = (content) => {
-        setTitulosModal("Hacer pedido");
-        setContentModal(content);
-        setShowModal(true);
-    }
-
     // Para almacenar las observaciones
     const [observaciones, setObservaciones] = useState("");
     // Para el modal de las observaciones
-    const modalObservaciones = (content) => {
-        setTitulosModal("Observaciones");
+    const datosExtraVenta = (content) => {
+        setTitulosModal("Datos extra de la venta");
         setContentModal(content);
         setShowModal(true);
     }
@@ -515,13 +484,7 @@ function Tiquet(props) {
                     {/**/}
                 </div>
                 <div className="ticket__actions">
-                    <Button
-                        title="Registrar venta e imprimir ticket"
-                        onClick={() =>
-                            handleRegistraVenta()
-                        }>
-                        ✅
-                    </Button>
+                    <Button title="Registrar venta e imprimir ticket" onClick={() => handleRegistraVenta()}>✅</Button>
 
                     <Button title="Registrar venta e imprimir doble ticket" onClick={() => handleRegistraVentaDoble()}> 2️⃣</Button>
 
@@ -532,71 +495,21 @@ function Tiquet(props) {
                     <Button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>
 
                     <Button
-                        title="Elegir una forma de pago"
+                        title="Añadir detalles de la venta"
                         onClick={() =>
-                            cuantoDinero(
-                                <DineroIngresado
+                            datosExtraVenta(
+                                <DatosExtraVenta
                                     setTipoPago={setTipoPago}
                                     setDineroIngresado={setDineroIngresado}
-                                    setShowModal={setShowModal}
-                                />
-                            )
-                        }>
-                        💵
-                    </Button>
-
-                    <Button
-                        title="Elegir el tipo de pedido"
-                        onClick={() =>
-                            tipoPedidos(
-                                <TipoPedido
                                     setTipoPedido={setTipoPedido}
-                                    setShowModal={setShowModal}
-                                />
-                            )
-                        }>
-                        ❓
-                    </Button>
-
-                    <Button
-                        title="Seleccionar por donde se hizo el pedido"
-                        onClick={() =>
-                            hacerPedidos(
-                                <HacerPedido
                                     setHacerPedido={setHacerPedido}
-                                    setShowModal={setShowModal}
-                                />
-                            )
-                        }>
-                        📱
-                    </Button>
-
-                    <Button
-                        title="Añadir observaciones"
-                        onClick={() =>
-                            modalObservaciones(
-                                <Observaciones
+                                    setNombreCliente={setNombreCliente}
                                     setObservaciones={setObservaciones}
                                     setShowModal={setShowModal}
                                 />
                             )
                         }>
                         <FontAwesomeIcon icon={faCircleInfo} />
-                    </Button>
-
-
-                    <Button
-                        title="Añadir el nombre del cliente"
-                        onClick={() =>
-                            nombreUsuario(
-                                <NombreCliente
-                                    setNombreCliente={setNombreCliente}
-                                    setShowModal={setShowModal}
-                                />
-                            )
-                        }
-                    >
-                        <FontAwesomeIcon icon={faAddressCard} />
                     </Button>
                 </div>
             </div>

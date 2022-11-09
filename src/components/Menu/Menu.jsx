@@ -1,11 +1,11 @@
-import {useEffect, Fragment} from 'react';
+import { useEffect, Fragment } from 'react';
 import "./Menu.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import Producto from "../Producto";
 import Categoria from "../Categoria";
-import {getTokenApi, isExpiredToken, logoutApi} from "../../api/auth";
-import {toast} from "react-toastify";
+import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
 
 function Menu(props) {
@@ -13,8 +13,8 @@ function Menu(props) {
 
     // Cerrado de sesión automatico
     useEffect(() => {
-        if(getTokenApi()) {
-            if(isExpiredToken(getTokenApi())) {
+        if (getTokenApi()) {
+            if (isExpiredToken(getTokenApi())) {
                 toast.warning("Sesión expirada");
                 toast.success("Sesión cerrada por seguridad");
                 logoutApi();
@@ -35,29 +35,20 @@ function Menu(props) {
     return (
         <>
             <div className="menu">
-                <div className="regresarCategorias">
-                    <FontAwesomeIcon
-                        icon={faHouse}
-                        className="home"
-                        title="Regresar"
-                        onClick={() => {
-                            clickHomeHandler()
-                        }}
-                    />
-                </div>
+
                 {
                     !categoriaActual ?
                         (
                             listCategorias &&
                             (
                                 listCategorias.map((categoria, index) => {
-                                    return(
-                                        <Button key={index} 
-                                                title={categoria.nombre}
-                                                onClick={() => setCategoriaActual(categoria.id)}>
+                                    return (
+                                        <Button key={index}
+                                            title={categoria.nombre}
+                                            onClick={() => setCategoriaActual(categoria.id)}>
                                             <Categoria key={index}
-                                                       imagen={categoria.imagen}
-                                                       nombre={categoria.nombre}
+                                                imagen={categoria.imagen}
+                                                nombre={categoria.nombre}
                                             />
                                         </Button>
                                     )
@@ -67,28 +58,38 @@ function Menu(props) {
                         :
                         (
                             <>
+                                <div className="regresarCategorias">
+                                    <FontAwesomeIcon
+                                        icon={faHouse}
+                                        className="home"
+                                        title="Regresar"
+                                        onClick={() => {
+                                            clickHomeHandler()
+                                        }}
+                                    />
+                                </div>
                                 {
                                     listProductos &&
                                     (
                                         listProductos.map((product, index) => {
-                                            return(
+                                            return (
                                                 <Button key={index}
-                                                        title={product.nombre + " " + "$"+product.precio}
-                                                        onClick={() => clickHandler(product)}>
+                                                    title={product.nombre + " " + "$" + product.precio}
+                                                    onClick={() => clickHandler(product)}>
                                                     <Producto key={index}
-                                                              imagen={product.imagen}
-                                                              nombre={product.nombre}
-                                                              precio={product.precio}
+                                                        imagen={product.imagen}
+                                                        nombre={product.nombre}
+                                                        precio={product.precio}
                                                     />
                                                 </Button>
                                             )
                                         })
                                     )
-                            
+
                                 }
                             </>
                         )
-                        
+
                 }
             </div>
         </>

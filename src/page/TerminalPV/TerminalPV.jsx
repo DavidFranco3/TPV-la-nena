@@ -4,18 +4,20 @@ import Menu from "../../components/Menu";
 import Tiquet from "../../components/Tiquet";
 import "./TerminalPV.scss";
 import { listarProductosCategoria } from "../../api/productos";
-import {Alert, Col, Row} from "react-bootstrap";
+import { Alert, Col, Row } from "react-bootstrap";
 import { listarCategorias } from "../../api/categorias";
-import {getTokenApi, isExpiredToken, logoutApi} from "../../api/auth";
-import {toast} from "react-toastify";
+import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { toast } from "react-toastify";
+import Lottie from "react-lottie-player";
+import AnimacionLoading from "../../assets/json/loading.json";
 
 function TerminalPv(props) {
     const { setRefreshCheckLogin, usuarioCurso } = props;
 
     // Cerrado de sesión automatico
     useEffect(() => {
-        if(getTokenApi()) {
-            if(isExpiredToken(getTokenApi())) {
+        if (getTokenApi()) {
+            if (isExpiredToken(getTokenApi())) {
                 toast.warning("Sesión expirada");
                 toast.success("Sesión cerrada por seguridad");
                 logoutApi();
@@ -40,8 +42,6 @@ function TerminalPv(props) {
     }
 
     const removeProduct = (item) => {
-        // console.log("Recibido por el metodo remove")
-        // console.log(item)
         let newArray = ticketItems;
         newArray.splice(newArray.findIndex(a => a.nombre === item.nombre), 1);
         setTicketItems([...newArray]);
@@ -58,7 +58,7 @@ function TerminalPv(props) {
             // listarProductos()
             listarProductosCategoria(categoriaActual).then(response => {
                 const { data } = response;
-                if(!listProductos && data) {
+                if (!listProductos && data) {
                     setListProductos(formatModelProductos(data));
                 } else {
                     const datosProductos = formatModelProductos(data);
@@ -80,7 +80,7 @@ function TerminalPv(props) {
             listarCategorias().then(response => {
                 const { data } = response;
                 //console.log(data)
-                if(!listCategorias && data) {
+                if (!listCategorias && data) {
                     setListCategorias(formatModelCategorias(data));
                 } else {
                     const datosCategorias = formatModelCategorias(data);
@@ -97,31 +97,46 @@ function TerminalPv(props) {
     return (
         <>
             <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-            <Alert className="fondoPrincipalAlert">
-        <Row>
-          <Col xs={12} md={4} className="titulo">
-            <h1 className="font-bold">Ventas</h1>
-          </Col>
-        </Row>
-      </Alert>
-                <div className="app">
-                    <div className="pos">
-                        <Tiquet
-                            usuarioCurso={usuarioCurso}
-                            products={ticketItems}
-                            empty={emptyTicket}
-                            remove={removeProduct}
-                        />
-                        <Menu
-                            addItems={addItems}
-                            listProductos={listProductos}
-                            listCategorias={listCategorias}
-                            setCategoriaActual={setCategoriaActual}
-                            categoriaActual={categoriaActual}
-                        />
-                    </div>
-                </div>
-      
+                <Alert className="fondoPrincipalAlert">
+                    <Row>
+                        <Col xs={12} md={4} className="titulo">
+                            <h1 className="font-bold">Ventas</h1>
+                        </Col>
+                    </Row>
+                </Alert>
+
+                {
+                    listProductos && listCategorias ?
+                        (
+                            <>
+                                <div className="app">
+                                    <div className="pos">
+                                        <Tiquet
+                                            usuarioCurso={usuarioCurso}
+                                            products={ticketItems}
+                                            empty={emptyTicket}
+                                            remove={removeProduct}
+                                        />
+                                        <Menu
+                                            addItems={addItems}
+                                            listProductos={listProductos}
+                                            listCategorias={listCategorias}
+                                            setCategoriaActual={setCategoriaActual}
+                                            categoriaActual={categoriaActual}
+                                        />
+                                    </div>
+                                </div>
+
+                            </>
+                        )
+                        :
+                        (
+                            <>
+                                <Lottie loop={true} play={true} animationData={AnimacionLoading} />
+                            </>
+                        )
+                }
+
             </LayoutPrincipal>
         </>
     );
