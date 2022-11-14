@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { registraCategorias } from "../../../api/categorias";
 import Dropzone from "../../Dropzone";
-import "./RegistroCategorias.scss";
-import {Button, Col, Form, Row, Spinner} from "react-bootstrap";
-import {subeArchivosCloudinary} from "../../../api/cloudinary";
-import {toast} from "react-toastify";
+import "../../../scss/styles.scss";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
+import { subeArchivosCloudinary } from "../../../api/cloudinary";
+import { toast } from "react-toastify";
 import queryString from "query-string";
-import {faX, faSave} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function RegistroCategorias(props) {
     const { setShowModal, history } = props;
@@ -16,7 +16,7 @@ function RegistroCategorias(props) {
 
     //Para almacenar la imagen del producto que se guardara a la bd
     const [imagenProducto, setImagenProducto] = useState(null);
-    
+
     // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
@@ -25,47 +25,45 @@ function RegistroCategorias(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if(!imagenProducto) {
+        if (!imagenProducto) {
             toast.warning("Debes agregar una imagen a la categoría")
         } else {
             if (!formData.nombre) {
-                        setLoading(false);
-                        toast.warning("Completa el formulario");
-                    } else {
-            try {
-                setLoading(true);
-                // Sube a cloudinary la imagen principal del producto
-                subeArchivosCloudinary(imagenProducto, "categoria").then(response => {
-                    const { data } = response;
+                setLoading(false);
+                toast.warning("Completa el formulario");
+            } else {
+                try {
+                    setLoading(true);
+                    // Sube a cloudinary la imagen principal del producto
+                    subeArchivosCloudinary(imagenProducto, "categoria").then(response => {
+                        const { data } = response;
 
                         setLoading(true);
-                        
-                        const dataTemp = {
-                        nombre: formData.nombre,
-                        imagen: data.secure_url,
-                        negocio: "LA NENA"
-                    }
 
-                            registraCategorias(dataTemp).then(response =>
-                            {
-                                const { data } = response;
-                                    setLoading(true);
-                                    history.push({
-                                        search: queryString.stringify(""),
-                                    });
-                                    toast.success("Categoría registrada");
-                                    setShowModal(false);
-                                
-                            })
-                        
-                }).then(e => {
+                        const dataTemp = {
+                            nombre: formData.nombre,
+                            imagen: data.secure_url,
+                            negocio: "LA NENA"
+                        }
+
+                        registraCategorias(dataTemp).then(response => {
+                            const { data } = response;
+                            history.push({
+                                search: queryString.stringify(""),
+                            });
+                            toast.success(data.mensaje);
+                            setShowModal(false);
+
+                        })
+
+                    }).then(e => {
+                        //console.log(e)
+                    })
+                } catch (e) {
                     //console.log(e)
-                })
-            } catch (e) {
-                //console.log(e)
+                }
             }
         }
-    }
     }
 
     const onChange = e => {
@@ -90,45 +88,45 @@ function RegistroCategorias(props) {
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control type="text" name="nombre"
-                                          placeholder="Escribe el nombre"
-                                          defaultValue={formData.nombre}
+                                placeholder="Escribe el nombre"
+                                defaultValue={formData.nombre}
                             />
                         </Form.Group>
                     </Row>
                 </div>
 
                 <Form.Group as={Row} className="botonSubirProducto">
-                        <Col>
-                            <Button
-                                title="Registrar categoría"
-                                type="submit"
-                                variant="success"
-                                className="registrar"
-                                disabled={loading}
-                            >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Registrar categoría" : <Spinner animation="border" />}
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                title="Cerrar ventana"
-                                variant="danger"
-                                className="cancelar"
-                                disabled={loading}
-                                onClick={() => {
-                                    cancelarRegistro()
-                                }}
-                            >
-                               <FontAwesomeIcon icon={faX} /> Cancelar
-                            </Button>
-                        </Col>
-                    </Form.Group>
+                    <Col>
+                        <Button
+                            title="Registrar categoría"
+                            type="submit"
+                            variant="success"
+                            className="registrar"
+                            disabled={loading}
+                        >
+                            <FontAwesomeIcon icon={faSave} /> {!loading ? "Registrar" : <Spinner animation="border" />}
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            title="Cerrar ventana"
+                            variant="danger"
+                            className="cancelar"
+                            disabled={loading}
+                            onClick={() => {
+                                cancelarRegistro()
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faX} /> Cancelar
+                        </Button>
+                    </Col>
+                </Form.Group>
             </Form>
         </>
     );
 }
 
-function initialFormValue(){
+function initialFormValue() {
     return {
         nombre: ""
     }

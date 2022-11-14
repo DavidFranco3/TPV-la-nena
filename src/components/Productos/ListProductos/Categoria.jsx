@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import {obtenerCategoria} from "../../../api/categorias";
-import {toast} from "react-toastify";
+import { obtenerCategoria } from "../../../api/categorias";
 
 function Categoria(props) {
     const { id } = props;
@@ -13,15 +12,10 @@ function Categoria(props) {
         try {
             obtenerCategoria(id).then(response => {
                 const { data } = response;
-                // console.log(data)
                 const { nombre } = data;
                 setNombreCategoria(nombre)
             }).catch(e => {
-                //console.log(e)
-                if(e.message === 'Network Error') {
-                    //console.log("No hay internet")
-                    toast.error("Conexión al servidor no disponible");
-                }
+                console.log(e)
             })
         } catch (e) {
             console.log(e)

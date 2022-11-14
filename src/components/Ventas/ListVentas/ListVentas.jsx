@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import moment from "moment";
 import "moment/locale/es";
-import {Badge, Container} from "react-bootstrap";
-import "./ListVentas.scss";
+import { Badge, Container } from "react-bootstrap";
+import "../../../scss/styles.scss";
 import BasicModal from "../../Modal/BasicModal";
 import DetallesVenta from "../DetallesVenta";
 import CancelarVenta from "../CancelarVenta";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faX, faRotateLeft, faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faX, faRotateLeft, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
-import {estilos} from "../../../utils/tableStyled";
+import { estilos } from "../../../utils/tableStyled";
 
 function ListVentas(props) {
-    const { listVentas, location, setRefreshCheckLogin, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas  } = props;
-    
+    const { listVentas, location, setRefreshCheckLogin, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
+
     //console.log(listVentas)
 
     moment.locale("es");
@@ -36,15 +36,15 @@ function ListVentas(props) {
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     // Para cancelar la venta
     const recuperarVenta = (content) => {
         setTitulosModal("Recuperar venta");
         setContentModal(content);
         setShowModal(true);
     }
-    
-        const handleChangePage = (page) => {
+
+    const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
     };
@@ -55,8 +55,8 @@ function ListVentas(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
-    
-        const columns = [
+
+    const columns = [
         {
             name: "No. Ticket",
             selector: row => row.numeroTiquet,
@@ -75,30 +75,30 @@ function ListVentas(props) {
             name: "Estado",
             selector: row => (
                 <>
-        {
-                                row.estado === "true" ?
-                                    (
-                                        <>
-                                            <Badge
-                                                bg="success"
-                                                className="estado"
-                                            >
-                                                Venta completada
-                                            </Badge>
-                                        </>
-                                    )
-                                    :
-                                    (
-                                        <>
-                                            <Badge
-                                                bg="danger"
-                                                className="estado"
-                                            >
-                                                Venta cancelada
-                                            </Badge>
-                                        </>
-                                    )
-                            }
+                    {
+                        row.estado === "true" ?
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        className="estado"
+                                    >
+                                        Venta completada
+                                    </Badge>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <Badge
+                                        bg="danger"
+                                        className="estado"
+                                    >
+                                        Venta cancelada
+                                    </Badge>
+                                </>
+                            )
+                    }
                 </>
             ),
 
@@ -119,99 +119,86 @@ function ListVentas(props) {
             center: true,
             reorder: false,
             selector: row => (
-                    <>
-            <Badge
-            bg="success">
-                ${''}
+                <>
+                    <Badge
+                        bg="success">
+                        ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
                         }).format(row.total)} MXN
-                        </Badge>
+                    </Badge>
                 </>
-        ),
+            ),
         },
         {
             name: "Acciones",
             selector: row => (
                 <>
-                   <div className="flex justify-end items-center space-x-4">
-                            <Badge
-                                title="Ver productos vendidos" 
-                                bg="primary"
-                                className="indicadorDetallesVenta"
-                                onClick={() => {
-                                    detallesVenta(
-                                        <DetallesVenta
-                                            datosProducto={row.articulosVendidos}
-                                            nombreCliente={row.cliente}
-                                            fecha={moment(row?.fechaCreacion).format('LLLL')}
-                                            datos={row}
-                                            location={location}
-                                            history={history}
-                                        />
-                                    )
-                                }}
-                            >
+                    <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            title="Ver productos vendidos"
+                            bg="primary"
+                            className="indicadorDetallesVenta"
+                            onClick={() => {
+                                detallesVenta(
+                                    <DetallesVenta
+                                        datos={row}
+                                        location={location}
+                                        history={history}
+                                    />
+                                )
+                            }}
+                        >
                             <FontAwesomeIcon icon={faEye} className="text-lg" />
-                            </Badge>
-              {
-                                row.estado === "true" ?
-                                    (
-                                        <>
-                                            <Badge
-                                                bg="danger"
-                                                title="Cancelar venta" 
-                                                className="indicadorCancelarVenta"
-                                                onClick={() => {
-                                                    cancelarVenta(
-                                                        <CancelarVenta
-                                                            idVenta={row.id}
-                                                            noTiquet={row.numeroTiquet}
-                                                            productosVendidos={row.productosVendidos}
-                                                            totalVenta={row.total}
-                                                            fechaCreacion={row.fechaCreacion}
-                                                            estado={row.estado}
-                                                            location={location}
-                                                            history={history}
-                                                            setShowModal={setShowModal}
-                                                        />
-                                                    )
-                                                }}
-                                            >
+                        </Badge>
+                        {
+                            row.estado === "true" ?
+                                (
+                                    <>
+                                        <Badge
+                                            bg="danger"
+                                            title="Cancelar venta"
+                                            className="indicadorCancelarVenta"
+                                            onClick={() => {
+                                                cancelarVenta(
+                                                    <CancelarVenta
+                                                        datosVentas={row}
+                                                        location={location}
+                                                        history={history}
+                                                        setShowModal={setShowModal}
+                                                    />
+                                                )
+                                            }}
+                                        >
                                             <FontAwesomeIcon icon={faX} className="text-lg" />
-                                            </Badge>
-                                        </>
-                                    )
-                                    :
-                                    (
-                                        <>
-                                            <Badge
-                                                bg="success"
-                                                title="Recuperar venta" 
-                                                className="indicadorCancelarVenta"
-                                                onClick={() => {
-                                                    recuperarVenta(
-                                                        <CancelarVenta
-                                                            idVenta={row.id}
-                                                            noTiquet={row.numeroTiquet}
-                                                            estado={row.estado}
-                                                            productosVendidos={row.productosVendidos}
-                                                            totalVenta={row.total}
-                                                            fechaCreacion={row.fechaCreacion}
-                                                            location={location}
-                                                            history={history}
-                                                            setShowModal={setShowModal}
-                                                        />
-                                                    )
-                                                }}
-                                            >
+                                        </Badge>
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                        <Badge
+                                            bg="success"
+                                            title="Recuperar venta"
+                                            className="indicadorCancelarVenta"
+                                            onClick={() => {
+                                                recuperarVenta(
+                                                    <CancelarVenta
+                                                        datosVentas={row}
+                                                        location={location}
+                                                        history={history}
+                                                        setShowModal={setShowModal}
+                                                    />
+                                                )
+                                            }}
+                                        >
                                             <FontAwesomeIcon icon={faRotateLeft} className="text-lg" />
-                                            </Badge>
-                                        </>
-                                    )
-                            }
-                        </div>
+                                        </Badge>
+                                    </>
+                                )
+                        }
+                    </div>
                 </>
             ),
             sortable: false,
@@ -219,27 +206,27 @@ function ListVentas(props) {
             reorder: false
         },
     ];
-    
+
     // Definiendo estilos para data table
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-                setRows(listVentas);
+            setRows(listVentas);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
     }, []);
-    
+
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
+
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-    
+
     return (
         <>
             <Container fluid>

@@ -1,5 +1,5 @@
-import { useEffect, Fragment } from 'react';
-import "./Menu.scss";
+import { useEffect } from 'react';
+import "../../scss/styles.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import Producto from "../Producto";
@@ -43,7 +43,8 @@ function Menu(props) {
                             (
                                 listCategorias.map((categoria, index) => {
                                     return (
-                                        <Button key={index}
+                                        <Button 
+                                            key={index}
                                             title={categoria.nombre}
                                             onClick={() => setCategoriaActual(categoria.id)}>
                                             <Categoria key={index}

@@ -1,23 +1,17 @@
 import { useState, useEffect } from 'react';
-import { map } from "lodash";
-import "./DetallesVenta.scss";
-import {Badge, Col, Row, Container} from "react-bootstrap";
+import "../../../scss/styles.scss";
+import { Badge, Col, Row, Container } from "react-bootstrap";
 import BasicModal from "../../Modal/BasicModal";
 import GeneraPDF from "../GeneraPDF";
 import DataTable from "react-data-table-component";
-import {estilos} from "../../../utils/tableStyled";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
-import Lottie from "react-lottie-player";
-import AnimacionLoading from "../../../assets/json/loading.json";
+import { estilos } from "../../../utils/tableStyled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 
 function DetallesVenta(props) {
-    const { datosProducto, nombreCliente, datos, fecha } = props;
+    const { datos } = props;
 
-    console.log(datosProducto)
-    
-    const { numeroTiquet } = datos;
-    const {nombre, precio} = datosProducto;
+    const { numeroTiquet, articulosVendidos, cliente} = datos;
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -26,11 +20,11 @@ function DetallesVenta(props) {
 
     // Para cancelar la venta
     const handlePrint = (content) => {
-        setTitulosModal("Detalles del tiquet No. "+ numeroTiquet.toString());
+        setTitulosModal("Detalles del tiquet No. " + numeroTiquet.toString());
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     const columns = [
         {
             name: ' Producto',
@@ -42,22 +36,22 @@ function DetallesVenta(props) {
         {
             name: ' Precio',
             selector: row => (
-            <>
-            <Badge bg="success">
-                            ${''}
-                            {new Intl.NumberFormat('es-MX', {
+                <>
+                    <Badge bg="success">
+                        ${''}
+                        {new Intl.NumberFormat('es-MX', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                            }).format(row.precio)} MXN
-                            </Badge>
-            </>
+                        }).format(row.precio)} MXN
+                    </Badge>
+                </>
             ),
             sortable: false,
             center: true,
             reorder: false
         },
     ];
-    
+
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
@@ -65,7 +59,7 @@ function DetallesVenta(props) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setRows(datosProducto);
+            setRows(articulosVendidos);
             setPending(false);
         }, 2000);
         return () => clearTimeout(timeout);
@@ -75,47 +69,45 @@ function DetallesVenta(props) {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
-       const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-       
-       return (
-        <>        
-        <Container fluid>
-        Cliente: {nombreCliente}
-            <DataTable
-                columns={columns}
-                data={datosProducto}
-                progressPending={pending}
-                pagination
-                paginationComponentOptions={paginationComponentOptions}
-                paginationResetDefaultPage={resetPaginationToogle}
-                customStyles={estilos}
-                sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />} 
-            />
-        <br/>
-        <br/>
-        <Row>
-                <Col sm={8}></Col>
-                <Col sm={4}>
-                    <button
-                        className="btnImprimirdeNuevo"
-                        title="Ver ticket" 
-                        onClick={() => handlePrint(
-                            <GeneraPDF
-                                fecha={fecha}
-                                datos={datos}
-                                datosProducto={datosProducto}
-                            />
-                        )}
-                    > 🖨︎</button>
-                </Col>
-            </Row>
-        </Container>
-        
-        <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
-            {contentModal}
-        </BasicModal>
-        
+
+    const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
+
+    return (
+        <>
+            <Container fluid>
+                Cliente: {cliente}
+                <DataTable
+                    columns={columns}
+                    data={articulosVendidos}
+                    progressPending={pending}
+                    pagination
+                    paginationComponentOptions={paginationComponentOptions}
+                    paginationResetDefaultPage={resetPaginationToogle}
+                    customStyles={estilos}
+                    sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
+                />
+                <br />
+                <br />
+                <Row>
+                    <Col sm={8}></Col>
+                    <Col sm={4}>
+                        <button
+                            className="btnImprimirdeNuevo"
+                            title="Ver ticket"
+                            onClick={() => handlePrint(
+                                <GeneraPDF
+                                    datos={datos}
+                                />
+                            )}
+                        > 🖨︎</button>
+                    </Col>
+                </Row>
+            </Container>
+
+            <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
+                {contentModal}
+            </BasicModal>
+
         </>
     );
 }

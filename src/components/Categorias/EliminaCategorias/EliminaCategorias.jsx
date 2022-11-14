@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import {Button, Col, Form, Row, Spinner, Alert} from "react-bootstrap";
-import {eliminaCategoria} from "../../../api/categorias";
-import {toast} from "react-toastify";
+import { Button, Col, Form, Row, Spinner, Alert } from "react-bootstrap";
+import { eliminaCategoria } from "../../../api/categorias";
+import { toast } from "react-toastify";
 import queryString from "query-string";
 import moment from "moment";
 import "moment/locale/es";
 import "../../../scss/styles.scss";
-import {faX, faSave} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const fechaToCurrentTimezone = (fecha) => {
-  const date = new Date(fecha)
+    const date = new Date(fecha)
 
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
 
 
-  return date.toISOString().slice(0, 16);
+    return date.toISOString().slice(0, 16);
 }
 
 function EliminaCategorias(props) {
@@ -23,7 +23,7 @@ function EliminaCategorias(props) {
     const { id, nombre, fechaActualizacion } = datosCategoria;
 
     moment.locale("es");
-    
+
     // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
@@ -39,7 +39,6 @@ function EliminaCategorias(props) {
             eliminaCategoria(id).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
-                setLoading(false);
                 history.push({
                     search: queryString.stringify(""),
                 });
@@ -54,59 +53,59 @@ function EliminaCategorias(props) {
         <>
             <Form onSubmit={onSubmit}>
                 <div className="datosDelProducto">
-                <Alert variant="danger">
-                    <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
-                    <p className="mensaje">
-                        Esta acción eliminará del sistema la categoria.
-                    </p>
-                </Alert>
+                    <Alert variant="danger">
+                        <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
+                        <p className="mensaje">
+                            Esta acción eliminará del sistema la categoria.
+                        </p>
+                    </Alert>
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control type="text" name="nombre"
-                                          placeholder="Escribe el nombre"
-                                          defaultValue={nombre}
-                                          disabled
+                                placeholder="Escribe el nombre"
+                                defaultValue={nombre}
+                                disabled
                             />
                         </Form.Group>
-                        
+
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Modificación</Form.Label>
                             <Form.Control type="text" name="nombre"
-                                          placeholder="Escribe el nombre"
-                                          defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
-                                          disabled
+                                placeholder="Escribe el nombre"
+                                defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                disabled
                             />
                         </Form.Group>
                     </Row>
                 </div>
 
                 <Form.Group as={Row} className="botonSubirProducto">
-                        <Col>
-                            <Button
-                                title="Eliminar categoría"
-                                type="submit"
-                                variant="success"
-                                className="registrar"
-                                disabled={loading}
-                            >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar categoría" : <Spinner animation="border" />}
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                title="Cerrar ventana"
-                                variant="danger"
-                                className="cancelar"
-                                disabled={loading}
-                                onClick={() => {
-                                    cancelarRegistro()
-                                }}
-                            >
-                               <FontAwesomeIcon icon={faX} /> Cancelar
-                            </Button>
-                        </Col>
-                    </Form.Group>
+                    <Col>
+                        <Button
+                            title="Eliminar categoría"
+                            type="submit"
+                            variant="success"
+                            className="registrar"
+                            disabled={loading}
+                        >
+                            <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar" : <Spinner animation="border" />}
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            title="Cerrar ventana"
+                            variant="danger"
+                            className="cancelar"
+                            disabled={loading}
+                            onClick={() => {
+                                cancelarRegistro()
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faX} /> Cancelar
+                        </Button>
+                    </Col>
+                </Form.Group>
             </Form>
         </>
     );

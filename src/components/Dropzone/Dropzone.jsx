@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
-import "./Dropzone.scss";
+import "../../scss/styles.scss";
 
 function Dropzone(props) {
     const { setImagenFile, imagenProductoBD } = props;
@@ -21,7 +21,7 @@ function Dropzone(props) {
         setImagenFile(file);
     }, [setImagenFile]);
 
-    const {getRootProps, getInputProps} = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
         accept: "image/*",
         onDrop: onDropImagen,
     });
@@ -32,7 +32,7 @@ function Dropzone(props) {
             const type = tempType[0];
             //console.log(Ext);
             //console.log(type);
-            if(type !== "image") {
+            if (type !== "image") {
                 //const tempP = file.preview;
                 //slider1(tempP);
                 toast.error("Archivo no permitido");
@@ -54,7 +54,7 @@ function Dropzone(props) {
 
     return (
         <div className="archivo"
-             {...getRootProps()}
+            {...getRootProps()}
         >
             {imagenProductoBD && slide.length === 0 ?
                 (
@@ -77,7 +77,7 @@ function Dropzone(props) {
                     </>
                 )
             }
-            <input {...getInputProps()}/>
+            <input {...getInputProps()} />
         </div>
     );
 }

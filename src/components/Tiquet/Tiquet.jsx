@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { registraVentas } from "../../api/ventas";
-import "./Tiquet.scss";
+import "../../scss/styles.scss";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
@@ -37,7 +37,7 @@ function Tiquet(props) {
         setObservaciones("");
     }
 
-    const [IVA, setIVA] = useState("");
+    const [IVA, setIVA] = useState("0");
 
     const handleIVACancel = () => {
         setIVA("0");
@@ -48,13 +48,11 @@ function Tiquet(props) {
     }
 
     const handlePrint = () => {
-        // Primer renderizado del tiquet -- sin recuperar logo del cliente
-        const tiquetGenerado = window.open('', 'PRINT', 'height=800,width=1200');
+        toast.info("Registrando venta... espere por favor")
+        const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
         tiquetGenerado.document.write('<html><head>');
         tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        //tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .items__price {color: #000000 !important;} </style>');
         tiquetGenerado.document.write('</head><body>');
-        // tiquetGenerado.document.write(ImagetoPrint(LogoTiquet));
         tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
         tiquetGenerado.document.write('</body></html>');
 
@@ -65,21 +63,17 @@ function Tiquet(props) {
     }
 
     const handlePrintDouble = () => {
-        // Primer renderizado del tiquet -- sin recuperar logo del cliente
-        const tiquetGenerado = window.open('', 'PRINT', 'height=800,width=1200');
+        toast.info("Registrando venta... espere por favor")
+        const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
         tiquetGenerado.document.write('<html><head>');
         tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        //tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .items__price {color: #000000 !important;} </style>');
         tiquetGenerado.document.write('</head><body>');
-        // tiquetGenerado.document.write(ImagetoPrint(LogoTiquet));
         tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
         tiquetGenerado.document.write('</body></html>');
 
         tiquetGenerado.document.write('<html><head>');
         tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        //tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .items__price {color: #000000 !important;} </style>');
         tiquetGenerado.document.write('</head><body>');
-        // tiquetGenerado.document.write(ImagetoPrint(LogoTiquet));
         tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
         tiquetGenerado.document.write('</body></html>');
 
@@ -117,14 +111,14 @@ function Tiquet(props) {
             comision = "0.03"
         }
 
-        if (products.length !== 0) {
+        if (products.length === 0) {
+            toast.warning("Debe cargar articulos al tiquet")
+        } else {
             handlePrint()
-            toast.info("Registrando venta... espere por favor")
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
             try {
                 const dataTemp = {
-
                     numeroTiquet: numeroTiquet,
                     cliente: nombreCliente,
                     estado: "true",
@@ -151,14 +145,10 @@ function Tiquet(props) {
             } catch (e) {
                 console.log(e)
             }
-        } else {
-            toast.warning("Debe cargar articulos al tiquet")
         }
     }
 
     const handleRegistraVentaDoble = () => {
-        toast.info("Registrando venta... espere por favor")
-
         let iva = "0";
         let comision = "0";
 
@@ -170,13 +160,14 @@ function Tiquet(props) {
             comision = "0.03"
         }
 
-        if (products.length !== 0) {
+        if (products.length === 0) {
+            toast.warning("Debe cargar articulos al tiquet")
+        } else {
             handlePrintDouble()
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
             try {
                 const dataTemp = {
-
                     numeroTiquet: numeroTiquet,
                     cliente: nombreCliente,
                     estado: "true",
@@ -203,8 +194,6 @@ function Tiquet(props) {
             } catch (e) {
                 console.log(e)
             }
-        } else {
-            toast.warning("Debe cargar articulos al tiquet")
         }
     }
 

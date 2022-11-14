@@ -27,33 +27,33 @@ export function logoutApi() {
 
 export function isUserLogedApi() {
     const token = getTokenApi();
-    if(!token){
+    if (!token) {
         logoutApi();
         return null;
     }
-    if(isExpired(token)){
+    if (isExpired(token)) {
         logoutApi();
     }
     return jwtDecode(token);
 }
 
 function isExpired(token) {
-    const {exp} = jwtDecode(token);
+    const { exp } = jwtDecode(token);
     const expire = exp * 1000;
     const timeout = expire - Date.now()
 
-    if (timeout < 0){
+    if (timeout < 0) {
         return true;
     }
     return false;
 }
 
 export function isExpiredToken(token) {
-    const {exp} = jwtDecode(token);
+    const { exp } = jwtDecode(token);
     const expire = exp * 1000;
     const timeout = expire - Date.now()
 
-    if (timeout < 0){
+    if (timeout < 0) {
         return true;
     }
     return false;

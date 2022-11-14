@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
-import {map} from "lodash";
+import { map } from "lodash";
 import moment from "moment";
 import "moment/locale/es";
-import {Badge, Image, Container} from "react-bootstrap";
-import "./ListHistoricoVentasMes.scss";
+import { Badge, Image, Container } from "react-bootstrap";
+import "../../../scss/styles.scss";
 import Total from "../../../page/HistoricoVentasMes/Total";
 import BasicModal from "../../Modal/BasicModal";
 import HistorialVentasMes from "../../../page/HistorialVentasMes";
 import LogoHistorial from "../../../assets/png/historial.png";
 import ProcesamientoCSV from "../ProcesamientoCSV";
-import {estilos} from "../../../utils/tableStyled";
+import { estilos } from "../../../utils/tableStyled";
 import DataTable from "react-data-table-component";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPenToSquare, faTrashCan, faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 
 function ListHistoricoVentasMes(props) {
     const { listVentas, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas, setRefreshCheckLogin } = props;
-
-    //console.log(listVentas)
 
     moment.locale("es");
 
@@ -26,7 +24,6 @@ function ListHistoricoVentasMes(props) {
     const [contentModal, setContentModal] = useState(null);
     const [titulosModal, setTitulosModal] = useState(null);
 
-    
     const [listaDias, setListaDias] = useState([]);
 
     useEffect(() => {
@@ -37,7 +34,7 @@ function ListHistoricoVentasMes(props) {
             listaFechasTemp.push(tempFecha[0]);
         })
         //console.log(listaFechasTemp)
-        let listaDias = listaFechasTemp.filter((item,index)=>{
+        let listaDias = listaFechasTemp.filter((item, index) => {
             return listaFechasTemp.indexOf(item) === index;
         })
         setListaDias(listaDias)
@@ -50,7 +47,7 @@ function ListHistoricoVentasMes(props) {
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -62,7 +59,7 @@ function ListHistoricoVentasMes(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
-    
+
     const columns = [
         {
             name: "Ventas del mes",
@@ -74,12 +71,12 @@ function ListHistoricoVentasMes(props) {
         {
             name: "Detalles del mes",
             selector: row => (
-                    <>
-            <Total
-                                dia={row}
-                            />
+                <>
+                    <Total
+                        mes={row}
+                    />
                 </>
-        ),
+            ),
             sortable: false,
             center: true,
             reorder: false
@@ -88,30 +85,30 @@ function ListHistoricoVentasMes(props) {
             name: "Acciones",
             selector: row => (
                 <>
-                  <div className="flex justify-end items-center space-x-4">
-                            <Badge
-                                title="Ver las ventas del mes" 
-                                bg="light"
-                                className="vistaDetalles"
-                                onClick={() => {
-                                    detallesHistorial(
-                                        <HistorialVentasMes
-                                            setRefreshCheckLogin={setRefreshCheckLogin}
-                                            dia={row}
-                                            setShowModal={setShowModal}
-                                        />
-                                    )
-                                }}
-                            >
-                                <Image
-                                    src={LogoHistorial}
-                                    className="logoHistorial"
-                                />
-                            </Badge>
-                                
-                            <ProcesamientoCSV dia={row} />
-                                
-                        </div>
+                    <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            title="Ver las ventas del mes"
+                            bg="light"
+                            className="vistaDetalles"
+                            onClick={() => {
+                                detallesHistorial(
+                                    <HistorialVentasMes
+                                        setRefreshCheckLogin={setRefreshCheckLogin}
+                                        mes={row}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}
+                        >
+                            <Image
+                                src={LogoHistorial}
+                                className="logoHistorial"
+                            />
+                        </Badge>
+
+                        <ProcesamientoCSV dia={row} />
+
+                    </div>
                 </>
             ),
             sortable: false,
@@ -119,27 +116,27 @@ function ListHistoricoVentasMes(props) {
             reorder: false
         },
     ];
-    
+
     // Definiendo estilos para data table
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-                setRows(listaDias);
+            setRows(listaDias);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
     }, []);
-    
+
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
+
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-    
+
     return (
         <>
             <Container fluid>
@@ -164,7 +161,7 @@ function ListHistoricoVentasMes(props) {
                 {contentModal}
             </BasicModal>
         </>
-    );     
+    );
 }
 
 export default ListHistoricoVentasMes;

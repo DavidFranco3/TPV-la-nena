@@ -1,16 +1,16 @@
 import { useState, useEffect, Fragment } from 'react';
-import {getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado} from "../../api/auth";
+import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import {toast} from "react-toastify";
-import {Button, Row, Container, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { Button, Row, Container, Form } from "react-bootstrap";
 import LogoLANENA from "../../assets/jpg/logo-la-nena-2.jpg";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
 import { obtenerUsuario } from "../../api/usuarios";
-import "./layoutPrincipal.scss";
+import "../../scss/styles.scss";
 
-    function LayoutPrincipal (props) {
+function LayoutPrincipal(props) {
     const { setRefreshCheckLogin, children } = props;
 
     const redirecciona = useHistory();
@@ -42,8 +42,8 @@ import "./layoutPrincipal.scss";
     }
 
     return (
-       <>
-                <div className="min-h-full">
+        <>
+            <div className="min-h-full">
                 <Disclosure as="nav" className="bg-gray-800">
                     {({ open }) => (
                         <>
@@ -163,8 +163,8 @@ import "./layoutPrincipal.scss";
 
                 {/*<header className="bg-white shadow">*/}
                 {/*<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">*/}
-                        {/*<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>*/}
-                        {/*</div>*/}
+                {/*<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>*/}
+                {/*</div>*/}
                 {/*</header>*/}
                 {children}
             </div>

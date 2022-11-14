@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import {map} from "lodash";
-import {Badge, Container} from "react-bootstrap";
-import "./ListHistorialVentasDia.scss";
+import { Badge, Container } from "react-bootstrap";
+import "../../../scss/styles.scss";
 import BasicModal from "../../Modal/BasicModal";
 import ListProductoTiquet from "../../Ventas/DetallesVenta";
 import moment from "moment";
 import "moment/locale/es";
 import DataTable from "react-data-table-component";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
-import {estilos} from "../../../utils/tableStyled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { estilos } from "../../../utils/tableStyled";
 
 function ListHistorialVentasDia(props) {
     const { listDetallesDia, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
@@ -27,7 +26,7 @@ function ListHistorialVentasDia(props) {
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -39,7 +38,7 @@ function ListHistorialVentasDia(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
-    
+
     const columns = [
         {
             name: "No. Ticket",
@@ -58,17 +57,17 @@ function ListHistorialVentasDia(props) {
         {
             name: "Total",
             selector: row => (
-                    <>
-            <Badge
-            bg="success">
-                ${''}
+                <>
+                    <Badge
+                        bg="success">
+                        ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
                         }).format(row.total)} MXN
-                        </Badge>
+                    </Badge>
                 </>
-        ),
+            ),
             sortable: false,
             center: true,
             reorder: false
@@ -77,28 +76,24 @@ function ListHistorialVentasDia(props) {
             name: "Acciones",
             selector: row => (
                 <>
-                  <div className="flex justify-end items-center space-x-4">
-                            <>
+                    <div className="flex justify-end items-center space-x-4">
+                        <>
                             <Badge
-                                title="ver productos vendidos" 
+                                title="ver productos vendidos"
                                 bg="primary"
                                 className="vistaDetalle"
                                 onClick={() => {
                                     detallesTiquet(
                                         <ListProductoTiquet
-                                            datosProducto={row.articulosVendidos}
-                                            nombreCliente={row.cliente}
-                                            fecha={moment(row?.fechaCreacion).format('LLLL')}
                                             datos={row}
-                                            estado={row.estado}
                                         />
                                     )
                                 }}
                             >
                                 <FontAwesomeIcon icon={faEye} className="text-lg" />
                             </Badge>
-                            </>
-                        </div>
+                        </>
+                    </div>
                 </>
             ),
             sortable: false,
@@ -106,30 +101,30 @@ function ListHistorialVentasDia(props) {
             reorder: false
         },
     ];
-    
+
     // Definiendo estilos para data table
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-                setRows(listDetallesDia);
+            setRows(listDetallesDia);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
     }, []);
-    
+
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
+
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-    
+
     // Estilos personalizados
 
-    
+
     return (
         <>
             <Container fluid>
@@ -154,7 +149,7 @@ function ListHistorialVentasDia(props) {
             </BasicModal>
         </>
     );
-    
+
 }
 
 export default ListHistorialVentasDia;

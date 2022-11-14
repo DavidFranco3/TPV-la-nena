@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Button, Col, Form, Row, Spinner} from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
-import {map} from "lodash";
+import { map } from "lodash";
 import { registraProductos } from "../../../api/productos";
 import queryString from "query-string";
 import Dropzone from "../../Dropzone";
 import { subeArchivosCloudinary } from "../../../api/cloudinary";
-import "./RegistraProductos.scss";
-import {faX, faSave} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "../../../scss/styles.scss";
+import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function RegistraProductos(props) {
     const { setShowModal, history, listCategorias } = props;
@@ -17,63 +17,61 @@ function RegistraProductos(props) {
 
     //Para almacenar la imagen del producto que se guardara a la bd
     const [imagenProducto, setImagenProducto] = useState(null);
-    
+
     // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
     }
 
-        const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault();
 
-        if(!imagenProducto) {
+        if (!imagenProducto) {
             toast.warning("Debes agregar una imagen al producto")
         } else {
             if (!formData.nombre || !formData.categoria || !formData.precio) {
-                        setLoading(false);
-                        toast.warning("Completa el formulario");
-                    } else {
-            try {
-                setLoading(true);
-                // Sube a cloudinary la imagen principal del producto
-                subeArchivosCloudinary(imagenProducto, "productos").then(response => {
-                    const { data } = response;
+                setLoading(false);
+                toast.warning("Completa el formulario");
+            } else {
+                try {
+                    setLoading(true);
+                    // Sube a cloudinary la imagen principal del producto
+                    subeArchivosCloudinary(imagenProducto, "productos").then(response => {
+                        const { data } = response;
 
                         setLoading(true);
-                        
-                        const dataTemp = {
-                        nombre: formData.nombre,
-                        categoria: formData.categoria,
-                        precio: formData.precio,
-                        imagen: data.secure_url,
-                        negocio: "LA NENA"
-                    }
 
-                            registraProductos(dataTemp).then(response =>
-                            {
-                                const { data } = response;
-                                    setLoading(true);
-                                    history.push({
-                                        search: queryString.stringify(""),
-                                    });
-                                    toast.success("Producto registrado");
-                                    setShowModal(false);
-                                
-                            })
-                        
-                }).then(e => {
+                        const dataTemp = {
+                            nombre: formData.nombre,
+                            categoria: formData.categoria,
+                            precio: formData.precio,
+                            imagen: data.secure_url,
+                            negocio: "LA NENA"
+                        }
+
+                        registraProductos(dataTemp).then(response => {
+                            const { data } = response;
+                            history.push({
+                                search: queryString.stringify(""),
+                            });
+                            toast.success(data.mensaje);
+                            setShowModal(false);
+
+                        })
+
+                    }).then(e => {
+                        //console.log(e)
+                    })
+                } catch (e) {
                     //console.log(e)
-                })
-            } catch (e) {
-                //console.log(e)
+                }
             }
         }
-    }
     }
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };  
+    };
 
     return (
         <>
@@ -91,7 +89,7 @@ function RegistraProductos(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control 
+                            <Form.Control
                                 type="text" name="nombre"
                                 placeholder="Escribe el nombre"
                                 defaultValue={formData.nombre}
@@ -100,11 +98,11 @@ function RegistraProductos(props) {
 
                         <Form.Group as={Col} controlId="formGridCategoria">
                             <Form.Label>Categoría</Form.Label>
-                            <Form.Control 
-                                 as="select"
-                                 defaultValue={formData.categoria}
-                                 name="categoria" 
-                                 >
+                            <Form.Control
+                                as="select"
+                                defaultValue={formData.categoria}
+                                name="categoria"
+                            >
                                 <option>Elige una opción</option>
                                 {map(listCategorias, (cat, index) => (
                                     <option key={index} value={cat?.id}>{cat?.nombre}</option>
@@ -115,39 +113,39 @@ function RegistraProductos(props) {
                         <Form.Group as={Col} controlId="formGridPrecio">
                             <Form.Label>Precio</Form.Label>
                             <Form.Control type="text" name="precio"
-                                          placeholder="Precio"
-                                          defaultValue={formData.precio}
+                                placeholder="Precio"
+                                defaultValue={formData.precio}
                             />
                         </Form.Group>
                     </Row>
-                </div> 
-                
+                </div>
+
                 <Form.Group as={Row} className="botonSubirProducto">
-                        <Col>
-                            <Button
-                                title="Registrar producto" 
-                                type="submit"
-                                variant="success"
-                                className="registrar"
-                                disabled={loading}
-                            >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Registrar producto" : <Spinner animation="border" />}
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                title="Cerrar ventana" 
-                                variant="danger"
-                                className="cancelar"
-                                disabled={loading}
-                                onClick={() => {
-                                    cancelarRegistro()
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faX} /> Cancelar
-                            </Button>
-                        </Col>
-                    </Form.Group>
+                    <Col>
+                        <Button
+                            title="Registrar producto"
+                            type="submit"
+                            variant="success"
+                            className="registrar"
+                            disabled={loading}
+                        >
+                            <FontAwesomeIcon icon={faSave} /> {!loading ? "Registrar" : <Spinner animation="border" />}
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            title="Cerrar ventana"
+                            variant="danger"
+                            className="cancelar"
+                            disabled={loading}
+                            onClick={() => {
+                                cancelarRegistro()
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faX} /> Cancelar
+                        </Button>
+                    </Col>
+                </Form.Group>
             </Form>
         </>
     );

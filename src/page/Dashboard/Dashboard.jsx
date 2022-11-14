@@ -12,7 +12,7 @@ import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
 import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { obtenerUsuario } from "../../api/usuarios";
-import './Dashboard.scss';
+import "../../scss/styles.scss";
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -31,35 +31,29 @@ function Dashboard(props) {
     }
   }, [])
   // Termina cerrado de sesión automatico
-  
- const [estadoUsuario, setEstadoUsuario] = useState("");
-  
-  useEffect(() => {
-        try {
-            obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
-                const { data } = response;
-                const { admin } = data;
-                //console.log(data)
-                setEstadoUsuario(admin);
-                if(admin === "true") {
-                    //console.log("entra en true")
-                }
-                if(admin === "false") {
-                    //console.log("entra en false")
-                }
-            }).catch((e) => {
-                if(e.message === "Request failed with status code 400") {
-                }
-                if(e.message === 'Network Error') {
-                    //console.log("No hay internet")
-                    toast.error("Conexión al servidor no disponible");
 
-                }
-            })
-        } catch (e) {
+  const [estadoUsuario, setEstadoUsuario] = useState("");
+
+  useEffect(() => {
+    try {
+      obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+        const { data } = response;
+        const { admin } = data;
+        //console.log(data)
+        setEstadoUsuario(admin);
+      }).catch((e) => {
+        if (e.message === "Request failed with status code 400") {
+        }
+        if (e.message === 'Network Error') {
+          //console.log("No hay internet")
+          toast.error("Conexión al servidor no disponible");
 
         }
-    }, []);
+      })
+    } catch (e) {
+
+    }
+  }, []);
 
   const goTo = (ruta) => enrutamiento.push(ruta);
 
@@ -76,45 +70,71 @@ function Dashboard(props) {
 
   return (
     <>
-    <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-      <div className="grid grid-cols-4 gap-4">
-        <ItemCard path={'/TerminalPV'}
-            logo={LogoVentas}
-            title={'Ventas'}
-            />
-        <ItemCard
-          path={'/Ventas'}
-          logo={LogoHistorial}
-          title={'Historial general'}
-        />
-        <ItemCard
-          path={'/HistoricoVentas'}
-          logo={LogoHistorialDia}
-          title={'Historial por dia'}
-        />
-        <ItemCard
-          path={'/HistoricoVentasMes'}
-          logo={LogoHistorialMes} 
-          title={'Historial por mes'}
-        />
+      <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
         {
-            estadoUsuario === "true" &&
-                (
-                    <>
-        <ItemCard 
-          path={'/Productos'} 
-          logo={LogoProductos} 
-          title={'Productos'} 
-        />
-        <ItemCard
-          path={'/Categorias'}
-          logo={LogoCategorias}
-          title={'Categorías'}
-        />
-         </>
-                                                    )
-                                                }
-      </div>
+          estadoUsuario === "true" ?
+            (
+              <>
+                <div className="grid grid-cols-3 gap-3">
+                  <ItemCard path={'/TerminalPV'}
+                    logo={LogoVentas}
+                    title={'Ventas'}
+                  />
+                  <ItemCard
+                    path={'/Ventas'}
+                    logo={LogoHistorial}
+                    title={'Historial general'}
+                  />
+                  <ItemCard
+                    path={'/HistoricoVentas'}
+                    logo={LogoHistorialDia}
+                    title={'Historial por dia'}
+                  />
+                  <ItemCard
+                    path={'/HistoricoVentasMes'}
+                    logo={LogoHistorialMes}
+                    title={'Historial por mes'}
+                  />
+                  <ItemCard
+                    path={'/Productos'}
+                    logo={LogoProductos}
+                    title={'Productos'}
+                  />
+                  <ItemCard
+                    path={'/Categorias'}
+                    logo={LogoCategorias}
+                    title={'Categorías'}
+                  />
+                </div>
+              </>
+            )
+            :
+            (
+              <>
+                <div className="grid grid-cols-4 gap-4">
+                  <ItemCard path={'/TerminalPV'}
+                    logo={LogoVentas}
+                    title={'Ventas'}
+                  />
+                  <ItemCard
+                    path={'/Ventas'}
+                    logo={LogoHistorial}
+                    title={'Historial general'}
+                  />
+                  <ItemCard
+                    path={'/HistoricoVentas'}
+                    logo={LogoHistorialDia}
+                    title={'Historial por dia'}
+                  />
+                  <ItemCard
+                    path={'/HistoricoVentasMes'}
+                    logo={LogoHistorialMes}
+                    title={'Historial por mes'}
+                  />
+                </div>
+              </>
+            )
+        }
       </LayoutPrincipal>
     </>
   )

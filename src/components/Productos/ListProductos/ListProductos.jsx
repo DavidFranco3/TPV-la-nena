@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPenToSquare, faTrashCan, faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import moment from "moment";
 import "moment/locale/es";
 import EliminaProductos from "../EliminaProductos";
-import {Badge, Container} from "react-bootstrap";
+import { Badge, Container } from "react-bootstrap";
 import ModificaProductos from "../ModificaProductos";
-import "./ListProductos.scss";
+import "../../../scss/styles.scss";
 import DataTable from "react-data-table-component";
-import {estilos} from "../../../utils/tableStyled";
+import { estilos } from "../../../utils/tableStyled";
 import Categoria from "./Categoria";
 
 function ListProductos(props) {
@@ -35,7 +35,7 @@ function ListProductos(props) {
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -47,7 +47,7 @@ function ListProductos(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
-    
+
     const columns = [
         {
             name: "Nombre",
@@ -72,17 +72,17 @@ function ListProductos(props) {
         {
             name: "Precio",
             selector: row => (
-                    <>
-            <Badge
-            bg="success" className="estado">
-                ${''}
+                <>
+                    <Badge
+                        bg="success" className="estado">
+                        ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
                         }).format(row.precio)} MXN
-                        </Badge>
+                    </Badge>
                 </>
-        ),
+            ),
             sortable: false,
             center: true,
             reorder: false
@@ -98,44 +98,44 @@ function ListProductos(props) {
             name: "Acciones",
             selector: row => (
                 <>
-                  <div className="flex justify-end items-center space-x-4">
-                            <Badge
+                    <div className="flex justify-end items-center space-x-4">
+                        <Badge
                             bg="success"
-                            title="Modificar producto" 
+                            title="Modificar producto"
                             className="editar"
                             onClick={() => {
-                                    modificaProductos(
-                                        <ModificaProductos
-                                            datosProducto={row}
-                                            listCategorias={listCategorias}
-                                            location={location}
-                                            history={history}
-                                            setShowModal={setShowModal}
-                                        />
-                                    )
-                                }}>
-                                    <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
-                                </Badge>
-                                
-                                <Badge
-                                title="Eliminar producto" 
-                                bg="danger"
-                                className="eliminar" onClick={() => {
-                                    eliminaProductos(
-                                        <EliminaProductos
-                                            datosProducto={row}
-                                            listCategorias={listCategorias}
-                                            location={location}
-                                            history={history}
-                                            setShowModal={setShowModal}
-                                            setRefreshCheckLogin={setRefreshCheckLogin}
-                                        />
-                                    )
-                                }}>
-                                    <FontAwesomeIcon icon={faTrashCan} className="text-lg" />
-                                </Badge>
-                                
-                        </div>
+                                modificaProductos(
+                                    <ModificaProductos
+                                        datosProducto={row}
+                                        listCategorias={listCategorias}
+                                        location={location}
+                                        history={history}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}>
+                            <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
+                        </Badge>
+
+                        <Badge
+                            title="Eliminar producto"
+                            bg="danger"
+                            className="eliminar" onClick={() => {
+                                eliminaProductos(
+                                    <EliminaProductos
+                                        datosProducto={row}
+                                        listCategorias={listCategorias}
+                                        location={location}
+                                        history={history}
+                                        setShowModal={setShowModal}
+                                        setRefreshCheckLogin={setRefreshCheckLogin}
+                                    />
+                                )
+                            }}>
+                            <FontAwesomeIcon icon={faTrashCan} className="text-lg" />
+                        </Badge>
+
+                    </div>
                 </>
             ),
             sortable: false,
@@ -143,26 +143,26 @@ function ListProductos(props) {
             reorder: false
         },
     ];
-    
+
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-                setRows(listProductos);
+            setRows(listProductos);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
     }, []);
-    
+
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
+
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-    
+
     return (
         <>
             <Container fluid>
@@ -186,7 +186,7 @@ function ListProductos(props) {
                 {contentModal}
             </BasicModal>
         </>
-    );       
+    );
 }
 
 export default ListProductos;

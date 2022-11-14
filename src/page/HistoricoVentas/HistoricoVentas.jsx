@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
 import { withRouter } from "react-router-dom";
-import "./HistoricoVentas.scss";
+import "../../scss/styles.scss";
 import ListHistoricoVentas from "../../components/HistoricoVentas/ListHistoricoVentas";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";

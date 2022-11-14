@@ -1,41 +1,41 @@
 import { useState, useEffect } from 'react';
-import {Badge, Col, Row} from "react-bootstrap";
-import {listarVentasPorMes} from "../../api/ventas";
-import "./HistoricoVentasMes.scss"
+import { Badge, Col, Row } from "react-bootstrap";
+import { listarVentasPorMes } from "../../api/ventas";
+import "../../scss/styles.scss";
 
 function Total(props) {
-    const { dia } = props;
+    const { mes } = props;
 
     // Para almacenar total vendido en efectivo
     const [totalEfectivo, setTotalEfectivo] = useState(0);
 
     // Para almacenar total vendido con tarjeta
     const [totalTarjeta, setTotalTarjeta] = useState(0);
-    
+
     // Para almacenar total vendido con tarjeta
     const [totalTransferencia, setTotalTransferencia] = useState(0);
 
     // Para almacenar el total de articulos vendidos
     const [totalTortas, setTotalTortas] = useState(0);
-    
+
     // Para almacenar el total de bebidas y postres vendidos
     const [totalBebidas, setTotalBebidas] = useState(0);
-    
+
     // Para almacenar el total de extras vendidos
     const [totalExtras, setTotalExtras] = useState(0);
-    
+
     // Para almacenar el total de sandwiches y ensaladas vendidas
     const [totalSandwiches, setTotalSandwiches] = useState(0);
-    
+
     // Para almacenar el total de desayunos vendidos
     const [totalDesayunos, setTotalDesayunos] = useState(0);
-    
+
     // Para almacenar el total de envios vendidos
     const [totalEnvios, setTotalEnvios] = useState(0);
 
     useEffect(() => {
         try {
-            listarVentasPorMes(dia).then(response => {
+            listarVentasPorMes(mes).then(response => {
                 const { data } = response;
                 const { efectivo, tarjeta, transferencia, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 // console.log(data)
@@ -52,7 +52,7 @@ function Total(props) {
         } catch (e) {
             console.log(e);
         }
-    }, [dia]);
+    }, [mes]);
 
     return (
         <>
@@ -64,8 +64,8 @@ function Total(props) {
                     <Badge bg="success">
                         ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                         }).format(totalEfectivo)} MXN
                     </Badge>
                 </Col>
@@ -78,10 +78,10 @@ function Total(props) {
                     <Badge bg="success">
                         ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                         }).format(totalTarjeta)} MXN
-                        </Badge>
+                    </Badge>
                 </Col>
             </Row>
             <Row align="center">
@@ -92,10 +92,10 @@ function Total(props) {
                     <Badge bg="success">
                         ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                         }).format(totalTransferencia)} MXN
-                        </Badge>
+                    </Badge>
                 </Col>
             </Row>
             <Row align="center">
@@ -106,8 +106,8 @@ function Total(props) {
                     <Badge bg="success">
                         ${''}
                         {new Intl.NumberFormat('es-MX', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                         }).format(totalEfectivo + totalTarjeta + totalTransferencia)} MXN</Badge>
                 </Col>
             </Row>

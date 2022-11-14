@@ -1,30 +1,31 @@
 import { useState } from 'react';
-import {Button, Col, Form, Spinner, Row, Alert} from "react-bootstrap";
-import {map} from "lodash";
-import {eliminaProductos} from "../../../api/productos";
-import {toast} from "react-toastify";
+import { Button, Col, Form, Spinner, Row, Alert } from "react-bootstrap";
+import { map } from "lodash";
+import { eliminaProductos } from "../../../api/productos";
+import { toast } from "react-toastify";
 import queryString from "query-string";
 import Dropzone from "../../Dropzone";
 import moment from "moment";
 import "moment/locale/es";
-import {faX, faSave} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../../../scss/styles.scss";
 
 const fechaToCurrentTimezone = (fecha) => {
-  const date = new Date(fecha)
+    const date = new Date(fecha)
 
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
 
 
-  return date.toISOString().slice(0, 16);
+    return date.toISOString().slice(0, 16);
 }
 
 function EliminaProductos(props) {
     const { datosProducto, history, listCategorias, setShowModal } = props;
     const { id, nombre, categoria, precio, fechaActualizacion } = datosProducto;
-    
+
     moment.locale("es");
-    
+
     const cancelarRegistro = () => {
         setShowModal(false)
     }
@@ -38,7 +39,6 @@ function EliminaProductos(props) {
             eliminaProductos(id).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
-                setLoading(false);
                 history.push({
                     search: queryString.stringify(""),
                 });
@@ -46,75 +46,75 @@ function EliminaProductos(props) {
             }).catch(e => {
                 console.log(e)
             })
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
 
     return (
         <>
-                <div className="datosDelProducto">
+            <div className="datosDelProducto">
                 <Alert variant="danger">
                     <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
                     <p className="mensaje">
                         Esta acción eliminará del sistema el producto.
                     </p>
                 </Alert>
-                
+
                 <Form onSubmit={onSubmit}>
-                
-                <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formGridNombre">
+
+                    <Row className="mb-3">
+                        <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>
                                 Nombre
-                            </Form.Label>    
-                    <Form.Control type="text" name="nombre"
-                                      placeholder="Escribe el nombre"
-                                      defaultValue={nombre}
-                                      disabled
-                        />
-                    </Form.Group>
-                    
-                    <Form.Group as={Col} controlId="formGridCategoria">
+                            </Form.Label>
+                            <Form.Control type="text" name="nombre"
+                                placeholder="Escribe el nombre"
+                                defaultValue={nombre}
+                                disabled
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridCategoria">
                             <Form.Label>Categoría</Form.Label>
                             <Form.Control as="select"
-                                        defaultValue={categoria}
-                                        name="categoria"
-                                        disabled>
+                                defaultValue={categoria}
+                                name="categoria"
+                                disabled>
                                 <option>Elige una opción</option>
                                 {map(listCategorias, (cat, index) => (
                                     <option key={index} value={cat?.id}>{cat?.nombre}</option>
                                 ))}
                             </Form.Control>
                         </Form.Group>
-                    </Row>   
-                    
+                    </Row>
+
                     <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>
                                 Precio
-                            </Form.Label>    
-                    <Form.Control type="text" name="nombre"
-                                      placeholder="Escribe el nombre"
-                                      defaultValue={precio}
-                                      disabled
-                        />
-                    </Form.Group>
-                    
-                    <Form.Group as={Col} controlId="formGridFecha">
-                        <Form.Label>
+                            </Form.Label>
+                            <Form.Control type="text" name="nombre"
+                                placeholder="Escribe el nombre"
+                                defaultValue={precio}
+                                disabled
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridFecha">
+                            <Form.Label>
                                 Modificación
                             </Form.Label>
                             <Form.Control type="text"
-                                      name="fecha"
-                                      placeholder="Escribe la fecha"
-                                      defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
-                                      disabled
-                        />
-                    </Form.Group>
-                </Row>                               
+                                name="fecha"
+                                placeholder="Escribe la fecha"
+                                defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Row>
 
-                <Form.Group as={Row} className="botonSubirProducto">
+                    <Form.Group as={Row} className="botonSubirProducto">
                         <Col>
                             <Button
                                 title="Eliminar producto"
@@ -123,7 +123,7 @@ function EliminaProductos(props) {
                                 className="registrar"
                                 disabled={loading}
                             >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar producto" : <Spinner animation="border" />}
+                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar" : <Spinner animation="border" />}
                             </Button>
                         </Col>
                         <Col>
@@ -140,7 +140,7 @@ function EliminaProductos(props) {
                             </Button>
                         </Col>
                     </Form.Group>
-            </Form>
+                </Form>
             </div>
         </>
     );

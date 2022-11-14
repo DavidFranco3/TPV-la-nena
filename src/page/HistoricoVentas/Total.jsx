@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Badge, Col, Row } from "react-bootstrap";
 import { listarVentasPorDia } from "../../api/ventas";
-import "./HistoricoVentas.scss"
+import "../../scss/styles.scss";
 
 function Total(props) {
     const { dia } = props;

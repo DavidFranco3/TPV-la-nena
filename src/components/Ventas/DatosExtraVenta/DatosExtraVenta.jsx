@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
-import "./DatosExtraVenta.scss";
+import "../../../scss/styles.scss";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -112,16 +112,16 @@ function Observaciones(props) {
                     </Row>
 
                     <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formGridNombre">
-                        <Form.Label>
-                            Nombre del cliente
-                        </Form.Label>
-                        <Form.Control type="text"
-                            name="nombre"
-                            placeholder="Escribe el nombre"
-                            defaultValue={formData.nombre}
-                        />
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="formGridNombre">
+                            <Form.Label>
+                                Nombre del cliente
+                            </Form.Label>
+                            <Form.Control type="text"
+                                name="nombre"
+                                placeholder="Escribe el nombre"
+                                defaultValue={formData.nombre}
+                            />
+                        </Form.Group>
                     </Row>
 
                     <Row className="mb-3">

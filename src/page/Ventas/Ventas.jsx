@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
 import { withRouter } from "react-router-dom";
-import "./Ventas.scss";
+import "../../scss/styles.scss";
 import { Alert, Col, Row, Spinner } from "react-bootstrap";
 import ListVentas from "../../components/Ventas/ListVentas";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
@@ -12,6 +12,7 @@ import AnimacionLoading from "../../assets/json/loading.json";
 
 function Ventas(props) {
         const { setRefreshCheckLogin, location, history } = props;
+
         // Cerrado de sesión automatico
         useEffect(() => {
                 if (getTokenApi()) {
@@ -27,11 +28,12 @@ function Ventas(props) {
 
         // Para almacenar las ventas realizadas
         const [listVentas, setListVentas] = useState(null);
-        
+
         // Para controlar la paginación
         const [rowsPerPage, setRowsPerPage] = useState(10);
         const [page, setPage] = useState(1);
         const [noTotalVentas, setNoTotalVentas] = useState(1);
+
         useEffect(() => {
                 try {
                         totalVentas().then(response => {
@@ -75,6 +77,7 @@ function Ventas(props) {
                 }
 
         }, [location, page, rowsPerPage]);
+
         return (
                 <>
                         <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>

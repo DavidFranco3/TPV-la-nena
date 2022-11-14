@@ -6,7 +6,7 @@ import { isUserLogedApi } from "./api/auth";
 import { ToastContainer } from "react-toastify";
 import './App.scss';
 
-function App () {
+function App() {
     const [user, setUser] = useState(null);
     const [LoadUser, setLoadUser] = useState(false);
     const [refreshCheckLogin, setRefreshCheckLogin] = useState(false);

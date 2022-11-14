@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
 import moment from "moment";
-import {Badge, Container} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPenToSquare, faTrashCan, faArrowDownLong} from "@fortawesome/free-solid-svg-icons";
+import { Badge, Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import EliminaCategorias from "../EliminaCategorias";
 import ModificaCategorias from "../ModificaCategorias";
 import DataTable from "react-data-table-component";
-import {estilos} from "../../../utils/tableStyled";
+import { estilos } from "../../../utils/tableStyled";
 
 function ListCategorias(props) {
     const { listCategorias, location, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
@@ -33,7 +33,7 @@ function ListCategorias(props) {
         setContentModal(content);
         setShowModal(true);
     }
-    
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -45,7 +45,7 @@ function ListCategorias(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
-    
+
     const columns = [
         {
             name: "Nombre",
@@ -65,42 +65,42 @@ function ListCategorias(props) {
             name: "Acciones",
             selector: row => (
                 <>
-                   <div className="flex justify-end items-center space-x-4">
-                            <Badge
-                                    title="Modificar Categoría"
-                                    bg="success"
-                                    className="editar"
-                                    onClick={() => {
-                                    modificaCategorias(
-                                        <ModificaCategorias
-                                            datosCategorias={row}
-                                            location={location}
-                                            history={history}
-                                            setShowModal={setShowModal}
-                                        />
-                                    )
-                                }}>
-                                    <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
-                                </Badge>
-                                
-                                <Badge 
-                                       title="Eliminar categoría"
-                                       bg="danger"
-                                       className="eliminar"
-                                       onClick={() => {
-                                    eliminaCategorias(
-                                        <EliminaCategorias
-                                            datosCategoria={row}
-                                            location={location}
-                                            history={history}
-                                            setShowModal={setShowModal}
-                                        />
-                                    )
-                                }}>
-                                    <FontAwesomeIcon icon={faTrashCan} className="text-lg" />
-                                </Badge>
-                                
-                        </div>
+                    <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            title="Modificar Categoría"
+                            bg="success"
+                            className="editar"
+                            onClick={() => {
+                                modificaCategorias(
+                                    <ModificaCategorias
+                                        datosCategorias={row}
+                                        location={location}
+                                        history={history}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}>
+                            <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
+                        </Badge>
+
+                        <Badge
+                            title="Eliminar categoría"
+                            bg="danger"
+                            className="eliminar"
+                            onClick={() => {
+                                eliminaCategorias(
+                                    <EliminaCategorias
+                                        datosCategoria={row}
+                                        location={location}
+                                        history={history}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}>
+                            <FontAwesomeIcon icon={faTrashCan} className="text-lg" />
+                        </Badge>
+
+                    </div>
                 </>
             ),
             sortable: false,
@@ -108,27 +108,27 @@ function ListCategorias(props) {
             reorder: false
         },
     ];
-    
+
     // Definiendo estilos para data table
     // Configurando animacion de carga
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-                setRows(listCategorias);
+            setRows(listCategorias);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
     }, []);
-    
+
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
         rangeSeparatorText: 'de'
     };
-    
+
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
-    
+
     return (
         <>
             <Container fluid>

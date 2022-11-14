@@ -10,7 +10,7 @@ export async function subeArchivosCloudinary(imagen, carpeta) {
     data.append("upload_preset", "TPV_LA_NENA")
     data.append('public_id', `${carpeta}/${Date.now() + "_" + imagen.name}`)
     data.append('folder', `${carpeta}`)
-    data.append("cloud_name","omarlestrella")
+    data.append("cloud_name", "omarlestrella")
 
     const config = {
         headers: {
