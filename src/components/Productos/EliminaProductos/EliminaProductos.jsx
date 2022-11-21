@@ -70,7 +70,7 @@ function EliminaProductos(props) {
                             </Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
-                                defaultValue={nombre}
+                                value={nombre}
                                 disabled
                             />
                         </Form.Group>
@@ -78,7 +78,7 @@ function EliminaProductos(props) {
                         <Form.Group as={Col} controlId="formGridCategoria">
                             <Form.Label>Categoría</Form.Label>
                             <Form.Control as="select"
-                                defaultValue={categoria}
+                                value={categoria}
                                 name="categoria"
                                 disabled>
                                 <option>Elige una opción</option>
@@ -96,7 +96,7 @@ function EliminaProductos(props) {
                             </Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
-                                defaultValue={precio}
+                                value={precio}
                                 disabled
                             />
                         </Form.Group>
@@ -108,7 +108,7 @@ function EliminaProductos(props) {
                             <Form.Control type="text"
                                 name="fecha"
                                 placeholder="Escribe la fecha"
-                                defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
                                 disabled
                             />
                         </Form.Group>

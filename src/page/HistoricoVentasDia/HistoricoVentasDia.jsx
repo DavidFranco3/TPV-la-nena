@@ -3,14 +3,14 @@ import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
 import { withRouter } from "react-router-dom";
 import "../../scss/styles.scss";
-import ListHistoricoVentas from "../../components/HistoricoVentas/ListHistoricoVentas";
+import ListHistoricoVentas from "../../components/HistoricoVentasDia/ListHistoricoVentasDia";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import { Spinner, Col, Row, Alert } from "react-bootstrap";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
-function HistoricoVentas(props) {
+function HistoricoVentasDia(props) {
     const { setRefreshCheckLogin, location, history } = props;
 
     // Cerrado de sesión automatico
@@ -144,4 +144,4 @@ function formatModelVentas(ventas) {
     return tempVentas;
 }
 
-export default withRouter(HistoricoVentas);
+export default withRouter(HistoricoVentasDia);

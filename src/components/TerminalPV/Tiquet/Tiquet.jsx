@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
-import { registraVentas } from "../../api/ventas";
-import "../../scss/styles.scss";
+import "../../../scss/styles.scss";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
-import BasicModal from "../Modal/BasicModal";
-import { obtenUltimoNoTiquet } from "../../api/ventas";
+import BasicModal from "../../Modal/BasicModal";
+import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
 import { Col, Button, Row } from "react-bootstrap";
 import moment from "moment";
 import "moment/locale/es";
-import DatosExtraVenta from "../Ventas/DatosExtraVenta";
-import { logoTiquetGris } from "../../assets/base64/logo-tiquet";
+import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
+import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 
 function Tiquet(props) {
     const { products, empty, remove } = props;

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../scss/styles.scss";
+import "../../../scss/styles.scss";
 
 function Producto(props) {
     const { imagen, nombre, precio } = props;

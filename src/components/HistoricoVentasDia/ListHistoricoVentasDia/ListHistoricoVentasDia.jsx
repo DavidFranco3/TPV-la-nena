@@ -4,7 +4,7 @@ import moment from "moment";
 import "moment/locale/es";
 import { Badge, Image, Container } from "react-bootstrap";
 import "../../../scss/styles.scss";
-import Total from "../../../page/HistoricoVentas/Total";
+import Total from "../../../page/HistoricoVentasDia/Total";
 import BasicModal from "../../Modal/BasicModal";
 import HistorialVentasDia from "../../../page/HistorialVentasDia";
 import LogoHistorial from "../../../assets/png/historial.png";
@@ -14,7 +14,7 @@ import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 
-function ListHistoricoVentas(props) {
+function ListHistoricoVentasDia(props) {
     const { listVentas, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas, setRefreshCheckLogin } = props;
 
     moment.locale("es");
@@ -162,4 +162,4 @@ function ListHistoricoVentas(props) {
     );
 }
 
-export default ListHistoricoVentas;
+export default ListHistoricoVentasDia;

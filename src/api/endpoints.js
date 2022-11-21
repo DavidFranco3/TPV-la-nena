@@ -49,8 +49,3 @@ export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes"
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
 export const ENDPOINTTotalVentas = "/ventas/totalVentas";
-export const ENDPOINTTotalVentasDia = "/ventas/totalVentasDia";
-export const ENDPOINTTotalVentasMes = "/ventas/totalVentasMes";
-
-// Detalles de venta de cada usuario -- listarDetallesUsuario usuario y dia
-export const ENDPOINTListarDetalles = "/ventas/listarDetallesUsuario";

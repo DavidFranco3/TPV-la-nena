@@ -12,14 +12,11 @@ import {
     ENDPOINTObtenerNumeroVenta,
     ENDPOINTListarVentasPorDia,
     ENDPOINTListarVentasPorMes,
-    ENDPOINTListarDetalles,
     ENDPOINTListarDetallesVentasDia,
     ENDPOINTListarDetallesVentasMes,
     ENDPOINTListarDetallesProductosVendidosDia,
     ENDPOINTListarDetallesProductosVendidosMes,
     ENDPOINTTotalVentas,
-    ENDPOINTTotalVentasDia
-
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -75,18 +72,6 @@ export async function totalVentas(params) {
     return await axios.get(API_HOST + ENDPOINTTotalVentas, config);
 }
 
-// Para listar todas las ventas
-export async function totalVentasDia(dia) {
-    const config = {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getTokenApi()}`
-        }
-    };
-    return await axios.get(API_HOST + ENDPOINTTotalVentasDia + `?dia=${dia}`, config);
-}
-
 // Listar ventas por dia
 export async function listarVentasPorDia(dia) {
     const config = {
@@ -100,7 +85,7 @@ export async function listarVentasPorDia(dia) {
 }
 
 // Listar ventas por dia
-export async function listarVentasPorMes(dia) {
+export async function listarVentasPorMes(mes) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -108,7 +93,7 @@ export async function listarVentasPorMes(dia) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?dia=${dia}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?mes=${mes}`, config);
 }
 
 // Listar las ventas paginandolas
@@ -136,7 +121,7 @@ export async function listarPaginacionVentasDia(pagina, limite, dia) {
 }
 
 // Listar las ventas paginandolas
-export async function listarPaginacionVentasMes(pagina, limite, dia) {
+export async function listarPaginacionVentasMes(pagina, limite, mes) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -144,7 +129,7 @@ export async function listarPaginacionVentasMes(pagina, limite, dia) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasMes + `/?pagina=${pagina}&&limite=${limite}&&dia=${dia}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasMes + `/?pagina=${pagina}&&limite=${limite}&&mes=${mes}`, config);
 }
 
 // Listar los detalles de las ventas del dia
@@ -171,18 +156,6 @@ export async function listarDetallesVentasPorDia(dia) {
     return await axios.get(API_HOST + ENDPOINTListarDetallesVentasDia + `?dia=${dia}`, config);
 }
 
-// Listar detalles de las ventas de cada usuario indicando usuario y dia -- ENDPOINTListarDetalles
-export async function listarDetalles(usuario, dia) {
-    const config = {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getTokenApi()}`
-        }
-    };
-    return await axios.get(API_HOST + ENDPOINTListarDetalles + `?dia=${dia}&&usuario=${usuario}`, config);
-}
-
 // Listar solo los productos que se vendieron en el día solicitado -- ENDPOINTListarDetallesProductosVendidosDia
 export async function listarDetallesProductosVentasPorDia(dia) {
     const config = {
@@ -196,7 +169,7 @@ export async function listarDetallesProductosVentasPorDia(dia) {
 }
 
 // Listar solo los productos que se vendieron en el día solicitado -- ENDPOINTListarDetallesProductosVendidosDia
-export async function listarDetallesProductosVentasPorMes(dia) {
+export async function listarDetallesProductosVentasPorMes(mes) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -204,7 +177,7 @@ export async function listarDetallesProductosVentasPorMes(dia) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosMes + `?dia=${dia}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosMes + `?mes=${mes}`, config);
 }
 
 // Elimina ventas

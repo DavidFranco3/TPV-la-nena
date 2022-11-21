@@ -4,7 +4,7 @@ import Categorias from "../page/Categorias";
 import Ventas from "../page/Ventas";
 import Error404 from "../page/Error404";
 import TerminalPV from "../page/TerminalPV";
-import HistoricoVentas from "../page/HistoricoVentas";
+import HistoricoVentasDia from "../page/HistoricoVentasDia";
 import HistoricoVentasMes from "../page/HistoricoVentasMes";
 
 const configRouting = [
@@ -14,9 +14,9 @@ const configRouting = [
         page: HistoricoVentasMes
     },    
     {
-        path: "/HistoricoVentas",
+        path: "/HistoricoVentasDia",
         exact: true,
-        page: HistoricoVentas
+        page: HistoricoVentasDia
     },
     {
         path: "/Productos",

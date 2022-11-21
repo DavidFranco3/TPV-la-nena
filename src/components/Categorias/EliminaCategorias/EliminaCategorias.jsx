@@ -64,7 +64,7 @@ function EliminaCategorias(props) {
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
-                                defaultValue={nombre}
+                                value={nombre}
                                 disabled
                             />
                         </Form.Group>
@@ -73,7 +73,7 @@ function EliminaCategorias(props) {
                             <Form.Label>Modificación</Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
-                                defaultValue={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
                                 disabled
                             />
                         </Form.Group>

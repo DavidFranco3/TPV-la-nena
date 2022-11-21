@@ -63,10 +63,10 @@ function ModificaCategorias(props) {
                         })
 
                     }).then(e => {
-                        //console.log(e)
+                        console.log(e)
                     })
                 } catch (e) {
-                    //console.log(e)
+                    console.log(e)
                 }
             }
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../scss/styles.scss";
+import "../../../scss/styles.scss";
 
 function Categoria(props) {
     const { imagen, nombre } = props;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import LayoutPrincipal from "../../layout/layoutPrincipal";
-import Menu from "../../components/Menu";
-import Tiquet from "../../components/Tiquet";
+import Menu from "../../components/TerminalPV/Menu";
+import Tiquet from "../../components/TerminalPV/Tiquet";
 import "../../scss/styles.scss";
 import { listarProductosCategoria } from "../../api/productos";
 import { Alert, Col, Row } from "react-bootstrap";
