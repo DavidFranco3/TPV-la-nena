@@ -86,7 +86,7 @@ function Dashboard(props) {
                     title={'Historial general'}
                   />
                   <ItemCard
-                    path={'/HistoricoVentas'}
+                    path={'/HistoricoVentasDia'}
                     logo={LogoHistorialDia}
                     title={'Historial por dia'}
                   />
