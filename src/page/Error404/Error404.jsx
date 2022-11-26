@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { Redirect } from "react-router-dom";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
@@ -23,9 +22,7 @@ function Error404(props) {
 
     return (
         <>
-            <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-                <Redirect to="/" />
-            </LayoutPrincipal>
+            <Redirect to="/" />
         </>
     );
 }

@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense } from 'react';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
 import { withRouter } from "react-router-dom";
 import "../../scss/styles.scss";
@@ -80,41 +79,39 @@ function HistoricoVentasDia(props) {
 
     return (
         <>
-            <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-                <Alert className="fondoPrincipalAlert">
-                    <Row>
-                        <Col xs={12} md={4} className="titulo">
-                            <h1 className="font-bold">Historial por dia</h1>
-                        </Col>
-                    </Row>
-                </Alert>
-                {
-                    listVentas ?
-                        (
-                            <>
-                                <Suspense fallback={< Spinner />}>
-                                    <ListHistoricoVentas
-                                        listVentas={listVentas}
-                                        location={location}
-                                        history={history}
-                                        setRefreshCheckLogin={setRefreshCheckLogin}
-                                        setRowsPerPage={setRowsPerPage}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        setPage={setPage}
-                                        noTotalVentas={noTotalVentas}
-                                    />
-                                </Suspense>
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <Lottie loop={true} play={true} animationData={AnimacionLoading} />
-                            </>
-                        )
-                }
-            </LayoutPrincipal>
+            <Alert className="fondoPrincipalAlert">
+                <Row>
+                    <Col xs={12} md={4} className="titulo">
+                        <h1 className="font-bold">Historial por dia</h1>
+                    </Col>
+                </Row>
+            </Alert>
+            {
+                listVentas ?
+                    (
+                        <>
+                            <Suspense fallback={< Spinner />}>
+                                <ListHistoricoVentas
+                                    listVentas={listVentas}
+                                    location={location}
+                                    history={history}
+                                    setRefreshCheckLogin={setRefreshCheckLogin}
+                                    setRowsPerPage={setRowsPerPage}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    setPage={setPage}
+                                    noTotalVentas={noTotalVentas}
+                                />
+                            </Suspense>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Lottie loop={true} play={true} animationData={AnimacionLoading} />
+                        </>
+                    )
+            }
         </>
     );
 }

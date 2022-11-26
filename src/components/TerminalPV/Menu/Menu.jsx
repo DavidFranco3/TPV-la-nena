@@ -43,7 +43,7 @@ function Menu(props) {
                             (
                                 listCategorias.map((categoria, index) => {
                                     return (
-                                        <Button 
+                                        <Button
                                             key={index}
                                             title={categoria.nombre}
                                             onClick={() => setCategoriaActual(categoria.id)}>

@@ -61,7 +61,7 @@ function DetallesVenta(props) {
         const timeout = setTimeout(() => {
             setRows(articulosVendidos);
             setPending(false);
-        }, 2000);
+        }, 0);
         return () => clearTimeout(timeout);
     }, []);
 

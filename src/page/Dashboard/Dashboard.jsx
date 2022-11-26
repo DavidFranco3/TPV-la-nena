@@ -10,7 +10,6 @@ import LogoHistorialDia from '../../assets/png/historialDia.png';
 import LogoHistorialMes from '../../assets/png/historialMes.png';
 import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
 
@@ -70,72 +69,70 @@ function Dashboard(props) {
 
   return (
     <>
-      <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-        {
-          estadoUsuario === "true" ?
-            (
-              <>
-                <div className="grid grid-cols-3 gap-3">
-                  <ItemCard path={'/TerminalPV'}
-                    logo={LogoVentas}
-                    title={'Ventas'}
-                  />
-                  <ItemCard
-                    path={'/Ventas'}
-                    logo={LogoHistorial}
-                    title={'Historial general'}
-                  />
-                  <ItemCard
-                    path={'/HistoricoVentasDia'}
-                    logo={LogoHistorialDia}
-                    title={'Historial por dia'}
-                  />
-                  <ItemCard
-                    path={'/HistoricoVentasMes'}
-                    logo={LogoHistorialMes}
-                    title={'Historial por mes'}
-                  />
-                  <ItemCard
-                    path={'/Productos'}
-                    logo={LogoProductos}
-                    title={'Productos'}
-                  />
-                  <ItemCard
-                    path={'/Categorias'}
-                    logo={LogoCategorias}
-                    title={'Categorías'}
-                  />
-                </div>
-              </>
-            )
-            :
-            (
-              <>
-                <div className="grid grid-cols-4 gap-4">
-                  <ItemCard path={'/TerminalPV'}
-                    logo={LogoVentas}
-                    title={'Ventas'}
-                  />
-                  <ItemCard
-                    path={'/Ventas'}
-                    logo={LogoHistorial}
-                    title={'Historial general'}
-                  />
-                  <ItemCard
-                    path={'/HistoricoVentas'}
-                    logo={LogoHistorialDia}
-                    title={'Historial por dia'}
-                  />
-                  <ItemCard
-                    path={'/HistoricoVentasMes'}
-                    logo={LogoHistorialMes}
-                    title={'Historial por mes'}
-                  />
-                </div>
-              </>
-            )
-        }
-      </LayoutPrincipal>
+      {
+        estadoUsuario === "true" ?
+          (
+            <>
+              <div className="grid grid-cols-3 gap-3">
+                <ItemCard path={'/TerminalPV'}
+                  logo={LogoVentas}
+                  title={'Ventas'}
+                />
+                <ItemCard
+                  path={'/Ventas'}
+                  logo={LogoHistorial}
+                  title={'Historial general'}
+                />
+                <ItemCard
+                  path={'/HistoricoVentasDia'}
+                  logo={LogoHistorialDia}
+                  title={'Historial por dia'}
+                />
+                <ItemCard
+                  path={'/HistoricoVentasMes'}
+                  logo={LogoHistorialMes}
+                  title={'Historial por mes'}
+                />
+                <ItemCard
+                  path={'/Productos'}
+                  logo={LogoProductos}
+                  title={'Productos'}
+                />
+                <ItemCard
+                  path={'/Categorias'}
+                  logo={LogoCategorias}
+                  title={'Categorías'}
+                />
+              </div>
+            </>
+          )
+          :
+          (
+            <>
+              <div className="grid grid-cols-4 gap-4">
+                <ItemCard path={'/TerminalPV'}
+                  logo={LogoVentas}
+                  title={'Ventas'}
+                />
+                <ItemCard
+                  path={'/Ventas'}
+                  logo={LogoHistorial}
+                  title={'Historial general'}
+                />
+                <ItemCard
+                  path={'/HistoricoVentasDia'}
+                  logo={LogoHistorialDia}
+                  title={'Historial por dia'}
+                />
+                <ItemCard
+                  path={'/HistoricoVentasMes'}
+                  logo={LogoHistorialMes}
+                  title={'Historial por mes'}
+                />
+              </div>
+            </>
+          )
+      }
     </>
   )
 }

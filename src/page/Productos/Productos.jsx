@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense } from 'react';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { useHistory, withRouter } from "react-router-dom";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { toast } from "react-toastify";
@@ -120,64 +119,62 @@ function Productos(props) {
 
     return (
         <>
-            <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-                <Alert className="fondoPrincipalAlert">
-                    <Row>
-                        <Col xs={12} md={4} className="titulo">
-                            <h1 className="font-bold">Productos</h1>
-                        </Col>
-                        <Col xs={6} md={8}>
-                            <div style={{ float: 'right' }}>
+            <Alert className="fondoPrincipalAlert">
+                <Row>
+                    <Col xs={12} md={4} className="titulo">
+                        <h1 className="font-bold">Productos</h1>
+                    </Col>
+                    <Col xs={6} md={8}>
+                        <div style={{ float: 'right' }}>
 
-                                <Button
-                                    title="Registrar un nuevo producto"
-                                    className="btnRegistro"
-                                    onClick={() => {
-                                        registroProductos(
-                                            <RegistrarProducto
-                                                setShowModal={setShowModal}
-                                                location={location}
-                                                history={history}
-                                                listCategorias={listCategorias}
-                                            />
-                                        )
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faCirclePlus} /> Registrar un producto
-                                </Button>
+                            <Button
+                                title="Registrar un nuevo producto"
+                                className="btnRegistro"
+                                onClick={() => {
+                                    registroProductos(
+                                        <RegistrarProducto
+                                            setShowModal={setShowModal}
+                                            location={location}
+                                            history={history}
+                                            listCategorias={listCategorias}
+                                        />
+                                    )
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar un producto
+                            </Button>
 
-                            </div>
-                        </Col>
-                    </Row>
-                </Alert>
-                {
-                    listProductos ?
-                        (
-                            <>
-                                <Suspense fallback={< Spinner />}>
-                                    <ListProductos
-                                        setRefreshCheckLogin={setRefreshCheckLogin}
-                                        listProductos={listProductos}
-                                        listCategorias={listCategorias}
-                                        location={location}
-                                        history={history}
-                                        setRowsPerPage={setRowsPerPage}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        setPage={setPage}
-                                        noTotalProductos={noTotalProductos}
-                                    />
-                                </Suspense>
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <Lottie loop={true} play={true} animationData={AnimacionLoading} />
-                            </>
-                        )
-                }
-            </LayoutPrincipal>
+                        </div>
+                    </Col>
+                </Row>
+            </Alert>
+            {
+                listProductos ?
+                    (
+                        <>
+                            <Suspense fallback={< Spinner />}>
+                                <ListProductos
+                                    setRefreshCheckLogin={setRefreshCheckLogin}
+                                    listProductos={listProductos}
+                                    listCategorias={listCategorias}
+                                    location={location}
+                                    history={history}
+                                    setRowsPerPage={setRowsPerPage}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    setPage={setPage}
+                                    noTotalProductos={noTotalProductos}
+                                />
+                            </Suspense>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Lottie loop={true} play={true} animationData={AnimacionLoading} />
+                        </>
+                    )
+            }
             <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
                 {contentModal}
             </BasicModal>

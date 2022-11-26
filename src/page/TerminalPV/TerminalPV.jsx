@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import Menu from "../../components/TerminalPV/Menu";
 import Tiquet from "../../components/TerminalPV/Tiquet";
 import "../../scss/styles.scss";
@@ -12,7 +11,7 @@ import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
 function TerminalPv(props) {
-    const { setRefreshCheckLogin, usuarioCurso } = props;
+    const { setRefreshCheckLogin } = props;
 
     // Cerrado de sesión automatico
     useEffect(() => {
@@ -96,7 +95,6 @@ function TerminalPv(props) {
 
     return (
         <>
-            <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
                 <Alert className="fondoPrincipalAlert">
                     <Row>
                         <Col xs={12} md={4} className="titulo">
@@ -112,7 +110,6 @@ function TerminalPv(props) {
                                 <div className="app">
                                     <div className="pos">
                                         <Tiquet
-                                            usuarioCurso={usuarioCurso}
                                             products={ticketItems}
                                             empty={emptyTicket}
                                             remove={removeProduct}
@@ -137,7 +134,6 @@ function TerminalPv(props) {
                         )
                 }
 
-            </LayoutPrincipal>
         </>
     );
 }

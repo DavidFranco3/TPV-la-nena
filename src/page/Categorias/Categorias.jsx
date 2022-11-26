@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense } from 'react';
-import LayoutPrincipal from "../../layout/layoutPrincipal";
 import { listarPaginacionCategorias, totalCategorias } from "../../api/categorias";
 import { withRouter } from "react-router-dom";
 import "../../scss/styles.scss";
@@ -95,60 +94,58 @@ function Categorias(props) {
 
     return (
         <>
-            <LayoutPrincipal setRefreshCheckLogin={setRefreshCheckLogin}>
-                <Alert className="fondoPrincipalAlert">
-                    <Row>
-                        <Col xs={12} md={4} className="titulo">
-                            <h1 className="font-bold">Categorías</h1>
-                        </Col>
-                        <Col xs={6} md={8}>
-                            <div style={{ float: 'right' }}>
-                                <Button
-                                    title="Registrar una nueva categoría"
-                                    className="btnRegistro"
-                                    onClick={() => {
-                                        registroCategorias(
-                                            <RegistroCategorias
-                                                setShowModal={setShowModal}
-                                                location={location}
-                                                history={history}
-                                            />
-                                        )
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faCirclePlus} /> Registrar una categoría
-                                </Button>
-                            </div>
-                        </Col>
-                    </Row>
-                </Alert>
-                {
-                    listCategorias ?
-                        (
-                            <>
-                                <Suspense fallback={< Spinner />}>
-                                    <ListCategorias
-                                        setRefreshCheckLogin={setRefreshCheckLogin}
-                                        listCategorias={listCategorias}
-                                        location={location}
-                                        history={history}
-                                        setRowsPerPage={setRowsPerPage}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        setPage={setPage}
-                                        noTotalCategorias={noTotalCategorias}
-                                    />
-                                </Suspense>
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <Lottie loop={true} play={true} animationData={AnimacionLoading} />
-                            </>
-                        )
-                }
-            </LayoutPrincipal>
+            <Alert className="fondoPrincipalAlert">
+                <Row>
+                    <Col xs={12} md={4} className="titulo">
+                        <h1 className="font-bold">Categorías</h1>
+                    </Col>
+                    <Col xs={6} md={8}>
+                        <div style={{ float: 'right' }}>
+                            <Button
+                                title="Registrar una nueva categoría"
+                                className="btnRegistro"
+                                onClick={() => {
+                                    registroCategorias(
+                                        <RegistroCategorias
+                                            setShowModal={setShowModal}
+                                            location={location}
+                                            history={history}
+                                        />
+                                    )
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar una categoría
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+            </Alert>
+            {
+                listCategorias ?
+                    (
+                        <>
+                            <Suspense fallback={< Spinner />}>
+                                <ListCategorias
+                                    setRefreshCheckLogin={setRefreshCheckLogin}
+                                    listCategorias={listCategorias}
+                                    location={location}
+                                    history={history}
+                                    setRowsPerPage={setRowsPerPage}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    setPage={setPage}
+                                    noTotalCategorias={noTotalCategorias}
+                                />
+                            </Suspense>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Lottie loop={true} play={true} animationData={AnimacionLoading} />
+                        </>
+                    )
+            }
             <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
                 {contentModal}
             </BasicModal>
