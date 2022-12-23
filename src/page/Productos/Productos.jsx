@@ -40,7 +40,7 @@ function Productos(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     // Guarda el listado de productos

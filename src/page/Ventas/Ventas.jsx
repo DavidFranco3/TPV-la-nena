@@ -22,7 +22,7 @@ function Ventas(props) {
                                 setRefreshCheckLogin(true);
                         }
                 }
-        }, [setRefreshCheckLogin]);
+        }, []);
         // Termina cerrado de sesión automatico
 
         // Para almacenar las ventas realizadas

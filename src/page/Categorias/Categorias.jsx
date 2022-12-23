@@ -30,7 +30,7 @@ function Categorias(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     // Para la lista de abonos

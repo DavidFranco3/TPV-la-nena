@@ -41,8 +41,6 @@ function Dashboard(props) {
         //console.log(data)
         setEstadoUsuario(admin);
       }).catch((e) => {
-        if (e.message === "Request failed with status code 400") {
-        }
         if (e.message === 'Network Error') {
           //console.log("No hay internet")
           toast.error("Conexión al servidor no disponible");
@@ -60,7 +58,7 @@ function Dashboard(props) {
     <Card>
       <Card.Body onClick={() => goTo(path)}>
         <div className="flex flex-col items-center justify-center">
-          <Image title={title} alt={title} src={logo} style={{ width: '95px' }} />
+          <Image title={title} alt={title} src={logo} style={{ width: '100px' }} />
           <span className="inline-block text-lg font-normal">{title}</span>
         </div>
       </Card.Body>
@@ -73,7 +71,7 @@ function Dashboard(props) {
         estadoUsuario === "true" ?
           (
             <>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-24">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}

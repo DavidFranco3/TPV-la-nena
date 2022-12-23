@@ -22,7 +22,7 @@ function HistorialVentasDia(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     //console.log(dia)

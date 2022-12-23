@@ -23,7 +23,7 @@ function TerminalPv(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     const [ticketItems, setTicketItems] = useState([]);

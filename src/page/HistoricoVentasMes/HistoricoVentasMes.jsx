@@ -22,7 +22,7 @@ function HistoricoVentasMes(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     const [rowsPerPage, setRowsPerPage] = useState(500);
