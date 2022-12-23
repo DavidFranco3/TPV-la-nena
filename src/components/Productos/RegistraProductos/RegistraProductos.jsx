@@ -26,45 +26,34 @@ function RegistraProductos(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!imagenProducto) {
-            toast.warning("Debes agregar una imagen al producto")
+        if (!imagenProducto || !formData.nombre || !formData.categoria || !formData.precio) {
+            toast.warning("Completa el formulario");
         } else {
-            if (!formData.nombre || !formData.categoria || !formData.precio) {
-                setLoading(false);
-                toast.warning("Completa el formulario");
-            } else {
-                try {
-                    setLoading(true);
-                    // Sube a cloudinary la imagen principal del producto
-                    subeArchivosCloudinary(imagenProducto, "productos").then(response => {
+            try {
+                setLoading(true);
+                // Sube a cloudinary la imagen principal del producto
+                subeArchivosCloudinary(imagenProducto, "productos").then(response => {
+                    const { data } = response;
+                    const dataTemp = {
+                        nombre: formData.nombre,
+                        categoria: formData.categoria,
+                        precio: formData.precio,
+                        imagen: data.secure_url,
+                        negocio: "LA NENA"
+                    }
+                    registraProductos(dataTemp).then(response => {
                         const { data } = response;
-
-                        setLoading(true);
-
-                        const dataTemp = {
-                            nombre: formData.nombre,
-                            categoria: formData.categoria,
-                            precio: formData.precio,
-                            imagen: data.secure_url,
-                            negocio: "LA NENA"
-                        }
-
-                        registraProductos(dataTemp).then(response => {
-                            const { data } = response;
-                            history.push({
-                                search: queryString.stringify(""),
-                            });
-                            toast.success(data.mensaje);
-                            setShowModal(false);
-
-                        })
-
-                    }).then(e => {
-                        console.log(e)
+                        history.push({
+                            search: queryString.stringify(""),
+                        });
+                        toast.success(data.mensaje);
+                        setShowModal(false);
                     })
-                } catch (e) {
+                }).then(e => {
                     console.log(e)
-                }
+                })
+            } catch (e) {
+                console.log(e)
             }
         }
     }

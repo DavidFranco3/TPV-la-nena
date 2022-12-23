@@ -625,6 +625,17 @@
   margin-top: -50px !important;
 }
 
+.imagenPrincipal {
+  text-align: center;
+
+  .textoImagenPrincipal {
+
+  }
+  .imagenProducto {
+    margin-top: 45px;
+  }
+}
+
 .btnImprimirdeNuevo:hover {
   -webkit-transform: scale(1.25);
   -moz-transform: scale(1.25);

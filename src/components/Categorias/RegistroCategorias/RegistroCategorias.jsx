@@ -25,43 +25,33 @@ function RegistroCategorias(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!imagenProducto) {
-            toast.warning("Debes agregar una imagen a la categoría")
+        if (!imagenProducto || !formData.nombre) {
+            toast.warning("Completa el formulario");
         } else {
-            if (!formData.nombre) {
-                setLoading(false);
-                toast.warning("Completa el formulario");
-            } else {
-                try {
-                    setLoading(true);
-                    // Sube a cloudinary la imagen principal del producto
-                    subeArchivosCloudinary(imagenProducto, "categoria").then(response => {
+            try {
+                setLoading(true);
+                // Sube a cloudinary la imagen principal del producto
+                subeArchivosCloudinary(imagenProducto, "categoria").then(response => {
+                    const { data } = response;
+
+                    const dataTemp = {
+                        nombre: formData.nombre,
+                        imagen: data.secure_url,
+                        negocio: "LA NENA"
+                    }
+                    registraCategorias(dataTemp).then(response => {
                         const { data } = response;
-
-                        setLoading(true);
-
-                        const dataTemp = {
-                            nombre: formData.nombre,
-                            imagen: data.secure_url,
-                            negocio: "LA NENA"
-                        }
-
-                        registraCategorias(dataTemp).then(response => {
-                            const { data } = response;
-                            history.push({
-                                search: queryString.stringify(""),
-                            });
-                            toast.success(data.mensaje);
-                            setShowModal(false);
-
-                        })
-
-                    }).then(e => {
-                        console.log(e)
+                        history.push({
+                            search: queryString.stringify(""),
+                        });
+                        toast.success(data.mensaje);
+                        setShowModal(false);
                     })
-                } catch (e) {
-                     console.log(e)
-                }
+                }).then(e => {
+                    console.log(e)
+                })
+            } catch (e) {
+                console.log(e)
             }
         }
     }
@@ -78,7 +68,6 @@ function RegistroCategorias(props) {
                     <div title="Seleccionar imagen de la categoría" className="imagenProducto">
                         <Dropzone
                             setImagenFile={setImagenProducto}
-                            disabled
                         />
                     </div>
                 </div>

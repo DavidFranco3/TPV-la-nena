@@ -31,43 +31,32 @@ function ModificaCategorias(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!imagenFile) {
-            toast.warning("Debes agregar una imagen a la categoría")
+        if (!imagenFile || !formData.nombre) {
+            toast.warning("Completa el formulario");
         } else {
-            if (!formData.nombre) {
-                setLoading(false);
-                toast.warning("Completa el formulario");
-            } else {
-                try {
-                    setLoading(true);
-                    // Sube a cloudinary la imagen principal del producto
-                    subeArchivosCloudinary(imagenFile, "categoria").then(response => {
+            try {
+                setLoading(true);
+                // Sube a cloudinary la imagen principal del producto
+                subeArchivosCloudinary(imagenFile, "categoria").then(response => {
+                    const { data } = response;
+                    const dataTemp = {
+                        nombre: formData.nombre,
+                        imagen: data.secure_url,
+                        negocio: "LA NENA"
+                    }
+                    actualizaCategoria(id, dataTemp).then(response => {
                         const { data } = response;
-
-                        setLoading(true);
-
-                        const dataTemp = {
-                            nombre: formData.nombre,
-                            imagen: data.secure_url,
-                            negocio: "LA NENA"
-                        }
-
-                        actualizaCategoria(id, dataTemp).then(response => {
-                            const { data } = response;
-                            history.push({
-                                search: queryString.stringify(""),
-                            });
-                            toast.success(data.mensaje);
-                            setShowModal(false);
-
-                        })
-
-                    }).then(e => {
-                        console.log(e)
+                        history.push({
+                            search: queryString.stringify(""),
+                        });
+                        toast.success(data.mensaje);
+                        setShowModal(false);
                     })
-                } catch (e) {
+                }).then(e => {
                     console.log(e)
-                }
+                })
+            } catch (e) {
+                console.log(e)
             }
         }
     }
