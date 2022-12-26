@@ -7,6 +7,7 @@ import "moment/locale/es";
 import EliminaProductos from "../EliminaProductos";
 import { Badge, Container } from "react-bootstrap";
 import ModificaProductos from "../ModificaProductos";
+import CancelarProductos from '../CancelarProductos';
 import "../../../scss/styles.scss";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
@@ -32,6 +33,20 @@ function ListProductos(props) {
     //Para la modificacion de productos
     const modificaProductos = (content) => {
         setTitulosModal("Modificación producto");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const cancelarProducto = (content) => {
+        setTitulosModal("Cancelar producto");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const recuperarProducto = (content) => {
+        setTitulosModal("Recuperar producto");
         setContentModal(content);
         setShowModal(true);
     }
@@ -83,6 +98,67 @@ function ListProductos(props) {
                     </Badge>
                 </>
             ),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Estado",
+            selector: row => (
+                <>
+                    {
+                        row.estado === "true" ?
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                        title="Cancelar categoria"
+                                        onClick={() => {
+                                            cancelarProducto(
+                                                <CancelarProductos
+                                                    datosProducto={row}
+                                                    listCategorias={listCategorias}
+                                                    location={location}
+                                                    history={history}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        Habilitado
+                                    </Badge>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <Badge
+                                        bg="danger"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                        title="Recuperar categoria"
+                                        onClick={() => {
+                                            recuperarProducto(
+                                                <CancelarProductos
+                                                    datosProducto={row}
+                                                    listCategorias={listCategorias}
+                                                    location={location}
+                                                    history={history}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        Deshabilitado
+                                    </Badge>
+                                </>
+                            )
+                    }
+                </>
+            ),
+
             sortable: false,
             center: true,
             reorder: false

@@ -3,6 +3,7 @@ import { ENDPOINTLoginAdministrador } from "./endpoints";
 import jwtDecode from "jwt-decode";
 import axios from 'axios';
 
+// Validar inicio de sesion
 export async function login(data) {
     const config = {
         headers: {
@@ -13,18 +14,22 @@ export async function login(data) {
     return await axios.post(API_HOST + ENDPOINTLoginAdministrador, data, config);
 }
 
+// colocar el token
 export function setTokenApi(token) {
     localStorage.setItem(TOKEN, token);
 }
 
+// obtener el token
 export function getTokenApi() {
     return localStorage.getItem(TOKEN);
 }
 
+// Cerrar sesion
 export function logoutApi() {
     return localStorage.removeItem(TOKEN);
 }
 
+// obtener los datos del usuario logueado
 export function isUserLogedApi() {
     const token = getTokenApi();
     if (!token) {
@@ -37,6 +42,7 @@ export function isUserLogedApi() {
     return jwtDecode(token);
 }
 
+// cerrar sesion porque el tiempo de sesion expiro
 function isExpired(token) {
     const { exp } = jwtDecode(token);
     const expire = exp * 1000;
@@ -48,6 +54,7 @@ function isExpired(token) {
     return false;
 }
 
+// eliminar el token porque el tiempo de sesion expiro
 export function isExpiredToken(token) {
     const { exp } = jwtDecode(token);
     const expire = exp * 1000;

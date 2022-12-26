@@ -3,7 +3,7 @@ import { useHistory, withRouter } from "react-router-dom";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { toast } from "react-toastify";
 import { obtenerUsuario } from "../../api/usuarios";
-import { listarPaginacionProductos, totalProductos } from "../../api/productos";
+import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginacionProductosCancelados, totalProductosCancelados } from "../../api/productos";
 import ListProductos from "../../components/Productos/ListProductos";
 import { listarCategorias } from "../../api/categorias";
 import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
@@ -14,9 +14,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import "../../scss/styles.scss";
+import { Switch } from '@headlessui/react';
 
 function Productos(props) {
     const { setRefreshCheckLogin, location, history } = props;
+
+    // Para definir el estado del switch
+    const [estadoSwitch, setEstadoSwitch] = useState(true);
 
     // Para hacer uso del modal
     const [showModal, setShowModal] = useState(false);
@@ -51,52 +55,93 @@ function Productos(props) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
     const [noTotalProductos, setNoTotalProductos] = useState(1);
-    const [noTotalCategorias, setNoTotalCategorias] = useState(1);
 
     // obtener el listado de productos
     useEffect(() => {
+        //console.log("Estado del switch ", estadoSwitch)
         try {
-            totalProductos().then(response => {
-                const { data } = response;
-                setNoTotalProductos(data)
-            }).catch(e => {
-                console.log(e)
-            })
-
-            if (page === 0) {
-                setPage(1)
-
-                listarPaginacionProductos(page, rowsPerPage).then(response => {
+            if (estadoSwitch) {
+                // Lista los productos activos
+                totalProductosActivos().then(response => {
                     const { data } = response;
-                    if (!listProductos && data) {
-                        setListProductos(formatModelProductos(data));
-                    } else {
-                        const datosProductos = formatModelProductos(data);
-                        setListProductos(datosProductos)
-                    }
+                    setNoTotalProductos(data)
                 }).catch(e => {
                     console.log(e)
                 })
+    
+                if (page === 0) {
+                    setPage(1)
+    
+                    listarPaginacionProductosActivos(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        if (!listarPaginacionProductosActivos && data) {
+                            setListProductos(formatModelProductos(data));
+                        } else {
+                            const datosProductos = formatModelProductos(data);
+                            setListProductos(datosProductos)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                } else {
+                    listarPaginacionProductosActivos(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        //console.log(data)
+    
+                        if (!listProductos && data) {
+                            setListProductos(formatModelProductos(data));
+                        } else {
+                            const datosProductos = formatModelProductos(data);
+                            setListProductos(datosProductos)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                }
             } else {
-                listarPaginacionProductos(page, rowsPerPage).then(response => {
+                // Lista los productos obsoletos
+                totalProductosCancelados().then(response => {
                     const { data } = response;
-                    //console.log(data)
-
-                    if (!listProductos && data) {
-                        setListProductos(formatModelProductos(data));
-                    } else {
-                        const datosProductos = formatModelProductos(data);
-                        setListProductos(datosProductos)
-                    }
+                    setNoTotalProductos(data)
                 }).catch(e => {
                     console.log(e)
                 })
+    
+                if (page === 0) {
+                    setPage(1)
+    
+                    listarPaginacionProductosCancelados(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        if (!listarPaginacionProductosActivos && data) {
+                            setListProductos(formatModelProductos(data));
+                        } else {
+                            const datosProductos = formatModelProductos(data);
+                            setListProductos(datosProductos)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                } else {
+                    listarPaginacionProductosCancelados(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        //console.log(data)
+    
+                        if (!listProductos && data) {
+                            setListProductos(formatModelProductos(data));
+                        } else {
+                            const datosProductos = formatModelProductos(data);
+                            setListProductos(datosProductos)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                }
             }
+
         } catch (e) {
             console.log(e)
         }
-
-    }, [location, page, rowsPerPage]);
+    }, [location, estadoSwitch, page, rowsPerPage]);
 
     useEffect(() => {
         try {
@@ -141,13 +186,35 @@ function Productos(props) {
                                     )
                                 }}
                             >
-                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar un producto
+                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
                             </Button>
 
                         </div>
                     </Col>
                 </Row>
             </Alert>
+
+            <Row>
+                <Col xs={12} md={8}>
+                    <h3 className="tituloSwitch">Estado de los productos</h3>
+                </Col>
+                <Col xs={6} md={4}>
+                    <Switch
+                        checked={estadoSwitch}
+                        onChange={setEstadoSwitch}
+                        className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
+          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                    >
+                        <span className="sr-only">Use setting</span>
+                        <span
+                            aria-hidden="true"
+                            className={`${estadoSwitch ? 'translate-x-9' : 'translate-x-0'}
+            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+                        />
+                    </Switch>
+                </Col>
+            </Row>
+
             {
                 listProductos ?
                     (
@@ -192,6 +259,7 @@ function formatModelProductos(productos) {
             negocio: producto.negocio,
             precio: parseInt(producto.precio),
             imagen: producto.imagen,
+            estado: producto.estado,
             fechaCreacion: producto.createdAt,
             fechaActualizacion: producto.updatedAt
         });
@@ -207,6 +275,7 @@ function formatModelCategorias(categorias) {
             nombre: categoria.nombre,
             negocio: categoria.negocio,
             imagen: categoria.imagen,
+            estado: categoria.estado,
             fechaCreacion: categoria.createdAt,
             fechaActualizacion: categoria.updatedAt
         });

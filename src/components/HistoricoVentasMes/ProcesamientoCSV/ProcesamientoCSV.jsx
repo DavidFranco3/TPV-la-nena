@@ -43,7 +43,7 @@ function ProcesamientoCsv(props) {
 
             listarVentasPorMes(dia).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, total, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos, totalProductosVendidos } = data;
+                const { efectivo, tarjeta, transferencia, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 //console.log(data)
                 const dataTitulos = [{
                     efectivo: "Total efectivo",

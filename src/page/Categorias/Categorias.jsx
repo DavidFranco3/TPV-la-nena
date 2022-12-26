@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionCategorias, totalCategorias } from "../../api/categorias";
+import { listarPaginacionCategoriasActivas, totalCategoriasActivas, listarPaginacionCategoriasCanceladas, totalCategoriasCanceladas } from "../../api/categorias";
 import { withRouter } from "react-router-dom";
 import "../../scss/styles.scss";
 import BasicModal from "../../components/Modal/BasicModal";
@@ -12,9 +12,13 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
+import { Switch } from '@headlessui/react'
 
 function Categorias(props) {
     const { setRefreshCheckLogin, location, history } = props;
+
+    // Para definir el estado del switch
+    const [estadoSwitch, setEstadoSwitch] = useState(true);
 
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
@@ -48,48 +52,90 @@ function Categorias(props) {
     const [noTotalCategorias, setNoTotalCategorias] = useState(1);
 
     useEffect(() => {
+        //console.log("Estado del switch ", estadoSwitch)
         try {
-            totalCategorias().then(response => {
-                const { data } = response;
-                setNoTotalCategorias(data)
-            }).catch(e => {
-                console.log(e)
-            })
-
-            if (page === 0) {
-                setPage(1)
-
-                listarPaginacionCategorias(page, rowsPerPage).then(response => {
+            if (estadoSwitch) {
+                // Lista los productos activos
+                totalCategoriasActivas().then(response => {
                     const { data } = response;
-                    if (!listCategorias && data) {
-                        setListCategorias(formatModelCategorias(data));
-                    } else {
-                        const datosCategorias = formatModelCategorias(data);
-                        setListCategorias(datosCategorias)
-                    }
+                    setNoTotalCategorias(data)
                 }).catch(e => {
                     console.log(e)
                 })
+
+                if (page === 0) {
+                    setPage(1)
+
+                    listarPaginacionCategoriasActivas(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        if (!listCategorias && data) {
+                            setListCategorias(formatModelCategorias(data));
+                        } else {
+                            const datosCategorias = formatModelCategorias(data);
+                            setListCategorias(datosCategorias)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                } else {
+                    listarPaginacionCategoriasActivas(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        //console.log(data)
+
+                        if (!listCategorias && data) {
+                            setListCategorias(formatModelCategorias(data));
+                        } else {
+                            const datosCategorias = formatModelCategorias(data);
+                            setListCategorias(datosCategorias)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                }
             } else {
-                listarPaginacionCategorias(page, rowsPerPage).then(response => {
+                // Lista los productos obsoletos
+                totalCategoriasCanceladas().then(response => {
                     const { data } = response;
-                    //console.log(data)
-
-                    if (!listCategorias && data) {
-                        setListCategorias(formatModelCategorias(data));
-                    } else {
-                        const datosCategorias = formatModelCategorias(data);
-                        setListCategorias(datosCategorias)
-                    }
+                    setNoTotalCategorias(data)
                 }).catch(e => {
                     console.log(e)
                 })
+
+                if (page === 0) {
+                    setPage(1)
+
+                    listarPaginacionCategoriasCanceladas(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        if (!listCategorias && data) {
+                            setListCategorias(formatModelCategorias(data));
+                        } else {
+                            const datosCategorias = formatModelCategorias(data);
+                            setListCategorias(datosCategorias)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                } else {
+                    listarPaginacionCategoriasCanceladas(page, rowsPerPage).then(response => {
+                        const { data } = response;
+                        //console.log(data)
+
+                        if (!listCategorias && data) {
+                            setListCategorias(formatModelCategorias(data));
+                        } else {
+                            const datosCategorias = formatModelCategorias(data);
+                            setListCategorias(datosCategorias)
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                    })
+                }
             }
+
         } catch (e) {
             console.log(e)
         }
-
-    }, [location, page, rowsPerPage]);
+    }, [location, estadoSwitch, page, rowsPerPage]);
 
 
     return (
@@ -114,12 +160,34 @@ function Categorias(props) {
                                     )
                                 }}
                             >
-                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar una categoría
+                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
                             </Button>
                         </div>
                     </Col>
                 </Row>
             </Alert>
+
+            <Row>
+                <Col xs={12} md={8}>
+                    <h3 className="tituloSwitch">Estado de las categorías</h3>
+                </Col>
+                <Col xs={6} md={4}>
+                    <Switch
+                        checked={estadoSwitch}
+                        onChange={setEstadoSwitch}
+                        className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
+          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                    >
+                        <span className="sr-only">Use setting</span>
+                        <span
+                            aria-hidden="true"
+                            className={`${estadoSwitch ? 'translate-x-9' : 'translate-x-0'}
+            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+                        />
+                    </Switch>
+                </Col>
+            </Row>
+
             {
                 listCategorias ?
                     (
@@ -161,6 +229,7 @@ function formatModelCategorias(categorias) {
             nombre: categoria.nombre,
             negocio: categoria.negocio,
             imagen: categoria.imagen,
+            estado: categoria.estado,
             fechaCreacion: categoria.createdAt,
             fechaActualizacion: categoria.updatedAt
         });

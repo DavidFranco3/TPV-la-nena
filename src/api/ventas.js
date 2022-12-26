@@ -2,6 +2,7 @@ import { API_HOST } from "../utils/constants";
 import {
     ENDPOINTRegistroVentas,
     ENDPOINTListarVentas,
+    ENDPOINTListarPaginandoVentasActivas,
     ENDPOINTListarPaginandoVentas,
     ENDPOINTListarPaginandoVentasDia,
     ENDPOINTListarPaginandoVentasMes,
@@ -17,6 +18,9 @@ import {
     ENDPOINTListarDetallesProductosVendidosDia,
     ENDPOINTListarDetallesProductosVendidosMes,
     ENDPOINTTotalVentas,
+    ENDPOINTTotalVentasActivas,
+    ENDPOINTTotalVentasCanceladas,
+    ENDPOINTListarPaginandoVentasCanceladas,
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -61,7 +65,19 @@ export async function listarVentas(params) {
 }
 
 // Para listar todas las ventas
-export async function totalVentas(params) {
+export async function totalVentasActivas() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasActivas, config);
+}
+
+// Para listar todas las ventas
+export async function totalVentas() {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -70,6 +86,18 @@ export async function totalVentas(params) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTTotalVentas, config);
+}
+
+// Para listar todas las ventas
+export async function totalVentasCanceladas() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasCanceladas, config);
 }
 
 // Listar ventas por dia
@@ -97,6 +125,18 @@ export async function listarVentasPorMes(mes) {
 }
 
 // Listar las ventas paginandolas
+export async function listarPaginacionVentasActivas(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasActivas + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar las ventas paginandolas
 export async function listarPaginacionVentas(pagina, limite) {
     const config = {
         headers: {
@@ -106,6 +146,18 @@ export async function listarPaginacionVentas(pagina, limite) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentas + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar las ventas paginandolas
+export async function listarPaginacionVentasCanceladas(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCanceladas + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
 // Listar las ventas paginandolas

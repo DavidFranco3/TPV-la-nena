@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Button, Col, Form, Spinner, Row, Alert } from "react-bootstrap";
+import "../../../scss/styles.scss";
+import { cancelarProducto } from "../../../api/productos";
 import { map } from "lodash";
-import { eliminaProductos } from "../../../api/productos";
 import { toast } from "react-toastify";
+import { Button, Col, Row, Form, Spinner, Alert } from "react-bootstrap";
 import queryString from "query-string";
 import moment from "moment";
 import "moment/locale/es";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../../scss/styles.scss";
 
 const fechaToCurrentTimezone = (fecha) => {
     const date = new Date(fecha)
@@ -19,12 +19,14 @@ const fechaToCurrentTimezone = (fecha) => {
     return date.toISOString().slice(0, 16);
 }
 
-function EliminaProductos(props) {
-    const { datosProducto, history, listCategorias, setShowModal } = props;
-    const { id, nombre, categoria, precio, fechaActualizacion } = datosProducto;
+function CancelarProductos(props) {
+    const { datosProducto, listCategorias, history, setShowModal } = props;
+
+    const { id, nombre, categoria, precio, estado, fechaActualizacion } = datosProducto;
 
     moment.locale("es");
 
+    // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
     }
@@ -33,15 +35,18 @@ function EliminaProductos(props) {
 
     const onSubmit = e => {
         e.preventDefault()
-        setLoading(true)
+        setLoading(true);
         try {
-            eliminaProductos(id).then(response => {
+            const dataTemp = {
+                estado: estado === "true" ? "false" : "true"
+            }
+            cancelarProducto(id, dataTemp).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
                 history.push({
                     search: queryString.stringify(""),
                 });
-                setShowModal(false);
+                setShowModal(false)
             }).catch(e => {
                 console.log(e)
             })
@@ -53,13 +58,30 @@ function EliminaProductos(props) {
     return (
         <>
             <div className="datosDelProducto">
-                <Alert variant="danger">
-                    <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
-                    <p className="mensaje">
-                        Esta acción eliminará del sistema el producto.
-                    </p>
-                </Alert>
 
+                {estado === "true" ?
+                    (
+                        <>
+                            <Alert variant="danger">
+                                <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
+                                <p className="mensaje">
+                                    Esta acción cancelara el producto.
+                                </p>
+                            </Alert>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Alert variant="success">
+                                <Alert.Heading>Atención! Acción constructiva!</Alert.Heading>
+                                <p className="mensaje">
+                                    Esta acción recuperara el producto.
+                                </p>
+                            </Alert>
+                        </>
+                    )
+                }
                 <Form onSubmit={onSubmit}>
 
                     <Row className="mb-3">
@@ -116,13 +138,12 @@ function EliminaProductos(props) {
                     <Form.Group as={Row} className="botonSubirProducto">
                         <Col>
                             <Button
-                                title="Eliminar producto"
+                                title={estado === "true" ? "cancelar producto" : "recuperar producto"}
                                 type="submit"
                                 variant="success"
                                 className="registrar"
-                                disabled={loading}
                             >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar" : <Spinner animation="border" />}
+                                <FontAwesomeIcon icon={faSave} /> {!loading ? (estado === "true" ? "Deshabilitar" : "Habilitar") : <Spinner animation="border" />}
                             </Button>
                         </Col>
                         <Col>
@@ -130,7 +151,6 @@ function EliminaProductos(props) {
                                 title="Cerrar ventana"
                                 variant="danger"
                                 className="cancelar"
-                                disabled={loading}
                                 onClick={() => {
                                     cancelarRegistro()
                                 }}
@@ -139,10 +159,11 @@ function EliminaProductos(props) {
                             </Button>
                         </Col>
                     </Form.Group>
+
                 </Form>
             </div>
         </>
     );
 }
 
-export default EliminaProductos;
+export default CancelarProductos;

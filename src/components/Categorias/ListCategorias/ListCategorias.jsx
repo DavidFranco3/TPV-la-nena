@@ -7,6 +7,7 @@ import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-so
 import BasicModal from "../../Modal/BasicModal";
 import EliminaCategorias from "../EliminaCategorias";
 import ModificaCategorias from "../ModificaCategorias";
+import CancelarCategorias from "../CancelarCategorias";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 
@@ -34,6 +35,20 @@ function ListCategorias(props) {
         setShowModal(true);
     }
 
+    // Para cancelar la venta
+    const cancelarCategoria = (content) => {
+        setTitulosModal("Cancelar categoria");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const recuperarCategoria = (content) => {
+        setTitulosModal("Recuperar categoria");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -50,6 +65,64 @@ function ListCategorias(props) {
         {
             name: "Nombre",
             selector: row => row.nombre,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Estado",
+            selector: row => (
+                <>
+                    {
+                        row.estado === "true" ?
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                        title="Cancelar categoria"
+                                        onClick={() => {
+                                            cancelarCategoria(
+                                                <CancelarCategorias
+                                                    datosCategoria={row}
+                                                    location={location}
+                                                    history={history}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        Habilitada
+                                    </Badge>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <Badge
+                                        bg="danger"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                        title="Recuperar categoria"
+                                        onClick={() => {
+                                            recuperarCategoria(
+                                                <CancelarCategorias
+                                                    datosCategoria={row}
+                                                    location={location}
+                                                    history={history}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        Deshabilitada
+                                    </Badge>
+                                </>
+                            )
+                    }
+                </>
+            ),
             sortable: false,
             center: true,
             reorder: false

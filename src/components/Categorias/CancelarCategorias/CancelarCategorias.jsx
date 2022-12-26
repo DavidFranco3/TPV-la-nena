@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { Button, Col, Form, Spinner, Row, Alert } from "react-bootstrap";
-import { map } from "lodash";
-import { eliminaProductos } from "../../../api/productos";
+import "../../../scss/styles.scss";
+import { cancelarCategoria } from "../../../api/categorias";
 import { toast } from "react-toastify";
+import { Button, Col, Row, Form, Spinner, Alert } from "react-bootstrap";
 import queryString from "query-string";
 import moment from "moment";
 import "moment/locale/es";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../../scss/styles.scss";
 
 const fechaToCurrentTimezone = (fecha) => {
     const date = new Date(fecha)
@@ -19,12 +18,14 @@ const fechaToCurrentTimezone = (fecha) => {
     return date.toISOString().slice(0, 16);
 }
 
-function EliminaProductos(props) {
-    const { datosProducto, history, listCategorias, setShowModal } = props;
-    const { id, nombre, categoria, precio, fechaActualizacion } = datosProducto;
+function CancelarCategorias(props) {
+    const { datosCategoria, history, setShowModal } = props;
+
+    const { id, nombre, estado, fechaActualizacion } = datosCategoria;
 
     moment.locale("es");
 
+    // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
     }
@@ -33,15 +34,18 @@ function EliminaProductos(props) {
 
     const onSubmit = e => {
         e.preventDefault()
-        setLoading(true)
+        setLoading(true);
         try {
-            eliminaProductos(id).then(response => {
+            const dataTemp = {
+                estado: estado === "true" ? "false" : "true"
+            }
+            cancelarCategoria(id, dataTemp).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
                 history.push({
                     search: queryString.stringify(""),
                 });
-                setShowModal(false);
+                setShowModal(false)
             }).catch(e => {
                 console.log(e)
             })
@@ -53,20 +57,35 @@ function EliminaProductos(props) {
     return (
         <>
             <div className="datosDelProducto">
-                <Alert variant="danger">
-                    <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
-                    <p className="mensaje">
-                        Esta acción eliminará del sistema el producto.
-                    </p>
-                </Alert>
 
+                {estado === "true" ?
+                    (
+                        <>
+                            <Alert variant="danger">
+                                <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
+                                <p className="mensaje">
+                                    Esta acción cancelara la categoría.
+                                </p>
+                            </Alert>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Alert variant="success">
+                                <Alert.Heading>Atención! Acción constructiva!</Alert.Heading>
+                                <p className="mensaje">
+                                    Esta acción recuperara la categoría.
+                                </p>
+                            </Alert>
+                        </>
+                    )
+                }
                 <Form onSubmit={onSubmit}>
 
-                    <Row className="mb-3">
+                <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>
-                                Nombre
-                            </Form.Label>
+                            <Form.Label>Nombre</Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
                                 value={nombre}
@@ -74,39 +93,10 @@ function EliminaProductos(props) {
                             />
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridCategoria">
-                            <Form.Label>Categoría</Form.Label>
-                            <Form.Control as="select"
-                                value={categoria}
-                                name="categoria"
-                                disabled>
-                                <option>Elige una opción</option>
-                                {map(listCategorias, (cat, index) => (
-                                    <option key={index} value={cat?.id}>{cat?.nombre}</option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
-                    </Row>
-
-                    <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>
-                                Precio
-                            </Form.Label>
+                            <Form.Label>Modificación</Form.Label>
                             <Form.Control type="text" name="nombre"
                                 placeholder="Escribe el nombre"
-                                value={precio}
-                                disabled
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridFecha">
-                            <Form.Label>
-                                Modificación
-                            </Form.Label>
-                            <Form.Control type="text"
-                                name="fecha"
-                                placeholder="Escribe la fecha"
                                 value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
                                 disabled
                             />
@@ -116,13 +106,12 @@ function EliminaProductos(props) {
                     <Form.Group as={Row} className="botonSubirProducto">
                         <Col>
                             <Button
-                                title="Eliminar producto"
+                                title={estado === "true" ? "cancelar categoría" : "recuperar categoría"}
                                 type="submit"
                                 variant="success"
                                 className="registrar"
-                                disabled={loading}
                             >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Eliminar" : <Spinner animation="border" />}
+                                <FontAwesomeIcon icon={faSave} /> {!loading ? (estado === "true" ? "Deshabilitar" : "Habilitar") : <Spinner animation="border" />}
                             </Button>
                         </Col>
                         <Col>
@@ -130,7 +119,6 @@ function EliminaProductos(props) {
                                 title="Cerrar ventana"
                                 variant="danger"
                                 className="cancelar"
-                                disabled={loading}
                                 onClick={() => {
                                     cancelarRegistro()
                                 }}
@@ -139,10 +127,11 @@ function EliminaProductos(props) {
                             </Button>
                         </Col>
                     </Form.Group>
+
                 </Form>
             </div>
         </>
     );
 }
 
-export default EliminaProductos;
+export default CancelarCategorias;

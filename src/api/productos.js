@@ -2,12 +2,15 @@ import { API_HOST } from "../utils/constants";
 import {
     ENDPOINTRegistroProductos,
     ENDPOINTListarProductos,
-    ENDPOINTListarPaginandoProductos,
+    ENDPOINTListarPaginandoProductosActivos,
     ENDPOINTListarProductosCategoria,
     ENDPOINTObtenerProductos,
     ENDPOINTEliminarProductos,
     ENDPOINTActualizarProductos,
-    ENDPOINTTotalProductos
+    ENDPOINTTotalProductosActivos,
+    ENDPOINTCancelarProductos,
+    ENDPOINTListarPaginandoProductosCancelados,
+    ENDPOINTTotalProductosCancelados
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -39,7 +42,7 @@ export async function obtenerProductos(params) {
 }
 
 // Para listar todos los productos
-export async function listarProductos(params) {
+export async function listarProductos() {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -51,7 +54,7 @@ export async function listarProductos(params) {
 }
 
 // Listar los productos paginandolos
-export async function listarPaginacionProductos(pagina, limite) {
+export async function listarPaginacionProductosActivos(pagina, limite) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -59,7 +62,19 @@ export async function listarPaginacionProductos(pagina, limite) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarPaginandoProductos + `/?pagina=${pagina}&&limite=${limite}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoProductosActivos + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar los productos paginandolos
+export async function listarPaginacionProductosCancelados(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoProductosCancelados + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
 // Listar productos por categoria
@@ -101,8 +116,8 @@ export async function actualizaProductos(id, data) {
     return await axios.put(API_HOST + ENDPOINTActualizarProductos + `/${id}`, data, config);
 }
 
-// Para listar todas las ventas
-export async function totalProductos(params) {
+// Cancelar productos
+export async function cancelarProducto(id, data) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -110,5 +125,30 @@ export async function totalProductos(params) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTTotalProductos, config);
+
+    return await axios.put(API_HOST + ENDPOINTCancelarProductos + `/${id}`, data, config);
+}
+
+// Para obtener el total de productos registrados
+export async function totalProductosActivos() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalProductosActivos, config);
+}
+
+// Para obtener el total de productos registrados
+export async function totalProductosCancelados() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalProductosCancelados, config);
 }

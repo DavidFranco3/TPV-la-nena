@@ -15,26 +15,37 @@ export const ENDPOINTActualizarUsuarios = "/usuarios/actualizar";
 // Categorias
 export const ENDPOINTRegistroCategorias = "/categorias/registro";
 export const ENDPOINTListarCategorias = "/categorias/listar";
-export const ENDPOINTListarPaginandoCategorias = "/categorias/listarPaginando";
+export const ENDPOINTListarPaginandoCategoriasActivas = "/categorias/listarPaginandoActivas";
+export const ENDPOINTTotalCategoriasActivas = "/categorias/totalCategoriasActivas";
+export const ENDPOINTListarPaginandoCategoriasCanceladas = "/categorias/listarPaginandoCanceladas";
+export const ENDPOINTTotalCategoriasCanceladas = "/categorias/totalCategoriasCanceladas";
 export const ENDPOINTObtenerCategorias = "/categorias/obtener";
 export const ENDPOINTEliminarCategorias = "/categorias/eliminar";
 export const ENDPOINTActualizarCategorias = "/categorias/actualizar";
-export const ENDPOINTTotalCategorias = "/categorias/totalCategorias";
+export const ENDPOINTCancelarCategorias = "/categorias/cancelar";
 
 // Productos
 export const ENDPOINTRegistroProductos = "/productos/registro";
 export const ENDPOINTListarProductos = "/productos/listar";
-export const ENDPOINTListarPaginandoProductos = "/productos/listarPaginando";
+export const ENDPOINTListarPaginandoProductosActivos = "/productos/listarPaginandoActivos";
+export const ENDPOINTTotalProductosActivos = "/productos/totalProductosActivos";
+export const ENDPOINTListarPaginandoProductosCancelados = "/productos/listarPaginandoCancelados";
+export const ENDPOINTTotalProductosCancelados = "/productos/totalProductosCancelados";
 export const ENDPOINTListarProductosCategoria = "/productos/listarFiltroCategoria";
 export const ENDPOINTObtenerProductos = "/productos/obtener";
 export const ENDPOINTEliminarProductos = "/productos/eliminar";
 export const ENDPOINTActualizarProductos = "/productos/actualizar";
-export const ENDPOINTTotalProductos = "/productos/totalProductos";
+export const ENDPOINTCancelarProductos = "/productos/cancelar";
 
 // Ventas
 export const ENDPOINTRegistroVentas = "/ventas/registro";
 export const ENDPOINTListarVentas = "/ventas/listar";
 export const ENDPOINTListarPaginandoVentas = "/ventas/listarPaginando";
+export const ENDPOINTTotalVentas = "/ventas/totalVentas";
+export const ENDPOINTListarPaginandoVentasActivas = "/ventas/listarPaginandoActivas";
+export const ENDPOINTTotalVentasActivas = "/ventas/totalVentasActivas";
+export const ENDPOINTListarPaginandoVentasCanceladas = "/ventas/listarPaginandoCanceladas";
+export const ENDPOINTTotalVentasCanceladas = "/ventas/totalVentasCanceladas";
 export const ENDPOINTListarPaginandoVentasDia = "/ventas/listarPaginandoDia";
 export const ENDPOINTListarPaginandoVentasMes = "/ventas/listarPaginandoMes";
 export const ENDPOINTObtenerVentas = "/ventas/obtener";
@@ -48,4 +59,3 @@ export const ENDPOINTListarDetallesVentasDia = "/ventas/listarDetallesVentasDia"
 export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes";
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
-export const ENDPOINTTotalVentas = "/ventas/totalVentas";

@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
+import { listarPaginacionVentasActivas, totalVentasActivas, listarPaginacionVentasCanceladas, totalVentasCanceladas } from "../../api/ventas";
 import { withRouter } from "react-router-dom";
 import "../../scss/styles.scss";
 import { Alert, Col, Row, Spinner } from "react-bootstrap";
@@ -8,9 +8,13 @@ import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
+import { Switch } from '@headlessui/react';
 
 function Ventas(props) {
         const { setRefreshCheckLogin, location, history } = props;
+
+        // Para definir el estado del switch
+        const [estadoSwitch, setEstadoSwitch] = useState(true);
 
         // Cerrado de sesión automatico
         useEffect(() => {
@@ -33,49 +37,92 @@ function Ventas(props) {
         const [page, setPage] = useState(1);
         const [noTotalVentas, setNoTotalVentas] = useState(1);
 
+        // Para listar las ventas
         useEffect(() => {
+                //console.log("Estado del switch ", estadoSwitch)
                 try {
-                        totalVentas().then(response => {
-                                const { data } = response;
-                                setNoTotalVentas(data)
-                        }).catch(e => {
-                                console.log(e)
-                        })
-
-                        if (page === 0) {
-                                setPage(1)
-
-                                listarPaginacionVentas(page, rowsPerPage).then(response => {
+                        if (estadoSwitch) {
+                                // Lista los productos activos
+                                totalVentasActivas().then(response => {
                                         const { data } = response;
-                                        if (!listVentas && data) {
-                                                setListVentas(formatModelVentas(data));
-                                        } else {
-                                                const datosVentas = formatModelVentas(data);
-                                                setListVentas(datosVentas)
-                                        }
+                                        setNoTotalVentas(data)
                                 }).catch(e => {
                                         console.log(e)
                                 })
+
+                                if (page === 0) {
+                                        setPage(1)
+
+                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                                const { data } = response;
+                                                if (!listVentas && data) {
+                                                        setListVentas(formatModelVentas(data));
+                                                } else {
+                                                        const datosVentas = formatModelVentas(data);
+                                                        setListVentas(datosVentas)
+                                                }
+                                        }).catch(e => {
+                                                console.log(e)
+                                        })
+                                } else {
+                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                                const { data } = response;
+                                                //console.log(data)
+
+                                                if (!listVentas && data) {
+                                                        setListVentas(formatModelVentas(data));
+                                                } else {
+                                                        const datosVentas = formatModelVentas(data);
+                                                        setListVentas(datosVentas)
+                                                }
+                                        }).catch(e => {
+                                                console.log(e)
+                                        })
+                                }
                         } else {
-                                listarPaginacionVentas(page, rowsPerPage).then(response => {
+                                // Lista los productos obsoletos
+                                totalVentasCanceladas().then(response => {
                                         const { data } = response;
-                                        //console.log(data)
-
-                                        if (!listVentas && data) {
-                                                setListVentas(formatModelVentas(data));
-                                        } else {
-                                                const datosVentas = formatModelVentas(data);
-                                                setListVentas(datosVentas)
-                                        }
+                                        setNoTotalVentas(data)
                                 }).catch(e => {
                                         console.log(e)
                                 })
+
+                                if (page === 0) {
+                                        setPage(1)
+
+                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                                const { data } = response;
+                                                if (!listVentas && data) {
+                                                        setListVentas(formatModelVentas(data));
+                                                } else {
+                                                        const datosVentas = formatModelVentas(data);
+                                                        setListVentas(datosVentas)
+                                                }
+                                        }).catch(e => {
+                                                console.log(e)
+                                        })
+                                } else {
+                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                                const { data } = response;
+                                                //console.log(data)
+
+                                                if (!listVentas && data) {
+                                                        setListVentas(formatModelVentas(data));
+                                                } else {
+                                                        const datosVentas = formatModelVentas(data);
+                                                        setListVentas(datosVentas)
+                                                }
+                                        }).catch(e => {
+                                                console.log(e)
+                                        })
+                                }
                         }
+
                 } catch (e) {
                         console.log(e)
                 }
-
-        }, [location, page, rowsPerPage]);
+        }, [location, estadoSwitch, page, rowsPerPage]);
 
         return (
                 <>
@@ -86,6 +133,27 @@ function Ventas(props) {
                                         </Col>
                                 </Row>
                         </Alert>
+
+                        <Row>
+                                <Col xs={12} md={8}>
+                                        <h3 className="tituloSwitch">Estado de las ventas</h3>
+                                </Col>
+                                <Col xs={6} md={4}>
+                                        <Switch
+                                                checked={estadoSwitch}
+                                                onChange={setEstadoSwitch}
+                                                className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
+          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                        >
+                                                <span className="sr-only">Use setting</span>
+                                                <span
+                                                        aria-hidden="true"
+                                                        className={`${estadoSwitch ? 'translate-x-9' : 'translate-x-0'}
+            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+                                                />
+                                        </Switch>
+                                </Col>
+                        </Row>
 
                         {
                                 listVentas ?
