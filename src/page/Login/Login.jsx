@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { login, setTokenApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
-import { Spinner, Button, Forn, Form } from "react-bootstrap";
+import { Spinner, Button, Form } from "react-bootstrap";
 import { obtenerUsuario } from "../../api/usuarios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";

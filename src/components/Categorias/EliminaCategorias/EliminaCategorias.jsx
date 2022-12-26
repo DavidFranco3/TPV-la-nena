@@ -62,7 +62,9 @@ function EliminaCategorias(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 value={nombre}
                                 disabled
@@ -71,7 +73,10 @@ function EliminaCategorias(props) {
 
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Modificación</Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                align="center"
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
                                 disabled

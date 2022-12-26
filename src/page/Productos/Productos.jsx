@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
-import { useHistory, withRouter } from "react-router-dom";
-import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
+import { withRouter } from "react-router-dom";
+import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import { obtenerUsuario } from "../../api/usuarios";
 import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginacionProductosCancelados, totalProductosCancelados } from "../../api/productos";
@@ -68,10 +68,10 @@ function Productos(props) {
                 }).catch(e => {
                     console.log(e)
                 })
-    
+
                 if (page === 0) {
                     setPage(1)
-    
+
                     listarPaginacionProductosActivos(page, rowsPerPage).then(response => {
                         const { data } = response;
                         if (!listarPaginacionProductosActivos && data) {
@@ -87,7 +87,7 @@ function Productos(props) {
                     listarPaginacionProductosActivos(page, rowsPerPage).then(response => {
                         const { data } = response;
                         //console.log(data)
-    
+
                         if (!listProductos && data) {
                             setListProductos(formatModelProductos(data));
                         } else {
@@ -106,10 +106,10 @@ function Productos(props) {
                 }).catch(e => {
                     console.log(e)
                 })
-    
+
                 if (page === 0) {
                     setPage(1)
-    
+
                     listarPaginacionProductosCancelados(page, rowsPerPage).then(response => {
                         const { data } = response;
                         if (!listarPaginacionProductosActivos && data) {
@@ -125,7 +125,7 @@ function Productos(props) {
                     listarPaginacionProductosCancelados(page, rowsPerPage).then(response => {
                         const { data } = response;
                         //console.log(data)
-    
+
                         if (!listProductos && data) {
                             setListProductos(formatModelProductos(data));
                         } else {
@@ -200,6 +200,7 @@ function Productos(props) {
                 </Col>
                 <Col xs={6} md={4}>
                     <Switch
+                        title={estadoSwitch === true ? "Ver productos cancelados" : "Ver productos activos"}
                         checked={estadoSwitch}
                         onChange={setEstadoSwitch}
                         className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}

@@ -140,6 +140,7 @@ function Ventas(props) {
                                 </Col>
                                 <Col xs={6} md={4}>
                                         <Switch
+                                                title={estadoSwitch === true ? "Ver ventas canceladas" : "Ver ventas activas"}
                                                 checked={estadoSwitch}
                                                 onChange={setEstadoSwitch}
                                                 className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}

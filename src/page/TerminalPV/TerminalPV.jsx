@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { withRouter } from "react-router-dom";
 import Menu from "../../components/TerminalPV/Menu";
 import Tiquet from "../../components/TerminalPV/Tiquet";
 import "../../scss/styles.scss";
@@ -169,4 +170,4 @@ function formatModelCategorias(categorias) {
     return tempCategorias;
 }
 
-export default TerminalPv;
+export default withRouter(TerminalPv);

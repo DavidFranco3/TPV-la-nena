@@ -82,7 +82,9 @@ function ModificaCategorias(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 defaultValue={formData.nombre}
                             />

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
-import { Card, Container, CardGroup, Image } from 'react-bootstrap';
+import { Card, Image } from 'react-bootstrap';
 // Importaciones de imagenes del dashboard
 import LogoVentas from '../../assets/png/ventas.png';
 import LogoHistorial from '../../assets/png/facturas.png';
@@ -84,7 +84,7 @@ function Dashboard(props) {
                 <ItemCard
                   path={'/HistoricoVentasDia'}
                   logo={LogoHistorialDia}
-                  title={'Historial por dia'}
+                  title={'Historial por día'}
                 />
                 <ItemCard
                   path={'/HistoricoVentasMes'}

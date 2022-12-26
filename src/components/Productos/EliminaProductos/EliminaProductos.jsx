@@ -67,7 +67,9 @@ function EliminaProductos(props) {
                             <Form.Label>
                                 Nombre
                             </Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 value={nombre}
                                 disabled
@@ -76,7 +78,8 @@ function EliminaProductos(props) {
 
                         <Form.Group as={Col} controlId="formGridCategoria">
                             <Form.Label>Categoría</Form.Label>
-                            <Form.Control as="select"
+                            <Form.Control
+                                as="select"
                                 value={categoria}
                                 name="categoria"
                                 disabled>
@@ -93,7 +96,9 @@ function EliminaProductos(props) {
                             <Form.Label>
                                 Precio
                             </Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 value={precio}
                                 disabled
@@ -104,7 +109,8 @@ function EliminaProductos(props) {
                             <Form.Label>
                                 Modificación
                             </Form.Label>
-                            <Form.Control type="text"
+                            <Form.Control
+                                type="text"
                                 name="fecha"
                                 placeholder="Escribe la fecha"
                                 value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}

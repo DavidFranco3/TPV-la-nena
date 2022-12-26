@@ -207,6 +207,7 @@ function ListCategorias(props) {
             <Container fluid>
                 <DataTable
                     columns={columns}
+                    noDataComponent="No hay registros para mostrar"
                     data={listCategorias}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}

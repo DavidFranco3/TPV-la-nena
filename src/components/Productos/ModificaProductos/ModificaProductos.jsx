@@ -81,7 +81,9 @@ function ModificaProductos(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 defaultValue={formData.nombre}
                             />
@@ -89,7 +91,8 @@ function ModificaProductos(props) {
 
                         <Form.Group as={Col} controlId="formGridCategoria">
                             <Form.Label>Categoría</Form.Label>
-                            <Form.Control as="select"
+                            <Form.Control
+                                as="select"
                                 defaultValue={formData.categoria}
                                 name="categoria">
                                 <option>Elige una opción</option>
@@ -101,7 +104,9 @@ function ModificaProductos(props) {
 
                         <Form.Group as={Col} controlId="formGridPrecio">
                             <Form.Label>Precio</Form.Label>
-                            <Form.Control type="text" name="precio"
+                            <Form.Control
+                                type="text"
+                                name="precio"
                                 placeholder="Precio"
                                 defaultValue={formData.precio}
                             />

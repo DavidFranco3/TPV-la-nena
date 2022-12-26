@@ -143,7 +143,6 @@ function ListHistoricoVentasMes(props) {
                 <DataTable
                     columns={columns}
                     data={listaDias}
-                    dense
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}

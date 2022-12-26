@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import "../../scss/styles.scss";
@@ -27,4 +27,4 @@ function Error404(props) {
     );
 }
 
-export default Error404;
+export default withRouter(Error404);

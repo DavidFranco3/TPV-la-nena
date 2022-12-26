@@ -39,7 +39,8 @@ function RegistraProductos(props) {
                         categoria: formData.categoria,
                         precio: formData.precio,
                         imagen: data.secure_url,
-                        negocio: "LA NENA"
+                        negocio: "LA NENA",
+                        estado: "true"
                     }
                     registraProductos(dataTemp).then(response => {
                         const { data } = response;
@@ -79,7 +80,8 @@ function RegistraProductos(props) {
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control
-                                type="text" name="nombre"
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 defaultValue={formData.nombre}
                             />
@@ -101,7 +103,9 @@ function RegistraProductos(props) {
 
                         <Form.Group as={Col} controlId="formGridPrecio">
                             <Form.Label>Precio</Form.Label>
-                            <Form.Control type="text" name="precio"
+                            <Form.Control
+                                type="text"
+                                name="precio"
                                 placeholder="Precio"
                                 defaultValue={formData.precio}
                             />

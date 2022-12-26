@@ -244,6 +244,7 @@ function ListProductos(props) {
             <Container fluid>
                 <DataTable
                     columns={columns}
+                    noDataComponent="No hay registros para mostrar"
                     data={listProductos}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}

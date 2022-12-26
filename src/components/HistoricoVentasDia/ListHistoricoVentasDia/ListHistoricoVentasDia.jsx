@@ -59,14 +59,14 @@ function ListHistoricoVentasDia(props) {
 
     const columns = [
         {
-            name: "Ventas del dia",
+            name: "Ventas del día",
             selector: row => moment(row).format('LL'),
             sortable: false,
             center: true,
             reorder: false
         },
         {
-            name: "Detalles del dia",
+            name: "Detalles del día",
             selector: row => (
                 <>
                     <Total
@@ -140,8 +140,8 @@ function ListHistoricoVentasDia(props) {
             <Container fluid>
                 <DataTable
                     columns={columns}
+                    noDataComponent="No hay registros para mostrar"
                     data={listaDias}
-                    dense
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}

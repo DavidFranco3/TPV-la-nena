@@ -82,7 +82,7 @@ function HistoricoVentasDia(props) {
             <Alert className="fondoPrincipalAlert">
                 <Row>
                     <Col xs={12} md={4} className="titulo">
-                        <h1 className="font-bold">Historial por dia</h1>
+                        <h1 className="font-bold">Historial por día</h1>
                     </Col>
                 </Row>
             </Alert>

@@ -173,6 +173,7 @@ function Categorias(props) {
                 </Col>
                 <Col xs={6} md={4}>
                     <Switch
+                        title={estadoSwitch === true ? "Ver categorías canceladas" : "Ver categorías activas"}
                         checked={estadoSwitch}
                         onChange={setEstadoSwitch}
                         className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}

@@ -37,7 +37,8 @@ function RegistroCategorias(props) {
                     const dataTemp = {
                         nombre: formData.nombre,
                         imagen: data.secure_url,
-                        negocio: "LA NENA"
+                        negocio: "LA NENA",
+                        estado: "true"
                     }
                     registraCategorias(dataTemp).then(response => {
                         const { data } = response;
@@ -76,7 +77,9 @@ function RegistroCategorias(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" name="nombre"
+                            <Form.Control
+                                type="text"
+                                name="nombre"
                                 placeholder="Escribe el nombre"
                                 defaultValue={formData.nombre}
                             />
