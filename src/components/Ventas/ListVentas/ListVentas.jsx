@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import moment from "moment";
-import "moment/locale/es";
 import { Badge, Container } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import BasicModal from "../../Modal/BasicModal";
@@ -10,13 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faX, faRotateLeft, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListVentas(props) {
     const { listVentas, location, setRefreshCheckLogin, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
 
-    //console.log(listVentas)
-
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -66,7 +66,7 @@ function ListVentas(props) {
         },
         {
             name: "Día de la venta",
-            selector: row => moment(row.fechaCreacion).format('LLLL'),
+            selector: row => dayjs(row.fechaCreacion).format('dddd, LL hh:mm A'),
             sortable: false,
             center: true,
             reorder: false

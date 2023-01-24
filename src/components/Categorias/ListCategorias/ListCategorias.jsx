@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
-import moment from "moment";
 import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
@@ -10,11 +9,15 @@ import ModificaCategorias from "../ModificaCategorias";
 import CancelarCategorias from "../CancelarCategorias";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListCategorias(props) {
     const { listCategorias, location, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
 
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -129,7 +132,7 @@ function ListCategorias(props) {
         },
         {
             name: "Modificación",
-            selector: row => moment(row.fechaActualizacion).format('LLLL'),
+            selector: row => dayjs(row.fechaActualizacion).format('dddd, LL hh:mm A'),
             sortable: false,
             center: true,
             reorder: false

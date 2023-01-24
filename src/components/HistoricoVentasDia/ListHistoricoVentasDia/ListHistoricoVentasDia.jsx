@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { map } from "lodash";
-import moment from "moment";
-import "moment/locale/es";
 import { Badge, Image, Container } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import Total from "../../../page/HistoricoVentasDia/Total";
@@ -12,12 +10,16 @@ import ProcesamientoCSV from "../ProcesamientoCSV";
 import { estilos } from "../../../utils/tableStyled";
 import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListHistoricoVentasDia(props) {
     const { listVentas, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas, setRefreshCheckLogin } = props;
 
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -60,7 +62,7 @@ function ListHistoricoVentasDia(props) {
     const columns = [
         {
             name: "Ventas del día",
-            selector: row => moment(row).format('LL'),
+            selector: row => dayjs(row).format('dddd, LL'),
             sortable: false,
             center: true,
             reorder: false

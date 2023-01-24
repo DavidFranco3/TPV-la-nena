@@ -23,6 +23,7 @@
     "bootstrap": "5.2.1",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "dayjs": "^1.11.7",
     "json-2-csv": "^3.17.1",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",

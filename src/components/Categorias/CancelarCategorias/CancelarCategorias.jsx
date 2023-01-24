@@ -4,26 +4,19 @@ import { cancelarCategoria } from "../../../api/categorias";
 import { toast } from "react-toastify";
 import { Button, Col, Row, Form, Spinner, Alert } from "react-bootstrap";
 import queryString from "query-string";
-import moment from "moment";
-import "moment/locale/es";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const fechaToCurrentTimezone = (fecha) => {
-    const date = new Date(fecha)
-
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
-
-
-    return date.toISOString().slice(0, 16);
-}
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function CancelarCategorias(props) {
     const { datosCategoria, history, setShowModal } = props;
 
     const { id, nombre, estado, fechaActualizacion } = datosCategoria;
 
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     // Para cancelar el registro
     const cancelarRegistro = () => {
@@ -101,7 +94,7 @@ function CancelarCategorias(props) {
                                 type="text"
                                 name="nombre"
                                 placeholder="Escribe el nombre"
-                                value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                value={dayjs(fechaActualizacion).format('L hh:mm A')}
                                 disabled
                             />
                         </Form.Group>

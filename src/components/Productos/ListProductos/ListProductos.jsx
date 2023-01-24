@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
-import moment from "moment";
-import "moment/locale/es";
 import EliminaProductos from "../EliminaProductos";
 import { Badge, Container } from "react-bootstrap";
 import ModificaProductos from "../ModificaProductos";
@@ -12,11 +10,15 @@ import "../../../scss/styles.scss";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import Categoria from "./Categoria";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListProductos(props) {
     const { listProductos, listCategorias, location, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalProductos, setRefreshCheckLogin } = props;
 
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -165,7 +167,7 @@ function ListProductos(props) {
         },
         {
             name: "Modificación",
-            selector: row => moment(row.fechaActualizacion).format('LLLL'),
+            selector: row => dayjs(row.fechaActualizacion).format('dddd, LL hh:mm A'),
             sortable: false,
             center: true,
             reorder: false

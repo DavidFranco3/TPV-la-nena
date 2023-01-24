@@ -6,14 +6,17 @@ import { faAddressCard, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
 import { Col, Button, Row } from "react-bootstrap";
-import moment from "moment";
-import "moment/locale/es";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function Tiquet(props) {
     const { products, empty, remove } = props;
-    moment.locale("es");
+    
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     const total = products.reduce((amount, item) => (amount + parseInt(item.precio)), 0);
 
@@ -227,7 +230,7 @@ function Tiquet(props) {
         const fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + " " + hora;
         // console.log(fecha)
         // console.log("Fecha actual ", hoy)
-        setFechayHora(moment(fecha).format('LLLL'))
+        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
     }, []);
 
     return (

@@ -2,12 +2,17 @@ import { Col, Row } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import { toast } from "react-toastify";
-import moment from "moment";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function GeneraPdf(props) {
     const { datos } = props;
 
     const { numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     const handlePrint = () => {
         toast.info("Generando... espere por favor")
@@ -47,7 +52,7 @@ function GeneraPdf(props) {
                             <p className="invoice__cliente">Pedido {tipoPedido}</p>
                             <p className="invoice__cliente">Hecho {hacerPedido}</p>
                             <p className="cafe__number">
-                                {moment(fechaCreacion).format('LLLL')}
+                                {dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
                             </p>
                         </div>
                     </div>

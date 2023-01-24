@@ -258,7 +258,7 @@ function formatModelProductos(productos) {
             nombre: producto.nombre,
             categoria: producto.categoria,
             negocio: producto.negocio,
-            precio: parseInt(producto.precio),
+            precio: parseFloat(producto.precio),
             imagen: producto.imagen,
             estado: producto.estado,
             fechaCreacion: producto.createdAt,

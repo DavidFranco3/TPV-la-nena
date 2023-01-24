@@ -4,26 +4,19 @@ import { map } from "lodash";
 import { eliminaProductos } from "../../../api/productos";
 import { toast } from "react-toastify";
 import queryString from "query-string";
-import moment from "moment";
-import "moment/locale/es";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../scss/styles.scss";
-
-const fechaToCurrentTimezone = (fecha) => {
-    const date = new Date(fecha)
-
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
-
-
-    return date.toISOString().slice(0, 16);
-}
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function EliminaProductos(props) {
     const { datosProducto, history, listCategorias, setShowModal } = props;
     const { id, nombre, categoria, precio, fechaActualizacion } = datosProducto;
 
-    moment.locale("es");
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     const cancelarRegistro = () => {
         setShowModal(false)
@@ -113,7 +106,7 @@ function EliminaProductos(props) {
                                 type="text"
                                 name="fecha"
                                 placeholder="Escribe la fecha"
-                                value={moment(fechaToCurrentTimezone(fechaActualizacion)).format('DD/MM/YYYY hh:mm a')}
+                                value={dayjs(fechaActualizacion).format('L hh:mm A')}
                                 disabled
                             />
                         </Form.Group>
