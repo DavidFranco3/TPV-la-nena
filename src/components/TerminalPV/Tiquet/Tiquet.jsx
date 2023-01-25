@@ -18,7 +18,7 @@ function Tiquet(props) {
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 
-    const total = products.reduce((amount, item) => (amount + parseInt(item.precio)), 0);
+    const total = products.reduce((amount, item) => (amount + parseFloat(item.precio)), 0);
 
     const [determinaBusquedaTiquet, setDeterminaBusquedaTiquet] = useState(false);
     const [numeroTiquet, setNumeroTiquet] = useState("");

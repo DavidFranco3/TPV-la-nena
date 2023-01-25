@@ -9,7 +9,8 @@ function BasicModal(props) {
     const { show, setShow, title, children } = props;
 
     return (
-        <Modal className="basic-modal"
+        <Modal
+            className="basic-modal"
             show={show}
             onHide={() => setShow(false)}
             size="lg"
@@ -19,7 +20,11 @@ function BasicModal(props) {
             <ModalHeader>
                 <h2>{title}</h2>
                 <Modal.Title>
-                    <FontAwesomeIcon title="Cerrar ventana" icon={faTimesCircle} onClick={() => setShow(false)} />
+                    <FontAwesomeIcon
+                        title="Cerrar ventana"
+                        icon={faTimesCircle}
+                        onClick={() => setShow(false)}
+                    />
                 </Modal.Title>
             </ModalHeader>
             <Modal.Body>

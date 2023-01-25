@@ -11,11 +11,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ModificaCategorias(props) {
     const { datosCategorias, history, setShowModal } = props;
-    const { id } = datosCategorias;
+    const { id, imagen } = datosCategorias;
     //console.log(datosCategorias)
 
     // Para almacenar la imagen
-    const [imagenFile, setImagenFile] = useState(datosCategorias.imagen);
+    const [imagenFile, setImagenFile] = useState(imagen);
 
     // Para almacenar el valor del formulario
     const [formData, setFormData] = useState(initialFormData(datosCategorias));
@@ -73,7 +73,7 @@ function ModificaCategorias(props) {
                     <div title="Seleccionar imagen de la categoría" className="imagenProducto">
                         <Dropzone
                             setImagenFile={setImagenFile}
-                            imagenProductoBD={datosCategorias.imagen}
+                            imagenProductoBD={imagen}
                         />
                     </div>
                 </div>

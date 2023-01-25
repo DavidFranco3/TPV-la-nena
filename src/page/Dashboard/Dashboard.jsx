@@ -3,6 +3,8 @@ import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import { Card, Image } from 'react-bootstrap';
+import { obtenerUsuario } from "../../api/usuarios";
+import "../../scss/styles.scss";
 // Importaciones de imagenes del dashboard
 import LogoVentas from '../../assets/png/ventas.png';
 import LogoHistorial from '../../assets/png/facturas.png';
@@ -10,8 +12,6 @@ import LogoHistorialDia from '../../assets/png/historialDia.png';
 import LogoHistorialMes from '../../assets/png/historialMes.png';
 import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
-import { obtenerUsuario } from "../../api/usuarios";
-import "../../scss/styles.scss";
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -71,7 +71,7 @@ function Dashboard(props) {
         estadoUsuario === "true" ?
           (
             <>
-              <div className="grid grid-cols-3 gap-24">
+              <div className="grid grid-cols-3 gap-3">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}

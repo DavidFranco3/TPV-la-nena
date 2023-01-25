@@ -1,7 +1,9 @@
 import { useState, useEffect, Suspense } from 'react';
 import { listarDetallesVentasPorDia, listarPaginacionVentasDia } from "../../api/ventas";
 import ListHistorialVentasDia from "../../components/HistorialVentasDia/ListHistorialVentasDia";
-import moment from "moment";
+import 'dayjs/locale/es';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import "../../scss/styles.scss";
@@ -11,6 +13,9 @@ import AnimacionLoading from "../../assets/json/loading.json";
 
 function HistorialVentasDia(props) {
     const { dia, setRefreshCheckLogin, location, history } = props;
+
+    dayjs.locale('es');
+    dayjs.extend(localizedFormat);
 
     // Cerrado de sesión automatico
     useEffect(() => {
@@ -86,7 +91,7 @@ function HistorialVentasDia(props) {
                         <>
                             <Suspense fallback={< Spinner />}>
                                 <div className="diaHistorial">
-                                    {moment(dia).format('LL')}
+                                    {dayjs(dia).format('dddd, LL')}
                                 </div>
                                 <ListHistorialVentasDia
                                     listDetallesDia={listDetallesDia}

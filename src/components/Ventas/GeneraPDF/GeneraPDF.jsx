@@ -24,7 +24,7 @@ function GeneraPdf(props) {
             tiquetGenerado.document.write('</head><body>');
             tiquetGenerado.document.write(document.getElementById('tiquetAutogenerado').innerHTML);
             tiquetGenerado.document.write('</body></html>');
-            
+
             tiquetGenerado.document.close();
             tiquetGenerado.focus();
             tiquetGenerado.print();

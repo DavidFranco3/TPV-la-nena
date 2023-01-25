@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import "../../../scss/styles.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import Producto from "../../Productos/Producto";
-import Categoria from "../../Categorias/Categoria";
+import Producto from "../Producto";
+import Categoria from "../Categoria";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../../api/auth";
 import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
@@ -21,7 +21,7 @@ function Menu(props) {
                 setRefreshCheckLogin(true);
             }
         }
-    }, [setRefreshCheckLogin]);
+    }, []);
     // Termina cerrado de sesión automatico
 
     const clickHandler = (product) => {
@@ -35,7 +35,6 @@ function Menu(props) {
     return (
         <>
             <div className="menu">
-
                 {
                     !categoriaActual ?
                         (
@@ -47,7 +46,8 @@ function Menu(props) {
                                             key={index}
                                             title={categoria.nombre}
                                             onClick={() => setCategoriaActual(categoria.id)}>
-                                            <Categoria key={index}
+                                            <Categoria
+                                                key={index}
                                                 imagen={categoria.imagen}
                                                 nombre={categoria.nombre}
                                             />
@@ -77,7 +77,8 @@ function Menu(props) {
                                                 <Button key={index}
                                                     title={product.nombre + " " + "$" + product.precio}
                                                     onClick={() => clickHandler(product)}>
-                                                    <Producto key={index}
+                                                    <Producto
+                                                        key={index}
                                                         imagen={product.imagen}
                                                         nombre={product.nombre}
                                                         precio={product.precio}
@@ -90,7 +91,6 @@ function Menu(props) {
                                 }
                             </>
                         )
-
                 }
             </div>
         </>

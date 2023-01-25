@@ -2,7 +2,6 @@ import { useState, useEffect, Suspense } from 'react';
 import { withRouter } from "react-router-dom";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
-import { obtenerUsuario } from "../../api/usuarios";
 import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginacionProductosCancelados, totalProductosCancelados } from "../../api/productos";
 import ListProductos from "../../components/Productos/ListProductos";
 import { listarCategorias } from "../../api/categorias";

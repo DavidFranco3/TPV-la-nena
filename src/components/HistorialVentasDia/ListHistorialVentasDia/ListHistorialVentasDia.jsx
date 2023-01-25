@@ -3,8 +3,6 @@ import { Badge, Container } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import BasicModal from "../../Modal/BasicModal";
 import ListProductoTiquet from "../../Ventas/DetallesVenta";
-import moment from "moment";
-import "moment/locale/es";
 import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +10,6 @@ import { estilos } from "../../../utils/tableStyled";
 
 function ListHistorialVentasDia(props) {
     const { listDetallesDia, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
-
-    moment.locale("es");
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);

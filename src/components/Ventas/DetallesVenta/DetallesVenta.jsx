@@ -11,7 +11,7 @@ import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 function DetallesVenta(props) {
     const { datos } = props;
 
-    const { numeroTiquet, articulosVendidos, cliente} = datos;
+    const { numeroTiquet, articulosVendidos, cliente } = datos;
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);

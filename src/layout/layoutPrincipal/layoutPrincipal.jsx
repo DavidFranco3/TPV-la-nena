@@ -1,13 +1,11 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useEffect, Fragment } from 'react';
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { toast } from "react-toastify";
-import { Button, Row, Container, Form } from "react-bootstrap";
 import LogoLANENA from "../../assets/jpg/logo-la-nena-2.jpg";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
-import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
 
 function LayoutPrincipal(props) {

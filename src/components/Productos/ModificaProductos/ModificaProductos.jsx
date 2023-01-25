@@ -13,12 +13,12 @@ import "../../../scss/styles.scss";
 function ModificaProductos(props) {
     const { datosProducto, listCategorias, history, setShowModal } = props;
 
-    const { id } = datosProducto;
+    const { id, imagen } = datosProducto;
     const [formData, setFormData] = useState(initialFormValue(datosProducto));
     const [loading, setLoading] = useState(false);
 
     //Para almacenar la imagen del producto que se guardara a la bd
-    const [imagenProducto, setImagenProducto] = useState(datosProducto.imagen);
+    const [imagenProducto, setImagenProducto] = useState(imagen);
 
     // Para cancelar el registro
     const cancelarRegistro = () => {
@@ -72,7 +72,7 @@ function ModificaProductos(props) {
                     <div title="Seleccionar imagen del producto" className="imagenProducto">
                         <Dropzone
                             setImagenFile={setImagenProducto}
-                            imagenProductoBD={datosProducto.imagen}
+                            imagenProductoBD={imagen}
                         />
                     </div>
                 </div>
