@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressCard, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
 import { Col, Button, Row } from "react-bootstrap";
@@ -14,7 +14,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function Tiquet(props) {
     const { products, empty, remove } = props;
-    
+
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 
@@ -50,39 +50,45 @@ function Tiquet(props) {
     }
 
     const handlePrint = () => {
-        toast.info("Registrando venta... espere por favor")
-        const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
-        tiquetGenerado.document.write('<html><head>');
-        tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        tiquetGenerado.document.write('</head><body>');
-        tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-        tiquetGenerado.document.write('</body></html>');
+        if (products.length === 0) {
+            toast.warning("Debe cargar articulos a la venta")
+        } else {
+            const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
+            tiquetGenerado.document.write('<html><head>');
+            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
+            tiquetGenerado.document.write('</head><body>');
+            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
+            tiquetGenerado.document.write('</body></html>');
 
-        tiquetGenerado.document.close();
-        tiquetGenerado.focus();
-        tiquetGenerado.print();
-        tiquetGenerado.close();
+            tiquetGenerado.document.close();
+            tiquetGenerado.focus();
+            tiquetGenerado.print();
+            tiquetGenerado.close();
+        }
     }
 
     const handlePrintDouble = () => {
-        toast.info("Registrando venta... espere por favor")
-        const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
-        tiquetGenerado.document.write('<html><head>');
-        tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        tiquetGenerado.document.write('</head><body>');
-        tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-        tiquetGenerado.document.write('</body></html>');
+        if (products.length === 0) {
+            toast.warning("Debe cargar articulos a la venta")
+        } else {
+            const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
+            tiquetGenerado.document.write('<html><head>');
+            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
+            tiquetGenerado.document.write('</head><body>');
+            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
+            tiquetGenerado.document.write('</body></html>');
 
-        tiquetGenerado.document.write('<html><head>');
-        tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-        tiquetGenerado.document.write('</head><body>');
-        tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-        tiquetGenerado.document.write('</body></html>');
+            tiquetGenerado.document.write('<html><head>');
+            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
+            tiquetGenerado.document.write('</head><body>');
+            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
+            tiquetGenerado.document.write('</body></html>');
 
-        tiquetGenerado.document.close();
-        tiquetGenerado.focus();
-        tiquetGenerado.print();
-        tiquetGenerado.close();
+            tiquetGenerado.document.close();
+            tiquetGenerado.focus();
+            tiquetGenerado.print();
+            tiquetGenerado.close();
+        }
     }
 
     useEffect(() => {
@@ -114,58 +120,8 @@ function Tiquet(props) {
         }
 
         if (products.length === 0) {
-            toast.warning("Debe cargar articulos al tiquet")
+            toast.warning("Debe cargar articulos a la venta")
         } else {
-            handlePrint()
-            const hoy = new Date();
-            const grupo = (hoy.getMonth() + 1);
-            try {
-                const dataTemp = {
-                    numeroTiquet: numeroTiquet,
-                    cliente: nombreCliente,
-                    estado: "true",
-                    detalles: observaciones,
-                    tipoPago: tipoPago,
-                    tipoPedido: tipoPedido,
-                    hacerPedido: hacerPedido,
-                    efectivo: dineroIngresado,
-                    cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
-                    productos: products,
-                    iva: parseFloat(total) * parseFloat(iva),
-                    comision: parseFloat(total) * parseFloat(comision),
-                    subtotal: total,
-                    total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
-                    agrupar: grupo
-                }
-
-                registraVentas(dataTemp).then(response => {
-                    const { data } = response;
-                    setDeterminaBusquedaTiquet(true)
-                    toast.success(data.mensaje)
-                    handleEmptyTicket()
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-    }
-
-    const handleRegistraVentaDoble = () => {
-        let iva = "0";
-        let comision = "0";
-
-        if (IVA === "0.16") {
-            iva = "0.16"
-        }
-
-        if (tipoPago === "Tarjeta") {
-            comision = "0.03"
-        }
-
-        if (products.length === 0) {
-            toast.warning("Debe cargar articulos al tiquet")
-        } else {
-            handlePrintDouble()
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
             try {
@@ -475,9 +431,11 @@ function Tiquet(props) {
                     {/**/}
                 </div>
                 <div className="ticket__actions">
-                    <Button title="Registrar venta e imprimir ticket" onClick={() => handleRegistraVenta()}>✅</Button>
+                    <Button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</Button>
 
-                    <Button title="Registrar venta e imprimir doble ticket" onClick={() => handleRegistraVentaDoble()}> 2️⃣</Button>
+                    <Button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>
+
+                    <Button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</Button>
 
                     <Button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</Button>
 
