@@ -38,7 +38,7 @@ function CancelarCategorias(props) {
                 history.push({
                     search: queryString.stringify(""),
                 });
-                setShowModal(false)
+                cancelarCategoria();
             }).catch(e => {
                 console.log(e)
             })

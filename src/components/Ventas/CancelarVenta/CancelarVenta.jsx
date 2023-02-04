@@ -38,7 +38,7 @@ function CancelarVenta(props) {
                 history.push({
                     search: queryString.stringify(""),
                 });
-                setShowModal(false)
+                cancelarRegistro();
             }).catch(e => {
                 console.log(e)
             })

@@ -49,7 +49,7 @@ function ModificaProductos(props) {
                             search: queryString.stringify(""),
                         });
                         toast.success(data.mensaje);
-                        setShowModal(false);
+                        cancelarRegistro();
                     })
                 }).then(e => {
                     console.log(e)

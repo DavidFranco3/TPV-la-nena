@@ -18,7 +18,7 @@ function Observaciones(props) {
         setHacerPedido(formData.hacerPedido);
         setNombreCliente(formData.nombre);
         setObservaciones(formData.observaciones);
-        setShowModal(false);
+        cancelarRegistro();
     }
 
     const onChange = e => {
