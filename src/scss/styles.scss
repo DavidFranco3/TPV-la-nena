@@ -192,6 +192,28 @@
   }
 }
 
+.vistaPreviaImagen {
+  position: relative;
+  top: -40px;
+  display: block;
+  margin: auto;
+  background-image: url("../../src/assets/png/upload-logo.png");
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 140px !important;
+    height: 140px !important;
+    border-radius: 50%;
+  }
+}
+
 .btnImprimir {
   font-size: 35px;
 }

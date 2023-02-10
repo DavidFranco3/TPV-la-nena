@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Col, Form, Row, Spinner, Alert } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner, Image, Alert } from "react-bootstrap";
 import { eliminaCategoria } from "../../../api/categorias";
 import { toast } from "react-toastify";
 import queryString from "query-string";
@@ -12,7 +12,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function EliminaCategorias(props) {
     const { datosCategoria, history, setShowModal } = props;
-    const { id, nombre, fechaActualizacion } = datosCategoria;
+    const { id, nombre, imagen, fechaActualizacion } = datosCategoria;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -52,6 +52,18 @@ function EliminaCategorias(props) {
                             Esta acción eliminará del sistema la categoria.
                         </p>
                     </Alert>
+
+                    <div className="imagenPrincipal">
+                        <h4 className="textoImagenPrincipal">Imagen de la categoría</h4>
+                        <div className="imagenProducto">
+                            <div className="vistaPreviaImagen">
+                                <Image
+                                    src={imagen}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>

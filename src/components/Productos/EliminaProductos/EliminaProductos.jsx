@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Col, Form, Spinner, Row, Alert } from "react-bootstrap";
+import { Button, Col, Form, Spinner, Row, Image, Alert } from "react-bootstrap";
 import { map } from "lodash";
 import { eliminaProductos } from "../../../api/productos";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function EliminaProductos(props) {
     const { datosProducto, history, listCategorias, setShowModal } = props;
-    const { id, nombre, categoria, precio, fechaActualizacion } = datosProducto;
+    const { id, nombre, categoria, precio, imagen, fechaActualizacion } = datosProducto;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -54,7 +54,17 @@ function EliminaProductos(props) {
                 </Alert>
 
                 <Form onSubmit={onSubmit}>
-
+                    <div className="imagenPrincipal">
+                        <h4 className="textoImagenPrincipal">Imagen del producto</h4>
+                        <div className="imagenProducto">
+                            <div className="vistaPreviaImagen">
+                                <Image
+                                    src={imagen}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>

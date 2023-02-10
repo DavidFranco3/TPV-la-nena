@@ -3,7 +3,7 @@ import "../../../scss/styles.scss";
 import { cancelarProducto } from "../../../api/productos";
 import { map } from "lodash";
 import { toast } from "react-toastify";
-import { Button, Col, Row, Form, Spinner, Alert } from "react-bootstrap";
+import { Button, Col, Row, Form, Spinner, Image, Alert } from "react-bootstrap";
 import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 function CancelarProductos(props) {
     const { datosProducto, listCategorias, history, setShowModal } = props;
 
-    const { id, nombre, categoria, precio, estado, fechaActualizacion } = datosProducto;
+    const { id, nombre, categoria, precio, estado, imagen, fechaActualizacion } = datosProducto;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -51,7 +51,6 @@ function CancelarProductos(props) {
     return (
         <>
             <div className="datosDelProducto">
-
                 {estado === "true" ?
                     (
                         <>
@@ -76,6 +75,16 @@ function CancelarProductos(props) {
                     )
                 }
                 <Form onSubmit={onSubmit}>
+                <div className="imagenPrincipal">
+                        <h4 className="textoImagenPrincipal">Imagen del producto</h4>
+                        <div className="imagenProducto">
+                            <div className="vistaPreviaImagen">
+                                <Image
+                                    src={imagen}
+                                />
+                            </div>
+                        </div>
+                    </div>
 
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
