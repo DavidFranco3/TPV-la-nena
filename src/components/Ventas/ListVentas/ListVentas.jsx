@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListVentas(props) {
-    const { listVentas, location, setRefreshCheckLogin, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
+    const { listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -145,7 +145,7 @@ function ListVentas(props) {
                                     <DetallesVenta
                                         datos={row}
                                         location={location}
-                                        history={history}
+                                        navigate={navigate}
                                     />
                                 )
                             }}
@@ -165,7 +165,7 @@ function ListVentas(props) {
                                                     <CancelarVenta
                                                         datosVentas={row}
                                                         location={location}
-                                                        history={history}
+                                                        navigate={navigate}
                                                         setShowModal={setShowModal}
                                                     />
                                                 )
@@ -187,7 +187,7 @@ function ListVentas(props) {
                                                     <CancelarVenta
                                                         datosVentas={row}
                                                         location={location}
-                                                        history={history}
+                                                        navigate={navigate}
                                                         setShowModal={setShowModal}
                                                     />
                                                 )

@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { listarPaginacionVentasActivas, totalVentasActivas, listarPaginacionVentasCanceladas, totalVentasCanceladas } from "../../api/ventas";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import { Alert, Col, Row, Spinner } from "react-bootstrap";
 import ListVentas from "../../components/Ventas/ListVentas";
@@ -11,7 +11,7 @@ import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
 
 function Ventas(props) {
-        const { setRefreshCheckLogin, location, history } = props;
+        const { setRefreshCheckLogin, location, navigate } = props;
 
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -164,7 +164,7 @@ function Ventas(props) {
                                                                 <ListVentas
                                                                         listVentas={listVentas}
                                                                         location={location}
-                                                                        history={history}
+                                                                        navigate={navigate}
                                                                         setRefreshCheckLogin={setRefreshCheckLogin}
                                                                         setRowsPerPage={setRowsPerPage}
                                                                         rowsPerPage={rowsPerPage}

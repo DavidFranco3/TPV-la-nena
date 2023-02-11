@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { listarPaginacionCategoriasActivas, totalCategoriasActivas, listarPaginacionCategoriasCanceladas, totalCategoriasCanceladas } from "../../api/categorias";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import BasicModal from "../../components/Modal/BasicModal";
 import ListCategorias from "../../components/Categorias/ListCategorias";
@@ -15,7 +15,7 @@ import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react'
 
 function Categorias(props) {
-    const { setRefreshCheckLogin, location, history } = props;
+    const { setRefreshCheckLogin, location, navigate } = props;
 
     // Para definir el estado del switch
     const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -155,7 +155,7 @@ function Categorias(props) {
                                         <RegistroCategorias
                                             setShowModal={setShowModal}
                                             location={location}
-                                            history={history}
+                                            navigate={navigate}
                                         />
                                     )
                                 }}
@@ -198,7 +198,7 @@ function Categorias(props) {
                                     setRefreshCheckLogin={setRefreshCheckLogin}
                                     listCategorias={listCategorias}
                                     location={location}
-                                    history={history}
+                                    navigate={navigate}
                                     setRowsPerPage={setRowsPerPage}
                                     rowsPerPage={rowsPerPage}
                                     page={page}

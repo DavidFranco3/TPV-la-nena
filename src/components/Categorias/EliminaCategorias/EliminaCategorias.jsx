@@ -11,7 +11,8 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function EliminaCategorias(props) {
-    const { datosCategoria, history, setShowModal } = props;
+    const { datosCategoria, navigate, setShowModal } = props;
+
     const { id, nombre, imagen, fechaActualizacion } = datosCategoria;
 
     dayjs.locale('es');
@@ -32,7 +33,7 @@ function EliminaCategorias(props) {
             eliminaCategoria(id).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
-                history.push({
+                navigate({
                     search: queryString.stringify(""),
                 });
                 cancelarRegistro();
@@ -49,7 +50,7 @@ function EliminaCategorias(props) {
                     <Alert variant="danger">
                         <Alert.Heading>Atención! Acción destructiva!</Alert.Heading>
                         <p className="mensaje">
-                            Esta acción eliminará del sistema la categoria.
+                            Esta acción eliminará del sistema la categoría.
                         </p>
                     </Alert>
 

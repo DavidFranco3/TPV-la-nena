@@ -52,7 +52,7 @@ export async function listarCategorias() {
     return await axios.get(API_HOST + ENDPOINTListarCategorias, config);
 }
 
-// Listar las categorias paginandolas
+// Listar las categorias activas paginandolas
 export async function listarPaginacionCategoriasActivas(pagina, limite) {
     const config = {
         headers: {
@@ -64,7 +64,7 @@ export async function listarPaginacionCategoriasActivas(pagina, limite) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoCategoriasActivas + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
-// Listar las categorias paginandolas
+// Listar las categorias canceladas paginandolas
 export async function listarPaginacionCategoriasCanceladas(pagina, limite) {
     const config = {
         headers: {
@@ -103,7 +103,7 @@ export async function actualizaCategoria(id, data) {
     return await axios.put(API_HOST + ENDPOINTActualizarCategorias + `/${id}`, data, config);
 }
 
-// Cancelar categorias
+// Cambiar el estado de las categorias
 export async function cancelarCategoria(id, data) {
     const config = {
         headers: {
@@ -116,7 +116,7 @@ export async function cancelarCategoria(id, data) {
     return await axios.put(API_HOST + ENDPOINTCancelarCategorias + `/${id}`, data, config);
 }
 
-// Obtiene el total de categorias registradas
+// Obtiene el total de categorias activas registradas
 export async function totalCategoriasActivas() {
     const config = {
         headers: {
@@ -128,7 +128,7 @@ export async function totalCategoriasActivas() {
     return await axios.get(API_HOST + ENDPOINTTotalCategoriasActivas, config);
 }
 
-// Obtiene el total de categorias registradas
+// Obtiene el total de categorias canceladas registradas
 export async function totalCategoriasCanceladas() {
     const config = {
         headers: {

@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../scss/styles.scss";
 
 function ModificaProductos(props) {
-    const { datosProducto, listCategorias, history, setShowModal } = props;
+    const { datosProducto, listCategorias, navigate, setShowModal } = props;
 
     const { id, imagen } = datosProducto;
     const [formData, setFormData] = useState(initialFormValue(datosProducto));
@@ -45,7 +45,7 @@ function ModificaProductos(props) {
                     }
                     actualizaProductos(id, dataTemp).then(response => {
                         const { data } = response;
-                        history.push({
+                        navigate({
                             search: queryString.stringify(""),
                         });
                         toast.success(data.mensaje);

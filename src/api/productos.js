@@ -53,7 +53,7 @@ export async function listarProductos() {
     return await axios.get(API_HOST + ENDPOINTListarProductos, config);
 }
 
-// Listar los productos paginandolos
+// Listar los productos activos paginandolos
 export async function listarPaginacionProductosActivos(pagina, limite) {
     const config = {
         headers: {
@@ -65,7 +65,7 @@ export async function listarPaginacionProductosActivos(pagina, limite) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoProductosActivos + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
-// Listar los productos paginandolos
+// Listar los productos cancelados paginandolos
 export async function listarPaginacionProductosCancelados(pagina, limite) {
     const config = {
         headers: {
@@ -116,7 +116,7 @@ export async function actualizaProductos(id, data) {
     return await axios.put(API_HOST + ENDPOINTActualizarProductos + `/${id}`, data, config);
 }
 
-// Cancelar productos
+// Cambiar el estado del producto
 export async function cancelarProducto(id, data) {
     const config = {
         headers: {

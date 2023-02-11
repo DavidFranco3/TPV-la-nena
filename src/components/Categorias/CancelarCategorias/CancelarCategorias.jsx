@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function CancelarCategorias(props) {
-    const { datosCategoria, history, setShowModal } = props;
+    const { datosCategoria, navigate, setShowModal } = props;
 
     const { id, nombre, imagen, estado, fechaActualizacion } = datosCategoria;
 
@@ -35,10 +35,10 @@ function CancelarCategorias(props) {
             cancelarCategoria(id, dataTemp).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
-                history.push({
+                navigate({
                     search: queryString.stringify(""),
                 });
-                cancelarCategoria();
+                cancelarRegistro();
             }).catch(e => {
                 console.log(e)
             })

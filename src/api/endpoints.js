@@ -12,7 +12,7 @@ export const ENDPOINTEliminarUsuarios = "/usuarios/eliminar";
 export const ENDPOINTDeshabilitarUsuarios = "/usuarios/deshabilitar";
 export const ENDPOINTActualizarUsuarios = "/usuarios/actualizar";
 
-// Categorias
+// Categorías
 export const ENDPOINTRegistroCategorias = "/categorias/registro";
 export const ENDPOINTListarCategorias = "/categorias/listar";
 export const ENDPOINTListarPaginandoCategoriasActivas = "/categorias/listarPaginandoActivas";

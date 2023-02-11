@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function CancelarProductos(props) {
-    const { datosProducto, listCategorias, history, setShowModal } = props;
+    const { datosProducto, listCategorias, navigate, setShowModal } = props;
 
     const { id, nombre, categoria, precio, estado, imagen, fechaActualizacion } = datosProducto;
 
@@ -36,7 +36,7 @@ function CancelarProductos(props) {
             cancelarProducto(id, dataTemp).then(response => {
                 const { data } = response;
                 toast.success(data.mensaje)
-                history.push({
+                navigate({
                     search: queryString.stringify(""),
                 });
                 cancelarRegistro();

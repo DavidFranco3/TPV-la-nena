@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListCategorias(props) {
-    const { listCategorias, location, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
+    const { listCategorias, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -90,7 +90,7 @@ function ListCategorias(props) {
                                                 <CancelarCategorias
                                                     datosCategoria={row}
                                                     location={location}
-                                                    history={history}
+                                                    navigate={navigate}
                                                     setShowModal={setShowModal}
                                                 />
                                             )
@@ -113,7 +113,7 @@ function ListCategorias(props) {
                                                 <CancelarCategorias
                                                     datosCategoria={row}
                                                     location={location}
-                                                    history={history}
+                                                    navigate={navigate}
                                                     setShowModal={setShowModal}
                                                 />
                                             )
@@ -151,7 +151,7 @@ function ListCategorias(props) {
                                     <ModificaCategorias
                                         datosCategorias={row}
                                         location={location}
-                                        history={history}
+                                        navigate={navigate}
                                         setShowModal={setShowModal}
                                     />
                                 )
@@ -168,7 +168,7 @@ function ListCategorias(props) {
                                     <EliminaCategorias
                                         datosCategoria={row}
                                         location={location}
-                                        history={history}
+                                        navigate={navigate}
                                         setShowModal={setShowModal}
                                     />
                                 )

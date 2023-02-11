@@ -10,7 +10,7 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function RegistroCategorias(props) {
-    const { setShowModal, history } = props;
+    const { setShowModal, navigate } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
 
@@ -42,7 +42,7 @@ function RegistroCategorias(props) {
                     }
                     registraCategorias(dataTemp).then(response => {
                         const { data } = response;
-                        history.push({
+                        navigate({
                             search: queryString.stringify(""),
                         });
                         toast.success(data.mensaje);

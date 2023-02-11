@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import Menu from "../../components/TerminalPV/Menu";
 import Tiquet from "../../components/TerminalPV/Tiquet";
 import "../../scss/styles.scss";

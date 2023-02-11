@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListProductos(props) {
-    const { listProductos, listCategorias, location, history, rowsPerPage, setRowsPerPage, page, setPage, noTotalProductos, setRefreshCheckLogin } = props;
+    const { listProductos, listCategorias, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalProductos, setRefreshCheckLogin } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -123,7 +123,7 @@ function ListProductos(props) {
                                                     datosProducto={row}
                                                     listCategorias={listCategorias}
                                                     location={location}
-                                                    history={history}
+                                                    navigate={navigate}
                                                     setShowModal={setShowModal}
                                                 />
                                             )
@@ -147,7 +147,7 @@ function ListProductos(props) {
                                                     datosProducto={row}
                                                     listCategorias={listCategorias}
                                                     location={location}
-                                                    history={history}
+                                                    navigate={navigate}
                                                     setShowModal={setShowModal}
                                                 />
                                             )
@@ -187,7 +187,7 @@ function ListProductos(props) {
                                         datosProducto={row}
                                         listCategorias={listCategorias}
                                         location={location}
-                                        history={history}
+                                        navigate={navigate}
                                         setShowModal={setShowModal}
                                     />
                                 )
@@ -204,7 +204,7 @@ function ListProductos(props) {
                                         datosProducto={row}
                                         listCategorias={listCategorias}
                                         location={location}
-                                        history={history}
+                                        navigate={navigate}
                                         setShowModal={setShowModal}
                                         setRefreshCheckLogin={setRefreshCheckLogin}
                                     />

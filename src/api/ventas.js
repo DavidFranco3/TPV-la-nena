@@ -27,8 +27,6 @@ import { getTokenApi } from "./auth";
 
 // Registra ventas
 export async function registraVentas(data) {
-    //console.log(data)
-
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -53,7 +51,7 @@ export async function obtenerVentas(params) {
 }
 
 // Para listar todas las ventas
-export async function listarVentas(params) {
+export async function listarVentas() {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -64,7 +62,7 @@ export async function listarVentas(params) {
     return await axios.get(API_HOST + ENDPOINTListarVentas, config);
 }
 
-// Para listar todas las ventas
+// Para obtener el total de ventas registradas
 export async function totalVentasActivas() {
     const config = {
         headers: {
@@ -88,7 +86,7 @@ export async function totalVentas() {
     return await axios.get(API_HOST + ENDPOINTTotalVentas, config);
 }
 
-// Para listar todas las ventas
+// Para listar todas las ventas canceladas
 export async function totalVentasCanceladas() {
     const config = {
         headers: {
@@ -124,7 +122,7 @@ export async function listarVentasPorMes(mes) {
     return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?mes=${mes}`, config);
 }
 
-// Listar las ventas paginandolas
+// Listar las ventas activas paginandolas
 export async function listarPaginacionVentasActivas(pagina, limite) {
     const config = {
         headers: {
@@ -148,7 +146,7 @@ export async function listarPaginacionVentas(pagina, limite) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentas + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
-// Listar las ventas paginandolas
+// Listar las ventas canceladas paginandolas
 export async function listarPaginacionVentasCanceladas(pagina, limite) {
     const config = {
         headers: {
@@ -160,7 +158,7 @@ export async function listarPaginacionVentasCanceladas(pagina, limite) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCanceladas + `/?pagina=${pagina}&&limite=${limite}`, config);
 }
 
-// Listar las ventas paginandolas
+// Listar las ventas de un dia especifico paginandolas
 export async function listarPaginacionVentasDia(pagina, limite, dia) {
     const config = {
         headers: {
@@ -172,7 +170,7 @@ export async function listarPaginacionVentasDia(pagina, limite, dia) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasDia + `/?pagina=${pagina}&&limite=${limite}&&dia=${dia}`, config);
 }
 
-// Listar las ventas paginandolas
+// Listar las ventas de un mes especifico paginandolas
 export async function listarPaginacionVentasMes(pagina, limite, mes) {
     const config = {
         headers: {
@@ -208,7 +206,7 @@ export async function listarDetallesVentasPorDia(dia) {
     return await axios.get(API_HOST + ENDPOINTListarDetallesVentasDia + `?dia=${dia}`, config);
 }
 
-// Listar solo los productos que se vendieron en el día solicitado -- ENDPOINTListarDetallesProductosVendidosDia
+// Listar solo los productos que se vendieron en el día solicitado
 export async function listarDetallesProductosVentasPorDia(dia) {
     const config = {
         headers: {
@@ -220,7 +218,7 @@ export async function listarDetallesProductosVentasPorDia(dia) {
     return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosDia + `?dia=${dia}`, config);
 }
 
-// Listar solo los productos que se vendieron en el día solicitado -- ENDPOINTListarDetallesProductosVendidosDia
+// Listar solo los productos que se vendieron en el día solicitado
 export async function listarDetallesProductosVentasPorMes(mes) {
     const config = {
         headers: {
@@ -258,7 +256,7 @@ export async function actualizaVenta(id, data) {
     return await axios.put(API_HOST + ENDPOINTActualizarVentas + `/${id}`, data, config);
 }
 
-// Cancelar ventas
+// Cambiar estado de las ventas
 export async function cancelarVenta(id, data) {
     const config = {
         headers: {

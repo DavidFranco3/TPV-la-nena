@@ -1,8 +1,8 @@
 import { useEffect, Fragment } from 'react';
-import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
-import { useHistory } from "react-router-dom";
+import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import LogoLANENA from "../../assets/jpg/logo-la-nena-2.jpg";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
@@ -11,12 +11,12 @@ import "../../scss/styles.scss";
 function LayoutPrincipal(props) {
     const { setRefreshCheckLogin, children } = props;
 
-    const redirecciona = useHistory();
+    const redirecciona = useNavigate();
 
     //Para cerrar la sesion
     const cerrarSesion = () => {
         toast.success("Sesión cerrada");
-        redirecciona.push("")
+        redirecciona("")
         logoutApi();
         setRefreshCheckLogin(true);
     }
@@ -36,7 +36,7 @@ function LayoutPrincipal(props) {
 
     // Para ir hacia el inicio
     const enrutaInicio = () => {
-        redirecciona.push("/")
+        redirecciona("/")
     }
 
     return (
@@ -113,9 +113,9 @@ function LayoutPrincipal(props) {
                                         <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
-                                                <XIcon className="block h-6 w-6" aria-hidden="true" />
+                                                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                                             ) : (
-                                                <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                                                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                                             )}
                                         </Disclosure.Button>
                                     </div>

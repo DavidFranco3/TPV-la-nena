@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Redirect, withRouter } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import "../../scss/styles.scss";
@@ -22,7 +23,7 @@ function Error404(props) {
 
     return (
         <>
-            <Redirect to="/" />
+            <Navigate to="/" />
         </>
     );
 }

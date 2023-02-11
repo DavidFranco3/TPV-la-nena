@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, Image } from 'react-bootstrap';
 import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
@@ -16,7 +16,7 @@ import LogoCategorias from '../../assets/png/categorias.png';
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
 
-  const enrutamiento = useHistory();
+  const enrutamiento = useNavigate();
 
   // Cerrado de sesión automatico
   useEffect(() => {
@@ -52,7 +52,7 @@ function Dashboard(props) {
     }
   }, []);
 
-  const goTo = (ruta) => enrutamiento.push(ruta);
+  const goTo = (ruta) => enrutamiento(ruta);
 
   const ItemCard = ({ path, logo, title }) => (
     <Card>

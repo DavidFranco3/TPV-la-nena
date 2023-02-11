@@ -10,43 +10,35 @@ import HistoricoVentasMes from "../page/HistoricoVentasMes";
 const configRouting = [
     {
         path: "/HistoricoVentasMes",
-        exact: true,
         page: HistoricoVentasMes
     },    
     {
         path: "/HistoricoVentasDia",
-        exact: true,
         page: HistoricoVentasDia
     },
     {
         path: "/Productos",
-        exact: true,
         page: Productos
     },
     {
         path: "/Categorias",
-        exact: true,
         page: Categorias
     },
     {
         path: "/Ventas",
-        exact: true,
         page: Ventas
     },
     {
         path: "/",
-        exact: true,
         page: Dashboard,
         default: true
     },
     {
         path: "/TerminalPV",
-        exact: true,
         page: TerminalPV
     },
     {
         path: "*",
-        exact: true,
         page: Error404
     }
 ]

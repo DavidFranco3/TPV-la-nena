@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginacionProductosCancelados, totalProductosCancelados } from "../../api/productos";
@@ -16,7 +16,7 @@ import "../../scss/styles.scss";
 import { Switch } from '@headlessui/react';
 
 function Productos(props) {
-    const { setRefreshCheckLogin, location, history } = props;
+    const { setRefreshCheckLogin, location, navigate } = props;
 
     // Para definir el estado del switch
     const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -179,7 +179,7 @@ function Productos(props) {
                                         <RegistrarProducto
                                             setShowModal={setShowModal}
                                             location={location}
-                                            history={history}
+                                            navigate={navigate}
                                             listCategorias={listCategorias}
                                         />
                                     )
@@ -225,7 +225,7 @@ function Productos(props) {
                                     listProductos={listProductos}
                                     listCategorias={listCategorias}
                                     location={location}
-                                    history={history}
+                                    navigate={navigate}
                                     setRowsPerPage={setRowsPerPage}
                                     rowsPerPage={rowsPerPage}
                                     page={page}

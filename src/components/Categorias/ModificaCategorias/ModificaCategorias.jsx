@@ -10,9 +10,9 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ModificaCategorias(props) {
-    const { datosCategorias, history, setShowModal } = props;
+    const { datosCategorias, navigate, setShowModal } = props;
+
     const { id, imagen } = datosCategorias;
-    //console.log(datosCategorias)
 
     // Para almacenar la imagen
     const [imagenFile, setImagenFile] = useState(imagen);
@@ -46,7 +46,7 @@ function ModificaCategorias(props) {
                     }
                     actualizaCategoria(id, dataTemp).then(response => {
                         const { data } = response;
-                        history.push({
+                        navigate({
                             search: queryString.stringify(""),
                         });
                         toast.success(data.mensaje);

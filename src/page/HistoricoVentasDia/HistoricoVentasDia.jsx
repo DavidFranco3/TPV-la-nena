@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import ListHistoricoVentas from "../../components/HistoricoVentasDia/ListHistoricoVentasDia";
 import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
@@ -10,7 +10,7 @@ import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
 function HistoricoVentasDia(props) {
-    const { setRefreshCheckLogin, location, history } = props;
+    const { setRefreshCheckLogin, location, navigate } = props;
 
     // Cerrado de sesión automatico
     useEffect(() => {
@@ -94,7 +94,7 @@ function HistoricoVentasDia(props) {
                                 <ListHistoricoVentas
                                     listVentas={listVentas}
                                     location={location}
-                                    history={history}
+                                    navigate={navigate}
                                     setRefreshCheckLogin={setRefreshCheckLogin}
                                     setRowsPerPage={setRowsPerPage}
                                     rowsPerPage={rowsPerPage}
