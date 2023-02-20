@@ -4,17 +4,17 @@ import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
-import EliminaCategorias from "../EliminaCategorias";
-import ModificaCategorias from "../ModificaCategorias";
-import CancelarCategorias from "../CancelarCategorias";
+import CancelarUsuarios from '../CancelarUsuarios';
+import EliminaUsuarios from '../EliminaUsuarios';
+import ModificaUsuarios from '../ModificaUsuarios';
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-function ListCategorias(props) {
-    const { listCategorias, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
+function ListUsuarios(props) {
+    const { listUsuarios, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalUsuarios } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -25,29 +25,29 @@ function ListCategorias(props) {
     const [titulosModal, setTitulosModal] = useState(null);
 
     //Para la eliminacion de categorias
-    const eliminaCategorias = (content) => {
-        setTitulosModal("Eliminación categoría");
+    const eliminaUsuario = (content) => {
+        setTitulosModal("Eliminación usuario");
         setContentModal(content);
         setShowModal(true);
     }
 
     //Para la modificacion de categorias
-    const modificaCategorias = (content) => {
-        setTitulosModal("Modificación categoría");
+    const modificaUsuarios = (content) => {
+        setTitulosModal("Modificación usuario");
         setContentModal(content);
         setShowModal(true);
     }
 
     // Para cancelar la venta
-    const cancelarCategoria = (content) => {
-        setTitulosModal("Cancelar categoría");
+    const cancelarUsuario = (content) => {
+        setTitulosModal("Cancelar usuario");
         setContentModal(content);
         setShowModal(true);
     }
 
     // Para cancelar la venta
-    const recuperarCategoria = (content) => {
-        setTitulosModal("Recuperar categoría");
+    const recuperarUsuario = (content) => {
+        setTitulosModal("Recuperar usuario");
         setContentModal(content);
         setShowModal(true);
     }
@@ -73,22 +73,43 @@ function ListCategorias(props) {
             reorder: false
         },
         {
+            name: "Usuario",
+            selector: row => row.usuario,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Password",
+            selector: row => row.password,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Tipo",
+            selector: row => row.admin == "true" ? "Administrador" : "Cajero",
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
             name: "Estado",
             selector: row => (
                 <>
                     {
-                        row.estado === "true" ?
+                        row.estadoUsuario === "true" ?
                             (
                                 <>
                                     <Badge
                                         bg="success"
                                         //className="estado"
                                         className="indicadorCancelarVenta"
-                                        title="Cancelar categoria"
+                                        title="Cancelar usuario"
                                         onClick={() => {
-                                            cancelarCategoria(
-                                                <CancelarCategorias
-                                                    datosCategoria={row}
+                                            cancelarUsuario(
+                                                <CancelarUsuarios
+                                                    datosUsuario={row}
                                                     location={location}
                                                     navigate={navigate}
                                                     setShowModal={setShowModal}
@@ -96,7 +117,7 @@ function ListCategorias(props) {
                                             )
                                         }}
                                     >
-                                        Habilitada
+                                        Habilitado
                                     </Badge>
                                 </>
                             )
@@ -107,11 +128,11 @@ function ListCategorias(props) {
                                         bg="danger"
                                         //className="estado"
                                         className="indicadorCancelarVenta"
-                                        title="Recuperar categoria"
+                                        title="Recuperar usuario"
                                         onClick={() => {
-                                            recuperarCategoria(
-                                                <CancelarCategorias
-                                                    datosCategoria={row}
+                                            recuperarUsuario(
+                                                <CancelarUsuarios
+                                                    datosUsuario={row}
                                                     location={location}
                                                     navigate={navigate}
                                                     setShowModal={setShowModal}
@@ -119,7 +140,7 @@ function ListCategorias(props) {
                                             )
                                         }}
                                     >
-                                        Deshabilitada
+                                        Deshabilitado
                                     </Badge>
                                 </>
                             )
@@ -143,13 +164,13 @@ function ListCategorias(props) {
                 <>
                     <div className="flex justify-end items-center space-x-4">
                         <Badge
-                            title="Modificar Categoría"
+                            title="Modificar usuario"
                             bg="success"
                             className="editar"
                             onClick={() => {
-                                modificaCategorias(
-                                    <ModificaCategorias
-                                        datosCategorias={row}
+                                modificaUsuarios(
+                                    <ModificaUsuarios
+                                        datosUsuario={row}
                                         location={location}
                                         navigate={navigate}
                                         setShowModal={setShowModal}
@@ -158,15 +179,14 @@ function ListCategorias(props) {
                             }}>
                             <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
                         </Badge>
-
                         <Badge
-                            title="Eliminar categoría"
+                            title="Eliminar usuario"
                             bg="danger"
                             className="eliminar"
                             onClick={() => {
-                                eliminaCategorias(
-                                    <EliminaCategorias
-                                        datosCategoria={row}
+                                eliminaUsuario(
+                                    <EliminaUsuarios
+                                        datosUsuario={row}
                                         location={location}
                                         navigate={navigate}
                                         setShowModal={setShowModal}
@@ -192,7 +212,7 @@ function ListCategorias(props) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setRows(listCategorias);
+            setRows(listUsuarios);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
@@ -211,7 +231,7 @@ function ListCategorias(props) {
                 <DataTable
                     columns={columns}
                     noDataComponent="No hay registros para mostrar"
-                    data={listCategorias}
+                    data={listUsuarios}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}
@@ -219,7 +239,7 @@ function ListCategorias(props) {
                     sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
                     pagination
                     paginationServer
-                    paginationTotalRows={noTotalCategorias}
+                    paginationTotalRows={noTotalUsuarios}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     onChangePage={handleChangePage}
                 />
@@ -232,4 +252,4 @@ function ListCategorias(props) {
     );
 }
 
-export default ListCategorias;
+export default ListUsuarios;

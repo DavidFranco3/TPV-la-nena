@@ -6,7 +6,11 @@ import {
     ENDPOINTObtenerUsuarios,
     ENDPOINTEliminarUsuarios,
     ENDPOINTDeshabilitarUsuarios,
-    ENDPOINTActualizarUsuarios
+    ENDPOINTActualizarUsuarios,
+    ENDPOINTListarPaginandoUsuariosActivos,
+    ENDPOINTTotalUsuariosActivos,
+    ENDPOINTListarPaginandoUsuariosCancelados,
+    ENDPOINTTotalUsuariosCancelados
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -60,6 +64,54 @@ export async function listarPaginacionUsuarios(pagina, limite) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarPaginandoUsuarios + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar las categorias activas paginandolas
+export async function listarPaginacionUsuariosActivos(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoUsuariosActivos + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar las categorias canceladas paginandolas
+export async function listarPaginacionUsuariosCancelados(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoUsuariosCancelados + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Obtiene el total de categorias activas registradas
+export async function totalUsuariosActivos() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalUsuariosActivos, config);
+}
+
+// Obtiene el total de categorias canceladas registradas
+export async function totalUsuariosCancelados() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalUsuariosCancelados, config);
 }
 
 // Elimina cliente fisicamente de la bd

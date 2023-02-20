@@ -6,7 +6,7 @@ import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginaci
 import ListProductos from "../../components/Productos/ListProductos";
 import { listarCategorias } from "../../api/categorias";
 import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
-import RegistrarProducto from "../../components/Productos/RegistraProductos/";
+import RegistrarProducto from "../../components/Productos/RegistraProductos";
 import BasicModal from "../../components/Modal/BasicModal";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

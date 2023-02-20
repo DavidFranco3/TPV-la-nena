@@ -12,6 +12,7 @@ import LogoHistorialDia from '../../assets/png/historialDia.png';
 import LogoHistorialMes from '../../assets/png/historialMes.png';
 import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
+import LogoUsuarios from '../../assets/png/usuarios.png';
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -100,6 +101,11 @@ function Dashboard(props) {
                   path={'/Categorias'}
                   logo={LogoCategorias}
                   title={'Categorías'}
+                />
+                <ItemCard
+                  path={'/Usuarios'}
+                  logo={LogoUsuarios}
+                  title={'Usuarios'}
                 />
               </div>
             </>

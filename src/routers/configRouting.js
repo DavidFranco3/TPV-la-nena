@@ -6,6 +6,7 @@ import Error404 from "../page/Error404";
 import TerminalPV from "../page/TerminalPV";
 import HistoricoVentasDia from "../page/HistoricoVentasDia";
 import HistoricoVentasMes from "../page/HistoricoVentasMes";
+import Usuarios from "../page/Usuarios";
 
 const configRouting = [
     {
@@ -29,13 +30,17 @@ const configRouting = [
         page: Ventas
     },
     {
+        path: "/TerminalPV",
+        page: TerminalPV
+    },
+    {
+        path: "/Usuarios",
+        page: Usuarios
+    },
+    {
         path: "/",
         page: Dashboard,
         default: true
-    },
-    {
-        path: "/TerminalPV",
-        page: TerminalPV
     },
     {
         path: "*",
