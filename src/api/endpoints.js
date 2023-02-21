@@ -63,3 +63,18 @@ export const ENDPOINTListarDetallesVentasDia = "/ventas/listarDetallesVentasDia"
 export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes";
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
+
+// Unidades medida
+export const ENDPOINTRegistraUM = "/unidadesMedida/registro";
+export const ENDPOINTListarUM = "/unidadesMedida/listar";
+export const ENDPOINTListarUMPorTipo = "/unidadesMedida/listarPorTipo";
+export const ENDPOINTObtenerUM = "/unidadesMedida/obtener";
+export const ENDPOINTEliminarUM = "/unidadesMedida/eliminar";
+export const ENDPOINTActualizarUM = "/unidadesMedida/actualizar";
+export const ENDPOINTDeshabilitaUM = "/unidadesMedida/deshabilitar";
+export const ENDPOINTListarUMPaginacion = "/unidadesMedida/listarPaginando";
+export const ENDPOINTTotalUM = "/unidadesMedida/total";
+export const ENDPOINTListarPaginandoUMActivas = "/unidadesMedida/listarPaginandoActivos";
+export const ENDPOINTTotalUMActivas = "/unidadesMedida/totalUMActivos";
+export const ENDPOINTListarPaginandoUMCanceladas = "/unidadesMedida/listarPaginandoCancelados";
+export const ENDPOINTTotalUMCanceladas = "/unidadesMedida/totalUMCancelados";

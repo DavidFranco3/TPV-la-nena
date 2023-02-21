@@ -7,6 +7,7 @@ import TerminalPV from "../page/TerminalPV";
 import HistoricoVentasDia from "../page/HistoricoVentasDia";
 import HistoricoVentasMes from "../page/HistoricoVentasMes";
 import Usuarios from "../page/Usuarios";
+import UnidadesMedida from "../page/UnidadesMedida";
 
 const configRouting = [
     {
@@ -36,6 +37,10 @@ const configRouting = [
     {
         path: "/Usuarios",
         page: Usuarios
+    },
+    {
+        path: "/UnidadesMedida",
+        page: UnidadesMedida
     },
     {
         path: "/",

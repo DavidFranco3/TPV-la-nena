@@ -111,7 +111,7 @@ function Productos(props) {
 
                     listarPaginacionProductosCancelados(page, rowsPerPage).then(response => {
                         const { data } = response;
-                        if (!listarPaginacionProductosActivos && data) {
+                        if (!listProductos && data) {
                             setListProductos(formatModelProductos(data));
                         } else {
                             const datosProductos = formatModelProductos(data);
