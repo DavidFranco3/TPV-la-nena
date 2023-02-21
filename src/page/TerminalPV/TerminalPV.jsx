@@ -4,7 +4,7 @@ import Menu from "../../components/TerminalPV/Menu";
 import Tiquet from "../../components/TerminalPV/Tiquet";
 import "../../scss/styles.scss";
 import { listarProductosCategoria } from "../../api/productos";
-import { Alert, Col, Row } from "react-bootstrap";
+import { Alert, Col, Row, Button } from "react-bootstrap";
 import { listarCategorias } from "../../api/categorias";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
@@ -12,9 +12,19 @@ import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSi
 import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function TerminalPv(props) {
     const { setRefreshCheckLogin } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
@@ -115,44 +125,59 @@ function TerminalPv(props) {
 
     return (
         <>
-                <Alert className="fondoPrincipalAlert">
-                    <Row>
-                        <Col xs={12} md={4} className="titulo">
-                            <h1 className="font-bold">Ventas</h1>
-                        </Col>
-                    </Row>
-                </Alert>
+            <Alert className="fondoPrincipalAlert">
+                <Row>
+                    <Col xs={12} md={4} className="titulo">
+                        <h1 className="font-bold">Ventas</h1>
+                    </Col>
+                    <Col xs={6} md={8}>
+                        <div style={{ float: 'right' }}>
+                            <Button
+                                title="Regresar a la pagina anterior"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    rutaRegreso();
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                            </Button>
 
-                {
-                    listProductos && listCategorias ?
-                        (
-                            <>
-                                <div className="app">
-                                    <div className="pos">
-                                        <Tiquet
-                                            products={ticketItems}
-                                            empty={emptyTicket}
-                                            remove={removeProduct}
-                                        />
-                                        <Menu
-                                            addItems={addItems}
-                                            listProductos={listProductos}
-                                            listCategorias={listCategorias}
-                                            setCategoriaActual={setCategoriaActual}
-                                            categoriaActual={categoriaActual}
-                                        />
-                                    </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Alert>
+
+            {
+                listProductos && listCategorias ?
+                    (
+                        <>
+                            <div className="app">
+                                <div className="pos">
+                                    <Tiquet
+                                        products={ticketItems}
+                                        empty={emptyTicket}
+                                        remove={removeProduct}
+                                    />
+                                    <Menu
+                                        addItems={addItems}
+                                        listProductos={listProductos}
+                                        listCategorias={listCategorias}
+                                        setCategoriaActual={setCategoriaActual}
+                                        categoriaActual={categoriaActual}
+                                    />
                                 </div>
+                            </div>
 
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <Lottie loop={true} play={true} animationData={AnimacionLoading} />
-                            </>
-                        )
-                }
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <Lottie loop={true} play={true} animationData={AnimacionLoading} />
+                        </>
+                    )
+            }
 
         </>
     );

@@ -6,6 +6,8 @@ import { Card, Image } from 'react-bootstrap';
 import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
+import Lottie from "react-lottie-player";
+import AnimacionLoading from "../../assets/json/loading.json";
 // Importaciones de imagenes del dashboard
 import LogoVentas from '../../assets/png/ventas.png';
 import LogoHistorial from '../../assets/png/facturas.png';
@@ -23,8 +25,8 @@ function Dashboard(props) {
 
   const enrutamiento = useNavigate();
 
-  const [estadoUsuario, setEstadoUsuario] = useState("");
-  const [datosUsuario, setDatosUsuario] = useState("");
+  const [estadoUsuario, setEstadoUsuario] = useState(null);
+  const [datosUsuario, setDatosUsuario] = useState(null);
 
   useEffect(() => {
     try {

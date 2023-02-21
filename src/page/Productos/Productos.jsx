@@ -10,15 +10,23 @@ import { listarCategorias } from "../../api/categorias";
 import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
 import RegistrarProducto from "../../components/Productos/RegistraProductos";
 import BasicModal from "../../components/Modal/BasicModal";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import "../../scss/styles.scss";
 import { Switch } from '@headlessui/react';
+import { useNavigate } from "react-router-dom";
 
 function Productos(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     // Para definir el estado del switch
     const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -185,15 +193,16 @@ function Productos(props) {
         <>
             <Alert className="fondoPrincipalAlert">
                 <Row>
-                    <Col xs={12} md={4} className="titulo">
+                    <Col xs={12} md={8} className="titulo">
                         <h1 className="font-bold">Productos</h1>
                     </Col>
-                    <Col xs={6} md={8}>
+                    <Col xs={6} md={4}>
                         <div style={{ float: 'right' }}>
 
                             <Button
                                 title="Registrar un nuevo producto"
                                 className="btnRegistro"
+                                style={{ marginRight: '10px' }}
                                 onClick={() => {
                                     registroProductos(
                                         <RegistrarProducto
@@ -208,6 +217,16 @@ function Productos(props) {
                                 <FontAwesomeIcon icon={faCirclePlus} /> Registrar
                             </Button>
 
+                            <Button
+                                title="Regresar a la pagina anterior"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    rutaRegreso();
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                            </Button>
                         </div>
                     </Col>
                 </Row>

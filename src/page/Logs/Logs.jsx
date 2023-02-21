@@ -1,6 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { Alert, Col, Row, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
 import { withRouter } from "../../utils/withRouter";
 import { listarLogsPaginacion, totalLogs } from "../../api/logsGenerales";
 import ListLogs from "../../components/Logs/ListLogs";
@@ -11,9 +10,19 @@ import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSi
 import { toast } from "react-toastify";
 import Lottie from 'react-lottie-player';
 import AnimacionLoading from '../../assets/json/loading.json';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Logs(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
@@ -106,6 +115,20 @@ function Logs(props) {
                         <h1 className="font-bold">
                             Logs del sistema
                         </h1>
+                    </Col>
+                    <Col xs={6} md={8}>
+                        <div style={{ float: 'right' }}>
+                            <Button
+                                title="Regresar a la pagina anterior"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    rutaRegreso();
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                            </Button>
+                        </div>
                     </Col>
                 </Row>
             </Alert>

@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { listarPaginacionVentasActivas, totalVentasActivas, listarPaginacionVentasCanceladas, totalVentasCanceladas } from "../../api/ventas";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
-import { Alert, Col, Row, Spinner } from "react-bootstrap";
+import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
 import ListVentas from "../../components/Ventas/ListVentas";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
@@ -11,9 +11,19 @@ import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Ventas(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
+
+        // Para definir el enrutamiento
+        const enrutamiento = useNavigate();
+
+        const rutaRegreso = () => {
+                enrutamiento("/")
+        }
 
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -149,6 +159,20 @@ function Ventas(props) {
                                 <Row>
                                         <Col xs={12} md={4} className="titulo">
                                                 <h1 className="font-bold">Historial general</h1>
+                                        </Col>
+                                        <Col xs={6} md={8}>
+                                                <div style={{ float: 'right' }}>
+                                                        <Button
+                                                                title="Regresar a la pagina anterior"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() => {
+                                                                        rutaRegreso();
+                                                                }}
+                                                        >
+                                                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                                                        </Button>
+                                                </div>
                                         </Col>
                                 </Row>
                         </Alert>

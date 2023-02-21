@@ -13,11 +13,19 @@ import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Usuarios(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
+
+        // Para definir el enrutamiento
+        const enrutamiento = useNavigate();
+
+        const rutaRegreso = () => {
+                enrutamiento("/")
+        }
 
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -171,6 +179,7 @@ function Usuarios(props) {
                                                         <Button
                                                                 title="Registrar un nuevo usuario"
                                                                 className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
                                                                 onClick={() => {
                                                                         registroUsuarios(
                                                                                 <RegistrarUsuario
@@ -183,7 +192,16 @@ function Usuarios(props) {
                                                         >
                                                                 <FontAwesomeIcon icon={faCirclePlus} /> Registrar
                                                         </Button>
-
+                                                        <Button
+                                                                title="Regresar a la pagina anterior"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() => {
+                                                                        rutaRegreso();
+                                                                }}
+                                                        >
+                                                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                                                        </Button>
                                                 </div>
                                         </Col>
                                 </Row>

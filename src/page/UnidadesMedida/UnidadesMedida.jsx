@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import "../../scss/styles.scss";
 import { Alert, Button, Col, Row, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { listarPaginacionUMActivas, totalUMActivas, listarPaginacionUMCanceladas, totalUMCanceladas } from "../../api/unidadesMedida";
 import { withRouter } from "../../utils/withRouter";
 import ListUnidadesMedida from "../../components/UnidadesMedida/ListUnidadesMedida";
@@ -15,9 +15,17 @@ import { toast } from "react-toastify";
 import Lottie from 'react-lottie-player';
 import AnimacionLoading from '../../assets/json/loading.json';
 import { Switch } from '@headlessui/react';
+import { useNavigate } from "react-router-dom";
 
 function UnidadesMedida(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     // Para almacenar los departamentos
     const [listUM, setListUM] = useState(null);
@@ -169,6 +177,7 @@ function UnidadesMedida(props) {
                         <div style={{ float: 'right' }}>
                             <Button
                                 className="btnRegistro"
+                                style={{ marginRight: '10px' }}
                                 title="Registrar una nueva unidad de medida"
                                 onClick={() => {
                                     registraUM(
@@ -181,6 +190,16 @@ function UnidadesMedida(props) {
                                 }}
                             >
                                 <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                            </Button>
+                            <Button
+                                title="Regresar a la pagina anterior"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    rutaRegreso();
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
                             </Button>
                         </div>
                     </Col>

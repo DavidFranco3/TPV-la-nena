@@ -7,12 +7,22 @@ import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
-import { Spinner, Col, Row, Alert } from "react-bootstrap";
+import { Spinner, Col, Button, Row, Alert } from "react-bootstrap";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function HistoricoVentasDia(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
@@ -103,6 +113,20 @@ function HistoricoVentasDia(props) {
                 <Row>
                     <Col xs={12} md={4} className="titulo">
                         <h1 className="font-bold">Historial por día</h1>
+                    </Col>
+                    <Col xs={6} md={8}>
+                        <div style={{ float: 'right' }}>
+                            <Button
+                                title="Regresar a la pagina anterior"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    rutaRegreso();
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                            </Button>
+                        </div>
                     </Col>
                 </Row>
             </Alert>
