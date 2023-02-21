@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import LogoLANENA from "../../assets/png/nena1.png";
 import "../../scss/styles.scss";
+import { LogsInformativos } from "../../components/Logs/LogsSistema/LogsSistema";
 
 function Login({ setRefreshCheckLogin }) {
   const [formData, setFormData] = useState(initialFormValue)
@@ -35,11 +36,12 @@ function Login({ setRefreshCheckLogin }) {
             const { _ } = jwtDecode(token)
             const idUdsuario = _
             try {
-              obtenerUsuario(idUdsuario).then(
-                ({ data: { nombre } }) => {
-                  setRefreshCheckLogin(true)
-                  toast.success('Bienvenido ' + nombre)
-                }
+              obtenerUsuario(idUdsuario).then(response => {
+                const { data } = response;
+                LogsInformativos("Inicio de sesión, para su seguridad la sesión finaliza automaticamente en 1 día", data)
+                setRefreshCheckLogin(true)
+                toast.success('Bienvenido ' + data.nombre)
+              }
               )
             } catch (ex) {
               toast.error('Error al obtener el usuario')

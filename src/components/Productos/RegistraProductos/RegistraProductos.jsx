@@ -9,6 +9,7 @@ import { subeArchivosCloudinary } from "../../../api/cloudinary";
 import "../../../scss/styles.scss";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function RegistraProductos(props) {
     const { setShowModal, navigate, listCategorias } = props;
@@ -47,6 +48,7 @@ function RegistraProductos(props) {
                         navigate({
                             search: queryString.stringify(""),
                         });
+                        LogsInformativos("Se ha registrado el producto " + formData.nombre, data.datos);
                         toast.success(data.mensaje);
                         cancelarRegistro();
                     })

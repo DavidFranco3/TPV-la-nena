@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Image } from 'react-bootstrap';
 import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
+import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 // Importaciones de imagenes del dashboard
 import LogoVentas from '../../assets/png/ventas.png';
 import LogoHistorial from '../../assets/png/facturas.png';
@@ -14,26 +15,15 @@ import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
 import LogoUsuarios from '../../assets/png/usuarios.png';
 import LogoUM from '../../assets/png/unidadesMedida.png';
+import LogoLogs from '../../assets/png/logs.png';
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
 
   const enrutamiento = useNavigate();
 
-  // Cerrado de sesión automatico
-  useEffect(() => {
-    if (getTokenApi()) {
-      if (isExpiredToken(getTokenApi())) {
-        toast.warning('Sesión expirada');
-        toast.success('Sesión cerrada por seguridad');
-        logoutApi();
-        setRefreshCheckLogin(true);
-      }
-    }
-  }, [])
-  // Termina cerrado de sesión automatico
-
   const [estadoUsuario, setEstadoUsuario] = useState("");
+  const [datosUsuario, setDatosUsuario] = useState("");
 
   useEffect(() => {
     try {
@@ -42,17 +32,29 @@ function Dashboard(props) {
         const { admin } = data;
         //console.log(data)
         setEstadoUsuario(admin);
+        setDatosUsuario(data);
       }).catch((e) => {
         if (e.message === 'Network Error') {
           //console.log("No hay internet")
           toast.error("Conexión al servidor no disponible");
-
         }
       })
     } catch (e) {
-
+      console.log(e)
     }
   }, []);
+
+  // Cerrado de sesión automatico
+  useEffect(() => {
+    if (getTokenApi()) {
+      if (isExpiredToken(getTokenApi())) {
+        LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+        toast.warning('Sesión expirada');
+        toast.success('Sesión cerrada por seguridad');
+      }
+    }
+  }, [])
+  // Termina cerrado de sesión automatico
 
   const goTo = (ruta) => enrutamiento(ruta);
 
@@ -112,6 +114,11 @@ function Dashboard(props) {
                   path={'/Usuarios'}
                   logo={LogoUsuarios}
                   title={'Usuarios'}
+                />
+                <ItemCard
+                  path={'/Logs'}
+                  logo={LogoLogs}
+                  title={'Logs'}
                 />
               </div>
             </>

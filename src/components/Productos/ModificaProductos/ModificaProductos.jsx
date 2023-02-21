@@ -9,6 +9,7 @@ import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../scss/styles.scss";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function ModificaProductos(props) {
     const { datosProducto, listCategorias, navigate, setShowModal } = props;
@@ -48,6 +49,7 @@ function ModificaProductos(props) {
                         navigate({
                             search: queryString.stringify(""),
                         });
+                        LogsInformativos("Se ha modificado el producto " + datosProducto.nombre, datosProducto);
                         toast.success(data.mensaje);
                         cancelarRegistro();
                     })

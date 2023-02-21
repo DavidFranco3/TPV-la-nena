@@ -78,3 +78,13 @@ export const ENDPOINTListarPaginandoUMActivas = "/unidadesMedida/listarPaginando
 export const ENDPOINTTotalUMActivas = "/unidadesMedida/totalUMActivos";
 export const ENDPOINTListarPaginandoUMCanceladas = "/unidadesMedida/listarPaginandoCancelados";
 export const ENDPOINTTotalUMCanceladas = "/unidadesMedida/totalUMCancelados";
+
+// Logs generales
+export const ENDPOINTRegistroLogs = "/logs/registro";
+export const ENDPOINTListarLogs = "/logs/listar";
+export const ENDPOINTObtenerNoLogs = "/logs/obtenerNoLog";
+export const ENDPOINTListarPaginandoLogs = "/logs/listarPaginando";
+export const ENDPOINTObtenerLogs = "/logs/obtener";
+export const ENDPOINTEliminarLogs = "/logs/eliminar";
+export const ENDPOINTActualizarLogs = "/logs/actualizar";
+export const ENDPOINTTotalLogs = "/logs/total";

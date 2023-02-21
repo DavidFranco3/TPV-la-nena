@@ -6,7 +6,9 @@ import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
 import RegistrarUsuario from "../../components/Usuarios/RegistroUsuarios";
 import ListUsuarios from "../../components/Usuarios/ListUsuarios";
 import BasicModal from "../../components/Modal/BasicModal";
-import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
+import { obtenerUsuario } from "../../api/usuarios";
+import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
@@ -32,18 +34,35 @@ function Usuarios(props) {
                 setShowModal(true);
         }
 
+        const [datosUsuario, setDatosUsuario] = useState("");
+
+        useEffect(() => {
+                try {
+                        obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+                                const { data } = response;
+                                //console.log(data)
+                                setDatosUsuario(data);
+                        }).catch((e) => {
+                                if (e.message === 'Network Error') {
+                                        //console.log("No hay internet")
+                                        toast.error("Conexión al servidor no disponible");
+                                }
+                        })
+                } catch (e) {
+                        console.log(e)
+                }
+        }, []);
+
         // Cerrado de sesión automatico
         useEffect(() => {
                 if (getTokenApi()) {
                         if (isExpiredToken(getTokenApi())) {
-                                toast.warning("Sesión expirada");
-                                toast.success("Sesión cerrada por seguridad");
-                                logoutApi();
-                                setRefreshCheckLogin(true);
+                                LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+                                toast.warning('Sesión expirada');
+                                toast.success('Sesión cerrada por seguridad');
                         }
                 }
-        }, []);
-        // Termina cerrado de sesión automatico
+        }, [])
 
         // Para almacenar los usuarios
         const [listUsuarios, setListUsuarios] = useState(null);

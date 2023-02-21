@@ -8,6 +8,7 @@ import HistoricoVentasDia from "../page/HistoricoVentasDia";
 import HistoricoVentasMes from "../page/HistoricoVentasMes";
 import Usuarios from "../page/Usuarios";
 import UnidadesMedida from "../page/UnidadesMedida";
+import Logs from "../page/Logs";
 
 const configRouting = [
     {
@@ -41,6 +42,10 @@ const configRouting = [
     {
         path: "/UnidadesMedida",
         page: UnidadesMedida
+    },
+    {
+        path: "/Logs",
+        page: Logs
     },
     {
         path: "/",

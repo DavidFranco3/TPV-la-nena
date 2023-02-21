@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function RegistroCategorias(props) {
     const { setShowModal, navigate } = props;
@@ -45,6 +46,7 @@ function RegistroCategorias(props) {
                         navigate({
                             search: queryString.stringify(""),
                         });
+                        LogsInformativos("Se ha registrado la categoría " + formData.nombre, data.datos);
                         toast.success(data.mensaje);
                         cancelarRegistro();
                     })

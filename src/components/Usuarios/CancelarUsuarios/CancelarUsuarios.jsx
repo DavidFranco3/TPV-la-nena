@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function CancelarUsuarios(props) {
     const { datosUsuario, navigate, setShowModal } = props;
@@ -34,10 +35,11 @@ function CancelarUsuarios(props) {
             }
             deshabilitaUsuario(id, dataTemp).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("Estado del usuario " + usuario + " actualizado", datosUsuario);
+                toast.success(data.mensaje);
                 cancelarRegistro();
             }).catch(e => {
                 console.log(e)

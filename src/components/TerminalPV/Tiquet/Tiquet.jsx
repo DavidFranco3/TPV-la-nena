@@ -11,6 +11,7 @@ import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function Tiquet(props) {
     const { products, empty, remove } = props;
@@ -146,6 +147,7 @@ function Tiquet(props) {
                 registraVentas(dataTemp).then(response => {
                     const { data } = response;
                     setDeterminaBusquedaTiquet(true)
+                    LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                     toast.success(data.mensaje)
                     handleEmptyTicket()
                 })

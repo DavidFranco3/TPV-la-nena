@@ -10,6 +10,7 @@ import "../../../scss/styles.scss";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function EliminaProductos(props) {
     const { datosProducto, navigate, listCategorias, setShowModal } = props;
@@ -30,10 +31,11 @@ function EliminaProductos(props) {
         try {
             eliminaProductos(id).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("El producto " + nombre + " fue eliminado", datosProducto);
+                toast.success(data.mensaje);
                 cancelarRegistro();
             }).catch(e => {
                 console.log(e)

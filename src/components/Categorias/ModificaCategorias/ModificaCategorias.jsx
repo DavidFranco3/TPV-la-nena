@@ -8,6 +8,7 @@ import { actualizaCategoria } from "../../../api/categorias";
 import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function ModificaCategorias(props) {
     const { datosCategorias, navigate, setShowModal } = props;
@@ -49,6 +50,7 @@ function ModificaCategorias(props) {
                         navigate({
                             search: queryString.stringify(""),
                         });
+                        LogsInformativos("Se ha modificado la categoría " + datosCategorias.nombre, datosCategorias);
                         toast.success(data.mensaje);
                         cancelarRegistro();
                     })

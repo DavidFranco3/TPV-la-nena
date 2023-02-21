@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function CancelarCategorias(props) {
     const { datosCategoria, navigate, setShowModal } = props;
@@ -34,10 +35,11 @@ function CancelarCategorias(props) {
             }
             cancelarCategoria(id, dataTemp).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("Estado de la categoría " + nombre  + " actualizado", datosCategoria);
+                toast.success(data.mensaje)
                 cancelarRegistro();
             }).catch(e => {
                 console.log(e)

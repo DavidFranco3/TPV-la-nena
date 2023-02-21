@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function CancelarProductos(props) {
     const { datosProducto, listCategorias, navigate, setShowModal } = props;
@@ -35,10 +36,11 @@ function CancelarProductos(props) {
             }
             cancelarProducto(id, dataTemp).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("Estado del producto " + nombre + " actualizado", datosProducto);
+                toast.success(data.mensaje);
                 cancelarRegistro();
             }).catch(e => {
                 console.log(e)

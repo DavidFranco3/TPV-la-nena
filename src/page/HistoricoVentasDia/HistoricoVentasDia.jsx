@@ -3,7 +3,9 @@ import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import ListHistoricoVentas from "../../components/HistoricoVentasDia/ListHistoricoVentasDia";
-import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
+import { obtenerUsuario } from "../../api/usuarios";
+import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
 import { Spinner, Col, Row, Alert } from "react-bootstrap";
 import Lottie from "react-lottie-player";
@@ -12,17 +14,35 @@ import AnimacionLoading from "../../assets/json/loading.json";
 function HistoricoVentasDia(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
 
+    const [datosUsuario, setDatosUsuario] = useState("");
+
+    useEffect(() => {
+        try {
+            obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+                const { data } = response;
+                //console.log(data)
+                setDatosUsuario(data);
+            }).catch((e) => {
+                if (e.message === 'Network Error') {
+                    //console.log("No hay internet")
+                    toast.error("Conexión al servidor no disponible");
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, []);
+
     // Cerrado de sesión automatico
     useEffect(() => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
-                toast.warning("Sesión expirada");
-                toast.success("Sesión cerrada por seguridad");
-                logoutApi();
-                setRefreshCheckLogin(true);
+                LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+                toast.warning('Sesión expirada');
+                toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, []);
+    }, [])
     // Termina cerrado de sesión automatico
 
     const [rowsPerPage, setRowsPerPage] = useState(90);

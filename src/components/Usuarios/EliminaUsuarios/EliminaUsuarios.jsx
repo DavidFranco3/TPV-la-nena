@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function EliminaUsuarios(props) {
     const { datosUsuario, navigate, setShowModal } = props;
@@ -32,10 +33,11 @@ function EliminaUsuarios(props) {
         try {
             eliminaUsuario(id).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("El usuario " + usuario + " fue eliminado", datosUsuario);
+                toast.success(data.mensaje);
                 cancelarRegistro();
             })
         } catch (e) {

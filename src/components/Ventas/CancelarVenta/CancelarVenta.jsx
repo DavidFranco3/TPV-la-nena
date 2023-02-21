@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function CancelarVenta(props) {
     const { datosVentas, navigate, setShowModal } = props;
@@ -34,10 +35,11 @@ function CancelarVenta(props) {
             }
             cancelarVenta(id, dataTemp).then(response => {
                 const { data } = response;
-                toast.success(data.mensaje)
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("Estado de la venta " + numeroTiquet + " actualizado", datosVentas);
+                toast.success(data.mensaje);
                 cancelarRegistro();
             }).catch(e => {
                 console.log(e)

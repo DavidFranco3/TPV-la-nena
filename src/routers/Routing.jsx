@@ -3,7 +3,7 @@ import { map } from "lodash"
 import LayoutPrincipal from "../layout/layoutPrincipal";
 import configRouting from './configRouting';
 
-const Routing = ({ setRefreshCheckLogin, navigate, location }) => (
+const Routing = ({ setRefreshCheckLogin }) => (
     <Router>
         <Routes>
             {map(configRouting, (route, index) => (

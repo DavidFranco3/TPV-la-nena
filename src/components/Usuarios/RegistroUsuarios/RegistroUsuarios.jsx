@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function RegistroUsuarios(props) {
     const { setShowModal, navigate } = props;
@@ -39,6 +40,7 @@ function RegistroUsuarios(props) {
                     navigate({
                         search: queryString.stringify(""),
                     });
+                    LogsInformativos("Se ha registrado el usuario " + formData.usuario, data.datos);
                     toast.success(data.mensaje);
                     cancelarRegistro();
                 })

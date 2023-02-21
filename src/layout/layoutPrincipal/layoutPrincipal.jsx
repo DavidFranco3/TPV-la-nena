@@ -1,5 +1,4 @@
-import { useEffect, Fragment } from 'react';
-import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -7,28 +6,46 @@ import { toast } from "react-toastify";
 import LogoLANENA from "../../assets/jpg/logo-la-nena-2.jpg";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
 import "../../scss/styles.scss";
+import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
+import { obtenerUsuario } from "../../api/usuarios";
+import { LogsInformativosLogout } from "../../components/Logs/LogsSistema/LogsSistema";
 
 function LayoutPrincipal(props) {
     const { setRefreshCheckLogin, children } = props;
 
     const redirecciona = useNavigate();
 
+    const [datosUsuario, setDatosUsuario] = useState("");
+
+    useEffect(() => {
+        try {
+            obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+                const { data } = response;
+                //console.log(data)
+                setDatosUsuario(data);
+            }).catch((e) => {
+                console.log(e);
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }, []);
+
+    console.log(datosUsuario);
+
     //Para cerrar la sesion
     const cerrarSesion = () => {
+        LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
         toast.success("Sesión cerrada");
-        redirecciona("")
-        logoutApi();
-        setRefreshCheckLogin(true);
     }
 
     // Cerrado de sesión automatico
     useEffect(() => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
+                LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
                 toast.warning("Sesión expirada");
                 toast.success("Sesión cerrada por seguridad");
-                logoutApi();
-                setRefreshCheckLogin(true);
             }
         }
     }, []);

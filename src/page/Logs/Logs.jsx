@@ -1,17 +1,18 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
+import { Alert, Col, Row, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { withRouter } from "../../utils/withRouter";
+import { listarLogsPaginacion, totalLogs } from "../../api/logsGenerales";
+import ListLogs from "../../components/Logs/ListLogs";
 import "../../scss/styles.scss";
-import ListHistoricoVentasMes from "../../components/HistoricoVentasMes/ListHistoricoVentasMes";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
-import { Spinner, Col, Row, Alert } from "react-bootstrap";
-import Lottie from "react-lottie-player";
-import AnimacionLoading from "../../assets/json/loading.json";
+import Lottie from 'react-lottie-player';
+import AnimacionLoading from '../../assets/json/loading.json';
 
-function HistoricoVentasMes(props) {
+function Logs(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
 
     const [datosUsuario, setDatosUsuario] = useState("");
@@ -43,20 +44,23 @@ function HistoricoVentasMes(props) {
             }
         }
     }, [])
-    // Termina cerrado de sesión automatico
 
-    const [rowsPerPage, setRowsPerPage] = useState(500);
+    // Para almacenar todos los log del sistema
+    const [listLog, setListLog] = useState(null);
+
+    // Para controlar la paginación
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
-    const [noTotalVentas, setNoTotalVentas] = useState(1);
+    const [noTotalLogs, setNoTotalLogs] = useState(1);
 
-    // Para almacenar las ventas realizadas
-    const [listVentas, setListVentas] = useState(null);
-
+    // Para listar las ventas
     useEffect(() => {
+        //console.log("Estado del switch ", estadoSwitch)
         try {
-            totalVentas().then(response => {
+            // Lista los productos activos
+            totalLogs().then(response => {
                 const { data } = response;
-                setNoTotalVentas(data)
+                setNoTotalLogs(data)
             }).catch(e => {
                 console.log(e)
             })
@@ -64,56 +68,55 @@ function HistoricoVentasMes(props) {
             if (page === 0) {
                 setPage(1)
 
-                listarPaginacionVentas(page, rowsPerPage).then(response => {
+                listarLogsPaginacion(page, rowsPerPage).then(response => {
                     const { data } = response;
-                    if (!listVentas && data) {
-                        setListVentas(formatModelVentas(data));
+                    if (!listLog && data) {
+                        setListLog(formatModelLogs(data));
                     } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListVentas(datosVentas)
+                        const datosLogs = formatModelLogs(data);
+                        setListLog(datosLogs)
                     }
                 }).catch(e => {
                     console.log(e)
                 })
             } else {
-                listarPaginacionVentas(page, rowsPerPage).then(response => {
+                listarLogsPaginacion(page, rowsPerPage).then(response => {
                     const { data } = response;
-                    //console.log(data)
-
-                    if (!listVentas && data) {
-                        setListVentas(formatModelVentas(data));
+                    if (!listLog && data) {
+                        setListLog(formatModelLogs(data));
                     } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListVentas(datosVentas)
+                        const datosLogs = formatModelLogs(data);
+                        setListLog(datosLogs)
                     }
                 }).catch(e => {
                     console.log(e)
                 })
             }
+
         } catch (e) {
             console.log(e)
         }
-
     }, [location, page, rowsPerPage]);
-
 
     return (
         <>
-            <Alert className="fondoPrincipalAlert">
+            <Alert>
                 <Row>
-                    <Col xs={12} md={4} className="titulo">
-                        <h1 className="font-bold">Historial por mes</h1>
+                    <Col xs={12} md={4}>
+                        <h1 className="font-bold">
+                            Logs del sistema
+                        </h1>
                     </Col>
                 </Row>
             </Alert>
+
             {
-                listVentas ?
+                listLog ?
                     (
                         <>
-                            <Suspense fallback={< Spinner />}>
-                                <ListHistoricoVentasMes
-
-                                    listVentas={listVentas}
+                            <Suspense fallback={<Spinner />}>
+                                <ListLogs
+                                    listLogs={listLog}
                                     location={location}
                                     navigate={navigate}
                                     setRefreshCheckLogin={setRefreshCheckLogin}
@@ -121,7 +124,7 @@ function HistoricoVentasMes(props) {
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     setPage={setPage}
-                                    noTotalVentas={noTotalVentas}
+                                    noTotalLogs={noTotalLogs}
                                 />
                             </Suspense>
                         </>
@@ -137,30 +140,26 @@ function HistoricoVentasMes(props) {
     );
 }
 
-function formatModelVentas(ventas) {
-    const tempVentas = []
-    ventas.forEach((venta) => {
-        tempVentas.push({
-            id: venta._id,
-            numeroTiquet: venta.numeroTiquet,
-            cliente: venta.cliente,
-            productosVendidos: venta.productos.length,
-            articulosVendidos: venta.productos,
-            detalles: venta.detalles,
-            tipoPago: venta.tipoPago,
-            total: parseFloat(venta.total),
-            subtotal: parseFloat(venta.subtotal),
-            iva: parseFloat(venta.iva),
-            comision: parseFloat(venta.comision),
-            hacerPedido: venta.hacerPedido,
-            tipoPedido: venta.tipoPedido,
-            estado: venta.estado,
-            agrupar: venta.agrupar,
-            fechaCreacion: venta.createdAt,
-            fechaActualizacion: venta.updatedAt
+function formatModelLogs(data) {
+    //console.log(data)
+    const dataTemp = []
+    data.forEach(data => {
+        dataTemp.push({
+            id: data._id,
+            folio: data.folio,
+            usuario: data.usuario,
+            sucursal: data.sucursal,
+            correo: data.correo,
+            ip: data.ip,
+            dispositivo: data.dispositivo,
+            descripcion: data.descripcion,
+            detalles: data.detalles,
+            mensaje: data.detalles.mensaje,
+            fechaCreacion: data.createdAt,
+            fechaActualizacion: data.updatedAt
         });
     });
-    return tempVentas;
+    return dataTemp;
 }
 
-export default withRouter(HistoricoVentasMes);
+export default withRouter(Logs);

@@ -1,6 +1,8 @@
 import { useState, useEffect, Suspense } from 'react';
 import { withRouter } from "../../utils/withRouter";
-import { getTokenApi, isExpiredToken, logoutApi } from "../../api/auth";
+import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
+import { obtenerUsuario } from "../../api/usuarios";
+import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
 import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginacionProductosCancelados, totalProductosCancelados } from "../../api/productos";
 import ListProductos from "../../components/Productos/ListProductos";
@@ -33,18 +35,35 @@ function Productos(props) {
         setShowModal(true);
     }
 
+    const [datosUsuario, setDatosUsuario] = useState("");
+
+    useEffect(() => {
+        try {
+            obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+                const { data } = response;
+                //console.log(data)
+                setDatosUsuario(data);
+            }).catch((e) => {
+                if (e.message === 'Network Error') {
+                    //console.log("No hay internet")
+                    toast.error("Conexión al servidor no disponible");
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, []);
+
     // Cerrado de sesión automatico
     useEffect(() => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
-                toast.warning("Sesión expirada");
-                toast.success("Sesión cerrada por seguridad");
-                logoutApi();
-                setRefreshCheckLogin(true);
+                LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+                toast.warning('Sesión expirada');
+                toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, []);
-    // Termina cerrado de sesión automatico
+    }, [])
 
     // Guarda el listado de productos
     const [listProductos, setListProductos] = useState(null);

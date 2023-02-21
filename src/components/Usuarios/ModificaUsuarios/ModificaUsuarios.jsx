@@ -6,6 +6,7 @@ import { actualizaUsuario } from '../../../api/usuarios';
 import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function ModificaUsuarios(props) {
     const { datosUsuario, navigate, setShowModal } = props;
@@ -43,6 +44,7 @@ function ModificaUsuarios(props) {
                     navigate({
                         search: queryString.stringify(""),
                     });
+                    LogsInformativos("Se ha modificado el usuario " + datosUsuario.usuario, datosUsuario);
                     toast.success(data.mensaje);
                     cancelarRegistro();
                 })
