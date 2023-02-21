@@ -88,3 +88,15 @@ export const ENDPOINTObtenerLogs = "/logs/obtener";
 export const ENDPOINTEliminarLogs = "/logs/eliminar";
 export const ENDPOINTActualizarLogs = "/logs/actualizar";
 export const ENDPOINTTotalLogs = "/logs/total";
+
+// Ingrediente
+export const ENDPOINTRegistroIngredientes = "/ingredientes/registro";
+export const ENDPOINTListarIngredientes = "/ingredientes/listar";
+export const ENDPOINTListarPaginandoIngredientesActivos = "/ingredientes/listarPaginandoActivos";
+export const ENDPOINTTotalIngredientesActivos = "/ingredientes/totalIngredientesActivos";
+export const ENDPOINTListarPaginandoIngredientesCancelados = "/ingredientes/listarPaginandoCancelados";
+export const ENDPOINTTotalIngredientesCancelados = "/ingredientes/totalIngredientesCancelados";
+export const ENDPOINTObtenerIngredientes = "/ingredientess/obtener";
+export const ENDPOINTEliminarIngredientes = "/ingredientes/eliminar";
+export const ENDPOINTActualizarIngredientes = "/ingredientes/actualizar";
+export const ENDPOINTCancelarIngredientes = "/ingredientes/cancelar";

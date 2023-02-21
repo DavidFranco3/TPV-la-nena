@@ -16,6 +16,7 @@ import LogoCategorias from '../../assets/png/categorias.png';
 import LogoUsuarios from '../../assets/png/usuarios.png';
 import LogoUM from '../../assets/png/unidadesMedida.png';
 import LogoLogs from '../../assets/png/logs.png';
+import LogoIngredientes from '../../assets/png/ingredientes.png';
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -75,7 +76,7 @@ function Dashboard(props) {
         estadoUsuario === "true" ?
           (
             <>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-5 gap-5">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
@@ -109,6 +110,11 @@ function Dashboard(props) {
                   path={'/UnidadesMedida'}
                   logo={LogoUM}
                   title={'Unidades de medida'}
+                />
+                <ItemCard
+                  path={'/Ingredientes'}
+                  logo={LogoIngredientes}
+                  title={'Ingredientes'}
                 />
                 <ItemCard
                   path={'/Usuarios'}

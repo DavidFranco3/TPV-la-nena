@@ -1,35 +1,27 @@
 import { useState, useEffect, Suspense } from 'react';
-import "../../scss/styles.scss";
-import { Alert, Button, Col, Row, Spinner } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { listarPaginacionUMActivas, totalUMActivas, listarPaginacionUMCanceladas, totalUMCanceladas } from "../../api/unidadesMedida";
+import { listarPaginacionIngredientesActivos, totalIngredientesActivos, listarPaginacionIngredientesCancelados, totalIngredientesCancelados } from "../../api/ingredientes";
 import { withRouter } from "../../utils/withRouter";
-import ListUnidadesMedida from "../../components/UnidadesMedida/ListUnidadesMedida";
+import "../../scss/styles.scss";
 import BasicModal from "../../components/Modal/BasicModal";
-import RegistroUnidadesMedida from "../../components/UnidadesMedida/Registro";
+import ListIngredientes from "../../components/Ingredientes/ListIngredientes";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
-import Lottie from 'react-lottie-player';
-import AnimacionLoading from '../../assets/json/loading.json';
-import { Switch } from '@headlessui/react';
+import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
+import RegistroIngredientes from "../../components/Ingredientes/RegistroIngredientes";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Lottie from "react-lottie-player";
+import AnimacionLoading from "../../assets/json/loading.json";
+import { Switch } from '@headlessui/react'
 
-function UnidadesMedida(props) {
+function Ingredientes(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
-
-    // Para almacenar los departamentos
-    const [listUM, setListUM] = useState(null);
-
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [page, setPage] = useState(1);
-    const [noTotalUM, setNoTotalUM] = useState(1);
 
     // Para definir el estado del switch
     const [estadoSwitch, setEstadoSwitch] = useState(true);
 
-    // Para hacer uso del modal
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
     const [titulosModal, setTitulosModal] = useState(null);
@@ -63,16 +55,30 @@ function UnidadesMedida(props) {
             }
         }
     }, [])
+    // Termina cerrado de sesión automatico
 
-    // obtener el listado de productos
+    // Para la lista de abonos
+    const registroIngredientes = (content) => {
+        setTitulosModal("Registrar un ingrediente");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para guardar el listado de categorias
+    const [listIngredientes, setListIngredientes] = useState(null);
+
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [page, setPage] = useState(1);
+    const [noTotalIngredientes, setNoTotalIngredientes] = useState(1);
+
     useEffect(() => {
         //console.log("Estado del switch ", estadoSwitch)
         try {
             if (estadoSwitch) {
                 // Lista los productos activos
-                totalUMActivas().then(response => {
+                totalIngredientesActivos().then(response => {
                     const { data } = response;
-                    setNoTotalUM(data)
+                    setNoTotalIngredientes(data)
                 }).catch(e => {
                     console.log(e)
                 })
@@ -80,25 +86,26 @@ function UnidadesMedida(props) {
                 if (page === 0) {
                     setPage(1)
 
-                    listarPaginacionUMActivas(page, rowsPerPage).then(response => {
+                    listarPaginacionIngredientesActivos(page, rowsPerPage).then(response => {
                         const { data } = response;
-                        if (!listUM && data) {
-                            setListUM(formatModelUM(data));
+                        if (!listIngredientes && data) {
+                            setListIngredientes(formatModelIngredientes(data));
                         } else {
-                            const datosUM = formatModelUM(data);
-                            setListUM(datosUM)
+                            const datosIngredientes = formatModelIngredientes(data);
+                            setListIngredientes(datosIngredientes)
                         }
                     }).catch(e => {
                         console.log(e)
                     })
                 } else {
-                    listarPaginacionUMActivas(page, rowsPerPage).then(response => {
+                    listarPaginacionIngredientesActivos(page, rowsPerPage).then(response => {
                         const { data } = response;
-                        if (!listUM && data) {
-                            setListUM(formatModelUM(data));
+                        //console.log(data)
+                        if (!listIngredientes && data) {
+                            setListIngredientes(formatModelIngredientes(data));
                         } else {
-                            const datosUM = formatModelUM(data);
-                            setListUM(datosUM)
+                            const datosIngredientes = formatModelIngredientes(data);
+                            setListIngredientes(datosIngredientes)
                         }
                     }).catch(e => {
                         console.log(e)
@@ -106,9 +113,9 @@ function UnidadesMedida(props) {
                 }
             } else {
                 // Lista los productos obsoletos
-                totalUMCanceladas().then(response => {
+                totalIngredientesCancelados().then(response => {
                     const { data } = response;
-                    setNoTotalUM(data)
+                    setNoTotalIngredientes(data)
                 }).catch(e => {
                     console.log(e)
                 })
@@ -116,27 +123,26 @@ function UnidadesMedida(props) {
                 if (page === 0) {
                     setPage(1)
 
-                    listarPaginacionUMCanceladas(page, rowsPerPage).then(response => {
+                    listarPaginacionIngredientesCancelados(page, rowsPerPage).then(response => {
                         const { data } = response;
-                        if (!listUM && data) {
-                            setListUM(formatModelUM(data));
+                        if (!listIngredientes && data) {
+                            setListIngredientes(formatModelIngredientes(data));
                         } else {
-                            const datosUM = formatModelUM(data);
-                            setListUM(datosUM)
+                            const datosIngredientes = formatModelIngredientes(data);
+                            setListIngredientes(datosIngredientes)
                         }
                     }).catch(e => {
                         console.log(e)
                     })
                 } else {
-                    listarPaginacionUMCanceladas(page, rowsPerPage).then(response => {
+                    listarPaginacionIngredientesCancelados(page, rowsPerPage).then(response => {
                         const { data } = response;
                         //console.log(data)
-
-                        if (!listUM && data) {
-                            setListUM(formatModelUM(data));
+                        if (!listIngredientes && data) {
+                            setListIngredientes(formatModelIngredientes(data));
                         } else {
-                            const datosUM = formatModelUM(data);
-                            setListUM(datosUM)
+                            const datosIngredientes = formatModelIngredientes(data);
+                            setListIngredientes(datosIngredientes)
                         }
                     }).catch(e => {
                         console.log(e)
@@ -149,33 +155,25 @@ function UnidadesMedida(props) {
         }
     }, [location, estadoSwitch, page, rowsPerPage]);
 
-    // Para guardar un nuevo dato
-    const registraUM = (content) => {
-        setTitulosModal("Registrar UM");
-        setContentModal(content);
-        setShowModal(true);
-    }
 
     return (
         <>
-            <Alert>
+            <Alert className="fondoPrincipalAlert">
                 <Row>
-                    <Col xs={12} md={4}>
-                        <h1 className="font-bold">
-                            Unidades de medida
-                        </h1>
+                    <Col xs={12} md={4} className="titulo">
+                        <h1 className="font-bold">Ingredientes</h1>
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
                             <Button
+                                title="Registrar un nuevo ingrediente"
                                 className="btnRegistro"
-                                title="Registrar una nueva unidad de medida"
                                 onClick={() => {
-                                    registraUM(
-                                        <RegistroUnidadesMedida
+                                    registroIngredientes(
+                                        <RegistroIngredientes
                                             setShowModal={setShowModal}
-                                            navigate={navigate}
                                             location={location}
+                                            navigate={navigate}
                                         />
                                     )
                                 }}
@@ -189,11 +187,11 @@ function UnidadesMedida(props) {
 
             <Row>
                 <Col xs={12} md={8}>
-                    <h3 className="tituloSwitch">Estado de las unidades de medida</h3>
+                    <h3 className="tituloSwitch">Estado de los ingredientes</h3>
                 </Col>
                 <Col xs={6} md={4}>
                     <Switch
-                        title={estadoSwitch === true ? "Ver UM canceladas" : "Ver UM activas"}
+                        title={estadoSwitch === true ? "Ver ingredientes cancelados" : "Ver ingredientes activos"}
                         checked={estadoSwitch}
                         onChange={setEstadoSwitch}
                         className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
@@ -210,20 +208,20 @@ function UnidadesMedida(props) {
             </Row>
 
             {
-                listUM ?
+                listIngredientes ?
                     (
                         <>
-                            <Suspense fallback={<Spinner />}>
-                                <ListUnidadesMedida
+                            <Suspense fallback={< Spinner />}>
+                                <ListIngredientes
                                     setRefreshCheckLogin={setRefreshCheckLogin}
-                                    listUM={listUM}
+                                    listIngredientes={listIngredientes}
                                     location={location}
                                     navigate={navigate}
                                     setRowsPerPage={setRowsPerPage}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     setPage={setPage}
-                                    noTotalUM={noTotalUM}
+                                    noTotalIngredientes={noTotalIngredientes}
                                 />
                             </Suspense>
                         </>
@@ -235,7 +233,6 @@ function UnidadesMedida(props) {
                         </>
                     )
             }
-
             <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
                 {contentModal}
             </BasicModal>
@@ -243,20 +240,23 @@ function UnidadesMedida(props) {
     );
 }
 
-function formatModelUM(data) {
-    //console.log(data)
-    const dataTemp = []
-    data.forEach(data => {
-        dataTemp.push({
-            id: data._id,
-            nombre: data.nombre,
-            tipo: data.tipo,
-            estadoUM: data.estadoUM,
-            fechaCreacion: data.createdAt,
-            fechaActualizacion: data.updatedAt
+function formatModelIngredientes(ingredientes) {
+    const tempIngredientes = []
+    ingredientes.forEach((ingrediente) => {
+        tempIngredientes.push({
+            id: ingrediente._id,
+            nombre: ingrediente.nombre,
+            tipoUM: ingrediente.tipoUM,
+            negocio: ingrediente.negocio,
+            um: ingrediente.um,
+            costo: ingrediente.costo,
+            imagen: ingrediente.imagen,
+            estado: ingrediente.estado,
+            fechaCreacion: ingrediente.createdAt,
+            fechaActualizacion: ingrediente.updatedAt
         });
     });
-    return dataTemp;
+    return tempIngredientes;
 }
 
-export default withRouter(UnidadesMedida);
+export default withRouter(Ingredientes);

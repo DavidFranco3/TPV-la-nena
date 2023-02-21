@@ -9,6 +9,7 @@ import HistoricoVentasMes from "../page/HistoricoVentasMes";
 import Usuarios from "../page/Usuarios";
 import UnidadesMedida from "../page/UnidadesMedida";
 import Logs from "../page/Logs";
+import Ingredientes from "../page/Ingredientes";
 
 const configRouting = [
     {
@@ -46,6 +47,10 @@ const configRouting = [
     {
         path: "/Logs",
         page: Logs
+    },
+    {
+        path: "/Ingredientes",
+        page: Ingredientes
     },
     {
         path: "/",

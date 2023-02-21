@@ -67,6 +67,7 @@ function Productos(props) {
 
     // Guarda el listado de productos
     const [listProductos, setListProductos] = useState(null);
+    
     // Para guardar el listado de categorias
     const [listCategorias, setListCategorias] = useState(null);
 
