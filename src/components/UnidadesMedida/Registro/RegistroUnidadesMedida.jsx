@@ -23,13 +23,14 @@ function RegistroUnidadesMedida(props) {
 
     const onSubmit = e => {
         e.preventDefault();
-        if (!formData.nombre || !formData.tipo) {
+        if (!formData.nombre || !formData.tipo || !formData.abreviatura) {
             toast.warning("Completa el formulario")
         } else {
             setLoading(true);
 
             const dataTemp = {
                 nombre: formData.nombre,
+                abreviatura: formData.abreviatura,
                 tipo: formData.tipo,
                 estadoUM: "true"
             }
@@ -62,8 +63,18 @@ function RegistroUnidadesMedida(props) {
                         <Form.Control
                             type="text"
                             name="nombre"
-                            placeholder='Unidad de medida'
+                            placeholder='Nombre de la unidad de medida'
                             defaultValue={formData.nombre}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Label>Abreviatura</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="abreviatura"
+                            placeholder='Abreviatura'
+                            defaultValue={formData.abreviatura}
                         />
                     </Form.Group>
 
@@ -114,6 +125,7 @@ function RegistroUnidadesMedida(props) {
 function initialFormData() {
     return {
         nombre: "",
+        abreviatura: "",
         tipo: "",
     }
 }

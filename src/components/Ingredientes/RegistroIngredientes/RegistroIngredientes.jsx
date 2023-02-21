@@ -115,7 +115,7 @@ function RegistroIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Tipo UM</Form.Label>
+                            <Form.Label>Tipo de unidad de medida</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="tipoUM"
@@ -140,7 +140,7 @@ function RegistroIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>UM</Form.Label>
+                            <Form.Label>unidad de medida</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="um"

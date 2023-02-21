@@ -7,7 +7,7 @@ import queryString from "query-string";
 
 function EliminacionFisicaUnidadesMedida(props) {
     const { dataUM, setShowModal, navigate } = props;
-    const { id, nombre, tipo } = dataUM;
+    const { id, nombre, tipo, abreviatura } = dataUM;
 
     //console.log(dataDepto)
 
@@ -57,6 +57,17 @@ function EliminacionFisicaUnidadesMedida(props) {
                             name="nombre"
                             disabled={true}
                             defaultValue={nombre}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Label>Abreviatura</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="abreviatura"
+                            placeholder='Abreviatura'
+                            defaultValue={abreviatura}
+                            disabled
                         />
                     </Form.Group>
 

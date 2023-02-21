@@ -120,7 +120,7 @@ function ModificaIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Tipo UM</Form.Label>
+                            <Form.Label>Tipo de unidad de medida</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="tipoUM"
@@ -145,7 +145,7 @@ function ModificaIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>UM</Form.Label>
+                            <Form.Label>Unidad de medida</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="um"

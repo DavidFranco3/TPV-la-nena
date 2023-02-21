@@ -269,6 +269,7 @@ function formatModelUM(data) {
         dataTemp.push({
             id: data._id,
             nombre: data.nombre,
+            abreviatura: data.abreviatura,
             tipo: data.tipo,
             estadoUM: data.estadoUM,
             fechaCreacion: data.createdAt,

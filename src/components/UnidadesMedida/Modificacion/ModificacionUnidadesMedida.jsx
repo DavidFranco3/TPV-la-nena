@@ -23,13 +23,14 @@ function ModificacionUnidadesMedida(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!formData.nombre || !formData.tipo) {
+        if (!formData.nombre || !formData.tipo || !formData.abreviatura) {
             toast.warning("Completa el formulario")
         } else {
             setLoading(true);
 
             const dataTemp = {
                 nombre: formData.nombre,
+                abreviatura: formData.abreviatura,
                 tipo: formData.tipo,
                 estadoUM: "true"
             }
@@ -63,6 +64,16 @@ function ModificacionUnidadesMedida(props) {
                             type="text"
                             name="nombre"
                             defaultValue={formData.nombre}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Label>Abreviatura</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="abreviatura"
+                            placeholder='Abreviatura'
+                            defaultValue={formData.abreviatura}
                         />
                     </Form.Group>
 
@@ -111,11 +122,12 @@ function ModificacionUnidadesMedida(props) {
 }
 
 function initialFormValue(data) {
-    const { nombre, tipo } = data;
+    const { abreviatura, nombre, tipo } = data;
     //console.log(nombre)
 
     return {
         nombre: nombre,
+        abreviatura: abreviatura,
         tipo: tipo
     }
 }

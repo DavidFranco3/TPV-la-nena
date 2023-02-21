@@ -73,14 +73,14 @@ function ListIngredientes(props) {
             reorder: false
         },
         {
-            name: "Tipo de UM",
+            name: "Tipo de unidad de medida",
             selector: row => row.tipoUM,
             sortable: false,
             center: true,
             reorder: false
         },
         {
-            name: "UM",
+            name: "Unidad de medida",
             selector: row => row.um,
             sortable: false,
             center: true,

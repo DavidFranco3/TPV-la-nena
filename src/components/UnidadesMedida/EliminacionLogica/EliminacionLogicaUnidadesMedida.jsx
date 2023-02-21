@@ -7,7 +7,7 @@ import "../../../scss/styles.scss";
 
 function EliminacionLogicaUnidadesMedida(props) {
     const { navigate, dataUM, setShowModal } = props;
-    const { id, nombre, tipo, estadoUM } = dataUM;
+    const { id, nombre, tipo, abreviatura, estadoUM } = dataUM;
 
     //console.log(dataUsuario)
 
@@ -75,6 +75,17 @@ function EliminacionLogicaUnidadesMedida(props) {
                         <Form.Control
                             type="text"
                             value={nombre}
+                            disabled
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Label>Abreviatura</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="abreviatura"
+                            placeholder='Abreviatura'
+                            defaultValue={abreviatura}
                             disabled
                         />
                     </Form.Group>
