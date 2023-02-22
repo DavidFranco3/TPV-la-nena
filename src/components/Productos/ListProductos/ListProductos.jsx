@@ -13,9 +13,17 @@ import Categoria from "./Categoria";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { useNavigate } from "react-router-dom";
 
 function ListProductos(props) {
     const { listProductos, listCategorias, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalProductos, setRefreshCheckLogin } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/")
+    }
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -33,10 +41,8 @@ function ListProductos(props) {
     }
 
     //Para la modificacion de productos
-    const modificaProductos = (content) => {
-        setTitulosModal("Modificación producto");
-        setContentModal(content);
-        setShowModal(true);
+    const modificaProductos = (id) => {
+        enrutamiento(`/ModificaProductos/${id}`);
     }
 
     // Para cancelar la venta
@@ -87,7 +93,7 @@ function ListProductos(props) {
             reorder: false
         },
         {
-            name: "Precio",
+            name: "Precio de venta",
             selector: row => (
                 <>
                     <Badge
@@ -97,6 +103,42 @@ function ListProductos(props) {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                         }).format(row.precio)} MXN
+                    </Badge>
+                </>
+            ),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Costo de producción",
+            selector: row => (
+                <>
+                    <Badge
+                        bg="success" className="estado">
+                        ${''}
+                        {new Intl.NumberFormat('es-MX', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(row.costoProduccion)} MXN
+                    </Badge>
+                </>
+            ),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Utilidad",
+            selector: row => (
+                <>
+                    <Badge
+                        bg="success" className="estado">
+                        ${''}
+                        {new Intl.NumberFormat('es-MX', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(row.precio - row.costoProduccion)} MXN
                     </Badge>
                 </>
             ),
@@ -182,16 +224,9 @@ function ListProductos(props) {
                             title="Modificar producto"
                             className="editar"
                             onClick={() => {
-                                modificaProductos(
-                                    <ModificaProductos
-                                        datosProducto={row}
-                                        listCategorias={listCategorias}
-                                        location={location}
-                                        navigate={navigate}
-                                        setShowModal={setShowModal}
-                                    />
-                                )
-                            }}>
+                                modificaProductos(row.id);
+                            }}
+                        >
                             <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
                         </Badge>
 

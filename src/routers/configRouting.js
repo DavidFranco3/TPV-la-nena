@@ -1,3 +1,4 @@
+// Importaciones de paginas principales
 import Dashboard from "../page/Dashboard";
 import Productos from "../page/Productos";
 import Categorias from "../page/Categorias";
@@ -11,6 +12,10 @@ import UnidadesMedida from "../page/UnidadesMedida";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
 
+// Importaciones de productos
+import RegistraProductos from "../components/Productos/RegistraProductos";
+import ModificaProductos from "../components/Productos/ModificaProductos";
+
 const configRouting = [
     {
         path: "/HistoricoVentasMes",
@@ -23,6 +28,14 @@ const configRouting = [
     {
         path: "/Productos",
         page: Productos
+    },
+    {
+        path: "/RegistraProductos",
+        page: RegistraProductos
+    },
+    {
+        path: "/ModificaProductos/:id",
+        page: ModificaProductos
     },
     {
         path: "/Categorias",

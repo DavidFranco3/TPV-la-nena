@@ -37,10 +37,8 @@ function Productos(props) {
     const [titulosModal, setTitulosModal] = useState(null);
 
     // Para la lista de abonos
-    const registroProductos = (content) => {
-        setTitulosModal("Registrar un producto");
-        setContentModal(content);
-        setShowModal(true);
+    const registroProductos = () => {
+        enrutamiento("/RegistraProductos")
     }
 
     const [datosUsuario, setDatosUsuario] = useState("");
@@ -204,14 +202,7 @@ function Productos(props) {
                                 className="btnRegistro"
                                 style={{ marginRight: '10px' }}
                                 onClick={() => {
-                                    registroProductos(
-                                        <RegistrarProducto
-                                            setShowModal={setShowModal}
-                                            location={location}
-                                            navigate={navigate}
-                                            listCategorias={listCategorias}
-                                        />
-                                    )
+                                    registroProductos();
                                 }}
                             >
                                 <FontAwesomeIcon icon={faCirclePlus} /> Registrar
@@ -296,6 +287,8 @@ function formatModelProductos(productos) {
             nombre: producto.nombre,
             categoria: producto.categoria,
             negocio: producto.negocio,
+            costoProduccion: parseFloat(producto.costoProduccion) ? parseFloat(producto.costoProduccion) : 0,
+            ingredientes: producto.ingredientes,
             precio: parseFloat(producto.precio),
             imagen: producto.imagen,
             estado: producto.estado,

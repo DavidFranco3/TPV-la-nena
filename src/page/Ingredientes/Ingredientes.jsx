@@ -268,7 +268,7 @@ function formatModelIngredientes(ingredientes) {
             tipoUM: ingrediente.tipoUM,
             negocio: ingrediente.negocio,
             um: ingrediente.um,
-            costo: ingrediente.costo,
+            costo: parseFloat(ingrediente.costo),
             imagen: ingrediente.imagen,
             estado: ingrediente.estado,
             fechaCreacion: ingrediente.createdAt,

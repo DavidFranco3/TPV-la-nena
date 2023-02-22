@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListCategorias(props) {
-    const { listCategorias, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalCategorias } = props;
+    const { listCategorias, location, navigate, setRowsPerPage, setPage, noTotalCategorias } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);

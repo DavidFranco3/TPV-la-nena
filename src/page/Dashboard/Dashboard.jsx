@@ -62,7 +62,7 @@ function Dashboard(props) {
   const goTo = (ruta) => enrutamiento(ruta);
 
   const ItemCard = ({ path, logo, title }) => (
-    <Card>
+    <Card className="contenidoCentrado">
       <Card.Body onClick={() => goTo(path)}>
         <div className="flex flex-col items-center justify-center">
           <Image title={title} alt={title} src={logo} style={{ width: '100px' }} />
