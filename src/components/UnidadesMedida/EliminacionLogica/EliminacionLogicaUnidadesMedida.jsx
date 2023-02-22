@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Button, Col, Form, Row, Spinner, Alert } from "react-bootstrap";
 import { deshabilitaUM } from "../../../api/unidadesMedida";
 import "../../../scss/styles.scss";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function EliminacionLogicaUnidadesMedida(props) {
     const { navigate, dataUM, setShowModal } = props;
@@ -35,6 +36,7 @@ function EliminacionLogicaUnidadesMedida(props) {
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("El estado de la unidad de medida " + nombre  + " fue actualizado", dataUM);
                 toast.success(data.mensaje);
                 cancelar();
             })

@@ -4,6 +4,7 @@ import "../../../scss/styles.scss";
 import { toast } from "react-toastify";
 import { registraUM } from "../../../api/unidadesMedida";
 import queryString from "query-string";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function RegistroUnidadesMedida(props) {
     const { setShowModal, navigate } = props;
@@ -41,6 +42,7 @@ function RegistroUnidadesMedida(props) {
                     navigate({
                         search: queryString.stringify(""),
                     });
+                    LogsInformativos("Se ha registrado la unidad de medida " + formData.nombre, data.datos);
                     toast.success(data.mensaje);
                     cancelarRegistro();
                 })

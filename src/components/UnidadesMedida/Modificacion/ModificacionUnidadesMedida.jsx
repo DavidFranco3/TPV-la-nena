@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { actualizaUM } from "../../../api/unidadesMedida";
 import queryString from "query-string";
 import "../../../scss/styles.scss";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function ModificacionUnidadesMedida(props) {
     const { dataUM, setShowModal, navigate } = props;
@@ -41,6 +42,7 @@ function ModificacionUnidadesMedida(props) {
                     navigate({
                         search: queryString.stringify(""),
                     });
+                    LogsInformativos("Se ha modificado la unidad de medida " + dataUM.nombre, dataUM);
                     toast.success(data.mensaje);
                     cancelarRegistro()
                 })

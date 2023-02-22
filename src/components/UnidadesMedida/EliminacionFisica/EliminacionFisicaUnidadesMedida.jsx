@@ -4,6 +4,7 @@ import "../../../scss/styles.scss";
 import { eliminaUM } from "../../../api/unidadesMedida";
 import { toast } from "react-toastify";
 import queryString from "query-string";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function EliminacionFisicaUnidadesMedida(props) {
     const { dataUM, setShowModal, navigate } = props;
@@ -31,6 +32,7 @@ function EliminacionFisicaUnidadesMedida(props) {
                 navigate({
                     search: queryString.stringify(""),
                 });
+                LogsInformativos("La unidad de medida " + nombre  + " fue eliminada", dataUM);
                 toast.success(data.mensaje);
                 cancelarEliminacion();
             })
