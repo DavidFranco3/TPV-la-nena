@@ -73,7 +73,7 @@ function ListIngredientes(props) {
             reorder: false
         },
         {
-            name: "Precio",
+            name: "Precio de adquisición",
             selector: row => (
                 <>
                     <Badge
@@ -82,7 +82,7 @@ function ListIngredientes(props) {
                         {new Intl.NumberFormat('es-MX', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                        }).format(row.costoUMPrimaria)} MXN
+                        }).format(row.costoAdquisicion)} MXN
                     </Badge>
                 </>
             ),
@@ -91,15 +91,15 @@ function ListIngredientes(props) {
             reorder: false
         },
         {
-            name: "UM primaria",
-            selector: row => row.umPrimaria,
+            name: "UM adquisición",
+            selector: row => row.umAdquisicion === "Paquete" ? row.umAdquisicion : row.umAdquisicion === "Unidad" ? row.umPrimaria : row.umAdquisicion + row.umPrimaria.toLowerCase(),
             sortable: false,
             center: true,
             reorder: false
         },
         {
-            name: "UM secundaria",
-            selector: row => row.umSecundaria === "Piezas" ? row.umSecundaria : row.umSecundaria + row.umPrimaria.toLowerCase(),
+            name: "UM producción",
+            selector: row => row.umProduccion === "Piezas" ? row.umProduccion : row.umProduccion === "Unidad" ? row.umPrimaria : row.umPrimaria + row.umProduccion.toLowerCase(),
             sortable: false,
             center: true,
             reorder: false

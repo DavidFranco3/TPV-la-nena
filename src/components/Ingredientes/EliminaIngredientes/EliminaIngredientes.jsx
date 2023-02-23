@@ -14,7 +14,7 @@ import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 function EliminaIngredientes(props) {
     const { datosIngrediente, navigate, setShowModal } = props;
 
-    const { id, nombre, umPrimaria, umSecundaria, costoUMPrimaria, imagen } = datosIngrediente;
+    const { id, nombre, umPrimaria, umAdquisicion, umProduccion, costoAdquisicion, imagen } = datosIngrediente;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -80,12 +80,12 @@ function EliminaIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Costo</Form.Label>
+                            <Form.Label>Precio de adquisición</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="costo"
                                 placeholder="Escribe el nombre"
-                                value={costoUMPrimaria}
+                                value={costoAdquisicion}
                                 disabled
                             />
                         </Form.Group>
@@ -93,23 +93,23 @@ function EliminaIngredientes(props) {
 
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Unidad de medida primaria</Form.Label>
+                            <Form.Label>Unidad de medida de adquisición</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="tipoUM"
                                 placeholder="Escribe el nombre"
-                                value={umPrimaria}
+                                value={umAdquisicion === "Paquete" ? umAdquisicion : umAdquisicion === "Unidad" ? umPrimaria : umAdquisicion + umPrimaria.toLowerCase()}
                                 disabled
                             />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Unidad de medida secundaria</Form.Label>
+                            <Form.Label>Unidad de medida de producción</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="um"
                                 placeholder="Escribe el nombre"
-                                value={umSecundaria === "Piezas" ? umSecundaria : umSecundaria + umPrimaria.toLowerCase()}
+                                value={umProduccion === "Piezas" ? umProduccion : umProduccion === "Unidad" ? umPrimaria : umPrimaria + umProduccion.toLowerCase()}
                                 disabled
                             />
                         </Form.Group>
