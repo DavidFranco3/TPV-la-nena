@@ -355,7 +355,7 @@ function RegistraProductos(props) {
                                         <Button
                                             variant="success"
                                             title="Agregar el producto"
-                                            className="registrar"
+                                            className="editar"
                                             onClick={() => {
                                                 addItems()
                                             }}
@@ -367,7 +367,7 @@ function RegistraProductos(props) {
                                         <Button
                                             variant="danger"
                                             title="Cancelar el producto"
-                                            className="cancelar"
+                                            className="editar"
                                             onClick={() => {
                                                 cancelarCargaProducto()
                                             }}

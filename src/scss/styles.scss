@@ -1630,5 +1630,18 @@ a:hover {
     }
   }
 }
-
 //Termina estilos para la tabla responsiva
+
+.editar {
+  width: 104%;
+  margin-right: 10px;
+
+  &:hover {
+    border-color: $background-transparente;
+    -webkit-transform: scale(1.10);
+    -moz-transform: scale(1.10);
+    -ms-transform: scale(1.10);
+    -o-transform: scale(1.10);
+    transform: scale(1.10);
+  }
+}

@@ -233,7 +233,8 @@ function ListProductos(props) {
                         <Badge
                             title="Eliminar producto"
                             bg="danger"
-                            className="eliminar" onClick={() => {
+                            className="eliminar"
+                            onClick={() => {
                                 eliminaProductos(
                                     <EliminaProductos
                                         datosProducto={row}
