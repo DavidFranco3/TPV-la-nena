@@ -131,7 +131,7 @@ function RegistraProductos(props) {
 
         const nombre = document.getElementById("nombre").value
 
-        if (!cargaProductos.um || !cargaProductos.tipoUM || !cargaProductos.precio || !cargaProductos.cantidad) {
+        if (!cargaProductos.um || !cargaProductos.precio || !cargaProductos.cantidad) {
             toast.warning("Completa la información del ingrediente");
         } else {
             const temp = nombre.split("/")
@@ -139,10 +139,9 @@ function RegistraProductos(props) {
             const dataTemp = {
                 nombre: temp[0],
                 um: cargaProductos.um,
-                tipoUM: cargaProductos.tipoUM,
                 precio: cargaProductos.precio,
                 cantidad: cargaProductos.cantidad,
-                total: parseInt(cargaProductos.precio) * parseInt(cargaProductos.cantidad)
+                total: parseFloat(cargaProductos.precio) * parseFloat(cargaProductos.cantidad)
             }
 
             //LogRegistroProductosOV(folioActual, cargaProductos.ID, cargaProductos.item, cantidad, um, precioUnitario, total, setListProductosCargados);
@@ -173,7 +172,7 @@ function RegistraProductos(props) {
         setListProductosCargados([...newArray]);
     }
 
-    const totalSinIVA = listProductosCargados.reduce((amount, item) => (amount + parseInt(item.total)), 0);
+    const totalSinIVA = listProductosCargados.reduce((amount, item) => (amount + parseFloat(item.total)), 0);
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -286,7 +285,7 @@ function RegistraProductos(props) {
                                 >
                                     <option>Elige una opción</option>
                                     {map(listIngredientes, (ingrediente, index) => (
-                                        <option key={index} value={ingrediente?.nombre + "/" + ingrediente?.um + "/" + ingrediente?.tipoUM + "/" + ingrediente?.costo}>{ingrediente?.nombre}</option>
+                                        <option key={index} value={ingrediente?.nombre + "/" + ingrediente?.umProduccion + "/" + ingrediente?.tipoUM + "/" + ingrediente?.costoProduccion}>{ingrediente?.nombre}</option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
@@ -301,20 +300,6 @@ function RegistraProductos(props) {
                                     placeholder="UM"
                                     name="um"
                                     defaultValue={cargaProductos.um}
-                                    disabled
-                                />
-                            </Form.Group>
-
-                            <Form.Group as={Col} controlId="formGridCliente">
-                                <Form.Label>
-                                    Tipo de UM
-                                </Form.Label>
-                                <Form.Control
-                                    id="tipoUM"
-                                    type="text"
-                                    placeholder="Tipo de UM"
-                                    name="tipoUM"
-                                    defaultValue={cargaProductos.tipoUM}
                                     disabled
                                 />
                             </Form.Group>
@@ -355,7 +340,7 @@ function RegistraProductos(props) {
                                     type="text"
                                     placeholder="Total"
                                     name="total"
-                                    value={parseInt(cargaProductos.precio) * parseInt(cargaProductos.cantidad)}
+                                    value={parseFloat(cargaProductos.precio) * parseFloat(cargaProductos.cantidad)}
                                     disabled
                                 />
                             </Form.Group>
@@ -414,7 +399,6 @@ function RegistraProductos(props) {
                                         <th scope="col">ITEM</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">UM</th>
-                                        <th scope="col">Tipo de UM</th>
                                         <th scope="col">Precio</th>
                                         <th scope="col">Cantidad</th>
                                         <th scope="col">Total</th>
@@ -434,9 +418,6 @@ function RegistraProductos(props) {
                                             </td>
                                             <td data-title="Material">
                                                 {producto.um}
-                                            </td>
-                                            <td data-title="UM">
-                                                {producto.tipoUM}
                                             </td>
                                             <td data-title="Orden de compra">
                                                 {new Intl.NumberFormat('es-MX', {
@@ -583,10 +564,13 @@ function formatModelIngredientes(ingredientes) {
         tempIngredientes.push({
             id: ingrediente._id,
             nombre: ingrediente.nombre,
-            tipoUM: ingrediente.tipoUM,
+            umPrimaria: ingrediente.umPrimaria,
+            costoAdquisicion: parseFloat(ingrediente.costoAdquisicion),
+            umAdquisicion: ingrediente.umAdquisicion,
+            umProduccion: ingrediente.umProduccion,
+            costoProduccion: parseFloat(ingrediente.costoProduccion),
+            cantidadPiezas: ingrediente.cantidadPiezas,
             negocio: ingrediente.negocio,
-            um: ingrediente.um,
-            costo: ingrediente.costo,
             imagen: ingrediente.imagen,
             estado: ingrediente.estado,
             fechaCreacion: ingrediente.createdAt,

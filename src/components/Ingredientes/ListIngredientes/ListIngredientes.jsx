@@ -92,14 +92,14 @@ function ListIngredientes(props) {
         },
         {
             name: "UM adquisición",
-            selector: row => row.umAdquisicion === "Paquete" ? row.umAdquisicion : row.umAdquisicion === "Unidad" ? row.umPrimaria : row.umAdquisicion + row.umPrimaria.toLowerCase(),
+            selector: row => row.umAdquisicion === "Paquete" || row.umAdquisicion === "Gramos" || row.umAdquisicion === "Litros" || row.umAdquisicion === "Metros" ? row.umAdquisicion : row.umAdquisicion + row.umPrimaria.toLowerCase(),
             sortable: false,
             center: true,
             reorder: false
         },
         {
             name: "UM producción",
-            selector: row => row.umProduccion === "Piezas" ? row.umProduccion : row.umProduccion === "Unidad" ? row.umPrimaria : row.umPrimaria + row.umProduccion.toLowerCase(),
+            selector: row => row.umProduccion === "Piezas" || row.umProduccion === "Gramos" || row.umProduccion === "Litros" || row.umProduccion === "Metros" ? row.umProduccion : row.umProduccion + row.umPrimaria.toLowerCase(),
             sortable: false,
             center: true,
             reorder: false

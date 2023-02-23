@@ -98,7 +98,7 @@ function EliminaIngredientes(props) {
                                 type="text"
                                 name="tipoUM"
                                 placeholder="Escribe el nombre"
-                                value={umAdquisicion === "Paquete" ? umAdquisicion : umAdquisicion === "Unidad" ? umPrimaria : umAdquisicion + umPrimaria.toLowerCase()}
+                                value={umAdquisicion === "Paquete" || umAdquisicion === "Gramos" || umAdquisicion === "Litros" || umAdquisicion === "Metros" ? umAdquisicion : umAdquisicion + umPrimaria.toLowerCase()}
                                 disabled
                             />
                         </Form.Group>
@@ -109,7 +109,7 @@ function EliminaIngredientes(props) {
                                 type="text"
                                 name="um"
                                 placeholder="Escribe el nombre"
-                                value={umProduccion === "Piezas" ? umProduccion : umProduccion === "Unidad" ? umPrimaria : umPrimaria + umProduccion.toLowerCase()}
+                                value={umProduccion === "Piezas" || umProduccion === "Gramos" || umProduccion === "Litros" || umProduccion === "Metros" ? umProduccion : umProduccion + umPrimaria.toLowerCase()}
                                 disabled
                             />
                         </Form.Group>

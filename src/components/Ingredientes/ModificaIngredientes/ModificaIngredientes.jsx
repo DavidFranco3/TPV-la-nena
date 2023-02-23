@@ -64,7 +64,8 @@ function ModificaIngredientes(props) {
                 // Sube a cloudinary la imagen principal del producto
                 subeArchivosCloudinary(imagenFile, "ingrediente").then(response => {
                     const { data } = response;
-                    const precio = formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umAdquisicion === "Decá" ? parseFloat(formData.costoAdquisicion) / 100 : formData.umAdquisicion === "Hectó" ? parseFloat(formData.costoAdquisicion) / 10 : formData.umAdquisicion === "Kiló" ? parseFloat(formData.costoAdquisicion) / 1000 : formData.umAdquisicion === "Decí" ? parseFloat(formData.costoAdquisicion) * 10 : formData.umAdquisicion === "Centí" ? parseFloat(formData.costoAdquisicion) * 100 : formData.umAdquisicion === "Milí" ? parseFloat(formData.costoAdquisicion) * 1000 : formData.umAdquisicion === "Unidad" ? formData.costoAdquisicion : "";
+
+                    const precio = formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umAdquisicion === "Decá" ? parseFloat(formData.costoAdquisicion) / 100 : formData.umAdquisicion === "Hectó" ? parseFloat(formData.costoAdquisicion) / 10 : formData.umAdquisicion === "Kiló" ? parseFloat(formData.costoAdquisicion) / 1000 : formData.umAdquisicion === "Decí" ? parseFloat(formData.costoAdquisicion) * 10 : formData.umAdquisicion === "Centí" ? parseFloat(formData.costoAdquisicion) * 100 : formData.umAdquisicion === "Milí" ? parseFloat(formData.costoAdquisicion) * 1000 : formData.umAdquisicion == formData.umPrimaria ? formData.costoAdquisicion : "";
 
                     const dataTemp = {
                         nombre: formData.nombre,
@@ -73,7 +74,7 @@ function ModificaIngredientes(props) {
                         umAdquisicion: formData.umPrimaria === "Paquete" ? "Paquete" : formData.umAdquisicion,
                         umProduccion: formData.umPrimaria === "Paquete" ? "Piezas" : formData.umProduccion,
                         cantidadPiezas: formData.cantidadPiezas,
-                        costoProduccion: formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umProduccion === "Decá" ? parseFloat(precio) * 100 : formData.umProduccion === "Hectó" ? parseFloat(formData.umAdquisicion) * 10 : formData.umProduccion === "Kiló" ? parseFloat(precio) * 1000 : formData.umProduccion === "Decí" ? parseFloat(precio) / 10 : formData.umProduccion === "Centí" ? parseFloat(precio) / 100 : formData.umProduccion === "Milí" ? parseFloat(precio) / 1000 : formData.umProduccion === "Unidad" ? precio : "",
+                        costoProduccion: formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umProduccion === "Decá" ? parseFloat(precio) * 100 : formData.umProduccion === "Hectó" ? parseFloat(formData.umAdquisicion) * 10 : formData.umProduccion === "Kiló" ? parseFloat(precio) * 1000 : formData.umProduccion === "Decí" ? parseFloat(precio) / 10 : formData.umProduccion === "Centí" ? parseFloat(precio) / 100 : formData.umProduccion === "Milí" ? parseFloat(precio) / 1000 : formData.umProduccion == formData.umPrimaria ? precio : "",
                         imagen: data.secure_url,
                     }
                     actualizaIngrediente(id, dataTemp).then(response => {
@@ -197,7 +198,7 @@ function ModificaIngredientes(props) {
                                             defaultValue={formData.umAdquisicion}
                                         >
                                             <option>Elige una opción</option>
-                                            <option value="Unidad">{formData.umPrimaria}</option>
+                                            <option value={formData.umPrimaria}>{formData.umPrimaria}</option>
                                             <option value="Decá">Decá{formData.umPrimaria.toLowerCase()}</option>
                                             <option value="Hectó">Hectó{formData.umPrimaria.toLowerCase()}</option>
                                             <option value="Kiló">Kiló{formData.umPrimaria.toLowerCase()}</option>
@@ -222,7 +223,7 @@ function ModificaIngredientes(props) {
                                             defaultValue={formData.umProduccion}
                                         >
                                             <option>Elige una opción</option>
-                                            <option value="Unidad">{formData.umPrimaria}</option>
+                                            <option value={formData.umPrimaria}>{formData.umPrimaria}</option>
                                             <option value="Decá">Decá{formData.umPrimaria.toLowerCase()}</option>
                                             <option value="Hectó">Hectó{formData.umPrimaria.toLowerCase()}</option>
                                             <option value="Kiló">Kiló{formData.umPrimaria.toLowerCase()}</option>
