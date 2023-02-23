@@ -73,20 +73,6 @@ function ListIngredientes(props) {
             reorder: false
         },
         {
-            name: "Tipo de unidad de medida",
-            selector: row => row.tipoUM,
-            sortable: false,
-            center: true,
-            reorder: false
-        },
-        {
-            name: "Unidad de medida",
-            selector: row => row.um,
-            sortable: false,
-            center: true,
-            reorder: false
-        },
-        {
             name: "Precio",
             selector: row => (
                 <>
@@ -96,10 +82,24 @@ function ListIngredientes(props) {
                         {new Intl.NumberFormat('es-MX', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                        }).format(row.costo)} MXN
+                        }).format(row.costoUMPrimaria)} MXN
                     </Badge>
                 </>
             ),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "UM primaria",
+            selector: row => row.umPrimaria,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "UM secundaria",
+            selector: row => row.umSecundaria === "Piezas" ? row.umSecundaria : row.umSecundaria + row.umPrimaria.toLowerCase(),
             sortable: false,
             center: true,
             reorder: false

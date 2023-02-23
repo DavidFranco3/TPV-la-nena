@@ -77,20 +77,6 @@ function ListUnidadesMedida(props) {
             reorder: false
         },
         {
-            name: 'Abreviatura',
-            selector: row => row.abreviatura,
-            sortable: false,
-            center: true,
-            reorder: false
-        },
-        {
-            name: 'Tipo',
-            selector: row => row.tipo,
-            sortable: false,
-            center: true,
-            reorder: false
-        },
-        {
             name: 'Estado',
             sortable: false,
             center: true,

@@ -78,7 +78,7 @@ function Dashboard(props) {
         estadoUsuario === "true" ?
           (
             <>
-              <div className="grid grid-cols-5 gap-5">
+              <div className="grid grid-cols-3 gap-3">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
@@ -107,11 +107,6 @@ function Dashboard(props) {
                   path={'/Categorias'}
                   logo={LogoCategorias}
                   title={'Categorías'}
-                />
-                <ItemCard
-                  path={'/UnidadesMedida'}
-                  logo={LogoUM}
-                  title={'Unidades de medida'}
                 />
                 <ItemCard
                   path={'/Ingredientes'}

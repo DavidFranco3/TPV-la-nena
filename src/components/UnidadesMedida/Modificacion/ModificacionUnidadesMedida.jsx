@@ -31,8 +31,6 @@ function ModificacionUnidadesMedida(props) {
 
             const dataTemp = {
                 nombre: formData.nombre,
-                abreviatura: formData.abreviatura,
-                tipo: formData.tipo,
                 estadoUM: "true"
             }
 
@@ -67,30 +65,6 @@ function ModificacionUnidadesMedida(props) {
                             name="nombre"
                             defaultValue={formData.nombre}
                         />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridNombre">
-                        <Form.Label>Abreviatura</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="abreviatura"
-                            placeholder='Abreviatura'
-                            defaultValue={formData.abreviatura}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridNombre">
-                        <Form.Label>Tipo</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="tipo"
-                            placeholder="Escribe el tipo de UM"
-                            defaultValue={formData.tipo}
-                        >
-                            <option>Elige una opción</option>
-                            <option value="Primaria" selected={formData.tipo == "Primaria"}>Primaria</option>
-                            <option value="Secundaria" selected={formData.tipo == "Secundaria"}>Secundaria</option>
-                        </Form.Control>
                     </Form.Group>
                 </Row>
 

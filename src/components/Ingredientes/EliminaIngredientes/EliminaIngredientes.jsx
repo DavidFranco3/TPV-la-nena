@@ -14,7 +14,7 @@ import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 function EliminaIngredientes(props) {
     const { datosIngrediente, navigate, setShowModal } = props;
 
-    const { id, nombre, tipoUM, um, costo, imagen } = datosIngrediente;
+    const { id, nombre, umPrimaria, umSecundaria, costoUMPrimaria, imagen } = datosIngrediente;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -80,12 +80,12 @@ function EliminaIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Tipo de unidad de medida</Form.Label>
+                            <Form.Label>Costo</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="tipoUM"
+                                name="costo"
                                 placeholder="Escribe el nombre"
-                                value={tipoUM}
+                                value={costoUMPrimaria}
                                 disabled
                             />
                         </Form.Group>
@@ -93,23 +93,23 @@ function EliminaIngredientes(props) {
 
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Costo</Form.Label>
+                            <Form.Label>Unidad de medida primaria</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="costo"
+                                name="tipoUM"
                                 placeholder="Escribe el nombre"
-                                value={costo}
+                                value={umPrimaria}
                                 disabled
                             />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Unidad de medida</Form.Label>
+                            <Form.Label>Unidad de medida secundaria</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="um"
                                 placeholder="Escribe el nombre"
-                                value={um}
+                                value={umSecundaria === "Piezas" ? umSecundaria : umSecundaria + umPrimaria.toLowerCase()}
                                 disabled
                             />
                         </Form.Group>

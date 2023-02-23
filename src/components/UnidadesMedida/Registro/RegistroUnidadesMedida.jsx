@@ -24,15 +24,13 @@ function RegistroUnidadesMedida(props) {
 
     const onSubmit = e => {
         e.preventDefault();
-        if (!formData.nombre || !formData.tipo || !formData.abreviatura) {
+        if (!formData.nombre) {
             toast.warning("Completa el formulario")
         } else {
             setLoading(true);
 
             const dataTemp = {
                 nombre: formData.nombre,
-                abreviatura: formData.abreviatura,
-                tipo: formData.tipo,
                 estadoUM: "true"
             }
 
@@ -67,30 +65,12 @@ function RegistroUnidadesMedida(props) {
                             name="nombre"
                             placeholder='Nombre de la unidad de medida'
                             defaultValue={formData.nombre}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridNombre">
-                        <Form.Label>Abreviatura</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="abreviatura"
-                            placeholder='Abreviatura'
-                            defaultValue={formData.abreviatura}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridNombre">
-                        <Form.Label>Tipo</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="tipo"
-                            placeholder="Escribe el tipo de UM"
-                            defaultValue={formData.tipo}
-                        >
+                            >
                             <option>Elige una opción</option>
-                            <option value="Primaria">Primaria</option>
-                            <option value="Secundaria">Secundaria</option>
+                            <option value="Litros">Litros</option>
+                            <option value="Gramos">Gramos</option>
+                            <option value="Metros">Litros</option>
+                            <option value="Paquete">Gramos</option>
                         </Form.Control>
                     </Form.Group>
                 </Row>
