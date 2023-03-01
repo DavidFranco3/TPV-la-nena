@@ -2,29 +2,19 @@
 import Dashboard from "../page/Dashboard";
 import Productos from "../page/Productos";
 import Categorias from "../page/Categorias";
-import Ventas from "../page/Ventas";
 import Error404 from "../page/Error404";
 import TerminalPV from "../page/TerminalPV";
-import HistoricoVentasDia from "../page/HistoricoVentasDia";
-import HistoricoVentasMes from "../page/HistoricoVentasMes";
 import Usuarios from "../page/Usuarios";
 import UnidadesMedida from "../page/UnidadesMedida";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
+import Historiales from "../page/Historiales";
 
 // Importaciones de productos
 import RegistraProductos from "../components/Productos/RegistraProductos";
 import ModificaProductos from "../components/Productos/ModificaProductos";
 
 const configRouting = [
-    {
-        path: "/HistoricoVentasMes",
-        page: HistoricoVentasMes
-    },    
-    {
-        path: "/HistoricoVentasDia",
-        page: HistoricoVentasDia
-    },
     {
         path: "/Productos",
         page: Productos
@@ -40,10 +30,6 @@ const configRouting = [
     {
         path: "/Categorias",
         page: Categorias
-    },
-    {
-        path: "/Ventas",
-        page: Ventas
     },
     {
         path: "/TerminalPV",
@@ -64,6 +50,10 @@ const configRouting = [
     {
         path: "/Ingredientes",
         page: Ingredientes
+    },
+    {
+        path: "/Historiales",
+        page: Historiales
     },
     {
         path: "/",

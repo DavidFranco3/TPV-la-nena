@@ -157,28 +157,6 @@ function Ventas(props) {
 
         return (
                 <>
-                        <Alert className="fondoPrincipalAlert">
-                                <Row>
-                                        <Col xs={12} md={4} className="titulo">
-                                                <h1 className="font-bold">Historial general</h1>
-                                        </Col>
-                                        <Col xs={6} md={8}>
-                                                <div style={{ float: 'right' }}>
-                                                        <Button
-                                                                title="Regresar a la pagina anterior"
-                                                                className="btnRegistro"
-                                                                style={{ marginRight: '10px' }}
-                                                                onClick={() => {
-                                                                        rutaRegreso();
-                                                                }}
-                                                        >
-                                                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
-                                                        </Button>
-                                                </div>
-                                        </Col>
-                                </Row>
-                        </Alert>
-
                         <Row>
                                 <Col xs={12} md={8}>
                                         <h3 className="tituloSwitch">Estado de las ventas</h3>

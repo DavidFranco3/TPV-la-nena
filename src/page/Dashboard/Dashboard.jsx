@@ -86,19 +86,9 @@ function Dashboard(props) {
                   title={'Ventas'}
                 />
                 <ItemCard
-                  path={'/Ventas'}
+                  path={'/Historiales'}
                   logo={LogoHistorial}
-                  title={'Historial general'}
-                />
-                <ItemCard
-                  path={'/HistoricoVentasDia'}
-                  logo={LogoHistorialDia}
-                  title={'Historial por día'}
-                />
-                <ItemCard
-                  path={'/HistoricoVentasMes'}
-                  logo={LogoHistorialMes}
-                  title={'Historial por mes'}
+                  title={'Historiales'}
                 />
                 <ItemCard
                   path={'/Productos'}
@@ -137,19 +127,9 @@ function Dashboard(props) {
                   title={'Ventas'}
                 />
                 <ItemCard
-                  path={'/Ventas'}
+                  path={'/Historiales'}
                   logo={LogoHistorial}
-                  title={'Historial general'}
-                />
-                <ItemCard
-                  path={'/HistoricoVentasDia'}
-                  logo={LogoHistorialDia}
-                  title={'Historial por dia'}
-                />
-                <ItemCard
-                  path={'/HistoricoVentasMes'}
-                  logo={LogoHistorialMes}
-                  title={'Historial por mes'}
+                  title={'Historiales'}
                 />
               </div>
             </>
