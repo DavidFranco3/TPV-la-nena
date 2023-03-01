@@ -48,11 +48,11 @@ export const estilos = {
             paddingLeft: "0px",
             paddingRight: "0px",
             fontWeight: 700,
-        },
-        draggingStyle: {
-            cursor: "move",
-        },
     },
+    draggingStyle: {
+        cursor: "move",
+    },
+},
     contextMenu: {
         style: {
             fontSize: "18px",

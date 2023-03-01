@@ -18,13 +18,6 @@ import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 function Ventas(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
 
-        // Para definir el enrutamiento
-        const enrutamiento = useNavigate();
-
-        const rutaRegreso = () => {
-                enrutamiento("/")
-        }
-
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
 
@@ -76,7 +69,7 @@ function Ventas(props) {
                                 // Lista los productos activos
                                 totalVentasActivas().then(response => {
                                         const { data } = response;
-                                        setNoTotalVentas(data)
+                                        setNoTotalVentas(data);
                                 }).catch(e => {
                                         console.log(e)
                                 })
@@ -114,7 +107,7 @@ function Ventas(props) {
                                 // Lista los productos obsoletos
                                 totalVentasCanceladas().then(response => {
                                         const { data } = response;
-                                        setNoTotalVentas(data)
+                                        setNoTotalVentas(data);
                                 }).catch(e => {
                                         console.log(e)
                                 })
@@ -154,6 +147,8 @@ function Ventas(props) {
                         console.log(e)
                 }
         }, [location, estadoSwitch, page, rowsPerPage]);
+
+        console.log(listVentas)
 
         return (
                 <>
