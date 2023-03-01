@@ -83,54 +83,52 @@ function Historiales(props) {
                 </Row>
             </Alert>
 
-            <div className="flex flex-col space-x-5">
-                <Tabs
-                    activeKey={tab}
-                    onSelect={(k) => setTab(k)}
-                    className="flex w-full"
-                    id="uncontrolled-tab-estados"
+            <Tabs
+                activeKey={tab}
+                onSelect={(k) => setTab(k)}
+                className="flex w-full"
+                id="uncontrolled-tab-estados"
+            >
+                <Tab
+                    key={0}
+                    tabClassName="font-semibold text-lg"
+                    eventKey="general"
+                    title="General"
                 >
-                    <Tab
-                        key={0}
-                        tabClassName="font-semibold text-lg"
-                        eventKey="general"
-                        title="General"
-                    >
-                        <br />
-                        <Suspense fallback={< Spinner />}>
-                            <Ventas
-                                setRefreshCheckLogin={setRefreshCheckLogin}
-                            />
-                        </Suspense>
-                    </Tab>
-                    <Tab
-                        key={1}
-                        tabClassName="font-semibold text-lg"
-                        eventKey="dia"
-                        title="Por día"
-                    >
-                        <br />
-                        <Suspense fallback={< Spinner />}>
-                            <HistoricoVentasDia
-                                setRefreshCheckLogin={setRefreshCheckLogin}
-                            />
-                        </Suspense>
-                    </Tab>
-                    <Tab
-                        key={2}
-                        tabClassName="font-semibold text-lg"
-                        eventKey="mes"
-                        title="Por mes"
-                    >
-                        <br />
-                        <Suspense fallback={< Spinner />}>
-                            <HistoricoVentasMes
-                                setRefreshCheckLogin={setRefreshCheckLogin}
-                            />
-                        </Suspense>
-                    </Tab>
-                </Tabs>
-                </div>
+                    <br />
+                    <Suspense fallback={< Spinner />}>
+                        <Ventas
+                            setRefreshCheckLogin={setRefreshCheckLogin}
+                        />
+                    </Suspense>
+                </Tab>
+                <Tab
+                    key={1}
+                    tabClassName="font-semibold text-lg"
+                    eventKey="dia"
+                    title="Por día"
+                >
+                    <br />
+                    <Suspense fallback={< Spinner />}>
+                        <HistoricoVentasDia
+                            setRefreshCheckLogin={setRefreshCheckLogin}
+                        />
+                    </Suspense>
+                </Tab>
+                <Tab
+                    key={2}
+                    tabClassName="font-semibold text-lg"
+                    eventKey="mes"
+                    title="Por mes"
+                >
+                    <br />
+                    <Suspense fallback={< Spinner />}>
+                        <HistoricoVentasMes
+                            setRefreshCheckLogin={setRefreshCheckLogin}
+                        />
+                    </Suspense>
+                </Tab>
+            </Tabs>
         </>
     );
 }

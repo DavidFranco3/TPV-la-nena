@@ -92,13 +92,6 @@ function GraficaProductosMes(props) {
             borderColor: "rgb(128, 64, 0)",
             borderWidth: 1,
             data: [desayunos]
-        },
-        {
-            label: "Total",
-            backgroundColor: "rgb(0, 0, 255)",
-            borderColor: "rgb(0, 0, 255)",
-            borderWidth: 1,
-            data: [total]
         }]
     };
 
@@ -110,6 +103,7 @@ function GraficaProductosMes(props) {
     return (
         <>
             <div className='App' style={{ width: "100%", height: "500px" }}>
+                <h2>Total de productos vendidos: {total}</h2>
                 <Bar data={data} options={opciones} />
             </div>
         </>

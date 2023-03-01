@@ -507,6 +507,8 @@ function RegistraProductos(props) {
                         </Col>
                     </Form.Group>
                 </Container>
+
+                <br/>
             </Form>
         </>
     );

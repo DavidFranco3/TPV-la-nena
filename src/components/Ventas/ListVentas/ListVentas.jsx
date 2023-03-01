@@ -233,7 +233,7 @@ function ListVentas(props) {
                 <DataTable
                     columns={columns}
                     noDataComponent="No hay registros para mostrar"
-                    data={listVentas}
+                    data={rows}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}

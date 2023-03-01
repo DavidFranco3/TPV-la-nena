@@ -70,13 +70,6 @@ function GraficaVentasDia(props) {
             borderColor: "rgb(255, 128, 0)",
             borderWidth: 1,
             data: [transferencia]
-        },
-        {
-            label: "Total",
-            backgroundColor: "rgb(0, 0, 255)",
-            borderColor: "rgb(0, 0, 255)",
-            borderWidth: 1,
-            data: [total]
         }]
     };
 
@@ -88,7 +81,12 @@ function GraficaVentasDia(props) {
     return (
         <>
             <div className='App' style={{ width: "100%", height: "500px" }}>
-                <Bar data={data} options={opciones}/>
+                <h2>Total de dinero ingresado: ${''}
+                        {new Intl.NumberFormat('es-MX', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(total)} MXN</h2>
+                <Bar data={data} options={opciones} />
             </div>
         </>
     );

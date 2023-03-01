@@ -529,6 +529,7 @@ function ModificaProductos(props) {
                         </Col>
                     </Form.Group>
                 </Container>
+                <br/>
             </Form>
         </>
     );
