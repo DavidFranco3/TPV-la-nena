@@ -47,6 +47,7 @@ export const estilos = {
         style: {
             paddingLeft: "0px",
             paddingRight: "0px",
+            fontWeight: 700,
         },
         draggingStyle: {
             cursor: "move",
@@ -78,7 +79,7 @@ export const estilos = {
     rows: {
         style: {
             fontFamily: 'arial',
-            fontSize: '15px',
+            fontSize: '14px',
             fontWeight: 0,
             minHeight: '35px',
             '&:not(:last-of-type)': {
