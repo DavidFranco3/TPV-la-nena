@@ -1,6 +1,7 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarDetallesVentasPorDia, listarPaginacionVentasDia } from "../../api/ventas";
-import ListHistorialVentasDia from "../../components/HistorialVentasDia/ListHistorialVentasDia";
+import { listarVentasMes } from "../../api/ventas";
+import GraficaVentasMes from "../../components/HistoricoVentasMes/GraficaVentasMes";
+import GraficaProductosMes from '../../components/HistoricoVentasMes/GraficaProductosMes';
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -9,12 +10,14 @@ import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
 import "../../scss/styles.scss";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Tabs, Tab, Alert, Row, Col } from "react-bootstrap";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
-function HistorialVentasDia(props) {
-    const { dia, setRefreshCheckLogin, location } = props;
+function GraficaMensual(props) {
+    const { mes, setRefreshCheckLogin, location } = props;
+
+    const [tab, setTab] = useState('dinero');
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -52,81 +55,86 @@ function HistorialVentasDia(props) {
     }, [])
     // Termina cerrado de sesión automatico
 
-    //console.log(dia)
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [page, setPage] = useState(1);
-    const [noTotalVentas, setNoTotalVentas] = useState(1);
-
     // Para guardar el listado de detalles de las ventas del dia
-    const [listDetallesDia, setListDetallesDia] = useState(null);
+    const [listDetallesMes, setListDetallesMes] = useState(null);
 
     useEffect(() => {
         try {
-            listarDetallesVentasPorDia(dia).then(response => {
+            listarVentasMes(mes).then(response => {
                 const { data } = response;
-                setNoTotalVentas(data)
+
+                //console.log(data);
+
+                if (!listDetallesMes && data) {
+                    setListDetallesMes(formatModelVentas(data));
+                } else {
+                    const datosVentas = formatModelVentas(data);
+                    setListDetallesMes(datosVentas);
+                }
             }).catch(e => {
                 console.log(e)
             })
-
-            if (page === 0) {
-                setPage(1)
-
-                listarPaginacionVentasDia(page, rowsPerPage, dia).then(response => {
-                    const { data } = response;
-                    if (!listDetallesDia && data) {
-                        setListDetallesDia(formatModelVentas(data));
-                    } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListDetallesDia(datosVentas)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            } else {
-                listarPaginacionVentasDia(page, rowsPerPage, dia).then(response => {
-                    const { data } = response;
-                    //console.log(data)
-
-                    if (!listDetallesDia && data) {
-                        setListDetallesDia(formatModelVentas(data));
-                    } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListDetallesDia(datosVentas)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            }
         } catch (e) {
             console.log(e)
         }
-
-    }, [dia, location, page, rowsPerPage]);
-
+    }, [location]);
 
     return (
         <>
+            <Alert>
+                <Row>
+                    <Col xs={12} md={8}>
+                        <h1>
+                        {dayjs(mes).format('MMMM')}
+                        </h1>
+                    </Col>
+                </Row>
+            </Alert>
+
             {
-                listDetallesDia ?
+                listDetallesMes ?
                     (
                         <>
-                            <Suspense fallback={< Spinner />}>
-                                <div className="diaHistorial">
-                                    {dayjs(dia).format('dddd, LL')}
-                                </div>
-                                <ListHistorialVentasDia
-                                    listDetallesDia={listDetallesDia}
-                                    dia={dia}
-                                    location={location}
-                                    setRefreshCheckLogin={setRefreshCheckLogin}
-                                    setRowsPerPage={setRowsPerPage}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    setPage={setPage}
-                                    noTotalVentas={noTotalVentas}
-                                />
-                            </Suspense>
+                            <Tabs
+                                activeKey={tab}
+                                onSelect={(k) => setTab(k)}
+                                className="flex w-full"
+                                id="uncontrolled-tab-estados"
+                            >
+                                <Tab
+                                    key={0}
+                                    tabClassName="font-semibold text-lg"
+                                    eventKey="dinero"
+                                    title="Dinero"
+                                >
+                                    <br />
+                                    <Suspense fallback={< Spinner />}>
+                                        <GraficaVentasMes
+                                            listDetallesMes={listDetallesMes}
+                                            mes={mes}
+                                            location={location}
+                                            setRefreshCheckLogin={setRefreshCheckLogin}
+                                        />
+                                    </Suspense>
+                                </Tab>
+
+                                <Tab
+                                    key={1}
+                                    tabClassName="font-semibold text-lg"
+                                    eventKey="productos"
+                                    title="Productos"
+                                >
+                                    <br />
+                                    <Suspense fallback={< Spinner />}>
+                                        <GraficaProductosMes
+                                            listDetallesMes={listDetallesMes}
+                                            mes={mes}
+                                            location={location}
+                                            setRefreshCheckLogin={setRefreshCheckLogin}
+                                        />
+                                    </Suspense>
+                                </Tab>
+                            </Tabs>
                         </>
                     )
                     :
@@ -167,4 +175,4 @@ function formatModelVentas(ventas) {
     return tempVentas;
 }
 
-export default HistorialVentasDia;
+export default GraficaMensual;

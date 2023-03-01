@@ -6,6 +6,8 @@ import Total from "../../../page/HistoricoVentasMes/Total";
 import BasicModal from "../../Modal/BasicModal";
 import HistorialVentasMes from "../../../page/HistorialVentasMes";
 import LogoHistorial from "../../../assets/png/historial.png";
+import LogoGrafica from "../../../assets/png/graficas.png";
+import GraficaMensual from '../../../page/GraficaMensual';
 import ProcesamientoCSV from "../ProcesamientoCSV";
 import { estilos } from "../../../utils/tableStyled";
 import DataTable from "react-data-table-component";
@@ -50,6 +52,13 @@ function ListHistoricoVentasMes(props) {
         setShowModal(true);
     }
 
+    //Para ver detalles
+    const grafica = (content) => {
+        setTitulosModal("Grafica del mes");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
     const handleChangePage = (page) => {
         // console.log("Nueva pagina "+ newPage)
         setPage(page);
@@ -88,6 +97,26 @@ function ListHistoricoVentasMes(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
+                    <Badge
+                            bg="light"
+                            className="vistaDetalles"
+                            onClick={() => {
+                                grafica(
+                                    <GraficaMensual
+                                        setRefreshCheckLogin={setRefreshCheckLogin}
+                                        mes={row}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}
+                        >
+                            <Image
+                                title="Ver la grafica del mes"
+                                alt="Ver la grafica del mes"
+                                src={LogoGrafica}
+                                className="logoHistorial"
+                            />
+                        </Badge>
                         <Badge
                             title="Ver las ventas del mes"
                             bg="light"

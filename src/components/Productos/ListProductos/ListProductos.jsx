@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan, faArrowDownLong, faEye } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import EliminaProductos from "../EliminaProductos";
 import { Badge, Container } from "react-bootstrap";
 import ModificaProductos from "../ModificaProductos";
 import CancelarProductos from '../CancelarProductos';
+import ListIngredientesProductos from '../ListIngredientesProductos';
 import "../../../scss/styles.scss";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
@@ -55,6 +56,13 @@ function ListProductos(props) {
     // Para cancelar la venta
     const recuperarProducto = (content) => {
         setTitulosModal("Recuperar producto");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const ingredientes = (content) => {
+        setTitulosModal("Ingredientes");
         setContentModal(content);
         setShowModal(true);
     }
@@ -219,6 +227,20 @@ function ListProductos(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            bg="primary"
+                            title="Ver ingredientes del producto"
+                            className="eliminar"
+                            onClick={() => {
+                                ingredientes(
+                                    <ListIngredientesProductos
+                                        listIngredientes={row.ingredientes}
+                                    />
+                                )
+                            }}>
+                            <FontAwesomeIcon icon={faEye} className="text-lg" />
+                        </Badge>
+
                         <Badge
                             bg="success"
                             title="Modificar producto"

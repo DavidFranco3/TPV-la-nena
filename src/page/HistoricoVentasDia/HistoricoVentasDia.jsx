@@ -48,6 +48,8 @@ function HistoricoVentasDia(props) {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+                logoutApi();
+                setRefreshCheckLogin(true);
                 toast.warning('Sesión expirada');
                 toast.success('Sesión cerrada por seguridad');
             }

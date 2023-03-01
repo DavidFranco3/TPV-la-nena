@@ -6,7 +6,9 @@ import Total from "../../../page/HistoricoVentasDia/Total";
 import BasicModal from "../../Modal/BasicModal";
 import HistorialVentasDia from "../../../page/HistorialVentasDia";
 import LogoHistorial from "../../../assets/png/historial.png";
+import LogoGrafica from "../../../assets/png/graficas.png";
 import ProcesamientoCSV from "../ProcesamientoCSV";
+import GraficaDiaria from '../../../page/GraficaDiaria';
 import { estilos } from "../../../utils/tableStyled";
 import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,6 +45,13 @@ function ListHistoricoVentasDia(props) {
     //Para ver detalles
     const detallesHistorial = (content) => {
         setTitulosModal("Historial del día");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    //Para ver detalles
+    const grafica = (content) => {
+        setTitulosModal("Grafica del día");
         setContentModal(content);
         setShowModal(true);
     }
@@ -85,6 +94,26 @@ function ListHistoricoVentasDia(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            bg="light"
+                            className="vistaDetalles"
+                            onClick={() => {
+                                grafica(
+                                    <GraficaDiaria
+                                        setRefreshCheckLogin={setRefreshCheckLogin}
+                                        dia={row}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}
+                        >
+                            <Image
+                                title="Ver la grafica del dia"
+                                alt="Ver la grafica del dia"
+                                src={LogoGrafica}
+                                className="logoHistorial"
+                            />
+                        </Badge>
                         <Badge
                             bg="light"
                             className="vistaDetalles"

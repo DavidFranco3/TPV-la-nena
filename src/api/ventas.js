@@ -2,6 +2,8 @@ import { API_HOST } from "../utils/constants";
 import {
     ENDPOINTRegistroVentas,
     ENDPOINTListarVentas,
+    ENDPOINTListarVentasDia,
+    ENDPOINTListarVentasMes,
     ENDPOINTListarPaginandoVentasActivas,
     ENDPOINTListarPaginandoVentas,
     ENDPOINTListarPaginandoVentasDia,
@@ -168,6 +170,30 @@ export async function listarPaginacionVentasDia(pagina, limite, dia) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasDia + `/?pagina=${pagina}&&limite=${limite}&&dia=${dia}`, config);
+}
+
+// Listar las ventas de un dia especifico paginandolas
+export async function listarVentasDia(dia) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarVentasDia + `/?dia=${dia}`, config);
+}
+
+// Listar las ventas de un dia especifico paginandolas
+export async function listarVentasMes(mes) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarVentasMes + `/?mes=${mes}`, config);
 }
 
 // Listar las ventas de un mes especifico paginandolas

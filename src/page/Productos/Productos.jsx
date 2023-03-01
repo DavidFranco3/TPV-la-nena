@@ -65,6 +65,8 @@ function Productos(props) {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+                logoutApi();
+                setRefreshCheckLogin(true);
                 toast.warning('Sesión expirada');
                 toast.success('Sesión cerrada por seguridad');
             }
@@ -73,7 +75,7 @@ function Productos(props) {
 
     // Guarda el listado de productos
     const [listProductos, setListProductos] = useState(null);
-    
+
     // Para guardar el listado de categorias
     const [listCategorias, setListCategorias] = useState(null);
 

@@ -44,6 +44,8 @@ export const ENDPOINTCancelarProductos = "/productos/cancelar";
 // Ventas
 export const ENDPOINTRegistroVentas = "/ventas/registro";
 export const ENDPOINTListarVentas = "/ventas/listar";
+export const ENDPOINTListarVentasDia = "/ventas/listarVentasDia";
+export const ENDPOINTListarVentasMes = "/ventas/listarVentasMes";
 export const ENDPOINTListarPaginandoVentas = "/ventas/listarPaginando";
 export const ENDPOINTTotalVentas = "/ventas/totalVentas";
 export const ENDPOINTListarPaginandoVentasActivas = "/ventas/listarPaginandoActivas";
