@@ -2,6 +2,7 @@ import { API_HOST } from "../utils/constants";
 import {
     ENDPOINTRegistroUsuarios,
     ENDPOINTListarUsuarios,
+    ENDPOINTListarUsuariosCajeros,
     ENDPOINTListarPaginandoUsuarios,
     ENDPOINTObtenerUsuarios,
     ENDPOINTEliminarUsuarios,
@@ -52,6 +53,18 @@ export async function listarUsuarios(params) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarUsuarios, config);
+}
+
+// Para listar todos los usuarios
+export async function listarUsuariosCajeros() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarUsuariosCajeros, config);
 }
 
 // Listar los usuarios paginandolos

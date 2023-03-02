@@ -62,7 +62,7 @@ function ListVentas(props) {
             selector: row => row.numeroTiquet,
             sortable: false,
             center: true,
-            reorder: false
+            reorder: false,
         },
         {
             name: "Día de la venta",
@@ -111,7 +111,7 @@ function ListVentas(props) {
             sortable: false,
             center: true,
             reorder: false,
-            selector: row => row.productosVendidos
+            selector: row => row.productosVendidos,
         },
         {
             name: "Total",
@@ -232,6 +232,7 @@ function ListVentas(props) {
             <Container fluid>
                 <DataTable
                     columns={columns}
+                    responsive={true} 
                     noDataComponent="No hay registros para mostrar"
                     data={listVentas}
                     progressPending={pending}

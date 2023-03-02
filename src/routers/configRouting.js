@@ -9,12 +9,17 @@ import UnidadesMedida from "../page/UnidadesMedida";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
 import Historiales from "../page/Historiales";
+import Cajas from "../page/Cajas";
 
 // Importaciones de productos
 import RegistraProductos from "../components/Productos/RegistraProductos";
 import ModificaProductos from "../components/Productos/ModificaProductos";
 
 const configRouting = [
+    {
+        path: "/Cajas",
+        page: Cajas
+    },
     {
         path: "/Productos",
         page: Productos

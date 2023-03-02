@@ -28,7 +28,7 @@ export const estilos = {
         style: {
             fontSize: "14px",
             fontWeight: 500,
-            minWidth: "0px",
+            minWidth: "0x",
             textAlign: "center",
         },
     },
@@ -48,11 +48,11 @@ export const estilos = {
             paddingLeft: "0px",
             paddingRight: "0px",
             fontWeight: 700,
+        },
+        draggingStyle: {
+            cursor: "move",
+        },
     },
-    draggingStyle: {
-        cursor: "move",
-    },
-},
     contextMenu: {
         style: {
             fontSize: "18px",
@@ -73,6 +73,7 @@ export const estilos = {
             paddingLeft: '0px',
             paddingRight: '0px',
             wordBreak: 'break-word',
+            whiteSpace: 'nowrap',
         },
         draggingStyle: {},
     },
@@ -82,28 +83,30 @@ export const estilos = {
             fontSize: '14px',
             fontWeight: 0,
             minHeight: '35px',
-            '&:not(:last-of-type)': {
-                borderBottomStyle: 'solid',
-                borderBottomWidth: '1px',
-            },
-        },
-        denseStyle: {
-            minHeight: "32px",
-        },
-        selectedHighlightStyle: {
-            // use nth-of-type(n) to override other nth selectors
-            '&:nth-of-type(n)': {
-            },
-        },
-        highlightOnHoverStyle: {
-            transitionDuration: '0.15s',
-            transitionProperty: 'background-color',
-            outlineStyle: 'solid',
-            outlineWidth: '1px',
-        },
-        stripedStyle: {
+            //width: '1200px',
+            //maxWidth: '100%',
+        '&:not(:last-of-type)': {
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
         },
     },
+    denseStyle: {
+        minHeight: "32px",
+    },
+    selectedHighlightStyle: {
+        // use nth-of-type(n) to override other nth selectors
+        '&:nth-of-type(n)': {
+        },
+    },
+    highlightOnHoverStyle: {
+        transitionDuration: '0.15s',
+        transitionProperty: 'background-color',
+        outlineStyle: 'solid',
+        outlineWidth: '1px',
+    },
+    stripedStyle: {
+    },
+},
     expanderRow: {
         style: {
         },

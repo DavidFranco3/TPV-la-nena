@@ -6,6 +6,7 @@ export const ENDPOINTLoginAdministrador = "/login";
 // Usuarios
 export const ENDPOINTRegistroUsuarios = "/usuarios/registro";
 export const ENDPOINTListarUsuarios = "/usuarios/listar";
+export const ENDPOINTListarUsuariosCajeros = "/usuarios/listarCajeros";
 export const ENDPOINTListarPaginandoUsuarios = "/usuarios/listarPaginando";
 export const ENDPOINTListarPaginandoUsuariosActivos = "/usuarios/listarPaginandoActivos";
 export const ENDPOINTTotalUsuariosActivos = "/usuarios/totalUsuariosActivos";
@@ -102,3 +103,17 @@ export const ENDPOINTObtenerIngredientes = "/ingredientess/obtener";
 export const ENDPOINTEliminarIngredientes = "/ingredientes/eliminar";
 export const ENDPOINTActualizarIngredientes = "/ingredientes/actualizar";
 export const ENDPOINTCancelarIngredientes = "/ingredientes/cancelar";
+
+// Cajas
+export const ENDPOINTRegistroCajas = "/cajas/registro";
+export const ENDPOINTListarCajas = "/cajas/listar";
+export const ENDPOINTListarPaginandoCajas = "/cajas/listarPaginando";
+export const ENDPOINTTotalCajas = "/cajas/totalCajas";
+export const ENDPOINTListarPaginandoCajasActivas = "/cajas/listarPaginandoActivas";
+export const ENDPOINTTotalCajasActivas = "/cajas/totalCajasActivas";
+export const ENDPOINTListarPaginandoCajasCanceladas = "/cajas/listarPaginandoCanceladas";
+export const ENDPOINTTotalCajasCanceladas = "/cajas/totalCajasCanceladas";
+export const ENDPOINTObtenerCajas = "/cajas/obtener";
+export const ENDPOINTEliminarCajas = "/cajas/eliminar";
+export const ENDPOINTActualizarCajas = "/cajas/actualizar";
+export const ENDPOINTCancelarCajas = "/cajas/cancelar";

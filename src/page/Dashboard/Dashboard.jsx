@@ -6,17 +6,13 @@ import { Card, Image } from 'react-bootstrap';
 import { obtenerUsuario } from "../../api/usuarios";
 import "../../scss/styles.scss";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
-import Lottie from "react-lottie-player";
-import AnimacionLoading from "../../assets/json/loading.json";
 // Importaciones de imagenes del dashboard
 import LogoVentas from '../../assets/png/ventas.png';
 import LogoHistorial from '../../assets/png/facturas.png';
-import LogoHistorialDia from '../../assets/png/historialDia.png';
-import LogoHistorialMes from '../../assets/png/historialMes.png';
 import LogoProductos from '../../assets/png/productos.png';
 import LogoCategorias from '../../assets/png/categorias.png';
 import LogoUsuarios from '../../assets/png/usuarios.png';
-import LogoUM from '../../assets/png/unidadesMedida.png';
+import LogoCajas from '../../assets/png/cajas.png';
 import LogoLogs from '../../assets/png/logs.png';
 import LogoIngredientes from '../../assets/png/ingredientes.png';
 
@@ -80,7 +76,7 @@ function Dashboard(props) {
         estadoUsuario === "true" ?
           (
             <>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-4 gap-4">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
@@ -106,6 +102,11 @@ function Dashboard(props) {
                   title={'Ingredientes'}
                 />
                 <ItemCard
+                  path={'/Cajas'}
+                  logo={LogoCajas}
+                  title={'Cajas'}
+                />
+                <ItemCard
                   path={'/Usuarios'}
                   logo={LogoUsuarios}
                   title={'Usuarios'}
@@ -121,7 +122,7 @@ function Dashboard(props) {
           :
           (
             <>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 <ItemCard path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
@@ -130,6 +131,11 @@ function Dashboard(props) {
                   path={'/Historiales'}
                   logo={LogoHistorial}
                   title={'Historiales'}
+                />
+                <ItemCard
+                  path={'/Cajas'}
+                  logo={LogoCajas}
+                  title={'Cajas'}
                 />
               </div>
             </>

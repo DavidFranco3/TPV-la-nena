@@ -11,9 +11,6 @@ import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Ventas(props) {
         const { setRefreshCheckLogin, location, navigate } = props;

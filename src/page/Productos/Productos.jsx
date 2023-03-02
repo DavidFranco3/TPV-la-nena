@@ -8,7 +8,6 @@ import { listarPaginacionProductosActivos, totalProductosActivos, listarPaginaci
 import ListProductos from "../../components/Productos/ListProductos";
 import { listarCategorias } from "../../api/categorias";
 import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
-import RegistrarProducto from "../../components/Productos/RegistraProductos";
 import BasicModal from "../../components/Modal/BasicModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
