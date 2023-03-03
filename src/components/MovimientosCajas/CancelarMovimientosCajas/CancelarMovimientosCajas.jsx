@@ -40,7 +40,7 @@ function CancelarMovimientosCajas(props) {
                     search: queryString.stringify(""),
                 });
                 LogsInformativos("Estado del movimiento actualizado", datosMovimiento);
-                LogCajaActualizacion(idCaja, movimiento == "Fondo de caja" ? parseFloat(monto) * -1 : movimiento == "Venta" && pago == "Transferencia" ? 0 : movimiento == "Venta" && pago == "Tarjeta" ? 0 : movimiento == "Venta" && pago == "Efevtivo" ? parseFloat(monto) * -1 : movimiento == "Retiro" ? monto : movimiento == "Aumento" ? monto : 0);
+                LogCajaActualizacion(idCaja, movimiento == "Fondo de caja" ? parseFloat(monto) * -1 : movimiento == "Venta" && pago == "Transferencia" ? 0 : movimiento == "Venta" && pago == "Tarjeta" ? 0 : movimiento == "Venta" && pago == "Efectivo" ? parseFloat(monto) * -1 : movimiento == "Retiro" ? monto : movimiento == "Aumento" ? monto : 0);
                 toast.success(data.mensaje);
                 cancelarRegistro();
             }).catch(e => {
