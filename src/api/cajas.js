@@ -11,7 +11,8 @@ import {
     ENDPOINTTotalCajasActivas,
     ENDPOINTCancelarCajas,
     ENDPOINTListarPaginandoCajasCanceladas,
-    ENDPOINTTotalCajasCanceladas
+    ENDPOINTTotalCajasCanceladas,
+    ENDPOINTObtenerUltimaCajaCajero
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -40,6 +41,18 @@ export async function obtenerCaja(params) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTObtenerCajas + `/${params}`, config);
+}
+
+// Listar las categorias activas paginandolas
+export async function obtenerUltimaCajaCajero(idCajero) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTObtenerUltimaCajaCajero + `/${idCajero}`, config);
 }
 
 // Para listar todas las categorias

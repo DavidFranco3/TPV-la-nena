@@ -117,6 +117,7 @@ export const ENDPOINTObtenerCajas = "/cajas/obtener";
 export const ENDPOINTEliminarCajas = "/cajas/eliminar";
 export const ENDPOINTActualizarCajas = "/cajas/actualizar";
 export const ENDPOINTCancelarCajas = "/cajas/cancelar";
+export const ENDPOINTObtenerUltimaCajaCajero = "/cajas/obtenerUltimaCajaCajero";
 
 // Movimientos cajas
 export const ENDPOINTRegistroMovimientosCajas = "/movimientosCajas/registro";

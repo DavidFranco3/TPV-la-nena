@@ -11,6 +11,7 @@ import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import RegistroMovimientosCajasVentas from '../../MovimientosCajas/RegistroMovimientosCajasVentas';
 
 function ListVentas(props) {
     const { listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
@@ -40,6 +41,13 @@ function ListVentas(props) {
     // Para cancelar la venta
     const recuperarVenta = (content) => {
         setTitulosModal("Recuperar venta");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+     // Para cancelar la venta
+     const registrarMovimiento = (content) => {
+        setTitulosModal("Registrar movimiento");
         setContentModal(content);
         setShowModal(true);
     }
@@ -102,6 +110,40 @@ function ListVentas(props) {
                 </>
             ),
 
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Movimiento en caja",
+            selector: row => (
+                row.estado === "true" ?
+                    (
+                        <>
+                            <Badge
+                                bg="primary"
+                                title="Generar un movimiento en caja"
+                                className="indicadorDetallesVenta"
+                                onClick={() => {
+                                    recuperarVenta(
+                                        <RegistroMovimientosCajasVentas
+                                            datosVentas={row}
+                                            location={location}
+                                            navigate={navigate}
+                                            setShowModal={setShowModal}
+                                        />
+                                    )
+                                }}
+                            >
+                                Generar
+                            </Badge>
+                        </>
+                    )
+                    :
+                    (
+                        "No disponible"
+                    )
+            ),
             sortable: false,
             center: true,
             reorder: false
