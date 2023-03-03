@@ -22,10 +22,6 @@ function ListProductos(props) {
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
 
-    const rutaRegreso = () => {
-        enrutamiento("/")
-    }
-
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 

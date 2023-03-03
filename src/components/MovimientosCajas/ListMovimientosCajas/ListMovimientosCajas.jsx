@@ -2,23 +2,20 @@ import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
 import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { useNavigate } from "react-router-dom";
+import CancelarMovimientosCajas from '../CancelarMovimientosCajas';
 
-function ListCajas(props) {
-    const { listCajas, location, navigate, setRowsPerPage, setPage, noTotalCajas } = props;
+function ListMovimientosCajas(props) {
+    const { listMovimientos, location, navigate, setRowsPerPage, setPage, noTotalMovimientos } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
-
-     // Para definir el enrutamiento
-     const enrutamiento = useNavigate();
 
     //Para el modal
     const [showModal, setShowModal] = useState(false);
@@ -40,8 +37,8 @@ function ListCajas(props) {
     }
 
     // Para cancelar la venta
-    const cancelarCategoria = (content) => {
-        setTitulosModal("Cancelar categoría");
+    const cancelarMovimiento = (content) => {
+        setTitulosModal("Cancelar movimiento");
         setContentModal(content);
         setShowModal(true);
     }
@@ -51,11 +48,6 @@ function ListCajas(props) {
         setTitulosModal("Recuperar categoría");
         setContentModal(content);
         setShowModal(true);
-    }
-
-    //Para la modificacion de productos
-    const movimientos = (id) => {
-        enrutamiento(`/MovimientosCajas/${id}`);
     }
 
     const handleChangePage = (page) => {
@@ -72,14 +64,14 @@ function ListCajas(props) {
 
     const columns = [
         {
-            name: "Cajero",
-            selector: row => row.cajero,
+            name: "Movimiento",
+            selector: row => row.movimiento,
             sortable: false,
             center: true,
             reorder: false
         },
         {
-            name: "Saldo",
+            name: "Monto",
             selector: row => (
                 <>
                     <Badge
@@ -88,7 +80,7 @@ function ListCajas(props) {
                         {new Intl.NumberFormat('es-MX', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                        }).format(row.saldo)} MXN
+                        }).format(row.monto)} MXN
                     </Badge>
                 </>
             ),
@@ -97,29 +89,56 @@ function ListCajas(props) {
             reorder: false
         },
         {
-            name: "Fecha",
-            selector: row => dayjs(row.fechCreacion).format('dddd, LL'),
+            name: "Estado",
+            selector: row => (
+                <>
+                    {
+                        row.estado === "true" ?
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                        title="Cancelar categoria"
+                                        onClick={() => {
+                                            cancelarMovimiento(
+                                                <CancelarMovimientosCajas
+                                                    datosMovimiento={row}
+                                                    location={location}
+                                                    navigate={navigate}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        Habilitado
+                                    </Badge>
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                    <Badge
+                                        bg="danger"
+                                        //className="estado"
+                                        className="indicadorCancelarVenta"
+                                    >
+                                        Deshabilitado
+                                    </Badge>
+                                </>
+                            )
+                    }
+                </>
+            ),
+
             sortable: false,
             center: true,
             reorder: false
         },
         {
-            name: "Acciones",
-            selector: row => (
-                <>
-                    <div className="flex justify-end items-center space-x-4">
-                        <Badge
-                            title="Movimientos"
-                            bg="primary"
-                            className="editar"
-                            onClick={() => {
-                                movimientos(row.id);
-                            }}>
-                            <FontAwesomeIcon icon={faEye} className="text-lg" />
-                        </Badge>
-                    </div>
-                </>
-            ),
+            name: "Hora",
+            selector: row => dayjs(row.fechaCreacion).format('hh:mm A'),
             sortable: false,
             center: true,
             reorder: false
@@ -133,7 +152,7 @@ function ListCajas(props) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setRows(listCajas);
+            setRows(listMovimientos);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
@@ -152,7 +171,7 @@ function ListCajas(props) {
                 <DataTable
                     columns={columns}
                     noDataComponent="No hay registros para mostrar"
-                    data={listCajas}
+                    data={listMovimientos}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}
@@ -160,7 +179,7 @@ function ListCajas(props) {
                     sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
                     pagination
                     paginationServer
-                    paginationTotalRows={noTotalCajas}
+                    paginationTotalRows={noTotalMovimientos}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     onChangePage={handleChangePage}
                 />
@@ -173,4 +192,4 @@ function ListCajas(props) {
     );
 }
 
-export default ListCajas;
+export default ListMovimientosCajas;

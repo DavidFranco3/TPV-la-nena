@@ -10,12 +10,17 @@ import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
 import Historiales from "../page/Historiales";
 import Cajas from "../page/Cajas";
+import MovimientosCajas from "../page/MovimientosCajas";
 
 // Importaciones de productos
 import RegistraProductos from "../components/Productos/RegistraProductos";
 import ModificaProductos from "../components/Productos/ModificaProductos";
 
 const configRouting = [
+    {
+        path: "/MovimientosCajas/:caja",
+        page: MovimientosCajas
+    },
     {
         path: "/Cajas",
         page: Cajas

@@ -117,3 +117,17 @@ export const ENDPOINTObtenerCajas = "/cajas/obtener";
 export const ENDPOINTEliminarCajas = "/cajas/eliminar";
 export const ENDPOINTActualizarCajas = "/cajas/actualizar";
 export const ENDPOINTCancelarCajas = "/cajas/cancelar";
+
+// Movimientos cajas
+export const ENDPOINTRegistroMovimientosCajas = "/movimientosCajas/registro";
+export const ENDPOINTListarMovimientosCajas = "/movimientosCajas/listar";
+export const ENDPOINTListarPaginandoMovimientosCajas = "/movimientosCajas/listarPaginando";
+export const ENDPOINTTotalMovimientosCajas = "/movimientosCajas/totalMovimientos";
+export const ENDPOINTListarPaginandoMovimientosCajasActivas = "/movimientosCajas/listarPaginandoActivas";
+export const ENDPOINTTotalMovimientosCajasActivas = "/movimientosCajas/totalMovimientosActivas";
+export const ENDPOINTListarPaginandoMovimientosCajasCanceladas = "/movimientosCajas/listarPaginandoCanceladas";
+export const ENDPOINTTotalMovimientosCajasCanceladas = "/movimientosCajas/totalMovimientosCanceladas";
+export const ENDPOINTObtenerMovimientosCajas = "/movimientosCajas/obtener";
+export const ENDPOINTEliminarMovimientosCajas = "/movimientosCajas/eliminar";
+export const ENDPOINTActualizarMovimientosCajas = "/movimientosCajas/actualizar";
+export const ENDPOINTCancelarMovimientosCajas = "/movimientosCajas/cancelar";
