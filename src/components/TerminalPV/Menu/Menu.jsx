@@ -44,12 +44,12 @@ function Menu(props) {
                                     return (
                                         <Button
                                             key={index}
-                                            title={categoria.nombre}
-                                            onClick={() => setCategoriaActual(categoria.id)}>
+                                            title={categoria?.nombre}
+                                            onClick={() => setCategoriaActual(categoria?.id)}>
                                             <Categoria
                                                 key={index}
-                                                imagen={categoria.imagen}
-                                                nombre={categoria.nombre}
+                                                imagen={categoria?.imagen}
+                                                nombre={categoria?.nombre}
                                             />
                                         </Button>
                                     )
@@ -75,13 +75,13 @@ function Menu(props) {
                                         listProductos.map((product, index) => {
                                             return (
                                                 <Button key={index}
-                                                    title={product.nombre + " " + "$" + product.precio}
+                                                    title={product?.nombre + " " + "$" + product?.precio}
                                                     onClick={() => clickHandler(product)}>
                                                     <Producto
                                                         key={index}
-                                                        imagen={product.imagen}
-                                                        nombre={product.nombre}
-                                                        precio={product.precio}
+                                                        imagen={product?.imagen}
+                                                        nombre={product?.nombre}
+                                                        precio={product?.precio}
                                                     />
                                                 </Button>
                                             )

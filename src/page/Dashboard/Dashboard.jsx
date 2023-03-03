@@ -77,7 +77,8 @@ function Dashboard(props) {
           (
             <>
               <div className="grid grid-cols-4 gap-4">
-                <ItemCard path={'/TerminalPV'}
+                <ItemCard
+                  path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
                 />
@@ -123,7 +124,8 @@ function Dashboard(props) {
           (
             <>
               <div className="grid grid-cols-3 gap-3">
-                <ItemCard path={'/TerminalPV'}
+                <ItemCard
+                  path={'/TerminalPV'}
                   logo={LogoVentas}
                   title={'Ventas'}
                 />

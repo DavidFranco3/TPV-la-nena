@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
+import { Image, Form } from "react-bootstrap";
 import "../../scss/styles.scss";
 
 function Dropzone(props) {
@@ -19,7 +20,7 @@ function Dropzone(props) {
         const file = acceptedFiles[0];
         //setURLFinal(URL.createObjectURL(file));
         setImagenFile(file);
-    }, [setImagenFile]);
+    });
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: "image/*",
@@ -42,10 +43,10 @@ function Dropzone(props) {
     }, [slide]);
 
     const visualizarSlide1 = slide.map(file => (
-        <div key={file.name}>
+        <div key={file?.name}>
             <div>
-                <img
-                    src={file.preview}
+                <Image
+                    src={file?.preview}
                     alt="logo"
                 />
             </div>
@@ -60,7 +61,7 @@ function Dropzone(props) {
                 (
                     <>
                         <aside>
-                            <img
+                            <Image
                                 src={imagenProductoBD}
                                 alt="logo"
                             />
@@ -77,7 +78,7 @@ function Dropzone(props) {
                     </>
                 )
             }
-            <input {...getInputProps()} />
+            <Form.Control {...getInputProps()} />
         </div>
     );
 }

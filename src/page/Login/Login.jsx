@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { login, setTokenApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
-import { Spinner, Button, Form } from "react-bootstrap";
+import { Spinner, Button, Form, Image } from "react-bootstrap";
 import { obtenerUsuario } from "../../api/usuarios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -76,7 +76,7 @@ function Login({ setRefreshCheckLogin }) {
         <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
           <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0 space-y-4">
             <div className="logos">
-              <img
+              <Image
                 className="logoPrincipal1"
                 src={LogoLANENA}
                 alt="Tortas la Nena"

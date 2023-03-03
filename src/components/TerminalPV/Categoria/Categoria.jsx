@@ -1,3 +1,4 @@
+import { Image } from "react-bootstrap";
 import "../../../scss/styles.scss";
 
 function Categoria(props) {
@@ -6,7 +7,7 @@ function Categoria(props) {
         <>
             <div className="categoria">
                 <div className="categoria__image">
-                    <img src={imagen} alt={nombre} title={nombre} />
+                    <Image src={imagen} alt={nombre} title={nombre} />
                 </div>
                 <div className="categoria__name">
                     <p>{nombre}</p>
