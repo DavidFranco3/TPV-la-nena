@@ -33,7 +33,8 @@ function RegistroCajas(props) {
                 const dataTemp = {
                     idCajero: temp[0],
                     cajero: temp[1],
-                    saldo: "0"
+                    saldo: "0",
+                    estado: "true"
                 }
                 registraCajas(dataTemp).then(response => {
                     const { data } = response;

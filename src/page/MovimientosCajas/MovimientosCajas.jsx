@@ -15,12 +15,31 @@ import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-ico
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { useNavigate, useParams } from "react-router-dom";
+import { obtenerCaja } from "../../api/cajas"
 
 function MovimientosCajas(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
 
     const params = useParams();
     const { caja } = params;
+
+    const [estadoCaja, setEstadoCaja] = useState("");
+
+    useEffect(() => {
+        try {
+            obtenerCaja(caja).then(response => {
+                const { data } = response;
+                const { estado } = data;
+                setEstadoCaja(estado);
+            }).catch((e) => {
+                if (e.message === 'Network Error') {
+                    console.log("No hay internet")
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, []);
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
@@ -129,23 +148,31 @@ function MovimientosCajas(props) {
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
-                            <Button
-                                title="Registrar un nuevo movimiento en la caja"
-                                className="btnRegistro"
-                                style={{ marginRight: '10px' }}
-                                onClick={() => {
-                                    registroMovimientos(
-                                        <RegistroMovimientosCajas
-                                            caja={caja}
-                                            setShowModal={setShowModal}
-                                            location={location}
-                                            navigate={navigate}
-                                        />
-                                    )
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
-                            </Button>
+                            {
+                                estadoCaja === "true" &&
+                                (
+                                    <>
+                                        <Button
+                                            title="Registrar un nuevo movimiento en la caja"
+                                            className="btnRegistro"
+                                            style={{ marginRight: '10px' }}
+                                            onClick={() => {
+                                                registroMovimientos(
+                                                    <RegistroMovimientosCajas
+                                                        caja={caja}
+                                                        setShowModal={setShowModal}
+                                                        location={location}
+                                                        navigate={navigate}
+                                                    />
+                                                )
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                        </Button>
+                                    </>
+                                )
+                            }
+
                             <Button
                                 title="Regresar a la pagina anterior"
                                 className="btnRegistro"

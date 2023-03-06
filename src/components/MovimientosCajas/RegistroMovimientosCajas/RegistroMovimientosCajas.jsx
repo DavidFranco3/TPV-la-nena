@@ -8,7 +8,7 @@ import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
-import { LogCajaActualizacion } from "../../Cajas/Gestion/GestionCajas";
+import { LogCajaActualizacion, LogCierreCaja } from "../../Cajas/Gestion/GestionCajas";
 
 function RegistroMovimientosCajas(props) {
     const { setShowModal, navigate, caja } = props;
@@ -55,7 +55,11 @@ function RegistroMovimientosCajas(props) {
                         search: queryString.stringify(""),
                     });
                     LogsInformativos("Se ha registrado el movimiento del cajero " + dataTemp.cajero, data.datos);
-                    LogCajaActualizacion(caja, formData.movimiento == "Fondo de caja" ? formData.monto : formData.movimiento == "Venta" && formData.pago == "Transferencia" ? 0 : formData.movimiento == "Venta" && formData.pago == "Tarjeta" ? 0 : formData.movimiento == "Venta" && formData.pago == "Efectivo" ? formData.monto : formData.movimiento == "Retiro" ? parseFloat(formData.monto) * -1 : formData.movimiento == "Aumento" ? formData.monto : 0);
+                    if (formData.movimiento === "Cierre") {
+                        LogCierreCaja(caja);
+                    } else {
+                        LogCajaActualizacion(caja, formData.movimiento == "Fondo de caja" ? formData.monto : formData.movimiento == "Venta" && formData.pago == "Transferencia" ? 0 : formData.movimiento == "Venta" && formData.pago == "Tarjeta" ? 0 : formData.movimiento == "Venta" && formData.pago == "Efectivo" ? formData.monto : formData.movimiento == "Retiro" ? parseFloat(formData.monto) * -1 : formData.movimiento == "Aumento" ? formData.monto : 0);
+                    }
                     toast.success(data.mensaje);
                     cancelarRegistro();
                 })
