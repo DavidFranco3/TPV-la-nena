@@ -11,7 +11,7 @@ import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 import { LogCajaActualizacion, LogCierreCaja } from "../../Cajas/Gestion/GestionCajas";
 
 function RegistroMovimientosCajas(props) {
-    const { setShowModal, navigate, caja } = props;
+    const { setShowModal, navigate, caja, setEstadoCaja } = props;
 
     const [formData, setFormData] = useState(initialFormValue());
     const [formDataCaja, setFormDataCaja] = useState(initialFormDataCajaInitial());
@@ -57,6 +57,7 @@ function RegistroMovimientosCajas(props) {
                     LogsInformativos("Se ha registrado el movimiento del cajero " + dataTemp.cajero, data.datos);
                     if (formData.movimiento === "Cierre") {
                         LogCierreCaja(caja);
+                        setEstadoCaja("false")
                     } else {
                         LogCajaActualizacion(caja, formData.movimiento == "Fondo de caja" ? formData.monto : formData.movimiento == "Venta" && formData.pago == "Transferencia" ? 0 : formData.movimiento == "Venta" && formData.pago == "Tarjeta" ? 0 : formData.movimiento == "Venta" && formData.pago == "Efectivo" ? formData.monto : formData.movimiento == "Retiro" ? parseFloat(formData.monto) * -1 : formData.movimiento == "Aumento" ? formData.monto : 0);
                     }

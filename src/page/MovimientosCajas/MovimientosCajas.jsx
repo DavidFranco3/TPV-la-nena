@@ -39,7 +39,7 @@ function MovimientosCajas(props) {
         } catch (e) {
             console.log(e)
         }
-    }, []);
+    }, [estadoCaja]);
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
@@ -160,6 +160,7 @@ function MovimientosCajas(props) {
                                                 registroMovimientos(
                                                     <RegistroMovimientosCajas
                                                         caja={caja}
+                                                        setEstadoCaja={setEstadoCaja}
                                                         setShowModal={setShowModal}
                                                         location={location}
                                                         navigate={navigate}
