@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
 import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
@@ -10,6 +10,7 @@ import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import CancelarMovimientosCajas from '../CancelarMovimientosCajas';
+import GeneraPDF from '../GeneraPDF';
 
 function ListMovimientosCajas(props) {
     const { listMovimientos, location, navigate, setRowsPerPage, setPage, noTotalMovimientos } = props;
@@ -39,6 +40,13 @@ function ListMovimientosCajas(props) {
     // Para cancelar la venta
     const cancelarMovimiento = (content) => {
         setTitulosModal("Cancelar movimiento");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const movimientos = (content) => {
+        setTitulosModal("Detalles");
         setContentModal(content);
         setShowModal(true);
     }
@@ -139,6 +147,42 @@ function ListMovimientosCajas(props) {
         {
             name: "Hora",
             selector: row => dayjs(row.fechaCreacion).format('hh:mm A'),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
+            name: "Acciones",
+            selector: row => (
+                row.movimiento === "Cierre" || row.movimiento === "Corte de caja" ?
+                    (
+                        <>
+                            <div className="flex justify-end items-center space-x-4">
+                                <Badge
+                                    title="Movimientos"
+                                    bg="primary"
+                                    className="editar"
+                                    onClick={() => {
+                                        movimientos(
+                                            <GeneraPDF
+                                                datos={row}
+                                                location={location}
+                                                navigate={navigate}
+                                                setShowModal={setShowModal}
+                                            />
+                                        )
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faEye} className="text-lg" />
+                                </Badge>
+                            </div>
+                        </>
+                    )
+                    :
+                    (
+                        "No disponibles"
+                    )
+            ),
             sortable: false,
             center: true,
             reorder: false

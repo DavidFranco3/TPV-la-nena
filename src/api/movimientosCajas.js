@@ -43,7 +43,7 @@ export async function obtenerMovimiento(params) {
 }
 
 // Para listar todas las categorias
-export async function listarMovimientos() {
+export async function listarMovimientos(idCaja) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -51,7 +51,7 @@ export async function listarMovimientos() {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarMovimientosCajas, config);
+    return await axios.get(API_HOST + ENDPOINTListarMovimientosCajas + `/?idCaja=${idCaja}`, config);
 }
 
 // Listar las categorias activas paginandolas
