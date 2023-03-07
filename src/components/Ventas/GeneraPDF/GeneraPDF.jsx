@@ -1,4 +1,4 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Image, Button } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import { toast } from "react-toastify";
@@ -31,152 +31,195 @@ function GeneraPdf(props) {
             tiquetGenerado.close();
         }, 2500);
         return () => clearTimeout(timer);
+    }
 
+    const Encabezado = ({ logo, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
+        return (
+            <div className="cafe">
+                {/**/}
+                <div id="logo" className="logotipo">
+                    <Image src={logo} alt="logo" />
+                </div>
+                {/**/}
+                <div className="detallesTitulo">
+                    <p className="cafe__number">Teléfono para pedidos</p>
+                    <p className="cafe__number">442-714-09-79</p>
+                    <p className="cafe__number">Ticket #{numeroTiquet}</p>
+                    <p className="invoice__cliente">Cliente {nombreCliente}</p>
+                    <p className="invoice__cliente">Pedido {tipoPedido}</p>
+                    <p className="invoice__cliente">Hecho {hacerPedido}</p>
+                    <p className="cafe__number">
+                        {fechayHora}
+                    </p>
+                </div>
+            </div>
+        )
+    }
+
+    const Cuerpo = ({ products }) => {
+        return (
+            <div className="ticket__table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th className="items__numeracion">#</th>
+                            <th className="items__description">Descripción</th>
+                            <th className="items__qty">Cantidad</th>
+                            <th className="items__price">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products?.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}.- </td>
+                                <td className="items__description">{item.nombre}</td>
+                                <td>1</td>
+                                <td>
+                                    ${''}
+                                    {new Intl.NumberFormat('es-MX', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    }).format(item.precio)} MXN
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+
+    const Pie = ({ detalles, tipoPago, comision, iva, subtotal, total, efectivo, cambio }) => {
+        return (
+            <div className="subtotal">
+                <hr />
+                <Row>
+                    <Col>
+                        <p className="observaciones__tiquet">
+                            {detalles}
+                        </p>
+                    </Col>
+                    <Col>
+                        <div className="subtotal__cambio">
+                            Pago realizado con {tipoPago}
+                        </div>
+                        {
+                            tipoPago === "Tarjeta" &&
+                            (
+                                <>
+                                    <div className="subtotal__cambio">
+                                        Comisión ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(comision)} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+                        {
+                            iva != "0" &&
+                            (
+                                <>
+                                    <div className="subtotal__price">
+                                        IVA ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(iva)} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+                        <div className="subtotal__price">
+                            Subtotal ${''}
+                            {new Intl.NumberFormat('es-MX', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            }).format(subtotal)} MXN
+                        </div>
+                        <div className="subtotal__price">
+                            Total ${''}
+                            {new Intl.NumberFormat('es-MX', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            }).format(total)} MXN
+                        </div>
+                        {
+                            tipoPago === "Efectivo" &&
+                            (
+                                <>
+                                    <div className="subtotal__cambio">
+                                        Efectivo ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(efectivo)} MXN
+                                    </div>
+                                    <div className="subtotal__cambio">
+                                        Cambio ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(cambio)} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+                    </Col>
+                </Row>
+                <hr />
+            </div>
+        )
+    }
+
+    const Imprimir = ({ onClick }) => {
+        return (
+                <Row>
+                    <Col sm={8}></Col>
+                    <Col sm={4}>
+                        <button
+                            className="btnImprimirdeNuevo"
+                            title="Imprimir ticket"
+                            onClick={onClick}
+                        > 🖨︎</button>
+                    </Col>
+                </Row>
+        )
     }
 
     return (
         <>
             <div id="tiquetAutogenerado" className="ticket__autogenerado">
                 <div className="ticket__information">
-                    <div className="cafe">
-                        {/**/}
-                        <div id="logo" className="logotipo">
-                            <img src={logoTiquetGris} alt="logo" />
-                        </div>
-                        {/**/}
-                        <div className="detallesTitulo">
-                            <p className="cafe__number">Teléfono para pedidos</p>
-                            <p className="cafe__number">442-714-09-79</p>
-                            <p className="cafe__number">Ticket #{numeroTiquet}</p>
-                            <p className="invoice__cliente">Cliente {cliente}</p>
-                            <p className="invoice__cliente">Pedido {tipoPedido}</p>
-                            <p className="invoice__cliente">Hecho {hacerPedido}</p>
-                            <p className="cafe__number">
-                                {dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="ticket__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="items__numeracion">#</th>
-                                    <th className="items__description">Descripcion</th>
-                                    <th className="items__qty">Cantidad</th>
-                                    <th className="items__price">Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {articulosVendidos?.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}.- </td>
-                                        <td className="items__description">{item.nombre}</td>
-                                        <td>1</td>
-                                        <td>
-                                            ${''}
-                                            {new Intl.NumberFormat('es-MX', {
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2,
-                                            }).format(item.precio)} MXN
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <Encabezado
+                        logo={logoTiquetGris}
+                        numeroTiquet={numeroTiquet}
+                        nombreCliente={cliente}
+                        tipoPedido={tipoPedido}
+                        hacerPedido={hacerPedido}
+                        fechayHora={dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
+                    />
+                    <Cuerpo
+                        products={articulosVendidos}
+                    />
 
-                    <div className="subtotal">
-                        <hr />
-                        <Row>
-                            <Col>
-                                <p className="observaciones__tiquet">
-                                    {detalles}
-                                </p>
-                            </Col>
-                            <Col>
-                                <div className="subtotal__cambio">
-                                    Pago realizado con {tipoPago}
-                                </div>
-                                {
-                                    tipoPago === "Tarjeta" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__cambio">
-                                                Comisión ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(comision)} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                {
-                                    iva != "0" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__price">
-                                                IVA ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(iva)} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                <div className="subtotal__price">
-                                    Subtotal ${''}
-                                    {new Intl.NumberFormat('es-MX', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2,
-                                    }).format(subtotal)} MXN
-                                </div>
-                                <div className="subtotal__price">
-                                    Total ${''}
-                                    {new Intl.NumberFormat('es-MX', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2,
-                                    }).format(total)} MXN
-                                </div>
-                                {
-                                    tipoPago === "Efectivo" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__cambio">
-                                                Efectivo ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(efectivo)} MXN
-                                            </div>
-                                            <div className="subtotal__cambio">
-                                                Cambio ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(cambio)} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-                            </Col>
-                        </Row>
-                        <hr />
-                    </div>
+                    <Pie
+                        detalles={detalles}
+                        tipoPago={tipoPago}
+                        comision={comision}
+                        iva={iva}
+                        subtotal={subtotal}
+                        total={total}
+                        efectivo={efectivo}
+                        cambio={cambio}
+                    />
                 </div>
             </div>
 
-            <Row>
-                <Col sm={8}></Col>
-                <Col sm={4}>
-                    <button
-                        className="btnImprimirdeNuevo"
-                        title="Imprimir ticket"
-                        onClick={() => handlePrint()}
-                    > 🖨︎</button>
-                </Col>
-            </Row>
+            <Imprimir
+                onClick={() => handlePrint()}
+            />
         </>
     );
 }

@@ -645,6 +645,8 @@
   float: right;
   width: 185px;
   margin-top: -50px !important;
+  color: $primary-dark;
+  background-color: transparent;
 }
 
 .imagenPrincipal {
@@ -1630,6 +1632,7 @@ a:hover {
     }
   }
 }
+
 //Termina estilos para la tabla responsiva
 
 .editar {

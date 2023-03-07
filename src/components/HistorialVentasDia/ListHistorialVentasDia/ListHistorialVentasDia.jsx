@@ -118,9 +118,6 @@ function ListHistorialVentasDia(props) {
 
     const [resetPaginationToogle, setResetPaginationToogle] = useState(false);
 
-    // Estilos personalizados
-
-
     return (
         <>
             <Container fluid>

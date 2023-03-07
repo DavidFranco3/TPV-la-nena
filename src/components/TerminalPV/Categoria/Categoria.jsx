@@ -3,8 +3,9 @@ import "../../../scss/styles.scss";
 
 function Categoria(props) {
     const { imagen, nombre } = props;
-    return (
-        <>
+
+    const Card = ({ imagen, nombre }) => {
+        return (
             <div className="categoria">
                 <div className="categoria__image">
                     <Image src={imagen} alt={nombre} title={nombre} />
@@ -13,6 +14,15 @@ function Categoria(props) {
                     <p>{nombre}</p>
                 </div>
             </div>
+        )
+    }
+    
+    return (
+        <>
+            <Card
+                imagen={imagen}
+                nombre={nombre}
+            />
         </>
     );
 }

@@ -5,7 +5,6 @@ import Categorias from "../page/Categorias";
 import Error404 from "../page/Error404";
 import TerminalPV from "../page/TerminalPV";
 import Usuarios from "../page/Usuarios";
-import UnidadesMedida from "../page/UnidadesMedida";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
 import Historiales from "../page/Historiales";
@@ -48,10 +47,6 @@ const configRouting = [
     {
         path: "/Usuarios",
         page: Usuarios
-    },
-    {
-        path: "/UnidadesMedida",
-        page: UnidadesMedida
     },
     {
         path: "/Logs",

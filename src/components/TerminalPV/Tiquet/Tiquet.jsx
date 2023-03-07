@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
-import { Col, Button, Row } from "react-bootstrap";
+import { Col, Button, Row, Image } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
@@ -191,278 +191,322 @@ function Tiquet(props) {
         setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
     }, []);
 
+    const Encabezado = ({ logo, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
+        return (
+            <div className="cafe">
+                {/**/}
+                <div id="logoFinal" className="logotipo">
+                    <Image src={logo} alt="logo" />
+                </div>
+                {/**/}
+                <div className="detallesTitulo">
+                    <p className="cafe__number">Teléfono para pedidos</p>
+                    <p className="cafe__number">442-714-09-79</p>
+                    <p className="cafe__number">Ticket #{numeroTiquet}</p>
+                    <p className="invoice__cliente">Cliente {nombreCliente}</p>
+                    <p className="invoice__cliente">Pedido {tipoPedido}</p>
+                    <p className="invoice__cliente">Hecho {hacerPedido}</p>
+                    <p className="cafe__number">
+                        {fechayHora}
+                    </p>
+                </div>
+            </div>
+        )
+    }
+
+    const Cuerpo = ({ products, onClick }) => {
+        return (
+            <div className="ticket__table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th className="items__numeracion">#</th>
+                            <th className="items__description">Descripción</th>
+                            <th className="items__qty">Cantidad</th>
+                            <th className="items__price">Precio</th>
+                            <th className="remove-icono">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products?.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}.- </td>
+                                <td className="items__description">{item.nombre}</td>
+                                <td>1</td>
+                                <td>
+                                    ${''}
+                                    {new Intl.NumberFormat('es-MX', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    }).format(item.precio)} MXN
+                                </td>
+                                <td title="Quitar producto" onClick={() => onClick(item)} className="remove-icon">❌</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+
+    const Pie = ({ observaciones, tipoPago, total, IVA, dineroIngresado }) => {
+        return (
+            <div className="subtotal">
+                <hr />
+                <Row>
+                    <Col>
+                        <p className="observaciones__tiquet">
+                            {observaciones}
+                        </p>
+                    </Col>
+                    <Col>
+                        <div className="subtotal__cambio">
+                            Pago realizado con {tipoPago}
+                        </div>
+
+                        <div className="subtotal__IVA">
+
+                        </div>
+
+                        <div className="subtotal__price">
+                            Subtotal ${''}
+                            {new Intl.NumberFormat('es-MX', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            }).format(total)} MXN
+                        </div>
+
+                        {
+                            tipoPago === "Tarjeta" &&
+                            (
+                                <>
+                                    <div className="subtotal__cambio">
+                                        Comisión ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) * parseFloat("0.03") ? parseFloat(total) * parseFloat("0.03") : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+
+                        {
+                            tipoPago === "Efectivo" && IVA === "0.16" &&
+                            (
+                                <>
+                                    <div className="subtotal__IVA">
+                                        IVA ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
+                                    </div>
+
+                                    <div className="subtotal__total">
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) + parseFloat(total) * parseFloat(IVA) ? parseFloat(total) + parseFloat(total) * parseFloat(IVA) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Efectivo" && IVA === "0" &&
+                            (
+                                <>
+                                    <div className="subtotal__total">
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) ? parseFloat(total) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Tarjeta" && IVA === "0.16" &&
+                            (
+                                <>
+                                    <div className="subtotal__IVA">
+                                        IVA ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
+                                    </div>
+
+                                    <div className="subtotal__total">
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format((parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) ? (parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Tarjeta" && IVA === "0" &&
+                            (
+                                <>
+
+                                    <div className="subtotal__total">
+
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) + parseFloat(total) * parseFloat("0.03") ? parseFloat(total) + parseFloat(total) * parseFloat("0.03") : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Transferencia" && IVA === "0.16" &&
+                            (
+                                <>
+                                    <div className="subtotal__total">
+                                        IVA ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
+                                    </div>
+                                    <div className="subtotal__total">
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) + parseFloat(total) * parseFloat(IVA) ? parseFloat(total) + parseFloat(total) * parseFloat(IVA) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Transferencia" && IVA === "0" &&
+                            (
+                                <>
+                                    <div className="subtotal__total">
+                                        Total ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(total) ? parseFloat(total) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        {
+                            tipoPago === "Efectivo" &&
+                            (
+                                <>
+                                    <div className="subtotal__cambio">
+                                        Efectivo ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(dineroIngresado) ? parseFloat(dineroIngresado) : "0")} MXN
+
+                                    </div>
+                                    <div className="subtotal__cambio">
+                                        Cambio ${''}
+                                        {new Intl.NumberFormat('es-MX', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }).format(parseFloat(dineroIngresado) - (parseFloat(total) + parseFloat(total) * parseFloat(IVA)) ? parseFloat(dineroIngresado) - (parseFloat(total) + parseFloat(total) * parseFloat(IVA)) : "0")} MXN
+                                    </div>
+                                </>
+                            )
+                        }
+                    </Col>
+                </Row>
+                <hr />
+            </div>
+        )
+    }
+
+    const Opciones = ({ icon }) => {
+        return (
+            <div className="ticket__actions">
+                <Button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</Button>
+
+                <Button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>
+
+                <Button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</Button>
+
+                <Button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</Button>
+
+                <Button title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</Button>
+
+                <Button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>
+
+                <Button
+                    title="Añadir detalles de la venta"
+                    onClick={() =>
+                        datosExtraVenta(
+                            <DatosExtraVenta
+                                setTipoPago={setTipoPago}
+                                setDineroIngresado={setDineroIngresado}
+                                setTipoPedido={setTipoPedido}
+                                setHacerPedido={setHacerPedido}
+                                setNombreCliente={setNombreCliente}
+                                setObservaciones={setObservaciones}
+                                setShowModal={setShowModal}
+                            />
+                        )
+                    }>
+                    <FontAwesomeIcon icon={icon} />
+                </Button>
+
+                {/*<Button href="whatsapp://send?text=Hola Mundo&phone=+524531527363">Enviar mensaje</Button>*/}
+
+            </div>
+        )
+    }
+
     return (
         <>
             <div id="ticketGenerado" className="ticket">
                 <div className="ticket__information">
                     {/**/}
-                    <div className="cafe">
-                        {/**/}
-                        <div id="logoFinal" className="logotipo">
-                            <img src={logoTiquetGris} alt="logo" />
-                        </div>
-                        {/**/}
-                        <div className="detallesTitulo">
-                            <p className="cafe__number">Teléfono para pedidos</p>
-                            <p className="cafe__number">442-714-09-79</p>
-                            <p className="cafe__number">Ticket #{numeroTiquet}</p>
-                            <p className="invoice__cliente">Cliente {nombreCliente}</p>
-                            <p className="invoice__cliente">Pedido {tipoPedido}</p>
-                            <p className="invoice__cliente">Hecho {hacerPedido}</p>
-                            <p className="cafe__number">
-                                {fechayHora}
-                            </p>
-                        </div>
-                    </div>
-                    {/**/}
-                    <div className="ticket__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="items__numeracion">#</th>
-                                    <th className="items__description">Descripción</th>
-                                    <th className="items__qty">Cantidad</th>
-                                    <th className="items__price">Precio</th>
-                                    <th className="remove-icono">Eliminar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products?.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}.- </td>
-                                        <td className="items__description">{item.nombre}</td>
-                                        <td>1</td>
-                                        <td>
-                                            ${''}
-                                            {new Intl.NumberFormat('es-MX', {
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2,
-                                            }).format(item.precio)} MXN
-                                        </td>
-                                        <td title="Quitar producto" onClick={() => handleDeleteProduct(item)} className="remove-icon">❌</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <Encabezado
+                        logo={logoTiquetGris}
+                        numeroTiquet={numeroTiquet}
+                        nombreCliente={nombreCliente}
+                        tipoPedido={tipoPedido}
+                        hacerPedido={hacerPedido}
+                        fechayHora={fechayHora}
+                    />
 
                     {/**/}
-                    <div className="subtotal">
-                        <hr />
-                        <Row>
-                            <Col>
-                                <p className="observaciones__tiquet">
-                                    {observaciones}
-                                </p>
-                            </Col>
-                            <Col>
-                                <div className="subtotal__cambio">
-                                    Pago realizado con {tipoPago}
-                                </div>
+                    <Cuerpo
+                        products={products}
+                        onClick={handleDeleteProduct}
+                    />
 
-                                <div className="subtotal__IVA">
-
-                                </div>
-
-                                <div className="subtotal__price">
-                                    Subtotal ${''}
-                                    {new Intl.NumberFormat('es-MX', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2,
-                                    }).format(total)} MXN
-                                </div>
-
-                                {
-                                    tipoPago === "Tarjeta" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__cambio">
-                                                Comisión ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) * parseFloat("0.03") ? parseFloat(total) * parseFloat("0.03") : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-
-                                {
-                                    tipoPago === "Efectivo" && IVA === "0.16" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__IVA">
-                                                IVA ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
-                                            </div>
-
-                                            <div className="subtotal__total">
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) + parseFloat(total) * parseFloat(IVA) ? parseFloat(total) + parseFloat(total) * parseFloat(IVA) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Efectivo" && IVA === "0" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__total">
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) ? parseFloat(total) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Tarjeta" && IVA === "0.16" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__IVA">
-                                                IVA ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
-                                            </div>
-
-                                            <div className="subtotal__total">
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format((parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) ? (parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Tarjeta" && IVA === "0" &&
-                                    (
-                                        <>
-
-                                            <div className="subtotal__total">
-
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) + parseFloat(total) * parseFloat("0.03") ? parseFloat(total) + parseFloat(total) * parseFloat("0.03") : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Transferencia" && IVA === "0.16" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__total">
-                                                IVA ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) * parseFloat(IVA) ? parseFloat(total) * parseFloat(IVA) : "0")} MXN
-                                            </div>
-                                            <div className="subtotal__total">
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) + parseFloat(total) * parseFloat(IVA) ? parseFloat(total) + parseFloat(total) * parseFloat(IVA) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Transferencia" && IVA === "0" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__total">
-                                                Total ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(total) ? parseFloat(total) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                                {
-                                    tipoPago === "Efectivo" &&
-                                    (
-                                        <>
-                                            <div className="subtotal__cambio">
-                                                Efectivo ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(dineroIngresado) ? parseFloat(dineroIngresado) : "0")} MXN
-
-                                            </div>
-                                            <div className="subtotal__cambio">
-                                                Cambio ${''}
-                                                {new Intl.NumberFormat('es-MX', {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }).format(parseFloat(dineroIngresado) - (parseFloat(total) + parseFloat(total) * parseFloat(IVA)) ? parseFloat(dineroIngresado) - (parseFloat(total) + parseFloat(total) * parseFloat(IVA)) : "0")} MXN
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-                            </Col>
-                        </Row>
-                        <hr />
-                    </div>
                     {/**/}
+                    <Pie
+                        observaciones={observaciones}
+                        tipoPago={tipoPago}
+                        total={total}
+                        IVA={IVA}
+                        dineroIngresado={dineroIngresado}
+                    />
                 </div>
-                <div className="ticket__actions">
-                    <Button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</Button>
-
-                    <Button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>
-
-                    <Button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</Button>
-
-                    <Button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</Button>
-
-                    <Button title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</Button>
-
-                    <Button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>
-
-                    <Button
-                        title="Añadir detalles de la venta"
-                        onClick={() =>
-                            datosExtraVenta(
-                                <DatosExtraVenta
-                                    setTipoPago={setTipoPago}
-                                    setDineroIngresado={setDineroIngresado}
-                                    setTipoPedido={setTipoPedido}
-                                    setHacerPedido={setHacerPedido}
-                                    setNombreCliente={setNombreCliente}
-                                    setObservaciones={setObservaciones}
-                                    setShowModal={setShowModal}
-                                />
-                            )
-                        }>
-                        <FontAwesomeIcon icon={faCircleInfo} />
-                    </Button>
-                </div>
+                <Opciones
+                    icon={faCircleInfo}
+                />
             </div>
 
             <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>

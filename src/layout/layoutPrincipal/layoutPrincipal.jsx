@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
+import {Image, Button} from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -70,7 +71,7 @@ function LayoutPrincipal(props) {
                                 <div className="flex items-center justify-between h-16">
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0">
-                                            <img
+                                            <Image
                                                 src={LogoLANENA}
                                                 width="125px"
                                                 alt="Workflow"
@@ -89,18 +90,14 @@ function LayoutPrincipal(props) {
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-4 flex items-center md:ml-6">
-                                            <button
-                                                type="button"
-                                                className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                            >
-                                            </button>
+                                            
 
                                             {/* Profile dropdown */}
                                             <Menu as="div" className="ml-3 relative">
                                                 <div>
                                                     <Menu.Button title="Desplegar el boton de cierre de sesión" className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                         <span className="sr-only">Open user menu</span>
-                                                        <img className="h-8 w-8 rounded-full" src={ImagenPerfil} alt="" />
+                                                        <Image className="h-8 w-8 rounded-full" src={ImagenPerfil} alt="" />
                                                     </Menu.Button>
                                                 </div>
                                                 <Transition
@@ -114,7 +111,7 @@ function LayoutPrincipal(props) {
                                                 >
                                                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         {({ active }) => (
-                                                            <button
+                                                            <Button
                                                                 title="Cerrar sesión"
                                                                 onClick={() => {
                                                                     cerrarSesion()
@@ -122,7 +119,7 @@ function LayoutPrincipal(props) {
                                                                 className="cerrarSesion"
                                                             >
                                                                 Cerrar sesion
-                                                            </button>
+                                                            </Button>
                                                         )}
                                                     </Menu.Items>
                                                 </Transition>
@@ -151,7 +148,7 @@ function LayoutPrincipal(props) {
                                     <div className="flex items-center px-5">
                                         {/* Incluir desplegable */}
                                         <div className="flex-shrink-0">
-                                            <img
+                                            <Image
                                                 //className="logoPrincipal"
                                                 className="h-8 w-8 rounded-full"
                                                 src={ImagenPerfil}
@@ -165,14 +162,6 @@ function LayoutPrincipal(props) {
                                             {/*<div className="text-base font-medium leading-none text-white">{user.name}</div>*/}
                                             {/*<div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>*/}
                                         </div>
-                                        <button
-                                            type="button"
-                                            className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                        >
-                                        </button>
-                                    </div>
-                                    <div className="mt-3 px-2 space-y-1">
-                                        {/* Navegacion */}
                                     </div>
                                 </div>
                             </Disclosure.Panel>

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import "../../../scss/styles.scss";
-import { map } from "lodash";
 import Dropzone from "../../Dropzone";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { subeArchivosCloudinary } from "../../../api/cloudinary";
@@ -10,7 +9,6 @@ import queryString from "query-string";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
-import { listarUMPorTipo } from "../../../api/unidadesMedida";
 
 function ModificaIngredientes(props) {
     const { datosIngredientes, navigate, setShowModal } = props;
@@ -19,28 +17,6 @@ function ModificaIngredientes(props) {
 
     // Para almacenar el valor del formulario
     const [formData, setFormData] = useState(initialFormData(datosIngredientes));
-
-    // Para guardar el listado de categorias
-    const [listUM, setListUM] = useState([]);
-
-    useEffect(() => {
-        try {
-            listarUMPorTipo(formData.tipoUM).then(response => {
-                const { data } = response;
-                if (!listUM && data) {
-                    console.log(data);
-                    setListUM(formatModelUM(data));
-                } else {
-                    const datosUM = formatModelUM(data);
-                    setListUM(datosUM);
-                }
-            }).catch(e => {
-                console.log(e)
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }, [formData.tipoUM]);
 
     // Para almacenar la imagen
     const [imagenFile, setImagenFile] = useState(imagen);
@@ -296,22 +272,6 @@ function initialFormData(data) {
         costoProduccion: data.costoProduccion,
         cantidadPiezas: data.cantidadPiezas,
     }
-}
-
-function formatModelUM(data) {
-    //console.log(data)
-    const dataTemp = []
-    data.forEach(data => {
-        dataTemp.push({
-            id: data._id,
-            nombre: data.nombre,
-            tipo: data.tipo,
-            estadoUM: data.estadoUM,
-            fechaCreacion: data.createdAt,
-            fechaActualizacion: data.updatedAt
-        });
-    });
-    return dataTemp;
 }
 
 export default ModificaIngredientes;

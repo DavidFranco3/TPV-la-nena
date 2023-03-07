@@ -32,6 +32,50 @@ function Menu(props) {
         setCategoriaActual("")
     }
 
+    const ButtonBack = ({ icon, onClick }) => {
+        return (
+            <div className="regresarCategorias">
+                <FontAwesomeIcon
+                    icon={icon}
+                    className="home"
+                    title="Regresar"
+                    onClick={onClick}
+                />
+            </div>
+        )
+    }
+
+    const MenuCategorias = ({ index, nombre, onClick, imagen }) => {
+        return (
+            <Button
+                key={index}
+                title={nombre}
+                onClick={onClick}>
+                <Categoria
+                    key={index}
+                    imagen={imagen}
+                    nombre={nombre}
+                />
+            </Button>
+        )
+    }
+
+    const MenuProductos = ({ index, nombre, onClick, imagen, precio }) => {
+        return (
+            <Button
+                key={index}
+                title={nombre + " " + "$" + precio}
+                onClick={onClick}>
+                <Producto
+                    key={index}
+                    imagen={imagen}
+                    nombre={nombre}
+                    precio={precio}
+                />
+            </Button>
+        )
+    }
+
     return (
         <>
             <div className="menu">
@@ -42,16 +86,12 @@ function Menu(props) {
                             (
                                 listCategorias.map((categoria, index) => {
                                     return (
-                                        <Button
-                                            key={index}
-                                            title={categoria?.nombre}
-                                            onClick={() => setCategoriaActual(categoria?.id)}>
-                                            <Categoria
-                                                key={index}
-                                                imagen={categoria?.imagen}
-                                                nombre={categoria?.nombre}
-                                            />
-                                        </Button>
+                                        <MenuCategorias
+                                            index={index}
+                                            nombre={categoria?.nombre}
+                                            imagen={categoria?.imagen}
+                                            onClick={() => setCategoriaActual(categoria?.id)}
+                                        />
                                     )
                                 })
                             )
@@ -59,31 +99,24 @@ function Menu(props) {
                         :
                         (
                             <>
-                                <div className="regresarCategorias">
-                                    <FontAwesomeIcon
-                                        icon={faHouse}
-                                        className="home"
-                                        title="Regresar"
-                                        onClick={() => {
-                                            clickHomeHandler()
-                                        }}
-                                    />
-                                </div>
+                                <ButtonBack
+                                    icon={faHouse}
+                                    onClick={() => {
+                                        clickHomeHandler()
+                                    }}
+                                />
                                 {
                                     listProductos &&
                                     (
                                         listProductos.map((product, index) => {
                                             return (
-                                                <Button key={index}
-                                                    title={product?.nombre + " " + "$" + product?.precio}
-                                                    onClick={() => clickHandler(product)}>
-                                                    <Producto
-                                                        key={index}
-                                                        imagen={product?.imagen}
-                                                        nombre={product?.nombre}
-                                                        precio={product?.precio}
-                                                    />
-                                                </Button>
+                                                <MenuProductos
+                                                    index={index}
+                                                    nombre={product?.nombre}
+                                                    imagen={product?.imagen}
+                                                    precio={product?.precio}
+                                                    onClick={() => clickHandler(product)}
+                                                />
                                             )
                                         })
                                     )

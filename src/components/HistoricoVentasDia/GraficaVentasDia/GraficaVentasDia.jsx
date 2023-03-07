@@ -82,10 +82,10 @@ function GraficaVentasDia(props) {
         <>
             <div className='App' style={{ width: "100%", height: "500px" }}>
                 <h2>Total de dinero ingresado: ${''}
-                        {new Intl.NumberFormat('es-MX', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                        }).format(total)} MXN</h2>
+                    {new Intl.NumberFormat('es-MX', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    }).format(total)} MXN</h2>
                 <Bar data={data} options={opciones} />
             </div>
         </>

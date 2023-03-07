@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
-import { Badge, Col, Row, Container } from "react-bootstrap";
+import { Badge, Col, Row, Container, Button } from "react-bootstrap";
 import BasicModal from "../../Modal/BasicModal";
 import GeneraPDF from "../GeneraPDF";
 import DataTable from "react-data-table-component";
@@ -27,7 +27,7 @@ function DetallesVenta(props) {
 
     const columns = [
         {
-            name: ' Producto',
+            name: 'Producto',
             selector: row => row.nombre,
             sortable: false,
             center: true,

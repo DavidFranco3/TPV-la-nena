@@ -12,6 +12,8 @@ import { obtenerCaja } from "../../../api/cajas"
 function GeneraPdf(props) {
     const { datos } = props;
 
+    console.log(datos);
+
     const { idCaja, numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
 
     dayjs.locale('es');

@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { registraIngredientes } from "../../../api/ingredientes";
-import { map } from "lodash";
-import { listarUMPorTipo } from "../../../api/unidadesMedida";
 import Dropzone from "../../Dropzone";
 import "../../../scss/styles.scss";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
@@ -16,28 +14,6 @@ function RegistroIngredientes(props) {
     const { setShowModal, navigate } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
-
-    // Para guardar el listado de categorias
-    const [listUM, setListUM] = useState([]);
-
-    useEffect(() => {
-        try {
-            listarUMPorTipo(formData.tipoUM).then(response => {
-                const { data } = response;
-                if (!listUM && data) {
-                    console.log(data);
-                    setListUM(formatModelUM(data));
-                } else {
-                    const datosUM = formatModelUM(data);
-                    setListUM(datosUM);
-                }
-            }).catch(e => {
-                console.log(e)
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }, [formData.tipoUM]);
 
     //Para almacenar la imagen del producto que se guardara a la bd
     const [imagenIngrediente, setImagenIngrediente] = useState(null);
@@ -293,22 +269,6 @@ function initialFormValue() {
         costoProduccion: "",
         cantidadPiezas: "",
     }
-}
-
-function formatModelUM(data) {
-    //console.log(data)
-    const dataTemp = []
-    data.forEach(data => {
-        dataTemp.push({
-            id: data._id,
-            nombre: data.nombre,
-            tipo: data.tipo,
-            estadoUM: data.estadoUM,
-            fechaCreacion: data.createdAt,
-            fechaActualizacion: data.updatedAt
-        });
-    });
-    return dataTemp;
 }
 
 export default RegistroIngredientes;
