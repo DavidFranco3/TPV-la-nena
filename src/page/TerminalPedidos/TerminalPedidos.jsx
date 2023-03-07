@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { withRouter } from "../../utils/withRouter";
-import Menu from "../../components/TerminalPV/Menu";
-import Tiquet from "../../components/TerminalPV/Tiquet";
+import Menu from "../../components/TerminalPedidos/Menu";
+import Tiquet from "../../components/TerminalPedidos/Tiquet";
 import "../../scss/styles.scss";
 import { listarProductosCategoria } from "../../api/productos";
 import { Alert, Col, Row, Button } from "react-bootstrap";
@@ -16,14 +16,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
-function TerminalPv(props) {
+function TerminalPedidos(props) {
     const { setRefreshCheckLogin } = props;
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
 
     const rutaRegreso = () => {
-        enrutamiento("/")
+        enrutamiento("/PedidosClientes")
     }
 
     const [datosUsuario, setDatosUsuario] = useState("");
@@ -127,7 +127,7 @@ function TerminalPv(props) {
             <Alert className="fondoPrincipalAlert">
                 <Row>
                     <Col xs={12} md={4} className="titulo">
-                        <h1 className="font-bold">Ventas</h1>
+                        <h1 className="font-bold">Pedidos</h1>
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
@@ -213,4 +213,4 @@ function formatModelCategorias(categorias) {
     return tempCategorias;
 }
 
-export default withRouter(TerminalPv);
+export default withRouter(TerminalPedidos);

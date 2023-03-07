@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
-import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
+import { obtenUltimoNoTiquet, registraPedidos } from "../../../api/pedidosClientes";
 import { Col, Button, Row, Image } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
@@ -12,9 +12,17 @@ import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
+import { useNavigate } from "react-router-dom";
 
 function Tiquet(props) {
     const { products, empty, remove } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/PedidosClientes")
+    }
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -93,7 +101,6 @@ function Tiquet(props) {
     }
 
     useEffect(() => {
-        setDeterminaBusquedaTiquet(false)
         try {
             obtenUltimoNoTiquet().then(response => {
                 const { data } = response;
@@ -105,7 +112,7 @@ function Tiquet(props) {
         } catch (e) {
             console.log(e.response)
         }
-    }, [determinaBusquedaTiquet]);
+    }, []);
 
     const handleRegistraVenta = () => {
         let iva = "0";
@@ -143,12 +150,13 @@ function Tiquet(props) {
                     agrupar: grupo
                 }
 
-                registraVentas(dataTemp).then(response => {
+                registraPedidos(dataTemp).then(response => {
                     const { data } = response;
                     setDeterminaBusquedaTiquet(true)
-                    LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
+                    LogsInformativos("Se ha registrado el pedido " + numeroTiquet, data.datos);
                     toast.success(data.mensaje)
                     handleEmptyTicket()
+                    rutaRegreso();
                 })
             } catch (e) {
                 console.log(e)
@@ -201,7 +209,7 @@ function Tiquet(props) {
                 <div className="detallesTitulo">
                     <p className="cafe__number">Teléfono para pedidos</p>
                     <p className="cafe__number">442-714-09-79</p>
-                    <p className="cafe__number">Ticket #{numeroTiquet}</p>
+                    <p className="cafe__number">Pedido #{numeroTiquet}</p>
                     <p className="invoice__cliente">Cliente {nombreCliente}</p>
                     <p className="invoice__cliente">Pedido {tipoPedido}</p>
                     <p className="invoice__cliente">Hecho {hacerPedido}</p>

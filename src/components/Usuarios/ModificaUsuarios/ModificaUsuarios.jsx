@@ -47,6 +47,19 @@ function ModificaUsuarios(props) {
                     LogsInformativos("Se ha modificado el usuario " + datosUsuario.usuario, datosUsuario);
                     toast.success(data.mensaje);
                     cancelarRegistro();
+                }).catch(e => {
+                    console.log(e)
+                    if (e.message === 'Network Error') {
+                        //console.log("No hay internet")
+                        toast.error("Conexión al servidor no disponible");
+                        setLoading(false);
+                    } else {
+                        if (e.response && e.response.status === 401) {
+                            const { mensaje } = e.response.data;
+                            toast.error(mensaje);
+                            setLoading(false);
+                        }
+                    }
                 })
             } catch (e) {
                 console.log(e)

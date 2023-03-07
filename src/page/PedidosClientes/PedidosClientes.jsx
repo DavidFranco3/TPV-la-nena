@@ -1,9 +1,9 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionVentasActivas, totalVentasActivas, listarPaginacionVentasCanceladas, totalVentasCanceladas } from "../../api/ventas";
+import { listarPaginacionPedidosActivas, totalPedidosActivas, listarPaginacionPedidosCanceladas, totalPedidosCanceladas } from "../../api/pedidosClientes";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
-import ListVentas from "../../components/Ventas/ListVentas";
+import ListPedidos from "../../components/PedidosClientes/ListPedidos";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
@@ -11,9 +11,23 @@ import { toast } from "react-toastify";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
-function Ventas(props) {
+function PedidosClientes(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
+
+        // Para definir el enrutamiento
+        const enrutamiento = useNavigate();
+
+        const rutaRegreso = () => {
+                enrutamiento("/")
+        }
+
+        const rutaRegistroVenta = () => {
+                enrutamiento("/TerminalPedidos")
+        }
 
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -51,12 +65,12 @@ function Ventas(props) {
         }, [])
 
         // Para almacenar las ventas realizadas
-        const [listVentas, setListVentas] = useState(null);
+        const [listPedidos, setListPedidos] = useState(null);
 
         // Para controlar la paginación
         const [rowsPerPage, setRowsPerPage] = useState(10);
         const [page, setPage] = useState(1);
-        const [noTotalVentas, setNoTotalVentas] = useState(1);
+        const [noTotalPedidos, setNoTotalPedidos] = useState(1);
 
         // Para listar las ventas
         useEffect(() => {
@@ -64,9 +78,9 @@ function Ventas(props) {
                 try {
                         if (estadoSwitch) {
                                 // Lista los productos activos
-                                totalVentasActivas().then(response => {
+                                totalPedidosActivas().then(response => {
                                         const { data } = response;
-                                        setNoTotalVentas(data);
+                                        setNoTotalPedidos(data);
                                 }).catch(e => {
                                         console.log(e)
                                 })
@@ -74,27 +88,25 @@ function Ventas(props) {
                                 if (page === 0) {
                                         setPage(1)
 
-                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosActivas(page, rowsPerPage).then(response => {
                                                 const { data } = response;
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
+                                                if (!listPedidos && data) {
+                                                        setListPedidos(formatModelPedidos(data));
                                                 } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
+                                                        const datosPedidos = formatModelPedidos(data);
+                                                        setListPedidos(datosPedidos)
                                                 }
                                         }).catch(e => {
                                                 console.log(e)
                                         })
                                 } else {
-                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosActivas(page, rowsPerPage).then(response => {
                                                 const { data } = response;
-                                                //console.log(data)
-
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
+                                                if (!listPedidos && data) {
+                                                        setListPedidos(formatModelPedidos(data));
                                                 } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
+                                                        const datosPedidos = formatModelPedidos(data);
+                                                        setListPedidos(datosPedidos)
                                                 }
                                         }).catch(e => {
                                                 console.log(e)
@@ -102,9 +114,9 @@ function Ventas(props) {
                                 }
                         } else {
                                 // Lista los productos obsoletos
-                                totalVentasCanceladas().then(response => {
+                                totalPedidosCanceladas().then(response => {
                                         const { data } = response;
-                                        setNoTotalVentas(data);
+                                        setNoTotalPedidos(data);
                                 }).catch(e => {
                                         console.log(e)
                                 })
@@ -112,27 +124,25 @@ function Ventas(props) {
                                 if (page === 0) {
                                         setPage(1)
 
-                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosCanceladas(page, rowsPerPage).then(response => {
                                                 const { data } = response;
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
+                                                if (!listPedidos && data) {
+                                                        setListPedidos(formatModelPedidos(data));
                                                 } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
+                                                        const datosPedidos = formatModelPedidos(data);
+                                                        setListPedidos(datosPedidos)
                                                 }
                                         }).catch(e => {
                                                 console.log(e)
                                         })
                                 } else {
-                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosCanceladas(page, rowsPerPage).then(response => {
                                                 const { data } = response;
-                                                //console.log(data)
-
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
+                                                if (!listPedidos && data) {
+                                                        setListPedidos(formatModelPedidos(data));
                                                 } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
+                                                        const datosPedidos = formatModelPedidos(data);
+                                                        setListPedidos(datosPedidos)
                                                 }
                                         }).catch(e => {
                                                 console.log(e)
@@ -147,9 +157,40 @@ function Ventas(props) {
 
         return (
                 <>
+                        <Alert className="fondoPrincipalAlert">
+                                <Row>
+                                        <Col xs={12} md={4} className="titulo">
+                                                <h1 className="font-bold">Pedidos de clientes</h1>
+                                        </Col>
+                                        <Col xs={6} md={8}>
+                                                <div style={{ float: 'right' }}>
+                                                        <Button
+                                                                title="Ir a la terminal de pedidos"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() => {
+                                                                        rutaRegistroVenta();
+                                                                }}
+                                                        >
+                                                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                                        </Button>
+                                                        <Button
+                                                                title="Regresar a la pagina anterior"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() => {
+                                                                        rutaRegreso();
+                                                                }}
+                                                        >
+                                                                <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
+                                                        </Button>
+                                                </div>
+                                        </Col>
+                                </Row>
+                        </Alert>
                         <Row>
                                 <Col xs={12} md={8}>
-                                        <h3 className="tituloSwitch">Estado de las ventas</h3>
+                                        <h3 className="tituloSwitch">Estado de los pedidos</h3>
                                 </Col>
                                 <Col xs={6} md={4}>
                                         <Switch
@@ -170,12 +211,12 @@ function Ventas(props) {
                         </Row>
 
                         {
-                                listVentas ?
+                                listPedidos ?
                                         (
                                                 <>
                                                         <Suspense fallback={< Spinner />}>
-                                                                <ListVentas
-                                                                        listVentas={listVentas}
+                                                                <ListPedidos
+                                                                        listPedidos={listPedidos}
                                                                         location={location}
                                                                         navigate={navigate}
                                                                         setRefreshCheckLogin={setRefreshCheckLogin}
@@ -183,7 +224,7 @@ function Ventas(props) {
                                                                         rowsPerPage={rowsPerPage}
                                                                         page={page}
                                                                         setPage={setPage}
-                                                                        noTotalVentas={noTotalVentas}
+                                                                        noTotalPedidos={noTotalPedidos}
                                                                 />
                                                         </Suspense>
                                                 </>
@@ -199,13 +240,14 @@ function Ventas(props) {
         );
 }
 
-function formatModelVentas(ventas) {
+function formatModelPedidos(ventas) {
         const tempVentas = []
         ventas.forEach((venta) => {
                 tempVentas.push({
                         id: venta._id,
                         numeroTiquet: venta.numeroTiquet,
                         cliente: venta.cliente,
+                        usuario: venta.usuario,
                         productosVendidos: venta.productos.length,
                         articulosVendidos: venta.productos,
                         detalles: venta.detalles,
@@ -226,4 +268,4 @@ function formatModelVentas(ventas) {
         return tempVentas;
 }
 
-export default withRouter(Ventas);
+export default withRouter(PedidosClientes);

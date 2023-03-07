@@ -67,6 +67,31 @@ export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes"
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
 
+// PedidosClientes
+export const ENDPOINTRegistroPedidos = "/pedidos/registro";
+export const ENDPOINTListarPedidos = "/pedidos/listar";
+export const ENDPOINTListarPedidosDia = "/pedidos/listarPedidosDia";
+export const ENDPOINTListarPedidosMes = "/pedidos/listarPedidosMes";
+export const ENDPOINTListarPaginandoPedidos = "/pedidos/listarPaginando";
+export const ENDPOINTTotalPedidos = "/pedidos/totalPedidos";
+export const ENDPOINTListarPaginandoPedidosActivas = "/pedidos/listarPaginandoActivas";
+export const ENDPOINTTotalPedidosActivas = "/pedidos/totalPedidosActivas";
+export const ENDPOINTListarPaginandoPedidosCanceladas = "/pedidos/listarPaginandoCanceladas";
+export const ENDPOINTTotalPedidosCanceladas = "/pedidos/totalPedidosCanceladas";
+export const ENDPOINTListarPaginandoPedidosDia = "/pedidos/listarPaginandoDia";
+export const ENDPOINTListarPaginandoPedidosMes = "/pedidos/listarPaginandoMes";
+export const ENDPOINTObtenerPedidos = "/pedidos/obtener";
+export const ENDPOINTEliminarPedidos = "/pedidos/eliminar";
+export const ENDPOINTActualizarPedidos = "/pedidos/actualizar";
+export const ENDPOINTCancelarPedidos = "/pedidos/cancelar";
+export const ENDPOINTObtenerNumeroPedido = "/pedidos/obtenNoTiquet";
+export const ENDPOINTListarPedidosPorDia = "/pedidos/listarTotalPedidosDia";
+export const ENDPOINTListarPedidosPorMes = "/pedidos/listarTotalPedidosMes";
+export const ENDPOINTListarDetallesPedidosDia = "/pedidos/listarDetallesPedidosDia";
+export const ENDPOINTListarDetallesPedidosMes = "/pedidos/listarDetallesPedidosMes";
+export const ENDPOINTListarDetallesProductosPedidosDia = "/pedidos/listarDetallesProductosPedidosDia";
+export const ENDPOINTListarDetallesProductosPedidosMes = "/pedidos/listarDetallesProductosPedidosMes";
+
 // Logs generales
 export const ENDPOINTRegistroLogs = "/logs/registro";
 export const ENDPOINTListarLogs = "/logs/listar";

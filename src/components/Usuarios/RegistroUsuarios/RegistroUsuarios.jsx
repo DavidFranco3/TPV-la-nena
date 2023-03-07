@@ -33,6 +33,7 @@ function RegistroUsuarios(props) {
                     usuario: formData.usuario,
                     admin: formData.admin,
                     password: formData.password,
+                    tipo: "interno",
                     estadoUsuario: "true"
                 }
                 registraUsuarios(dataTemp).then(response => {
@@ -43,6 +44,19 @@ function RegistroUsuarios(props) {
                     LogsInformativos("Se ha registrado el usuario " + formData.usuario, data.datos);
                     toast.success(data.mensaje);
                     cancelarRegistro();
+                }).catch(e => {
+                    console.log(e)
+                    if (e.message === 'Network Error') {
+                        //console.log("No hay internet")
+                        toast.error("Conexión al servidor no disponible");
+                        setLoading(false);
+                    } else {
+                        if (e.response && e.response.status === 401) {
+                            const { mensaje } = e.response.data;
+                            toast.error(mensaje);
+                            setLoading(false);
+                        }
+                    }
                 })
             } catch (e) {
                 console.log(e)

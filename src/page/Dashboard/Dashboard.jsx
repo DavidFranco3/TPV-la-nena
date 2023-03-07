@@ -15,6 +15,7 @@ import LogoUsuarios from '../../assets/png/usuarios.png';
 import LogoCajas from '../../assets/png/cajas.png';
 import LogoLogs from '../../assets/png/logs.png';
 import LogoIngredientes from '../../assets/png/ingredientes.png';
+import LogoPedidos from '../../assets/png/pedidos.png';
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -111,6 +112,11 @@ function Dashboard(props) {
                   path={'/Usuarios'}
                   logo={LogoUsuarios}
                   title={'Usuarios'}
+                />
+                <ItemCard
+                  path={'/PedidosClientes'}
+                  logo={LogoPedidos}
+                  title={'Pedidos en línea'}
                 />
                 <ItemCard
                   path={'/Logs'}

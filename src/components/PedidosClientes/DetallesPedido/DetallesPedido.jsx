@@ -8,7 +8,7 @@ import { estilos } from "../../../utils/tableStyled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 
-function DetallesVenta(props) {
+function DetallesPedido(props) {
     const { datos } = props;
 
     const { numeroTiquet, articulosVendidos, cliente } = datos;
@@ -20,7 +20,7 @@ function DetallesVenta(props) {
 
     // Para cancelar la venta
     const handlePrint = (content) => {
-        setTitulosModal("Detalles del ticket No. " + numeroTiquet.toString());
+        setTitulosModal("Detalles del pedido No. " + numeroTiquet.toString());
         setContentModal(content);
         setShowModal(true);
     }
@@ -112,4 +112,4 @@ function DetallesVenta(props) {
     );
 }
 
-export default DetallesVenta;
+export default DetallesPedido;
