@@ -27,6 +27,7 @@ function TerminalPedidos(props) {
     }
 
     const [datosUsuario, setDatosUsuario] = useState("");
+    const [idUsuario, setIdUsuario] = useState("");
 
     useEffect(() => {
         try {
@@ -34,6 +35,7 @@ function TerminalPedidos(props) {
                 const { data } = response;
                 //console.log(data)
                 setDatosUsuario(data);
+                setIdUsuario(data._id);
             }).catch((e) => {
                 if (e.message === 'Network Error') {
                     //console.log("No hay internet")
@@ -157,6 +159,7 @@ function TerminalPedidos(props) {
                                         products={ticketItems}
                                         empty={emptyTicket}
                                         remove={removeProduct}
+                                        idUsuario={idUsuario}
                                     />
                                     <Menu
                                         addItems={addItems}

@@ -15,7 +15,7 @@ import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 import { useNavigate } from "react-router-dom";
 
 function Tiquet(props) {
-    const { products, empty, remove } = props;
+    const { products, empty, remove, idUsuario } = props;
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
@@ -134,6 +134,7 @@ function Tiquet(props) {
             try {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
+                    usuario: idUsuario,
                     cliente: nombreCliente,
                     estado: "true",
                     detalles: observaciones,
