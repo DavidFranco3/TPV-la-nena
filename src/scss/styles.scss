@@ -837,6 +837,10 @@
   font-size: 12px;
 }
 
+.badge.bg-warning {
+  font-size: 12px;
+}
+
 .badge.bg-danger {
   font-size: 12px;
 }
@@ -1404,6 +1408,11 @@ a:hover {
   //margin-top: 10px;
   .estado {
     .editar.badge.bg-success {
+      cursor: pointer !important;
+      margin-left: -5px !important;
+    }
+
+    .editar.badge.bg-warning {
       cursor: pointer !important;
       margin-left: -5px !important;
     }

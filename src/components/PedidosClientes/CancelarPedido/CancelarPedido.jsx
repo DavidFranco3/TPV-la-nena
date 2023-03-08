@@ -31,7 +31,7 @@ function CancelarPedido(props) {
         setLoading(true);
         try {
             const dataTemp = {
-                estado: estado === "true" ? "false" : "true"
+                estado: estado === "Pendiente" ? "Confirmado" : "Cancelado"
             }
             cancelarPedidos(id, dataTemp).then(response => {
                 const { data } = response;
@@ -126,7 +126,7 @@ function CancelarPedido(props) {
                                 variant="success"
                                 className="registrar"
                             >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? (estado === "true" ? "Deshabilitar" : "Habilitar") : <Spinner animation="border" />}
+                                <FontAwesomeIcon icon={faSave} /> {!loading ? (estado === "Pendiente" ? "Confirmar" : "Cancelar") : <Spinner animation="border" />}
                             </Button>
                         </Col>
                         <Col>

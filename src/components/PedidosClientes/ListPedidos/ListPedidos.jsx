@@ -5,7 +5,7 @@ import BasicModal from "../../Modal/BasicModal";
 import DetallesPedido from "../DetallesPedido";
 import CancelarPedido from "../CancelarPedido";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faX, faRotateLeft, faArrowDownLong, faMessage } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faX, faRotateLeft, faArrowDownLong, faMessage, faCheck } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
@@ -38,8 +38,8 @@ function ListPedidos(props) {
     }
 
     // Para cancelar la venta
-    const recuperarPedido = (content) => {
-        setTitulosModal("Recuperar pedido");
+    const confirmarPedido = (content) => {
+        setTitulosModal("Confirmar pedido");
         setContentModal(content);
         setShowModal(true);
     }
@@ -83,28 +83,45 @@ function ListPedidos(props) {
             selector: row => (
                 <>
                     {
-                        row.estado === "true" ?
-                            (
-                                <>
-                                    <Badge
-                                        bg="success"
-                                        className="estado"
-                                    >
-                                        Pedido completado
-                                    </Badge>
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                    <Badge
-                                        bg="danger"
-                                        className="estado"
-                                    >
-                                        Pedido cancelado
-                                    </Badge>
-                                </>
-                            )
+                        row.estado === "Pendiente" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="warning"
+                                    className="estado"
+                                >
+                                    Pedido pendiente
+                                </Badge>
+                            </>
+                        )
+                    }
+
+                    {
+                        row.estado === "Confirmado" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="success"
+                                    className="estado"
+                                >
+                                    Pedido confirmado
+                                </Badge>
+                            </>
+                        )
+                    }
+
+                    {
+                        row.estado === "Cancelado" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="danger"
+                                    className="estado"
+                                >
+                                    Pedido cancelado
+                                </Badge>
+                            </>
+                        )
                     }
                 </>
             ),
@@ -142,24 +159,25 @@ function ListPedidos(props) {
             name: "Confirmar",
             selector: row => (
                 <>
-                    {tipoUsuario === "externo" ?
-                        (
-                            <>
-                                <a
-                                    className="text-emerald-700 no-underline"
-                                    //className="editar"
-                                    //cursor= "pointer !important"
-                                    title="Enviar mensaje de whatsapp"
-                                    href={"whatsapp://send?text=Se ha realizado un nuevo pedido con numero " + row.numeroTiquet + "&phone=+524427140979"}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >Enviar mensaje</a>
-                            </>
-                        )
-                        :
-                        (
-                            "No disponible"
-                        )
+                    {
+                        tipoUsuario === "externo" && row.estado=== "Pendiente" ?
+                            (
+                                <>
+                                    <a
+                                        className="text-emerald-700 no-underline"
+                                        //className="editar"
+                                        //cursor= "pointer !important"
+                                        title="Enviar mensaje de whatsapp"
+                                        href={"whatsapp://send?text=Se ha realizado un nuevo pedido con numero " + row.numeroTiquet + "&phone=+524427140979"}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >Enviar mensaje</a>
+                                </>
+                            )
+                            :
+                            (
+                                "No disponible"
+                            )
                     }
                 </>
 
@@ -173,29 +191,38 @@ function ListPedidos(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
-                        <Badge
-                            title="Ver productos vendidos"
-                            bg="primary"
-                            className="indicadorDetallesVenta"
-                            onClick={() => {
-                                detallesPedido(
-                                    <DetallesPedido
-                                        datos={row}
-                                        location={location}
-                                        navigate={navigate}
-                                    />
+                    {
+                            row.estado === "Pendiente" && tipoUsuario === "interno" &&
+                                (
+                                    <>
+                                        <Badge
+                                            bg="success"
+                                            title="Confirmar pedido"
+                                            className="indicadorCancelarVenta"
+                                            onClick={() => {
+                                                confirmarPedido(
+                                                    <CancelarPedido
+                                                        datosPedidos={row}
+                                                        location={location}
+                                                        navigate={navigate}
+                                                        setShowModal={setShowModal}
+                                                    />
+                                                )
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faCheck} className="text-lg" />
+                                        </Badge>
+                                    </>
                                 )
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faEye} className="text-lg" />
-                        </Badge>
-                        {/*{
-                            row.estado === "true" ?
+                        }
+
+{
+                            row.estado === "Confirmado" && tipoUsuario === "interno" &&
                                 (
                                     <>
                                         <Badge
                                             bg="danger"
-                                            title="Cancelar venta"
+                                            title="Cancelar pedido"
                                             className="indicadorCancelarVenta"
                                             onClick={() => {
                                                 cancelarPedido(
@@ -212,29 +239,23 @@ function ListPedidos(props) {
                                         </Badge>
                                     </>
                                 )
-                                :
-                                (
-                                    <>
-                                        <Badge
-                                            bg="success"
-                                            title="Recuperar venta"
-                                            className="indicadorCancelarVenta"
-                                            onClick={() => {
-                                                recuperarPedido(
-                                                    <CancelarPedido
-                                                        datosPedidos={row}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                        setShowModal={setShowModal}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faRotateLeft} className="text-lg" />
-                                        </Badge>
-                                    </>
+                        }
+                        <Badge
+                            title="Ver productos vendidos"
+                            bg="primary"
+                            className="indicadorDetallesVenta"
+                            onClick={() => {
+                                detallesPedido(
+                                    <DetallesPedido
+                                        datos={row}
+                                        location={location}
+                                        navigate={navigate}
+                                    />
                                 )
-                        }*/}
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faEye} className="text-lg" />
+                        </Badge>
                     </div>
                 </>
             ),

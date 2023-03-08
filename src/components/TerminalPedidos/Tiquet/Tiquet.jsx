@@ -136,7 +136,7 @@ function Tiquet(props) {
                     numeroTiquet: numeroTiquet,
                     usuario: idUsuario,
                     cliente: nombreCliente,
-                    estado: "true",
+                    estado: "Pendiente",
                     detalles: observaciones,
                     tipoPago: tipoPago,
                     tipoPedido: tipoPedido,
@@ -155,7 +155,7 @@ function Tiquet(props) {
                 registraPedidos(dataTemp).then(response => {
                     const { data } = response;
                     setDeterminaBusquedaTiquet(true)
-                    LogsInformativos("Se ha registrado el pedido " + numeroTiquet, data.datos);
+                    LogsInformativos("Se ha registrado tu pedido, para confirmarlo debes enviar un mensaje de whatsapp al local usando el boton que aparece en la tabla", data.datos);
                     toast.success(data.mensaje)
                     handleEmptyTicket()
                     rutaRegreso();
