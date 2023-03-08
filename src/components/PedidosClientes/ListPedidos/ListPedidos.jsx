@@ -150,7 +150,7 @@ function ListPedidos(props) {
                                     //className="editar"
                                     //cursor= "pointer !important"
                                     title="Enviar mensaje de whatsapp"
-                                    href={"whatsapp://send?text=Se ha realizado un nuevo pedido con numero " + row.numeroTiquet + "&phone=+524531527363"}
+                                    href={"whatsapp://send?text=Se ha realizado un nuevo pedido con numero " + row.numeroTiquet + "&phone=+524427140979"}
                                     target="_blank"
                                     rel="noreferrer"
                                 >Enviar mensaje</a>
