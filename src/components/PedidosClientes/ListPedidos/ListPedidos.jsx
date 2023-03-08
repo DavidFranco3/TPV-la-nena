@@ -159,7 +159,7 @@ function ListPedidos(props) {
                         >
                             <FontAwesomeIcon icon={faEye} className="text-lg" />
                         </Badge>
-                        {
+                        {/*{
                             row.estado === "true" ?
                                 (
                                     <>
@@ -204,7 +204,7 @@ function ListPedidos(props) {
                                         </Badge>
                                     </>
                                 )
-                        }
+                        }*/}
                     </div>
                 </>
             ),

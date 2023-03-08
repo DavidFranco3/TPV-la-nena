@@ -5,6 +5,7 @@ export const ENDPOINTLoginAdministrador = "/login";
 
 // Usuarios
 export const ENDPOINTRegistroUsuarios = "/usuarios/registro";
+export const ENDPOINTRegistroClientes = "/clientes/registroCliente";
 export const ENDPOINTListarUsuarios = "/usuarios/listar";
 export const ENDPOINTListarUsuariosCajeros = "/usuarios/listarCajeros";
 export const ENDPOINTListarPaginandoUsuarios = "/usuarios/listarPaginando";
@@ -16,6 +17,8 @@ export const ENDPOINTObtenerUsuarios = "/usuarios/obtenerUsuario";
 export const ENDPOINTEliminarUsuarios = "/usuarios/eliminar";
 export const ENDPOINTDeshabilitarUsuarios = "/usuarios/deshabilitar";
 export const ENDPOINTActualizarUsuarios = "/usuarios/actualizar";
+export const ENDPOINTListarPaginandoClientes = "/usuarios/listarPaginandoClientes";
+export const ENDPOINTTotalClientes = "/usuarios/totalClientes";
 
 // Categorías
 export const ENDPOINTRegistroCategorias = "/categorias/registro";
@@ -67,13 +70,15 @@ export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes"
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
 
-// PedidosClientes
+// Pedidos de clientes
 export const ENDPOINTRegistroPedidos = "/pedidos/registro";
 export const ENDPOINTListarPedidos = "/pedidos/listar";
 export const ENDPOINTListarPedidosDia = "/pedidos/listarPedidosDia";
 export const ENDPOINTListarPedidosMes = "/pedidos/listarPedidosMes";
 export const ENDPOINTListarPaginandoPedidos = "/pedidos/listarPaginando";
 export const ENDPOINTTotalPedidos = "/pedidos/totalPedidos";
+export const ENDPOINTListarPaginandoPedidosPorClientes = "/pedidos/listarPaginandoClientes";
+export const ENDPOINTTotalPedidosPorClientes = "/pedidos/totalPedidosClientes";
 export const ENDPOINTListarPaginandoPedidosActivas = "/pedidos/listarPaginandoActivas";
 export const ENDPOINTTotalPedidosActivas = "/pedidos/totalPedidosActivas";
 export const ENDPOINTListarPaginandoPedidosCanceladas = "/pedidos/listarPaginandoCanceladas";

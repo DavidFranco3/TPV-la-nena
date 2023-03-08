@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionPedidosActivas, totalPedidosActivas, listarPaginacionPedidosCanceladas, totalPedidosCanceladas } from "../../api/pedidosClientes";
+import { listarPaginacionPedidosPorClientes, totalPedidosPorClientes, listarPaginacionPedidos, totalPedidos } from "../../api/pedidosClientes";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
@@ -34,12 +34,18 @@ function PedidosClientes(props) {
 
         const [datosUsuario, setDatosUsuario] = useState("");
 
+        const [tipoUsuario, setTipoUsuario] = useState("");
+
+        const [idUsuario, setIdUsuario] = useState("");
+
         useEffect(() => {
                 try {
                         obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                                 const { data } = response;
                                 //console.log(data)
                                 setDatosUsuario(data);
+                                setTipoUsuario(data.tipo);
+                                setIdUsuario(data._id);
                         }).catch((e) => {
                                 if (e.message === 'Network Error') {
                                         //console.log("No hay internet")
@@ -76,9 +82,9 @@ function PedidosClientes(props) {
         useEffect(() => {
                 //console.log("Estado del switch ", estadoSwitch)
                 try {
-                        if (estadoSwitch) {
+                        if (tipoUsuario === "externo") {
                                 // Lista los productos activos
-                                totalPedidosActivas().then(response => {
+                                totalPedidosPorClientes().then(response => {
                                         const { data } = response;
                                         setNoTotalPedidos(data);
                                 }).catch(e => {
@@ -88,7 +94,7 @@ function PedidosClientes(props) {
                                 if (page === 0) {
                                         setPage(1)
 
-                                        listarPaginacionPedidosActivas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosPorClientes(page, rowsPerPage, idUsuario).then(response => {
                                                 const { data } = response;
                                                 if (!listPedidos && data) {
                                                         setListPedidos(formatModelPedidos(data));
@@ -100,7 +106,7 @@ function PedidosClientes(props) {
                                                 console.log(e)
                                         })
                                 } else {
-                                        listarPaginacionPedidosActivas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidosPorClientes(page, rowsPerPage, idUsuario).then(response => {
                                                 const { data } = response;
                                                 if (!listPedidos && data) {
                                                         setListPedidos(formatModelPedidos(data));
@@ -114,7 +120,7 @@ function PedidosClientes(props) {
                                 }
                         } else {
                                 // Lista los productos obsoletos
-                                totalPedidosCanceladas().then(response => {
+                                totalPedidos().then(response => {
                                         const { data } = response;
                                         setNoTotalPedidos(data);
                                 }).catch(e => {
@@ -124,7 +130,7 @@ function PedidosClientes(props) {
                                 if (page === 0) {
                                         setPage(1)
 
-                                        listarPaginacionPedidosCanceladas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidos(page, rowsPerPage).then(response => {
                                                 const { data } = response;
                                                 if (!listPedidos && data) {
                                                         setListPedidos(formatModelPedidos(data));
@@ -136,7 +142,7 @@ function PedidosClientes(props) {
                                                 console.log(e)
                                         })
                                 } else {
-                                        listarPaginacionPedidosCanceladas(page, rowsPerPage).then(response => {
+                                        listarPaginacionPedidos(page, rowsPerPage).then(response => {
                                                 const { data } = response;
                                                 if (!listPedidos && data) {
                                                         setListPedidos(formatModelPedidos(data));
@@ -153,7 +159,7 @@ function PedidosClientes(props) {
                 } catch (e) {
                         console.log(e)
                 }
-        }, [location, estadoSwitch, page, rowsPerPage]);
+        }, [location, tipoUsuario, page, rowsPerPage]);
 
         return (
                 <>
@@ -164,16 +170,23 @@ function PedidosClientes(props) {
                                         </Col>
                                         <Col xs={6} md={8}>
                                                 <div style={{ float: 'right' }}>
-                                                        <Button
-                                                                title="Ir a la terminal de pedidos"
-                                                                className="btnRegistro"
-                                                                style={{ marginRight: '10px' }}
-                                                                onClick={() => {
-                                                                        rutaRegistroVenta();
-                                                                }}
-                                                        >
-                                                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
-                                                        </Button>
+                                                        {
+                                                                tipoUsuario === "externo" &&
+                                                                (
+                                                                        <>
+                                                                                <Button
+                                                                                        title="Ir a la terminal de pedidos"
+                                                                                        className="btnRegistro"
+                                                                                        style={{ marginRight: '10px' }}
+                                                                                        onClick={() => {
+                                                                                                rutaRegistroVenta();
+                                                                                        }}
+                                                                                >
+                                                                                        <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                                                                </Button>
+                                                                        </>
+                                                                )
+                                                        }
                                                         <Button
                                                                 title="Regresar a la pagina anterior"
                                                                 className="btnRegistro"
@@ -188,27 +201,6 @@ function PedidosClientes(props) {
                                         </Col>
                                 </Row>
                         </Alert>
-                        <Row>
-                                <Col xs={12} md={8}>
-                                        <h3 className="tituloSwitch">Estado de los pedidos</h3>
-                                </Col>
-                                <Col xs={6} md={4}>
-                                        <Switch
-                                                title={estadoSwitch === true ? "Ver ventas canceladas" : "Ver ventas activas"}
-                                                checked={estadoSwitch}
-                                                onChange={setEstadoSwitch}
-                                                className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
-          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                                        >
-                                                <span className="sr-only">Use setting</span>
-                                                <span
-                                                        aria-hidden="true"
-                                                        className={`${estadoSwitch ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
-                                                />
-                                        </Switch>
-                                </Col>
-                        </Row>
 
                         {
                                 listPedidos ?

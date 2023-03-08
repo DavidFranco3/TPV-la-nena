@@ -86,7 +86,7 @@ function ModificaUsuarios(props) {
                             />
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Usario</Form.Label>
+                            <Form.Label>Usuario</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="usuario"

@@ -11,7 +11,10 @@ import {
     ENDPOINTListarPaginandoUsuariosActivos,
     ENDPOINTTotalUsuariosActivos,
     ENDPOINTListarPaginandoUsuariosCancelados,
-    ENDPOINTTotalUsuariosCancelados
+    ENDPOINTTotalUsuariosCancelados,
+    ENDPOINTRegistroClientes,
+    ENDPOINTListarPaginandoClientes,
+    ENDPOINTTotalClientes
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -29,6 +32,21 @@ export async function registraUsuarios(data) {
     };
 
     return await axios.post(API_HOST + ENDPOINTRegistroUsuarios, data, config);
+}
+
+// Registra usuarios
+export async function registraCliente(data) {
+    //console.log(data)
+
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+
+    return await axios.post(API_HOST + ENDPOINTRegistroClientes, data, config);
 }
 
 // Para obtener todos los datos del usuario
@@ -167,3 +185,29 @@ export async function actualizaUsuario(id, data) {
 
     return await axios.put(API_HOST + ENDPOINTActualizarUsuarios + `/${id}`, data, config);
 }
+
+// Listar las categorias activas paginandolas
+export async function listarPaginacionClientes(pagina, limite) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoClientes + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Obtiene el total de categorias canceladas registradas
+export async function totalClientes() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalClientes, config);
+}
+
+

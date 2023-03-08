@@ -23,6 +23,8 @@ import {
     ENDPOINTListarDetallesPedidosMes,
     ENDPOINTListarDetallesProductosPedidosDia,
     ENDPOINTListarDetallesProductosPedidosMes,
+    ENDPOINTListarPaginandoPedidosPorClientes,
+    ENDPOINTTotalPedidosPorClientes
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -77,7 +79,7 @@ export async function totalPedidosActivas() {
 }
 
 // Para listar todas las ventas
-export async function totalVentas() {
+export async function totalPedidos() {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -305,4 +307,28 @@ export async function obtenUltimoNoTiquet() {
         }
     };
     return await axios.get(API_HOST + ENDPOINTObtenerNumeroPedido, config);
+}
+
+// Listar las ventas paginandolas
+export async function listarPaginacionPedidosPorClientes(pagina, limite, usuario) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoPedidosPorClientes + `/?pagina=${pagina}&&limite=${limite}&&usuario=${usuario}`, config);
+}
+
+// Para obtener el total de ventas registradas
+export async function totalPedidosPorClientes() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalPedidosPorClientes, config);
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registraUsuarios } from "../../../api/usuarios";
+import { registraCliente } from "../../../api/usuarios";
 import "../../../scss/styles.scss";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
-function RegistroUsuarios(props) {
+function RegistroClientes(props) {
     const { setShowModal, navigate } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ function RegistroUsuarios(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!formData.nombre || !formData.usuario || !formData.password || !formData.admin) {
+        if (!formData.nombre || !formData.usuario || !formData.password) {
             toast.warning("Completa el formulario");
         } else {
             try {
@@ -31,16 +31,16 @@ function RegistroUsuarios(props) {
                 const dataTemp = {
                     nombre: formData.nombre,
                     usuario: formData.usuario,
-                    admin: formData.admin,
+                    admin: "false",
                     password: formData.password,
-                    tipo: "interno",
+                    tipo: "externo",
                     estadoUsuario: "true"
                 }
-                registraUsuarios(dataTemp).then(response => {
+                registraCliente(dataTemp).then(response => {
                     const { data } = response;
-                    navigate({
+                    /*navigate({
                         search: queryString.stringify(""),
-                    });
+                    });*/
                     LogsInformativos("Se ha registrado el usuario " + formData.usuario, data.datos);
                     toast.success(data.mensaje);
                     cancelarRegistro();
@@ -91,9 +91,7 @@ function RegistroUsuarios(props) {
                                 defaultValue={formData.usuario}
                             />
                         </Form.Group>
-                    </Row>
 
-                    <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Password</Form.Label>
                             <Form.Control
@@ -102,19 +100,6 @@ function RegistroUsuarios(props) {
                                 placeholder="Escribe el password"
                                 defaultValue={formData.password}
                             />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="formGridNombre">
-                            <Form.Label>Tipo</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="admin"
-                                placeholder="Escribe el tipo de usuario"
-                                defaultValue={formData.admin}
-                            >
-                                <option>Elige una opción</option>
-                                <option value="true">Administrador</option>
-                                <option value="false">Cajero</option>
-                            </Form.Control>
                         </Form.Group>
                     </Row>
                 </div>
@@ -159,4 +144,4 @@ function initialFormValue() {
     }
 }
 
-export default RegistroUsuarios;
+export default RegistroClientes;

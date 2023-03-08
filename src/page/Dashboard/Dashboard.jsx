@@ -16,6 +16,7 @@ import LogoCajas from '../../assets/png/cajas.png';
 import LogoLogs from '../../assets/png/logs.png';
 import LogoIngredientes from '../../assets/png/ingredientes.png';
 import LogoPedidos from '../../assets/png/pedidos.png';
+import LogoClientes from '../../assets/png/clientes.png';
 
 function Dashboard(props) {
   const { setRefreshCheckLogin } = props;
@@ -23,15 +24,17 @@ function Dashboard(props) {
   const enrutamiento = useNavigate();
 
   const [estadoUsuario, setEstadoUsuario] = useState(null);
+  const [tipoUsuario, setTipoUsuario] = useState(null);
   const [datosUsuario, setDatosUsuario] = useState(null);
 
   useEffect(() => {
     try {
       obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
         const { data } = response;
-        const { admin } = data;
+        const { admin, tipo } = data;
         //console.log(data)
         setEstadoUsuario(admin);
+        setTipoUsuario(tipo);
         setDatosUsuario(data);
       }).catch((e) => {
         if (e.message === 'Network Error') {
@@ -74,80 +77,113 @@ function Dashboard(props) {
   return (
     <>
       {
-        estadoUsuario === "true" ?
-          (
-            <>
-              <div className="grid grid-cols-4 gap-4">
-                <ItemCard
-                  path={'/TerminalPV'}
-                  logo={LogoVentas}
-                  title={'Ventas'}
-                />
-                <ItemCard
-                  path={'/Historiales'}
-                  logo={LogoHistorial}
-                  title={'Historiales'}
-                />
-                <ItemCard
-                  path={'/Productos'}
-                  logo={LogoProductos}
-                  title={'Productos'}
-                />
-                <ItemCard
-                  path={'/Categorias'}
-                  logo={LogoCategorias}
-                  title={'Categorías'}
-                />
-                <ItemCard
-                  path={'/Ingredientes'}
-                  logo={LogoIngredientes}
-                  title={'Ingredientes'}
-                />
-                <ItemCard
-                  path={'/Cajas'}
-                  logo={LogoCajas}
-                  title={'Cajas'}
-                />
-                <ItemCard
-                  path={'/Usuarios'}
-                  logo={LogoUsuarios}
-                  title={'Usuarios'}
-                />
-                <ItemCard
-                  path={'/PedidosClientes'}
-                  logo={LogoPedidos}
-                  title={'Pedidos en línea'}
-                />
-                <ItemCard
-                  path={'/Logs'}
-                  logo={LogoLogs}
-                  title={'Logs'}
-                />
-              </div>
-            </>
-          )
-          :
-          (
-            <>
-              <div className="grid grid-cols-3 gap-3">
-                <ItemCard
-                  path={'/TerminalPV'}
-                  logo={LogoVentas}
-                  title={'Ventas'}
-                />
-                <ItemCard
-                  path={'/Historiales'}
-                  logo={LogoHistorial}
-                  title={'Historiales'}
-                />
-                <ItemCard
-                  path={'/Cajas'}
-                  logo={LogoCajas}
-                  title={'Cajas'}
-                />
-              </div>
-            </>
-          )
+        estadoUsuario === "true" &&
+        (
+          <>
+            <div className="grid grid-cols-5 gap-5">
+              <ItemCard
+                path={'/TerminalPV'}
+                logo={LogoVentas}
+                title={'Ventas'}
+              />
+              <ItemCard
+                path={'/Historiales'}
+                logo={LogoHistorial}
+                title={'Historiales'}
+              />
+              <ItemCard
+                path={'/Productos'}
+                logo={LogoProductos}
+                title={'Productos'}
+              />
+              <ItemCard
+                path={'/Categorias'}
+                logo={LogoCategorias}
+                title={'Categorías'}
+              />
+              <ItemCard
+                path={'/Ingredientes'}
+                logo={LogoIngredientes}
+                title={'Ingredientes'}
+              />
+              <ItemCard
+                path={'/Cajas'}
+                logo={LogoCajas}
+                title={'Cajas'}
+              />
+              <ItemCard
+                path={'/Usuarios'}
+                logo={LogoUsuarios}
+                title={'Usuarios'}
+              />
+              <ItemCard
+                path={'/Clientes'}
+                logo={LogoClientes}
+                title={'Clientes'}
+              />
+              <ItemCard
+                path={'/PedidosClientes'}
+                logo={LogoPedidos}
+                title={'Pedidos en línea'}
+              />
+              <ItemCard
+                path={'/Logs'}
+                logo={LogoLogs}
+                title={'Logs'}
+              />
+            </div>
+          </>
+        )
+      }
+
+      {
+        estadoUsuario === "false" && tipoUsuario === "interno" &&
+        (
+          <>
+            <div className="grid grid-cols-5 gap-5">
+              <ItemCard
+                path={'/TerminalPV'}
+                logo={LogoVentas}
+                title={'Ventas'}
+              />
+              <ItemCard
+                path={'/Historiales'}
+                logo={LogoHistorial}
+                title={'Historiales'}
+              />
+              <ItemCard
+                path={'/Cajas'}
+                logo={LogoCajas}
+                title={'Cajas'}
+              />
+              <ItemCard
+                path={'/Clientes'}
+                logo={LogoClientes}
+                title={'Clientes'}
+              />
+              <ItemCard
+                path={'/PedidosClientes'}
+                logo={LogoPedidos}
+                title={'Pedidos en línea'}
+              />
+            </div>
+          </>
+        )
+      }
+
+      {
+        estadoUsuario === "false" && tipoUsuario === "externo" &&
+        (
+          <>
+            <div className="grid grid-cols-1 gap-1">
+              <ItemCard
+                path={'/PedidosClientes'}
+                logo={LogoPedidos}
+                title={'Pedidos en línea'}
+              />
+            </div>
+          </>
+        )
       }
     </>
   )

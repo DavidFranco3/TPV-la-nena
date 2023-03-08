@@ -88,7 +88,6 @@ function DatosExtraPedido(props) {
                             >
                                 <option>Elige una opción</option>
                                 <option value="para llevar">Para llevar</option>
-                                <option value="para comer aquí">Para comer aquí</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>
@@ -106,7 +105,6 @@ function DatosExtraPedido(props) {
                                 <option>Elige una opción</option>
                                 <option value="por WhatsApp">WhatsApp</option>
                                 <option value="por llamada">Llamada</option>
-                                <option value="de forma presencial">Presencial</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>

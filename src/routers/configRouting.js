@@ -12,6 +12,7 @@ import Cajas from "../page/Cajas";
 import MovimientosCajas from "../page/MovimientosCajas";
 import PedidosClientes from "../page/PedidosClientes";
 import TerminalPedidos from "../page/TerminalPedidos";
+import Clientes from "../page/Clientes";
 
 // Importaciones de productos
 import RegistraProductos from "../components/Productos/RegistraProductos";
@@ -25,6 +26,10 @@ const configRouting = [
     {
         path: "/PedidosClientes",
         page: PedidosClientes 
+    },
+    {
+        path: "/Clientes",
+        page: Clientes 
     },
     {
         path: "/TerminalPedidos",

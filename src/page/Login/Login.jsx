@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { login, setTokenApi } from "../../api/auth";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
-import { Spinner, Button, Form, Image } from "react-bootstrap";
+import { Spinner, Button, Form, Image, Row, Col } from "react-bootstrap";
 import { obtenerUsuario } from "../../api/usuarios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import LogoLANENA from "../../assets/png/nena1.png";
 import "../../scss/styles.scss";
+import RegistroClientes from '../../components/Usuarios/RegistroClientes';
+import BasicModal from "../../components/Modal/BasicModal";
 import { LogsInformativos } from "../../components/Logs/LogsSistema/LogsSistema";
 
 function Login({ setRefreshCheckLogin }) {
@@ -17,6 +19,18 @@ function Login({ setRefreshCheckLogin }) {
   const [mostrarPassword, setMostrarPassword] = useState(false)
   const togglePasswordVisiblity = () => {
     setMostrarPassword((val) => !val)
+  }
+
+  // Para hacer uso del modal
+  const [showModal, setShowModal] = useState(false);
+  const [contentModal, setContentModal] = useState(null);
+  const [titulosModal, setTitulosModal] = useState(null);
+
+  // Para la lista de abonos
+  const registroUsuarios = (content) => {
+    setTitulosModal("Crear usuario");
+    setContentModal(content);
+    setShowModal(true);
   }
 
   const onSubmit = async (e) => {
@@ -125,8 +139,32 @@ function Login({ setRefreshCheckLogin }) {
                   )}
                 </Button>
               </div>
+              <br />
+              <Form.Group as={Row} className="botonSubirProducto">
+                <Col>
+                  <Button
+                    title="Registrar usuario"
+                    variant="success"
+                    className="registrar"
+                    onClick={() => {
+                      registroUsuarios(
+                        <RegistroClientes
+                          setShowModal={setShowModal}
+                        />
+                      )
+                    }}
+                  >
+                    Crear usuario
+                  </Button>
+                </Col>
+              </Form.Group>
             </Form>
           </div>
+
+          < BasicModal show={showModal} setShow={setShowModal} title={titulosModal} >
+            {contentModal}
+          </BasicModal >
+
         </div>
         <div className="w-full text-center lg:text-left">
           <div className="text-gray-700 text-center p-4">
