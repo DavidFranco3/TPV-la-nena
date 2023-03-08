@@ -6,7 +6,7 @@ import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraPedidos } from "../../../api/pedidosClientes";
 import { Col, Button, Row, Image } from "react-bootstrap";
-import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
+import DatosExtraVenta from "../../PedidosClientes/DatosExtraPedido";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
@@ -48,7 +48,7 @@ function Tiquet(props) {
         setObservaciones("");
     }
 
-    const [IVA, setIVA] = useState("0");
+    const [IVA, setIVA] = useState("0.16");
 
     const handleIVACancel = () => {
         setIVA("0");
@@ -60,7 +60,7 @@ function Tiquet(props) {
 
     const handlePrint = () => {
         if (products.length === 0) {
-            toast.warning("Debe cargar articulos a la venta")
+            toast.warning("Debe cargar articulos al pedido")
         } else {
             const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
             tiquetGenerado.document.write('<html><head>');
@@ -78,7 +78,7 @@ function Tiquet(props) {
 
     const handlePrintDouble = () => {
         if (products.length === 0) {
-            toast.warning("Debe cargar articulos a la venta")
+            toast.warning("Debe cargar articulos al pedido")
         } else {
             const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
             tiquetGenerado.document.write('<html><head>');
@@ -127,7 +127,7 @@ function Tiquet(props) {
         }
 
         if (products.length === 0) {
-            toast.warning("Debe cargar articulos a la venta")
+            toast.warning("Debe cargar articulos al pedido")
         } else {
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
@@ -147,6 +147,7 @@ function Tiquet(props) {
                     iva: parseFloat(total) * parseFloat(iva),
                     comision: parseFloat(total) * parseFloat(comision),
                     subtotal: total,
+                    direccion: domicilio,
                     total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
                     agrupar: grupo
                 }
@@ -171,19 +172,28 @@ function Tiquet(props) {
 
     // Para almacenar el nombre del cliente
     const [nombreCliente, setNombreCliente] = useState("");
+
     // Para alamcenar el dinero ingresado
     const [dineroIngresado, setDineroIngresado] = useState("");
+
     // Para almacenar el tipo de pago
     const [tipoPago, setTipoPago] = useState("");
+
     // Para almacenar el tipo de pedido
     const [tipoPedido, setTipoPedido] = useState("");
+
     // Para almacenar la forma en la que se hizo el pedido
     const [hacerPedido, setHacerPedido] = useState("");
+
     // Para almacenar las observaciones
     const [observaciones, setObservaciones] = useState("");
+
+    // Para almacenar la direccion de entrega
+    const [domicilio, setDomicilio] = useState("");
+
     // Para el modal de las observaciones
     const datosExtraVenta = (content) => {
-        setTitulosModal("Datos extra de la venta");
+        setTitulosModal("Datos extra del pedido");
         setContentModal(content);
         setShowModal(true);
     }
@@ -257,14 +267,17 @@ function Tiquet(props) {
         )
     }
 
-    const Pie = ({ observaciones, tipoPago, total, IVA, dineroIngresado }) => {
+    const Pie = ({ observaciones, tipoPago, total, IVA, dineroIngresado, domicilio }) => {
         return (
             <div className="subtotal">
                 <hr />
                 <Row>
                     <Col>
                         <p className="observaciones__tiquet">
-                            {observaciones}
+                            Observaciones: {observaciones}
+                        </p>
+                        <p className="observaciones__tiquet">
+                            Dirección de entrega: {domicilio}
                         </p>
                     </Col>
                     <Col>
@@ -449,18 +462,18 @@ function Tiquet(props) {
             <div className="ticket__actions">
                 <Button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</Button>
 
-                <Button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>
+                {/*<Button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>*/}
 
-                <Button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</Button>
+                {/*<Button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}>2️⃣</Button>*/}
 
                 <Button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</Button>
 
-                <Button title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</Button>
+                {/*<Button title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</Button>*/}
 
-                <Button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>
+                {/*<Button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>*/}
 
                 <Button
-                    title="Añadir detalles de la venta"
+                    title="Añadir detalles del pedido"
                     onClick={() =>
                         datosExtraVenta(
                             <DatosExtraVenta
@@ -470,6 +483,7 @@ function Tiquet(props) {
                                 setHacerPedido={setHacerPedido}
                                 setNombreCliente={setNombreCliente}
                                 setObservaciones={setObservaciones}
+                                setDomicilio={setDomicilio}
                                 setShowModal={setShowModal}
                             />
                         )
@@ -506,6 +520,7 @@ function Tiquet(props) {
                     {/**/}
                     <Pie
                         observaciones={observaciones}
+                        domicilio={domicilio}
                         tipoPago={tipoPago}
                         total={total}
                         IVA={IVA}

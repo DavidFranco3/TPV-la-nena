@@ -260,6 +260,7 @@ function formatModelPedidos(ventas) {
                         comision: parseFloat(venta.comision),
                         hacerPedido: venta.hacerPedido,
                         tipoPedido: venta.tipoPedido,
+                        direccion: venta.direccion,
                         estado: venta.estado,
                         fechaCreacion: venta.createdAt,
                         fechaActualizacion: venta.updatedAt

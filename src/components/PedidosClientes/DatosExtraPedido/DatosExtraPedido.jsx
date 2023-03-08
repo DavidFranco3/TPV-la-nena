@@ -5,7 +5,7 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function DatosExtraPedido(props) {
-    const { setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
+    const { setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setDomicilio, setShowModal } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
 
@@ -17,6 +17,7 @@ function DatosExtraPedido(props) {
         setTipoPedido(formData.tipoPedido);
         setHacerPedido(formData.hacerPedido);
         setNombreCliente(formData.nombre);
+        setDomicilio(formData.domicilio);
         setObservaciones(formData.observaciones);
         cancelarRegistro();
     }
@@ -33,7 +34,6 @@ function DatosExtraPedido(props) {
     return (
         <>
             <Form onSubmit={onSubmit} onChange={onChange}>
-
                 <div className="metodoDePago">
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridEstado">
@@ -127,6 +127,21 @@ function DatosExtraPedido(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridObsrevaciones">
                             <Form.Label>
+                                Domicilio
+                            </Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="domicilio"
+                                placeholder="Escribe el domicilio ...."
+                                style={{ height: '100px' }}
+                                defaultValue={formData.domicilio}
+                            />
+                        </Form.Group>
+                    </Row>
+
+                    <Row className="mb-3">
+                        <Form.Group as={Col} controlId="formGridObsrevaciones">
+                            <Form.Label>
                                 Observaciones
                             </Form.Label>
                             <Form.Control
@@ -177,7 +192,8 @@ function initialFormValue() {
         tipoPedido: "",
         hacerPedido: "",
         nombre: "",
-        observaciones: ""
+        observaciones: "",
+        domicilio: "",
     }
 }
 

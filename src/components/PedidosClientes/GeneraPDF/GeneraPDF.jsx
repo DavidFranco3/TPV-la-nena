@@ -9,7 +9,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 function GeneraPdf(props) {
     const { datos } = props;
 
-    const { numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+    const { numeroTiquet, direccion, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -89,14 +89,17 @@ function GeneraPdf(props) {
         )
     }
 
-    const Pie = ({ detalles, tipoPago, comision, iva, subtotal, total, efectivo, cambio }) => {
+    const Pie = ({ detalles, tipoPago, comision, iva, subtotal, total, efectivo, cambio, direccion }) => {
         return (
             <div className="subtotal">
                 <hr />
                 <Row>
                     <Col>
                         <p className="observaciones__tiquet">
-                            {detalles}
+                            Observaciones: {detalles}
+                        </p>
+                        <p className="observaciones__tiquet">
+                            Dirección de entrega: {direccion}
                         </p>
                     </Col>
                     <Col>
@@ -213,6 +216,7 @@ function GeneraPdf(props) {
                         total={total}
                         efectivo={efectivo}
                         cambio={cambio}
+                        direccion={direccion}
                     />
                 </div>
             </div>
