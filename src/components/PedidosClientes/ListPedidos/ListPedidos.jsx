@@ -5,7 +5,7 @@ import BasicModal from "../../Modal/BasicModal";
 import DetallesPedido from "../DetallesPedido";
 import CancelarPedido from "../CancelarPedido";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faX, faRotateLeft, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faX, faRotateLeft, faArrowDownLong, faMessage } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ListPedidos(props) {
-    const { listPedidos, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalPedidos } = props;
+    const { listPedidos, tipoUsuario, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalPedidos } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -44,8 +44,8 @@ function ListPedidos(props) {
         setShowModal(true);
     }
 
-     // Para cancelar la venta
-     const registrarMovimiento = (content) => {
+    // Para cancelar la venta
+    const registrarMovimiento = (content) => {
         setTitulosModal("Registrar movimiento");
         setContentModal(content);
         setShowModal(true);
@@ -137,6 +137,36 @@ function ListPedidos(props) {
                     </Badge>
                 </>
             ),
+        },
+        {
+            name: "Confirmar",
+            selector: row => (
+                <>
+                    {tipoUsuario === "externo" ?
+                        (
+                            <>
+                                <a
+                                    className="text-emerald-700 no-underline"
+                                    //className="editar"
+                                    //cursor= "pointer !important"
+                                    title="Enviar mensaje de whatsapp"
+                                    href={"whatsapp://send?text=Se ha realizado un nuevo pedido con numero " + row.numeroTiquet + "&phone=+524531527363"}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >Enviar mensaje</a>
+                            </>
+                        )
+                        :
+                        (
+                            "No disponible"
+                        )
+                    }
+                </>
+
+            ),
+            sortable: false,
+            center: true,
+            reorder: false
         },
         {
             name: "Acciones",

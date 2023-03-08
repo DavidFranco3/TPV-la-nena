@@ -209,6 +209,7 @@ function PedidosClientes(props) {
                                                         <Suspense fallback={< Spinner />}>
                                                                 <ListPedidos
                                                                         listPedidos={listPedidos}
+                                                                        tipoUsuario={tipoUsuario}
                                                                         location={location}
                                                                         navigate={navigate}
                                                                         setRefreshCheckLogin={setRefreshCheckLogin}
