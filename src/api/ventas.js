@@ -23,6 +23,10 @@ import {
     ENDPOINTTotalVentasActivas,
     ENDPOINTTotalVentasCanceladas,
     ENDPOINTListarPaginandoVentasCanceladas,
+    ENDPOINTListarPaginandoVentasCajerosActivas,
+    ENDPOINTTotalVentasCajerosActivas,
+    ENDPOINTListarPaginandoVentasCajerosCanceladas,
+    ENDPOINTTotalVentasCajerosCanceladas,
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -158,6 +162,54 @@ export async function listarPaginacionVentasCanceladas(pagina, limite) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCanceladas + `/?pagina=${pagina}&&limite=${limite}`, config);
+}
+
+// Listar las ventas activas paginandolas
+export async function listarPaginacionVentasUsuariosActivas(pagina, limite, usuario) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCajerosActivas + `/?pagina=${pagina}&&limite=${limite}&&usuario=${usuario}`, config);
+}
+
+// Listar las ventas canceladas paginandolas
+export async function listarPaginacionVentasUsuariosCanceladas(pagina, limite, usuario) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCajerosCanceladas + `/?pagina=${pagina}&&limite=${limite}&&usuario=${usuario}`, config);
+}
+
+// Para obtener el total de ventas registradas
+export async function totalVentasUsuariosActivas(usuario) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasCajerosActivas + `/?usuario=${usuario}`, config);
+}
+
+// Para listar todas las ventas canceladas
+export async function totalVentasUsuariosCanceladas(usuario) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasCajerosCanceladas + `/?usuario=${usuario}`, config);
 }
 
 // Listar las ventas de un dia especifico paginandolas

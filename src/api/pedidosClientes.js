@@ -322,7 +322,7 @@ export async function listarPaginacionPedidosPorClientes(pagina, limite, usuario
 }
 
 // Para obtener el total de ventas registradas
-export async function totalPedidosPorClientes() {
+export async function totalPedidosPorClientes(usuario) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -330,5 +330,5 @@ export async function totalPedidosPorClientes() {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTTotalPedidosPorClientes, config);
+    return await axios.get(API_HOST + ENDPOINTTotalPedidosPorClientes + `/?usuario=${usuario}`, config);
 }

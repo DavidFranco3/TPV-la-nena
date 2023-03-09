@@ -15,6 +15,8 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 function ListPedidos(props) {
     const { listPedidos, tipoUsuario, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalPedidos } = props;
 
+    console.log(tipoUsuario);
+
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 
@@ -160,7 +162,7 @@ function ListPedidos(props) {
             selector: row => (
                 <>
                     {
-                        tipoUsuario === "externo" && row.estado=== "Pendiente" ?
+                        tipoUsuario === "externo" && row.estado === "Pendiente" ?
                             (
                                 <>
                                     <a
@@ -191,54 +193,54 @@ function ListPedidos(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
-                    {
+                        {
                             row.estado === "Pendiente" && tipoUsuario === "interno" &&
-                                (
-                                    <>
-                                        <Badge
-                                            bg="success"
-                                            title="Confirmar pedido"
-                                            className="indicadorCancelarVenta"
-                                            onClick={() => {
-                                                confirmarPedido(
-                                                    <CancelarPedido
-                                                        datosPedidos={row}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                        setShowModal={setShowModal}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faCheck} className="text-lg" />
-                                        </Badge>
-                                    </>
-                                )
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        title="Confirmar pedido"
+                                        className="indicadorCancelarVenta"
+                                        onClick={() => {
+                                            confirmarPedido(
+                                                <CancelarPedido
+                                                    datosPedidos={row}
+                                                    location={location}
+                                                    navigate={navigate}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faCheck} className="text-lg" />
+                                    </Badge>
+                                </>
+                            )
                         }
 
-{
+                        {
                             row.estado === "Confirmado" && tipoUsuario === "interno" &&
-                                (
-                                    <>
-                                        <Badge
-                                            bg="danger"
-                                            title="Cancelar pedido"
-                                            className="indicadorCancelarVenta"
-                                            onClick={() => {
-                                                cancelarPedido(
-                                                    <CancelarPedido
-                                                        datosPedidos={row}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                        setShowModal={setShowModal}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faX} className="text-lg" />
-                                        </Badge>
-                                    </>
-                                )
+                            (
+                                <>
+                                    <Badge
+                                        bg="danger"
+                                        title="Cancelar pedido"
+                                        className="indicadorCancelarVenta"
+                                        onClick={() => {
+                                            cancelarPedido(
+                                                <CancelarPedido
+                                                    datosPedidos={row}
+                                                    location={location}
+                                                    navigate={navigate}
+                                                    setShowModal={setShowModal}
+                                                />
+                                            )
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faX} className="text-lg" />
+                                    </Badge>
+                                </>
+                            )
                         }
                         <Badge
                             title="Ver productos vendidos"

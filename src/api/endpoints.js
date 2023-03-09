@@ -69,6 +69,10 @@ export const ENDPOINTListarDetallesVentasDia = "/ventas/listarDetallesVentasDia"
 export const ENDPOINTListarDetallesVentasMes = "/ventas/listarDetallesVentasMes";
 export const ENDPOINTListarDetallesProductosVendidosDia = "/ventas/listarDetallesProductosVendidosDia";
 export const ENDPOINTListarDetallesProductosVendidosMes = "/ventas/listarDetallesProductosVendidosMes";
+export const ENDPOINTListarPaginandoVentasCajerosActivas = "/ventas/listarPaginandoCajerosActivas";
+export const ENDPOINTTotalVentasCajerosActivas = "/ventas/totalVentasCajerosActivas";
+export const ENDPOINTListarPaginandoVentasCajerosCanceladas = "/ventas/listarPaginandoCajerosCanceladas";
+export const ENDPOINTTotalVentasCajerosCanceladas = "/ventas/totalVentasCajerosCanceladas";
 
 // Pedidos de clientes
 export const ENDPOINTRegistroPedidos = "/pedidos/registro";

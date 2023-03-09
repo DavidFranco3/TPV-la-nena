@@ -14,7 +14,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import RegistroMovimientosCajasVentas from '../../MovimientosCajas/RegistroMovimientosCajasVentas';
 
 function ListVentas(props) {
-    const { listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
+    const { estadoUsuario, listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -45,8 +45,8 @@ function ListVentas(props) {
         setShowModal(true);
     }
 
-     // Para cancelar la venta
-     const registrarMovimiento = (content) => {
+    // Para cancelar la venta
+    const registrarMovimiento = (content) => {
         setTitulosModal("Registrar movimiento");
         setContentModal(content);
         setShowModal(true);
@@ -194,51 +194,59 @@ function ListVentas(props) {
                         >
                             <FontAwesomeIcon icon={faEye} className="text-lg" />
                         </Badge>
+
                         {
-                            row.estado === "true" ?
-                                (
-                                    <>
-                                        <Badge
-                                            bg="danger"
-                                            title="Cancelar venta"
-                                            className="indicadorCancelarVenta"
-                                            onClick={() => {
-                                                cancelarVenta(
-                                                    <CancelarVenta
-                                                        datosVentas={row}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                        setShowModal={setShowModal}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faX} className="text-lg" />
-                                        </Badge>
-                                    </>
-                                )
-                                :
-                                (
-                                    <>
-                                        <Badge
-                                            bg="success"
-                                            title="Recuperar venta"
-                                            className="indicadorCancelarVenta"
-                                            onClick={() => {
-                                                recuperarVenta(
-                                                    <CancelarVenta
-                                                        datosVentas={row}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                        setShowModal={setShowModal}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faRotateLeft} className="text-lg" />
-                                        </Badge>
-                                    </>
-                                )
+                            estadoUsuario === "true" &&
+                            (
+                                <>
+                                    {
+                                        row.estado === "true" ?
+                                            (
+                                                <>
+                                                    <Badge
+                                                        bg="danger"
+                                                        title="Cancelar venta"
+                                                        className="indicadorCancelarVenta"
+                                                        onClick={() => {
+                                                            cancelarVenta(
+                                                                <CancelarVenta
+                                                                    datosVentas={row}
+                                                                    location={location}
+                                                                    navigate={navigate}
+                                                                    setShowModal={setShowModal}
+                                                                />
+                                                            )
+                                                        }}
+                                                    >
+                                                        <FontAwesomeIcon icon={faX} className="text-lg" />
+                                                    </Badge>
+                                                </>
+                                            )
+                                            :
+                                            (
+                                                <>
+                                                    <Badge
+                                                        bg="success"
+                                                        title="Recuperar venta"
+                                                        className="indicadorCancelarVenta"
+                                                        onClick={() => {
+                                                            recuperarVenta(
+                                                                <CancelarVenta
+                                                                    datosVentas={row}
+                                                                    location={location}
+                                                                    navigate={navigate}
+                                                                    setShowModal={setShowModal}
+                                                                />
+                                                            )
+                                                        }}
+                                                    >
+                                                        <FontAwesomeIcon icon={faRotateLeft} className="text-lg" />
+                                                    </Badge>
+                                                </>
+                                            )
+                                    }
+                                </>
+                            )
                         }
                     </div>
                 </>

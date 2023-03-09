@@ -84,7 +84,7 @@ function PedidosClientes(props) {
                 try {
                         if (tipoUsuario === "externo") {
                                 // Lista los productos activos
-                                totalPedidosPorClientes().then(response => {
+                                totalPedidosPorClientes(idUsuario).then(response => {
                                         const { data } = response;
                                         setNoTotalPedidos(data);
                                 }).catch(e => {

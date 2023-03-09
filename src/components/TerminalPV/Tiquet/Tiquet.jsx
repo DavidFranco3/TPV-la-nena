@@ -14,7 +14,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 
 function Tiquet(props) {
-    const { products, empty, remove } = props;
+    const { idUsuario, products, empty, remove } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -128,6 +128,7 @@ function Tiquet(props) {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
                     cliente: nombreCliente,
+                    usuario: idUsuario,
                     estado: "true",
                     detalles: observaciones,
                     tipoPago: tipoPago,

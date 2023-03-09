@@ -1,5 +1,14 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionVentasActivas, totalVentasActivas, listarPaginacionVentasCanceladas, totalVentasCanceladas } from "../../api/ventas";
+import {
+        listarPaginacionVentasActivas,
+        totalVentasActivas,
+        listarPaginacionVentasCanceladas,
+        totalVentasCanceladas,
+        listarPaginacionVentasUsuariosActivas,
+        totalVentasUsuariosActivas,
+        listarPaginacionVentasUsuariosCanceladas,
+        totalVentasUsuariosCanceladas
+} from "../../api/ventas";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
@@ -18,6 +27,10 @@ function Ventas(props) {
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
 
+        const [estadoUsuario, setEstadoUsuario] = useState("");
+
+        const [idUsuario, setIdUsuario] = useState("");
+
         const [datosUsuario, setDatosUsuario] = useState("");
 
         useEffect(() => {
@@ -26,6 +39,8 @@ function Ventas(props) {
                                 const { data } = response;
                                 //console.log(data)
                                 setDatosUsuario(data);
+                                setEstadoUsuario(data.admin);
+                                setIdUsuario(data._id);
                         }).catch((e) => {
                                 if (e.message === 'Network Error') {
                                         //console.log("No hay internet")
@@ -58,92 +73,176 @@ function Ventas(props) {
         const [page, setPage] = useState(1);
         const [noTotalVentas, setNoTotalVentas] = useState(1);
 
+        console.log(estadoUsuario)
+
         // Para listar las ventas
         useEffect(() => {
                 //console.log("Estado del switch ", estadoSwitch)
                 try {
                         if (estadoSwitch) {
-                                // Lista los productos activos
-                                totalVentasActivas().then(response => {
-                                        const { data } = response;
-                                        setNoTotalVentas(data);
-                                }).catch(e => {
-                                        console.log(e)
-                                })
 
-                                if (page === 0) {
-                                        setPage(1)
-
-                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                if (estadoUsuario === "true") {
+                                        // Lista los productos activos
+                                        totalVentasActivas().then(response => {
                                                 const { data } = response;
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
-                                                } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
-                                                }
+                                                setNoTotalVentas(data);
                                         }).catch(e => {
                                                 console.log(e)
                                         })
+
+                                        if (page === 0) {
+                                                setPage(1)
+
+                                                listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                                        const { data } = response;
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        } else {
+                                                listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                                        const { data } = response;
+                                                        //console.log(data)
+
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        }
                                 } else {
-                                        listarPaginacionVentasActivas(page, rowsPerPage).then(response => {
+                                        // Lista los productos activos
+                                        totalVentasUsuariosActivas(idUsuario).then(response => {
                                                 const { data } = response;
-                                                //console.log(data)
-
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
-                                                } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
-                                                }
+                                                setNoTotalVentas(data);
                                         }).catch(e => {
                                                 console.log(e)
                                         })
+
+                                        if (page === 0) {
+                                                setPage(1)
+
+                                                listarPaginacionVentasUsuariosActivas(page, rowsPerPage, idUsuario).then(response => {
+                                                        const { data } = response;
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        } else {
+                                                listarPaginacionVentasUsuariosActivas(page, rowsPerPage, idUsuario).then(response => {
+                                                        const { data } = response;
+                                                        //console.log(data)
+
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        }
                                 }
                         } else {
-                                // Lista los productos obsoletos
-                                totalVentasCanceladas().then(response => {
-                                        const { data } = response;
-                                        setNoTotalVentas(data);
-                                }).catch(e => {
-                                        console.log(e)
-                                })
 
-                                if (page === 0) {
-                                        setPage(1)
-
-                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                if (estadoUsuario === "true") {
+                                        // Lista los productos activos
+                                        totalVentasCanceladas().then(response => {
                                                 const { data } = response;
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
-                                                } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
-                                                }
+                                                setNoTotalVentas(data);
                                         }).catch(e => {
                                                 console.log(e)
                                         })
+
+                                        if (page === 0) {
+                                                setPage(1)
+
+                                                listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                                        const { data } = response;
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        } else {
+                                                listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                                        const { data } = response;
+                                                        //console.log(data)
+
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        }
                                 } else {
-                                        listarPaginacionVentasCanceladas(page, rowsPerPage).then(response => {
+                                        // Lista los productos activos
+                                        totalVentasUsuariosCanceladas(idUsuario).then(response => {
                                                 const { data } = response;
-                                                //console.log(data)
-
-                                                if (!listVentas && data) {
-                                                        setListVentas(formatModelVentas(data));
-                                                } else {
-                                                        const datosVentas = formatModelVentas(data);
-                                                        setListVentas(datosVentas)
-                                                }
+                                                setNoTotalVentas(data);
                                         }).catch(e => {
                                                 console.log(e)
                                         })
+
+                                        if (page === 0) {
+                                                setPage(1)
+
+                                                listarPaginacionVentasUsuariosCanceladas(page, rowsPerPage, idUsuario).then(response => {
+                                                        const { data } = response;
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        } else {
+                                                listarPaginacionVentasUsuariosCanceladas(page, rowsPerPage, idUsuario).then(response => {
+                                                        const { data } = response;
+                                                        //console.log(data)
+
+                                                        if (!listVentas && data) {
+                                                                setListVentas(formatModelVentas(data));
+                                                        } else {
+                                                                const datosVentas = formatModelVentas(data);
+                                                                setListVentas(datosVentas)
+                                                        }
+                                                }).catch(e => {
+                                                        console.log(e)
+                                                })
+                                        }
                                 }
                         }
 
                 } catch (e) {
                         console.log(e)
                 }
-        }, [location, estadoSwitch, page, rowsPerPage]);
+        }, [location, estadoSwitch, estadoUsuario, page, rowsPerPage]);
 
         return (
                 <>
@@ -184,6 +283,7 @@ function Ventas(props) {
                                                                         page={page}
                                                                         setPage={setPage}
                                                                         noTotalVentas={noTotalVentas}
+                                                                        estadoUsuario={estadoUsuario}
                                                                 />
                                                         </Suspense>
                                                 </>
