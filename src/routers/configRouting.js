@@ -37,7 +37,7 @@ const configRouting = [
     {
         path: "/TerminalPedidos",
         page: TerminalPedidos,
-        roles: ["cliente"]
+        roles: ["administrador", "vendedor", "cliente"]
     },
     {
         path: "/Cajas",

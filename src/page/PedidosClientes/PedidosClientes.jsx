@@ -170,23 +170,23 @@ function PedidosClientes(props) {
                                         </Col>
                                         <Col xs={6} md={8}>
                                                 <div style={{ float: 'right' }}>
-                                                        {
+                                                        {/*{
                                                                 tipoUsuario === "externo" &&
                                                                 (
-                                                                        <>
-                                                                                <Button
-                                                                                        title="Ir a la terminal de pedidos"
-                                                                                        className="btnRegistro"
-                                                                                        style={{ marginRight: '10px' }}
-                                                                                        onClick={() => {
-                                                                                                rutaRegistroVenta();
-                                                                                        }}
-                                                                                >
-                                                                                        <FontAwesomeIcon icon={faCirclePlus} /> Registrar
-                                                                                </Button>
-                                                                        </>
+                                                                <>*/}
+                                                        <Button
+                                                                title="Ir a la terminal de pedidos"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() => {
+                                                                        rutaRegistroVenta();
+                                                                }}
+                                                        >
+                                                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                                        </Button>
+                                                        {/*</>
                                                                 )
-                                                        }
+                                                        }*/}
                                                         <Button
                                                                 title="Regresar a la pagina anterior"
                                                                 className="btnRegistro"
