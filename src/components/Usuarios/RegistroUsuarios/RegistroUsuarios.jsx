@@ -34,6 +34,7 @@ function RegistroUsuarios(props) {
                     admin: formData.admin,
                     password: formData.password,
                     tipo: "interno",
+                    rol: formData.admin === "true" ? "administrador" : "vendedor",
                     estadoUsuario: "true"
                 }
                 registraUsuarios(dataTemp).then(response => {

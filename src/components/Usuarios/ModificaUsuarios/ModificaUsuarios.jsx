@@ -38,6 +38,7 @@ function ModificaUsuarios(props) {
                     usuario: formData.usuario,
                     admin: formData.admin,
                     password: formData.password,
+                    rol: formData.admin === "true" ? "administrador" : "vendedor",
                 }
                 actualizaUsuario(id, dataTemp).then(response => {
                     const { data } = response;

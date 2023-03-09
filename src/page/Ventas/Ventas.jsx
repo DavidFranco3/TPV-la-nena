@@ -73,8 +73,6 @@ function Ventas(props) {
         const [page, setPage] = useState(1);
         const [noTotalVentas, setNoTotalVentas] = useState(1);
 
-        console.log(estadoUsuario)
-
         // Para listar las ventas
         useEffect(() => {
                 //console.log("Estado del switch ", estadoSwitch)

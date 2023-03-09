@@ -21,68 +21,84 @@ import ModificaProductos from "../components/Productos/ModificaProductos";
 const configRouting = [
     {
         path: "/MovimientosCajas/:caja",
-        page: MovimientosCajas
+        page: MovimientosCajas,
+        roles: ["administrador", "vendedor"]
     },
     {
         path: "/PedidosClientes",
-        page: PedidosClientes 
+        page: PedidosClientes,
+        roles: ["administrador", "vendedor", "cliente"]
     },
     {
         path: "/Clientes",
-        page: Clientes 
+        page: Clientes,
+        roles: ["administrador", "vendedor"]
     },
     {
         path: "/TerminalPedidos",
-        page: TerminalPedidos
+        page: TerminalPedidos,
+        roles: ["cliente"]
     },
     {
         path: "/Cajas",
-        page: Cajas
+        page: Cajas,
+        roles: ["administrador", "vendedor"]
     },
     {
         path: "/Productos",
-        page: Productos
+        page: Productos,
+        roles: ["administrador"]
     },
     {
         path: "/RegistraProductos",
-        page: RegistraProductos
+        page: RegistraProductos,
+        roles: ["administrador"]
     },
     {
         path: "/ModificaProductos/:id",
-        page: ModificaProductos
+        page: ModificaProductos,
+        roles: ["administrador"]
     },
     {
         path: "/Categorias",
-        page: Categorias
+        page: Categorias,
+        roles: ["administrador"]
     },
     {
         path: "/TerminalPV",
-        page: TerminalPV
+        page: TerminalPV,
+        roles: ["administrador", "vendedor"]
     },
     {
         path: "/Usuarios",
-        page: Usuarios
+        page: Usuarios,
+        roles: ["administrador"]
     },
     {
         path: "/Logs",
-        page: Logs
+        page: Logs,
+        roles: ["administrador"]
     },
     {
         path: "/Ingredientes",
-        page: Ingredientes
+        page: Ingredientes,
+        roles: ["administrador"]
     },
     {
         path: "/Historiales",
-        page: Historiales
+        page: Historiales,
+        roles: ["administrador", "vendedor"]
+    },
+    {
+        path: "*",
+        page: Error404,
+        roles: ["administrador", "vendedor", "cliente"]
     },
     {
         path: "/",
         page: Dashboard,
-        default: true
-    },
-    {
-        path: "*",
-        page: Error404
+        default: true,
+        roles: ["administrador", "vendedor", "cliente"]
     }
 ]
 

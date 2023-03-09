@@ -34,7 +34,8 @@ function RegistroClientes(props) {
                     admin: "false",
                     password: formData.password,
                     tipo: "externo",
-                    estadoUsuario: "true"
+                    estadoUsuario: "true",
+                    rol: "cliente",
                 }
                 registraCliente(dataTemp).then(response => {
                     const { data } = response;

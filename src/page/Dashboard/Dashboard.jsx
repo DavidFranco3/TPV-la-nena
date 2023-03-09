@@ -76,6 +76,7 @@ function Dashboard(props) {
 
   return (
     <>
+      {/*Vista del Dashboard para un usuario administrador*/}
       {
         estadoUsuario === "true" &&
         (
@@ -135,7 +136,7 @@ function Dashboard(props) {
           </>
         )
       }
-
+      {/*Vista del Dashboard para un usuario cajero*/}
       {
         estadoUsuario === "false" && tipoUsuario === "interno" &&
         (
@@ -170,7 +171,7 @@ function Dashboard(props) {
           </>
         )
       }
-
+      {/*Vista del Dashboard para un usuario cliente*/}
       {
         estadoUsuario === "false" && tipoUsuario === "externo" &&
         (
