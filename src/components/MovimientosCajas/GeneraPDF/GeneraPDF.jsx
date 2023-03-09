@@ -12,9 +12,11 @@ import { obtenerCaja } from "../../../api/cajas"
 function GeneraPdf(props) {
     const { datos } = props;
 
-    console.log(datos);
+    const { idCaja, movimientosAcumulados, dineroAcumulado, observaciones, fechaCreacion } = datos;
 
-    const { idCaja, numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+    const movimientosTotales = movimientosAcumulados.concat(datos);
+
+    console.log(movimientosTotales);
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -107,7 +109,7 @@ function GeneraPdf(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {listMovimientos?.map((item, index) => (
+                                {movimientosTotales?.map((item, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}.- </td>
                                         <td className="items__description">{item.movimiento}</td>
@@ -128,12 +130,17 @@ function GeneraPdf(props) {
                         <hr />
                         <Row>
                             <Col>
+                                <p className="observaciones__tiquet">
+                                    {observaciones}
+                                </p>
+                            </Col>
+                            <Col>
                                 <div className="subtotal__price">
                                     Total de efectivo ${''}
                                     {new Intl.NumberFormat('es-MX', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
-                                    }).format(saldo)} MXN
+                                    }).format(dineroAcumulado)} MXN
                                 </div>
                             </Col>
                         </Row>

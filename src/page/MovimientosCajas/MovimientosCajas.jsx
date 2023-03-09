@@ -233,6 +233,9 @@ function formatModelMovimientosCajas(movimientos) {
             movimiento: movimiento.movimiento,
             monto: movimiento.monto,
             pago: movimiento.pago,
+            movimientosAcumulados: movimiento.movimientosAcumulados.reverse(),
+            dineroAcumulado: movimiento.dineroAcumulado, 
+            observaciones: movimiento.observaciones,
             estado: movimiento.estado,
             fechaCreacion: movimiento.createdAt,
             fechaActualizacion: movimiento.updatedAt

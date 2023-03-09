@@ -11,7 +11,8 @@ import {
     ENDPOINTTotalMovimientosCajasActivas,
     ENDPOINTCancelarMovimientosCajas,
     ENDPOINTListarPaginandoMovimientosCajasCanceladas,
-    ENDPOINTTotalMovimientosCajasCanceladas
+    ENDPOINTTotalMovimientosCajasCanceladas,
+    ENDPOINTObtenerMovimientosCajasPorCaja
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -40,6 +41,18 @@ export async function obtenerMovimiento(params) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTObtenerMovimientosCajas + `/${params}`, config);
+}
+
+// Para obtener una categoria
+export async function obtenerMovimientosPorCaja(params) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTObtenerMovimientosCajasPorCaja + `/${params}`, config);
 }
 
 // Para listar todas las categorias

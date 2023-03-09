@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { registraMovimientos } from "../../../api/movimientosCajas";
+import { registraMovimientos, listarMovimientos } from "../../../api/movimientosCajas";
 import { obtenerCaja } from "../../../api/cajas";
 import "../../../scss/styles.scss";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
@@ -26,6 +26,21 @@ function RegistroMovimientosCajas(props) {
         })
     }, []);
 
+    console.log(formDataCaja.dineroAcumulado);
+
+    const [movimientosAcumulados, setMovimientosAcumulados] = useState([]);
+
+    useEffect(() => {
+        listarMovimientos(caja).then(response => {
+            const { data } = response;
+            setMovimientosAcumulados(data);
+        }).catch(e => {
+            console.log(e)
+        })
+    }, []);
+
+    console.log(movimientosAcumulados);
+
     // Para cancelar el registro
     const cancelarRegistro = () => {
         setShowModal(false)
@@ -47,6 +62,9 @@ function RegistroMovimientosCajas(props) {
                     movimiento: formData.movimiento,
                     pago: formData.pago,
                     monto: formData.monto,
+                    movimientosAcumulados: movimientosAcumulados,
+                    dineroAcumulado: formDataCaja.dineroAcumulado,
+                    observaciones: formData.observaciones,
                     estado: "true",
                 }
                 registraMovimientos(dataTemp).then(response => {
@@ -153,6 +171,26 @@ function RegistroMovimientosCajas(props) {
                         }
 
                         {
+                            formData.movimiento === "Corte de caja" &&
+                            (
+                                <>
+                                    <Form.Group as={Col} controlId="formGridObsrevaciones">
+                                        <Form.Label>
+                                            Observaciones
+                                        </Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            name="observaciones"
+                                            placeholder="Escribe los detalles ...."
+                                            style={{ height: '100px' }}
+                                            defaultValue={formData.observaciones}
+                                        />
+                                    </Form.Group>
+                                </>
+                            )
+                        }
+
+                        {
                             formData.movimiento === "Aumento" &&
                             (
                                 <>
@@ -247,7 +285,8 @@ function initialFormValue() {
     return {
         movimiento: "",
         monto: "",
-        pago: ""
+        pago: "",
+        observaciones: ""
     }
 }
 
@@ -255,6 +294,7 @@ function initialFormDataCajaInitial() {
     return {
         idCajero: "",
         cajero: "",
+        dineroAcumulado: "",
     }
 }
 
@@ -262,6 +302,7 @@ function initialFormDataCaja(data) {
     return {
         idCajero: data.idCajero,
         cajero: data.cajero,
+        dineroAcumulado: data.saldo,
     }
 }
 
