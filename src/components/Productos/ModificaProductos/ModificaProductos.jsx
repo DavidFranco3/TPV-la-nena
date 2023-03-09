@@ -511,7 +511,7 @@ function ModificaProductos(props) {
                                 className="registrar"
                                 disabled={loading}
                             >
-                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Registrar" : <Spinner animation="border" />}
+                                <FontAwesomeIcon icon={faSave} /> {!loading ? "Modificar" : <Spinner animation="border" />}
                             </Button>
                         </Col>
                         <Col>

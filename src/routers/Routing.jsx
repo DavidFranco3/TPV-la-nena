@@ -18,7 +18,7 @@ const clientRoutes = configRouting.filter((route) =>
 const Routing = ({ setRefreshCheckLogin, userRole }) => (
     <Router>
         <Routes>
-            {map(userRole === "administrador" ? adminRoutes : userRole === "vendedor" ? sellerRoutes : userRole === "cliente" ? clientRoutes : [], (route, index) => (
+            {map(userRole === "administrador" ? adminRoutes : userRole === "vendedor" ? sellerRoutes : clientRoutes, (route, index) => (
                 <Route key={index} path={route.path} element={
                     <LayoutPrincipal
                         setRefreshCheckLogin={setRefreshCheckLogin}
