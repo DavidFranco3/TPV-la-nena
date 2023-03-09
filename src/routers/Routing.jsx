@@ -16,68 +16,23 @@ const clientRoutes = configRouting.filter((route) =>
 );
 
 const Routing = ({ setRefreshCheckLogin, userRole }) => (
-    console.log(userRole),
-    userRole === "administrador" ? (
-        <Router>
-            <Routes>
-                {map(adminRoutes, (route, index) => (
-                    <Route key={index} path={route.path} element={
-                        <LayoutPrincipal
-                            setRefreshCheckLogin={setRefreshCheckLogin}
-                        >
-                            <route.page
-                                setRefreshCheckLogin={setRefreshCheckLogin}
-                            /> </LayoutPrincipal>
-                    }
+    <Router>
+        <Routes>
+            {map(userRole === "administrador" ? adminRoutes : userRole === "vendedor" ? sellerRoutes : userRole === "cliente" ? clientRoutes : [], (route, index) => (
+                <Route key={index} path={route.path} element={
+                    <LayoutPrincipal
+                        setRefreshCheckLogin={setRefreshCheckLogin}
                     >
-                    </Route>
+                        <route.page
+                            setRefreshCheckLogin={setRefreshCheckLogin}
+                        /> </LayoutPrincipal>
+                }
+                >
+                </Route>
 
-                ))}
-            </Routes>
-        </Router>
-    ) : (
-        userRole === "vendedor" ? (
-            <Router>
-                <Routes>
-                    {map(sellerRoutes, (route, index) => (
-                        <Route key={index} path={route.path} element={
-                            <LayoutPrincipal
-                                setRefreshCheckLogin={setRefreshCheckLogin}
-                            >
-                                <route.page
-                                    setRefreshCheckLogin={setRefreshCheckLogin}
-                                /> </LayoutPrincipal>
-                        }
-                        >
-                        </Route>
-
-                    ))}
-                </Routes>
-            </Router>
-        ) : (
-            userRole === "cliente" ? (
-                <Router>
-                    <Routes>
-                        {map(clientRoutes, (route, index) => (
-                            <Route key={index} path={route.path} element={
-                                <LayoutPrincipal
-                                    setRefreshCheckLogin={setRefreshCheckLogin}
-                                >
-                                    <route.page
-                                        setRefreshCheckLogin={setRefreshCheckLogin}
-                                    /> </LayoutPrincipal>
-                            }
-                            >
-                            </Route>
-
-                        ))}
-                    </Routes>
-                </Router>
-            ) : (
-                <></>
-            )
-        )
-    )
+            ))}
+        </Routes>
+    </Router>
 )
 
 export default Routing;
