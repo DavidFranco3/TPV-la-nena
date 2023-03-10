@@ -107,7 +107,6 @@ function DetallesVenta(props) {
             <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
                 {contentModal}
             </BasicModal>
-
         </>
     );
 }

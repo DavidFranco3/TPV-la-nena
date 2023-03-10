@@ -85,7 +85,7 @@ function GraficaDiaria(props) {
                 <Row>
                     <Col xs={12} md={8}>
                         <h1>
-                        {dayjs(dia).format('dddd, LL')}
+                            {dayjs(dia).format('dddd, LL')}
                         </h1>
                     </Col>
                 </Row>

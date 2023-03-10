@@ -4,7 +4,7 @@ import "../../../scss/styles.scss";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Observaciones(props) {
+function DatosExtraVenta(props) {
     const { setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
@@ -181,4 +181,4 @@ function initialFormValue() {
     }
 }
 
-export default Observaciones;
+export default DatosExtraVenta;

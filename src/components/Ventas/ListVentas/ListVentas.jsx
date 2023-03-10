@@ -302,7 +302,6 @@ function ListVentas(props) {
             </BasicModal>
         </>
     );
-
 }
 
 export default ListVentas;
