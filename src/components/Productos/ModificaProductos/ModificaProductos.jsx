@@ -138,6 +138,7 @@ function ModificaProductos(props) {
         setProductoCargado(cargaProductos.nombre)
         const dataTempProductos = productoCargado.split("/")
         const dataTemp = {
+            id: dataTempProductos[4],
             um: dataTempProductos[1],
             tipoUM: dataTempProductos[2],
             precio: dataTempProductos[3],
@@ -158,6 +159,7 @@ function ModificaProductos(props) {
             const temp = nombre.split("/")
 
             const dataTemp = {
+                id: cargaProductos.id,
                 nombre: temp[0],
                 um: cargaProductos.um,
                 precio: cargaProductos.precio,
@@ -307,8 +309,8 @@ function ModificaProductos(props) {
                                 >
                                     <option>Elige una opción</option>
                                     {map(listIngredientes, (ingrediente, index) => (
-                                        <option key={index} value={ingrediente?.nombre + "/" + ingrediente?.umProduccion + "/" + ingrediente?.tipoUM + "/" + ingrediente?.costoProduccion}>{ingrediente?.nombre}</option>
-                                    ))}
+                                        <option key={index} value={ingrediente?.nombre + "/" + ingrediente?.umProduccion + "/" + ingrediente?.tipoUM + "/" + ingrediente?.costoProduccion + "/" + ingrediente?.id}>{ingrediente?.nombre}</option>
+                                        ))}
                                 </Form.Control>
                             </Form.Group>
 
@@ -554,6 +556,7 @@ function initialFormValue(data) {
 
 function initialFormDataProductos() {
     return {
+        id: "",
         nombre: "",
         um: "",
         tipoUM: "",
@@ -563,9 +566,10 @@ function initialFormDataProductos() {
 }
 
 function cargaFormDataProductos(data) {
-    const { um, tipoUM, precio } = data;
+    const { id, um, tipoUM, precio } = data;
 
     return {
+        id: id,
         nombre: "",
         um: um,
         tipoUM: tipoUM,

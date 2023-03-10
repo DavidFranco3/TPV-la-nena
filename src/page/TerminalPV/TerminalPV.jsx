@@ -189,11 +189,15 @@ function formatModelProductos(productos) {
     const tempProductos = []
     productos.forEach((producto) => {
         tempProductos.push({
+            id: producto._id,
             nombre: producto.nombre,
             categoria: producto.categoria,
             negocio: producto.negocio,
+            costoProduccion: parseFloat(producto.costoProduccion) ? parseFloat(producto.costoProduccion) : 0,
+            ingredientes: producto.ingredientes,
             precio: parseFloat(producto.precio),
             imagen: producto.imagen,
+            estado: producto.estado,
             fechaCreacion: producto.createdAt,
             fechaActualizacion: producto.updatedAt
         });

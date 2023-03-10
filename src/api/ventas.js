@@ -27,6 +27,7 @@ import {
     ENDPOINTTotalVentasCajerosActivas,
     ENDPOINTListarPaginandoVentasCajerosCanceladas,
     ENDPOINTTotalVentasCajerosCanceladas,
+    ENDPOINTTotalIngredientesConsumidosDiarios
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -282,6 +283,18 @@ export async function listarDetallesVentasPorDia(dia) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarDetallesVentasDia + `?dia=${dia}`, config);
+}
+
+// Listar solo los productos que se vendieron en el día solicitado
+export async function listarConsumoIngredientesDiario(dia) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    }; 
+    return await axios.get(API_HOST + ENDPOINTTotalIngredientesConsumidosDiarios + `?dia=${dia}`, config);
 }
 
 // Listar solo los productos que se vendieron en el día solicitado

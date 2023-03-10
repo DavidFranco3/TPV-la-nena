@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import Ventas from '../Ventas';
 import HistoricoVentasDia from '../HistoricoVentasDia';
 import HistoricoVentasMes from '../HistoricoVentasMes';
-import queryString from "query-string";
 
 function Historiales(props) {
     const { setRefreshCheckLogin, location, navigate } = props;

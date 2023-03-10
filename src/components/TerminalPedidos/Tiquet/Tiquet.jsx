@@ -220,7 +220,7 @@ function Tiquet(props) {
                 <div className="detallesTitulo">
                     <p className="cafe__number">Teléfono para pedidos</p>
                     <p className="cafe__number">442-714-09-79</p>
-                    <p className="cafe__number">Pedido #{numeroTiquet}</p>
+                    <p className="cafe__number">Pedido {numeroTiquet}</p>
                     <p className="invoice__cliente">Cliente {nombreCliente}</p>
                     <p className="invoice__cliente">Pedido {tipoPedido}</p>
                     <p className="invoice__cliente">Hecho {hacerPedido}</p>
