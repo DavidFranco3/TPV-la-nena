@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   color: #FFF;
+  overflow-y: scroll;
   //font-family: fantasy;
   font-size: .9rem;
   background-color: rgb(51, 51, 51);
@@ -227,11 +228,17 @@
 .app {
   background-color: rgba(150, 150, 150, 0.16);
   height: 100vh;
-  overflow: hidden;
 
   .pos {
     height: 100vh;
     display: flex;
+  }
+
+  @media only screen and (max-width: 768px) {
+    /* Modificar los estilos para pantallas de 768px o menos */
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
   }
 }
 
@@ -330,18 +337,11 @@
 
 .menu {
 
-  width: 65%;
-  background-color: rgb(32, 32, 32);
-  height: 85vh;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
   overflow-y: scroll;
-  //temporary
-  right: 0;
-  margin-left: auto;
-  margin: 20px;
+  overflow-x: scroll;
   //
 
   .regresarCategorias {
@@ -451,11 +451,13 @@
     width: 100%;
     height: 75%;
     text-align: center;
+    margin-top: 20px !important;
 
     img {
-      //width: 95%;
-      //height: 100%;
-      //border-radius: 50%;
+      // width: 95%;
+      // height: 100%;
+      // border-radius: 50%;
+      // border: 2px solid rgb(33, 33, 33);
       width: 150px;
       height: 150px;
       border-radius: 200px;
@@ -465,10 +467,6 @@
 
   .product__name {
     margin-top: 5px;
-
-    .informacionProducto {
-      font-size: 14px !important;
-    }
   }
 
   .product__price {}
@@ -482,11 +480,16 @@
   margin: 20px 0 0 10px;
   border-radius: 10px;
 
+  @media only screen and (max-width: 768px) {
+    /* Modificar los estilos para pantallas de 768px o menos */
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+
   .logotipo {
     width: 91px !important;
     margin: 0 auto;
-    //margin-left: 15px !important;
-    //margin-top: 10px;
   }
 
   .ticket__information {
@@ -560,8 +563,6 @@
           text-align: center;
         }
 
-        .items__numeracion {}
-
         .items__description {
           columns: 1;
           text-align: left;
@@ -571,17 +572,23 @@
           text-align: center;
           cursor: pointer;
         }
+      }
 
-        .remove-icon:hover {
-          -webkit-transform: scale(1.25);
-          -moz-transform: scale(1.25);
-          -ms-transform: scale(1.25);
-          -o-transform: scale(1.25);
-          transform: scale(1.25);
+      /* estilos para dispositivos móviles */
+      @media only screen and (max-width: 600px) {
+        table {
+          font-size: 12px;
         }
 
-        .remove-icono {
+        .items__description {
+          display: block;
           text-align: center;
+        }
+
+        .remove-icon {
+          display: block;
+          text-align: center;
+          margin-top: 10px;
         }
       }
     }
@@ -599,7 +606,6 @@
       }
 
       .observaciones__tiquet {
-        //margin-top: -10px !important;
         text-align: center;
         color: $font-dark !important;
         font-size: 14px !important;
@@ -608,12 +614,44 @@
       .subtotal__price {
         margin: 5px 20px;
       }
+
+      /* Responsive styles for screens smaller than 768px */
+      @media (max-width: 1200px) {
+        font-size: 14px;
+        margin: 5px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        hr {
+          display: none;
+        }
+
+        .observaciones__tiquet {
+          margin-top: 10px;
+          @media only screen and (max-width: 768px) {
+            /* Modificar los estilos para pantallas de 768px o menos */
+            height: auto;
+            margin: 10px 0;
+          }
+        }
+
+        .subtotal__price {
+          margin: 5px 0;
+          @media only screen and (max-width: 768px) {
+            /* Modificar los estilos para pantallas de 768px o menos */
+            height: auto;
+            margin: 10px 0;
+          }
+        }
+      }
     }
   }
 
   .ticket__actions {
     width: 100%;
-    border: solid 2px #000;
+    border: solid 2px;
     border-radius: 5px;
     height: 10%;
     margin: 5px 0;
@@ -762,6 +800,24 @@
           cursor: pointer;
         }
       }
+
+      /* estilos para dispositivos móviles */
+      @media only screen and (max-width: 600px) {
+        table {
+          font-size: 12px;
+        }
+
+        .items__description {
+          display: block;
+          text-align: center;
+        }
+
+        .remove-icon {
+          display: block;
+          text-align: center;
+          margin-top: 10px;
+        }
+      }
     }
 
     .subtotal {
@@ -777,7 +833,6 @@
       }
 
       .observaciones__tiquet {
-        //margin-top: -10px !important;
         text-align: center;
         color: $font-dark !important;
         font-size: 14px !important;
@@ -785,6 +840,29 @@
 
       .subtotal__price {
         margin: 5px 20px;
+      }
+
+      /* Responsive styles for screens smaller than 768px */
+      @media (max-width: 1200px) {
+        height: 1200px;
+        font-size: 14px;
+        margin: 5px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        hr {
+          display: none;
+        }
+
+        .observaciones__tiquet {
+          margin-top: 10px;
+        }
+
+        .subtotal__price {
+          margin: 5px 0;
+        }
       }
     }
   }

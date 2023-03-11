@@ -3,13 +3,11 @@ import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Mapa from '../Mapa';
 
 function DatosExtraPedido(props) {
     const { setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setDomicilio, setShowModal } = props;
     const [formData, setFormData] = useState(initialFormValue());
     const [loading, setLoading] = useState(false);
-    const [position, setPosition] = useState(null);
 
     const onSubmit = e => {
         e.preventDefault();
@@ -32,10 +30,6 @@ function DatosExtraPedido(props) {
     const cancelarRegistro = () => {
         setShowModal(false)
     }
-
-    const handlePositionChanged = (position) => {
-        setPosition(position);
-    };
 
     return (
         <>
@@ -157,11 +151,6 @@ function DatosExtraPedido(props) {
                             />
                         </Form.Group>
                     </Row>
-                </div>
-
-                <div>
-                    <h1>Selecciona una ubicación</h1>
-                    <Mapa />
                 </div>
 
                 <Form.Group as={Row} className="botonSubirProducto">
