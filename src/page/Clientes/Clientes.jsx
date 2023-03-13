@@ -25,24 +25,9 @@ function Clientes(props) {
                 enrutamiento("/")
         }
 
-        // Para definir el estado del switch
-        const [estadoSwitch, setEstadoSwitch] = useState(true);
-
-        // Para hacer uso del modal
-        const [showModal, setShowModal] = useState(false);
-        const [contentModal, setContentModal] = useState(null);
-        const [titulosModal, setTitulosModal] = useState(null);
-
-        // Para la lista de abonos
-        const registroUsuarios = (content) => {
-                setTitulosModal("Registrar un usuario");
-                setContentModal(content);
-                setShowModal(true);
-        }
-
         const [datosUsuario, setDatosUsuario] = useState("");
 
-        useEffect(() => {
+        const obtenerDatosUsuario = () => {
                 try {
                         obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                                 const { data } = response;
@@ -57,10 +42,13 @@ function Clientes(props) {
                 } catch (e) {
                         console.log(e)
                 }
+        }
+
+        useEffect(() => {
+                obtenerDatosUsuario();
         }, []);
 
-        // Cerrado de sesión automatico
-        useEffect(() => {
+        const cierreSesion = () => {
                 if (getTokenApi()) {
                         if (isExpiredToken(getTokenApi())) {
                                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -70,7 +58,13 @@ function Clientes(props) {
                                 toast.success('Sesión cerrada por seguridad');
                         }
                 }
+        }
+
+        // Cerrado de sesión automatico
+        useEffect(() => {
+                cierreSesion();
         }, [])
+        // Termina cerrado de sesión automatico
 
         // Para almacenar los usuarios
         const [listClientes, setListClientes] = useState(null);
@@ -80,9 +74,7 @@ function Clientes(props) {
         const [page, setPage] = useState(1);
         const [noTotalClientes, setNoTotalClientes] = useState(1);
 
-        // Para listar los usuarios
-        useEffect(() => {
-                //console.log("Estado del switch ", estadoSwitch)
+        const cargarDatos = () => {
                 try {
 
                         // Lista los productos activos
@@ -125,7 +117,12 @@ function Clientes(props) {
                 } catch (e) {
                         console.log(e)
                 }
-        }, [location, estadoSwitch, page, rowsPerPage]);
+        }
+
+        // Para listar los usuarios
+        useEffect(() => {
+                cargarDatos();
+        }, [location, page, rowsPerPage]);
 
         return (
                 <>
@@ -177,9 +174,6 @@ function Clientes(props) {
                                                 </>
                                         )
                         }
-                        <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
-                                {contentModal}
-                        </BasicModal>
                 </>
         );
 }

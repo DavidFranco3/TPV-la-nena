@@ -54,7 +54,7 @@ function MovimientosCajas(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -69,10 +69,13 @@ function MovimientosCajas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -82,8 +85,12 @@ function MovimientosCajas(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
-    // Termina cerrado de sesión automatico
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     // Para la lista de abonos
     const registroMovimientos = (content) => {
@@ -99,7 +106,7 @@ function MovimientosCajas(props) {
     const [page, setPage] = useState(1);
     const [noTotalMovimientos, setNoTotalMovimientos] = useState(1);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             totalMovimientos(caja).then(response => {
                 const { data } = response;
@@ -137,6 +144,10 @@ function MovimientosCajas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, [location, page, rowsPerPage]);
 
     return (
@@ -234,7 +245,7 @@ function formatModelMovimientosCajas(movimientos) {
             monto: movimiento.monto,
             pago: movimiento.pago,
             movimientosAcumulados: movimiento.movimientosAcumulados.reverse(),
-            dineroAcumulado: movimiento.dineroAcumulado, 
+            dineroAcumulado: movimiento.dineroAcumulado,
             observaciones: movimiento.observaciones,
             estado: movimiento.estado,
             fechaCreacion: movimiento.createdAt,

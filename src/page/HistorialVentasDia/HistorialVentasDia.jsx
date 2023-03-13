@@ -24,7 +24,7 @@ function HistorialVentasDia(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -39,10 +39,13 @@ function HistorialVentasDia(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -52,8 +55,12 @@ function HistorialVentasDia(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
-    // Termina cerrado de sesión automatico
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     //console.log(dia)
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -63,7 +70,7 @@ function HistorialVentasDia(props) {
     // Para guardar el listado de detalles de las ventas del dia
     const [listDetallesDia, setListDetallesDia] = useState(null);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             listarDetallesVentasPorDia(dia).then(response => {
                 const { data } = response;
@@ -104,13 +111,16 @@ function HistorialVentasDia(props) {
         } catch (e) {
             console.log(e)
         }
+    }
 
+    useEffect(() => {
+        cargarDatos();
     }, [dia, location, page, rowsPerPage]);
 
     // Para guardar el listado de detalles de las ventas del dia
     const [listIngredientesConsumidos, setListIngredientesConsumidos] = useState([]);
 
-    useEffect(() => {
+    const cargarDatosIngredientes = () => {
         try {
             listarConsumoIngredientesDiario(dia).then(response => {
                 const { data } = response;
@@ -129,10 +139,11 @@ function HistorialVentasDia(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatosIngredientes();
     }, [location]);
-
-    console.log(listIngredientesConsumidos)
-
 
     return (
         <>

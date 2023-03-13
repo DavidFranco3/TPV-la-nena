@@ -21,7 +21,7 @@ function HistorialVentasMes(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -36,10 +36,13 @@ function HistorialVentasMes(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -49,8 +52,12 @@ function HistorialVentasMes(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
-    // Termina cerrado de sesión automatico
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -59,7 +66,7 @@ function HistorialVentasMes(props) {
     // Para guardar el listado de detalles de las ventas del mes
     const [listDetallesMes, setListDetallesMes] = useState(null);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             listarDetallesVentasPorMes(mes).then(response => {
                 const { data } = response;
@@ -100,7 +107,10 @@ function HistorialVentasMes(props) {
         } catch (e) {
             console.log(e)
         }
+    }
 
+    useEffect(() => {
+        cargarDatos();
     }, [mes, location, page, rowsPerPage]);
 
 

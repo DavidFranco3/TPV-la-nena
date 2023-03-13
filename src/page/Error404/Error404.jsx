@@ -8,8 +8,7 @@ import "../../scss/styles.scss";
 function Error404(props) {
     const { setRefreshCheckLogin } = props;
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 toast.warning("Sesión expirada");
@@ -18,6 +17,11 @@ function Error404(props) {
                 setRefreshCheckLogin(true);
             }
         }
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
     }, []);
     // Termina cerrado de sesión automatico
 

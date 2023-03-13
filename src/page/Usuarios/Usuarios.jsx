@@ -44,7 +44,7 @@ function Usuarios(props) {
 
         const [datosUsuario, setDatosUsuario] = useState("");
 
-        useEffect(() => {
+        const obtenerDatosUsuario = () => {
                 try {
                         obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                                 const { data } = response;
@@ -59,10 +59,13 @@ function Usuarios(props) {
                 } catch (e) {
                         console.log(e)
                 }
+        }
+
+        useEffect(() => {
+                obtenerDatosUsuario();
         }, []);
 
-        // Cerrado de sesión automatico
-        useEffect(() => {
+        const cierreSesion = () => {
                 if (getTokenApi()) {
                         if (isExpiredToken(getTokenApi())) {
                                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -72,7 +75,12 @@ function Usuarios(props) {
                                 toast.success('Sesión cerrada por seguridad');
                         }
                 }
-        }, [])
+        }
+
+        // Cerrado de sesión automatico
+        useEffect(() => {
+                cierreSesion();
+        }, []);
 
         // Para almacenar los usuarios
         const [listUsuarios, setListUsuarios] = useState(null);

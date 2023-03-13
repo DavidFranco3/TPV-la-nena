@@ -33,14 +33,15 @@ function Ventas(props) {
 
         const [datosUsuario, setDatosUsuario] = useState("");
 
-        useEffect(() => {
+        const obtenerDatosUsuario = () => {
                 try {
                         obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                                 const { data } = response;
+
                                 //console.log(data)
                                 setDatosUsuario(data);
-                                setEstadoUsuario(data.admin);
                                 setIdUsuario(data._id);
+                                setEstadoUsuario(data.admin);
                         }).catch((e) => {
                                 if (e.message === 'Network Error') {
                                         //console.log("No hay internet")
@@ -50,10 +51,13 @@ function Ventas(props) {
                 } catch (e) {
                         console.log(e)
                 }
+        }
+
+        useEffect(() => {
+                obtenerDatosUsuario();
         }, []);
 
-        // Cerrado de sesión automatico
-        useEffect(() => {
+        const cierreSesion = () => {
                 if (getTokenApi()) {
                         if (isExpiredToken(getTokenApi())) {
                                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -63,7 +67,12 @@ function Ventas(props) {
                                 toast.success('Sesión cerrada por seguridad');
                         }
                 }
-        }, [])
+        }
+
+        // Cerrado de sesión automatico
+        useEffect(() => {
+                cierreSesion();
+        }, []);
 
         // Para almacenar las ventas realizadas
         const [listVentas, setListVentas] = useState(null);
@@ -73,8 +82,7 @@ function Ventas(props) {
         const [page, setPage] = useState(1);
         const [noTotalVentas, setNoTotalVentas] = useState(1);
 
-        // Para listar las ventas
-        useEffect(() => {
+        const cargarDatos = () => {
                 //console.log("Estado del switch ", estadoSwitch)
                 try {
                         if (estadoSwitch) {
@@ -240,6 +248,11 @@ function Ventas(props) {
                 } catch (e) {
                         console.log(e)
                 }
+        }
+
+        // Para listar las ventas
+        useEffect(() => {
+                cargarDatos();
         }, [location, estadoSwitch, estadoUsuario, page, rowsPerPage]);
 
         return (

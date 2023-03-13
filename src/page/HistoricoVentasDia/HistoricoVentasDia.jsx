@@ -26,7 +26,7 @@ function HistoricoVentasDia(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -41,10 +41,13 @@ function HistoricoVentasDia(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -54,8 +57,12 @@ function HistoricoVentasDia(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
-    // Termina cerrado de sesión automatico
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     const [rowsPerPage, setRowsPerPage] = useState(90);
     const [page, setPage] = useState(1);
@@ -64,7 +71,7 @@ function HistoricoVentasDia(props) {
     // Para almacenar las ventas realizadas
     const [listVentas, setListVentas] = useState(null);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             totalVentas().then(response => {
                 const { data } = response;
@@ -105,7 +112,10 @@ function HistoricoVentasDia(props) {
         } catch (e) {
             console.log(e)
         }
+    }
 
+    useEffect(() => {
+        cargarDatos();
     }, [location, page, rowsPerPage]);
 
 

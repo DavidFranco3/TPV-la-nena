@@ -27,14 +27,14 @@ function Dashboard(props) {
   const [tipoUsuario, setTipoUsuario] = useState(null);
   const [datosUsuario, setDatosUsuario] = useState(null);
 
-  useEffect(() => {
+  const obtenerDatosUsuario = () => {
     try {
       obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
         const { data } = response;
         const { admin, tipo } = data;
         //console.log(data)
-        setEstadoUsuario(admin);
         setTipoUsuario(tipo);
+        setEstadoUsuario(admin);
         setDatosUsuario(data);
       }).catch((e) => {
         if (e.message === 'Network Error') {
@@ -45,10 +45,13 @@ function Dashboard(props) {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  useEffect(() => {
+    obtenerDatosUsuario();
   }, []);
 
-  // Cerrado de sesión automatico
-  useEffect(() => {
+  const cierreSesion = () => {
     if (getTokenApi()) {
       if (isExpiredToken(getTokenApi())) {
         LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -58,6 +61,11 @@ function Dashboard(props) {
         toast.success('Sesión cerrada por seguridad');
       }
     }
+  }
+
+  // Cerrado de sesión automatico
+  useEffect(() => {
+    cierreSesion();
   }, [])
   // Termina cerrado de sesión automatico
 

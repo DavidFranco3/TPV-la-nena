@@ -24,7 +24,7 @@ function GraficaDiaria(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -39,10 +39,13 @@ function GraficaDiaria(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -52,13 +55,18 @@ function GraficaDiaria(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
     // Termina cerrado de sesión automatico
 
     // Para guardar el listado de detalles de las ventas del dia
     const [listDetallesDia, setListDetallesDia] = useState(null);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             listarVentasDia(dia).then(response => {
                 const { data } = response;
@@ -77,6 +85,10 @@ function GraficaDiaria(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, [location]);
 
     return (

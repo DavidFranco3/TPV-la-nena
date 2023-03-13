@@ -29,7 +29,7 @@ function TerminalPedidos(props) {
     const [datosUsuario, setDatosUsuario] = useState("");
     const [idUsuario, setIdUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -45,10 +45,13 @@ function TerminalPedidos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -58,7 +61,12 @@ function TerminalPedidos(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     const [ticketItems, setTicketItems] = useState([]);
 
@@ -83,8 +91,7 @@ function TerminalPedidos(props) {
     // Para almacenar la lista de productos
     const [listProductos, setListProductos] = useState(null);
 
-    // obtener el listado de productos
-    useEffect(() => {
+    const cargarDatosProductos = () => {
         try {
             listarProductosCategoria(categoriaActual).then(response => {
                 const { data } = response;
@@ -100,12 +107,17 @@ function TerminalPedidos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    // obtener el listado de productos
+    useEffect(() => {
+        cargarDatosProductos();
     }, [categoriaActual]);
 
     // Para guardar el listado de categorias
     const [listCategorias, setListCategorias] = useState(null);
 
-    useEffect(() => {
+    const cargarDatosCategorias = () => {
         try {
             listarCategorias().then(response => {
                 const { data } = response;
@@ -122,6 +134,10 @@ function TerminalPedidos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatosCategorias();
     }, []);
 
     return (

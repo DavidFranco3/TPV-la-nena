@@ -1,81 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import React, { useState } from 'react';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
-const Map = withGoogleMap(props => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  
+function Map() {
+  const [location, setLocation] = useState(null);
+
+  const handleMapClick = event => {
+    setLocation({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng()
+    });
+  };
+
   return (
     <GoogleMap
-      defaultZoom={10}
-      defaultCenter={{ lat: 20.4033876, lng: -100.0084915 }}
-      onClick={(event) => {
-        setSelectedLocation({
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng()
-        });
-      }}
-      options={{
-        streetViewControl: false,
-        mapTypeControl: false,
-        fullscreenControl: false,
-        zoomControl: true,
-        gestureHandling: "cooperative",
-        clickableIcons: false,
-        styles: [
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }]
-          },
-          {
-            featureType: "transit",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }]
-          }
-        ]
-      }}
-      mapContainerStyle={{ height: "400px", width: "100%" }}
+      defaultZoom={8}
+      defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
+      onClick={handleMapClick}
+      google={window.google} // <--- añadir esta línea
     >
-      {selectedLocation && (
-        <Marker
-          position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
-          onClick={() => {
-            setSelectedLocation(null);
-          }}
-        >
-          <InfoWindow>
-            <div>Ubicación seleccionada</div>
-          </InfoWindow>
-        </Marker>
-      )}
+      {location && <Marker position={location} />}
     </GoogleMap>
   );
-});
+}
 
-function Mapa() {
-  const [isLoaded, setIsLoaded] = useState(false);
+const MapWithMarker = withGoogleMap(Map);
 
-  useEffect(() => {
-    if (window.google && window.google.maps) {
-      setIsLoaded(true);
-    } else {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDPLUhWt9MegTITmwnDMNyHrvZes58wSOo`;
-      script.onload = () => setIsLoaded(true);
-      document.head.appendChild(script);
-    }
-  }, []);
+function App() {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const handleSaveLocation = () => {
+    setSelectedLocation(location);
+  };
 
   return (
     <div>
-      {isLoaded && (
-        <Map
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        />
+      <MapWithMarker
+        containerElement={<div style={{ height: '400px' }} />}
+        mapElement={<div style={{ height: '100%' }} />}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${YOUR_API_KEY}&libraries=geometry,drawing,places`} // <--- Reemplazar YOUR_API_KEY con tu clave de API
+        loadingElement={<div style={{ height: '100%' }} />}
+      />
+      <button onClick={handleSaveLocation}>Guardar ubicación</button>
+      {selectedLocation && (
+        <p>
+          Ubicación seleccionada: Latitud {selectedLocation.lat}, Longitud{' '}
+          {selectedLocation.lng}
+        </p>
       )}
     </div>
   );
 }
 
-export default Mapa;
+export default App;

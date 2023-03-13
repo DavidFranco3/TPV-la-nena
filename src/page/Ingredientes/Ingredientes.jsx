@@ -36,7 +36,7 @@ function Ingredientes(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -51,10 +51,13 @@ function Ingredientes(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -64,8 +67,12 @@ function Ingredientes(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
-    // Termina cerrado de sesión automatico
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     // Para la lista de abonos
     const registroIngredientes = (content) => {
@@ -81,7 +88,7 @@ function Ingredientes(props) {
     const [page, setPage] = useState(1);
     const [noTotalIngredientes, setNoTotalIngredientes] = useState(1);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         //console.log("Estado del switch ", estadoSwitch)
         try {
             if (estadoSwitch) {
@@ -163,6 +170,10 @@ function Ingredientes(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, [location, estadoSwitch, page, rowsPerPage]);
 
 

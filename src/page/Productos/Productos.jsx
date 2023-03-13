@@ -42,7 +42,7 @@ function Productos(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -57,10 +57,13 @@ function Productos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -70,7 +73,12 @@ function Productos(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
-    }, [])
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
+    }, []);
 
     // Guarda el listado de productos
     const [listProductos, setListProductos] = useState(null);
@@ -82,8 +90,7 @@ function Productos(props) {
     const [page, setPage] = useState(1);
     const [noTotalProductos, setNoTotalProductos] = useState(1);
 
-    // obtener el listado de productos
-    useEffect(() => {
+    const cargarDatos = () => {
         //console.log("Estado del switch ", estadoSwitch)
         try {
             if (estadoSwitch) {
@@ -167,9 +174,14 @@ function Productos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    // obtener el listado de productos
+    useEffect(() => {
+        cargarDatos();
     }, [location, estadoSwitch, page, rowsPerPage]);
 
-    useEffect(() => {
+    const cargarDatosCategorias = () => {
         try {
             listarCategorias().then(response => {
                 const { data } = response;
@@ -185,6 +197,10 @@ function Productos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatosCategorias();
     }, [location]);
 
 

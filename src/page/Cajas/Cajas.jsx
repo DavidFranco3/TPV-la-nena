@@ -33,7 +33,7 @@ function Cajas(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -48,10 +48,13 @@ function Cajas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    // Cerrado de sesión automatico
-    useEffect(() => {
+    const cierreSesion = () => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -61,6 +64,11 @@ function Cajas(props) {
                 toast.success('Sesión cerrada por seguridad');
             }
         }
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreSesion();
     }, [])
     // Termina cerrado de sesión automatico
 
@@ -78,7 +86,7 @@ function Cajas(props) {
     const [page, setPage] = useState(1);
     const [noTotalCajas, setNoTotalCajas] = useState(1);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             totalCajas().then(response => {
                 const { data } = response;
@@ -118,12 +126,16 @@ function Cajas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, [location, page, rowsPerPage]);
 
     // Para guardar el listado de categorias
     const [listUsuarios, setListUsuarios] = useState(null);
 
-    useEffect(() => {
+    const cargarDatosUsuarios = () => {
         try {
             listarUsuariosCajeros().then(response => {
                 const { data } = response;
@@ -139,10 +151,10 @@ function Cajas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+    useEffect(() => {
+        cargarDatosUsuarios();
     }, [location]);
-
-    console.log(listUsuarios)
-
 
     return (
         <>
