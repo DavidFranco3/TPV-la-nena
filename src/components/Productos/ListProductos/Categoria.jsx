@@ -7,7 +7,7 @@ function Categoria(props) {
     // Para almacenar el nombre del cliente
     const [nombreCategoria, setNombreCategoria] = useState("");
 
-    useEffect(() => {
+    const cargarCategoria = () => {
         //
         try {
             obtenerCategoria(id).then(response => {
@@ -20,6 +20,10 @@ function Categoria(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarCategoria();
     }, [id]);
 
     return (

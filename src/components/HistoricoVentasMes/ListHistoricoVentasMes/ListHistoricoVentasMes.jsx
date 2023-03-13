@@ -30,7 +30,7 @@ function ListHistoricoVentasMes(props) {
 
     const [listaDias, setListaDias] = useState([]);
 
-    useEffect(() => {
+    const filtrarLista = () => {
         let listaFechasTemp = []
         map(listVentas, (ventas, index) => {
             const tempFecha = ventas.agrupar.split("T");
@@ -43,6 +43,10 @@ function ListHistoricoVentasMes(props) {
         })
         setListaDias(listaDias)
         //console.log(listaDias);
+    }
+
+    useEffect(() => {
+        filtrarLista();
     }, [listVentas]);
 
     //Para ver detalles
@@ -153,12 +157,16 @@ function ListHistoricoVentasMes(props) {
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         const timeout = setTimeout(() => {
             setRows(listaDias);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, []);
 
     const paginationComponentOptions = {

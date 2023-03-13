@@ -18,7 +18,7 @@ function LayoutPrincipal(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -30,14 +30,22 @@ function LayoutPrincipal(props) {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
-    //Para cerrar la sesion
-    const cerrarSesion = () => {
+    const cierreAutomatico = () => {
         LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
         logoutApi();
         setRefreshCheckLogin(true);
         toast.success("Sesión cerrada");
+    }
+
+    //Para cerrar la sesion
+    const cerrarSesion = () => {
+        cierreAutomatico();
     }
 
     // Cerrado de sesión automatico

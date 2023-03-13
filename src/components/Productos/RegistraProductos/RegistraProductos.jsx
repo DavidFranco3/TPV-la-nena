@@ -23,7 +23,7 @@ function RegistraProductos(props) {
     // Para guardar el listado de categorias
     const [listCategorias, setListCategorias] = useState([]);
 
-    useEffect(() => {
+    const cargarListaCategorias = () => {
         try {
             listarCategorias().then(response => {
                 const { data } = response;
@@ -39,12 +39,16 @@ function RegistraProductos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarListaCategorias();
     }, []);
 
     // Para guardar el listado de categorias
     const [listIngredientes, setListIngredientes] = useState([]);
 
-    useEffect(() => {
+    const cargarListaIngredientes = () => {
         try {
             listarIngredientes().then(response => {
                 const { data } = response;
@@ -60,6 +64,10 @@ function RegistraProductos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarListaIngredientes();
     }, []);
 
     //Para almacenar la imagen del producto que se guardara a la bd
@@ -113,7 +121,7 @@ function RegistraProductos(props) {
     const [cargaProductos, setCargaProductos] = useState(initialFormDataProductos());
     const [productoCargado, setProductoCargado] = useState("");
 
-    useEffect(() => {
+    const cargarDatosProducto = () => {
         setProductoCargado(cargaProductos.nombre)
         const dataTempProductos = productoCargado.split("/")
         const dataTemp = {
@@ -124,6 +132,10 @@ function RegistraProductos(props) {
         }
         console.log(dataTemp);
         setCargaProductos(cargaFormDataProductos(dataTemp))
+    }
+
+    useEffect(() => {
+        cargarDatosProducto();
     }, [cargaProductos.nombre]);
 
     const renglon = listProductosCargados.length + 1;

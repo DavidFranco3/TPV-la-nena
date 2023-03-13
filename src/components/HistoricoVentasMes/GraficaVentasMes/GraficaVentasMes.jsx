@@ -19,7 +19,7 @@ function GraficaVentasMes(props) {
     const [tarjeta, setTarjeta] = useState(0);
     const [transferencia, setTransferencia] = useState(0);
 
-    useEffect(() => {
+    const cargarGrafica = () => {
         let efectivo = 0;
         let tarjeta = 0;
         let transferencia = 0;
@@ -46,6 +46,10 @@ function GraficaVentasMes(props) {
         setTarjeta(tarjeta);
         setTransferencia(transferencia);
         setTotal(efectivo + tarjeta + transferencia);
+    }
+
+    useEffect(() => {
+        cargarGrafica();
     }, []);
 
     const data = {

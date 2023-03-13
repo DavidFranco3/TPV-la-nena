@@ -16,50 +16,8 @@ function GeneraPdf(props) {
 
     const movimientosTotales = movimientosAcumulados.concat(datos);
 
-    console.log(movimientosTotales);
-
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
-
-    // Almacenar el listado de materias primas registradas
-    const [listMovimientos, setListMovimientos] = useState(null);
-
-    useEffect(() => {
-        try {
-            listarMovimientos(idCaja).then(response => {
-                const { data } = response;
-
-                if (!listMovimientos && data) {
-                    setListMovimientos(formatModelMovimientosCajas(data));
-                } else {
-                    const datosMovimientos = formatModelMovimientosCajas(data);
-                    setListMovimientos(datosMovimientos);
-                }
-            }).catch(e => {
-                console.log(e)
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }, []);
-
-    // Almacenar el listado de materias primas registradas
-    const [saldo, setSaldo] = useState(null);
-
-    useEffect(() => {
-        try {
-            obtenerCaja(idCaja).then(response => {
-                const { data } = response;
-                const { saldo } = data;
-
-                setSaldo(saldo);
-            }).catch(e => {
-                console.log(e)
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }, []);
 
     const handlePrint = () => {
         toast.info("Generando... espere por favor")

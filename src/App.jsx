@@ -14,13 +14,17 @@ function App() {
     const [refreshCheckLogin, setRefreshCheckLogin] = useState(false);
     const [userRole, setUserRole] = useState("");
 
-    useEffect(() => {
+    const obtenerDatos = () => {
         setUser(isUserLogedApi())
         setRefreshCheckLogin(false)
         setLoadUser(true)
-    }, [refreshCheckLogin]);
+    }
 
     useEffect(() => {
+        obtenerDatos();
+    }, [refreshCheckLogin]);
+
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -34,6 +38,10 @@ function App() {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
     if (!LoadUser) return null;

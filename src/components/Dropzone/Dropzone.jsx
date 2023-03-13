@@ -27,7 +27,7 @@ function Dropzone(props) {
         onDrop: onDropImagen,
     });
 
-    useEffect(() => {
+    const cargaImagen = () => {
         slide.map((file, key) => {
             const tempType = file.type.split("/");
             const type = tempType[0];
@@ -40,6 +40,10 @@ function Dropzone(props) {
             }
             return "";
         });
+    }
+
+    useEffect(() => {
+        cargaImagen();
     }, [slide]);
 
     const visualizarSlide1 = slide.map(file => (

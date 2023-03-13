@@ -21,7 +21,7 @@ function GraficaProductosDia(props) {
     const [sandwiches, setSandwiches] = useState(0);
     const [desayunos, setDesayunos] = useState(0);
 
-    useEffect(() => {
+    const cargarGrafica = () => {
         let productos_vendidos = 0;
         let bebidas_vendidas = 0;
         let extras_vendidos = 0;
@@ -54,6 +54,10 @@ function GraficaProductosDia(props) {
         setSandwiches(sandwiches_vendidos);
         setDesayunos(desayunos_vendidos);
         setTotal(productos_vendidos + bebidas_vendidas + extras_vendidos + sandwiches_vendidos + desayunos_vendidos);
+    }
+
+    useEffect(() => {
+        cargarGrafica();
     }, []);
 
     const data = {

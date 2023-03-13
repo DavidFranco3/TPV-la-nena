@@ -29,7 +29,7 @@ function ProcesamientoCsv(props) {
         totalVenta: "Total de venta en el tiquet"
     };
 
-    useEffect(() => {
+    const cargarDatosCSV = () => {
         try {
             // Inicia listado de detalles de los articulos vendidos
             listarDetallesProductosVentasPorMes(dia).then(response => {
@@ -106,6 +106,10 @@ function ProcesamientoCsv(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatosCSV();
     }, []);
 
     const generacionCSV = () => {

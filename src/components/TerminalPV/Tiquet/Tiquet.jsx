@@ -79,6 +79,8 @@ function Tiquet(props) {
             tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
             tiquetGenerado.document.write('</body></html>');
 
+            tiquetGenerado.document.write('<div style="page-break-after: always;"></div>');
+
             tiquetGenerado.document.write('<html><head>');
             tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
             tiquetGenerado.document.write('</head><body>');

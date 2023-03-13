@@ -25,7 +25,7 @@ function ModificaProductos(props) {
     // Para guardar el listado de categorias
     const [listCategorias, setListCategorias] = useState([]);
 
-    useEffect(() => {
+    const cargarListaCategorias = () => {
         try {
             listarCategorias().then(response => {
                 const { data } = response;
@@ -41,12 +41,16 @@ function ModificaProductos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarListaCategorias();
     }, []);
 
     // Para guardar el listado de categorias
     const [listIngredientes, setListIngredientes] = useState([]);
 
-    useEffect(() => {
+    const cargarListaIngredientes = () => {
         try {
             listarIngredientes().then(response => {
                 const { data } = response;
@@ -62,6 +66,10 @@ function ModificaProductos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarListaIngredientes();
     }, []);
 
 
@@ -71,7 +79,7 @@ function ModificaProductos(props) {
     //Para almacenar la imagen del producto que se guardara a la bd
     const [imagenProducto, setImagenProducto] = useState(null);
 
-    useEffect(() => {
+    const cargarDatos = () => {
         try {
             obtenerProductos(id).then(response => {
                 const { data } = response;
@@ -85,6 +93,10 @@ function ModificaProductos(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatos();
     }, []);
 
     // Para definir el enrutamiento
@@ -134,7 +146,7 @@ function ModificaProductos(props) {
     const [cargaProductos, setCargaProductos] = useState(initialFormDataProductos());
     const [productoCargado, setProductoCargado] = useState("");
 
-    useEffect(() => {
+    const cargarDatosProducto = () => {
         setProductoCargado(cargaProductos.nombre)
         const dataTempProductos = productoCargado.split("/")
         const dataTemp = {
@@ -145,6 +157,10 @@ function ModificaProductos(props) {
         }
         console.log(dataTemp);
         setCargaProductos(cargaFormDataProductos(dataTemp))
+    }
+
+    useEffect(() => {
+        cargarDatosProducto();
     }, [cargaProductos.nombre]);
 
     const renglon = listProductosCargados.length + 1;

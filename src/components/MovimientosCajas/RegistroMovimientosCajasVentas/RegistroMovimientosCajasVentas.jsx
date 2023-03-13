@@ -23,7 +23,7 @@ function RegistroMovimientosCajasVentas(props) {
     const [idCajero, setIdCajero] = useState("");
     const [cajero, setCajero] = useState("");
 
-    useEffect(() => {
+    const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
@@ -39,11 +39,15 @@ function RegistroMovimientosCajasVentas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        obtenerDatosUsuario();
     }, []);
 
     const [caja, setCaja] = useState("");
 
-    useEffect(() => {
+    const cargarDatosCajas = () => {
         try {
             obtenerUltimaCajaCajero(idCajero).then(response => {
                 const { data } = response;
@@ -58,6 +62,10 @@ function RegistroMovimientosCajasVentas(props) {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    useEffect(() => {
+        cargarDatosCajas();
     }, [idCajero]);
 
     // Para cancelar el registro

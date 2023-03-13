@@ -17,29 +17,33 @@ function RegistroMovimientosCajas(props) {
     const [formDataCaja, setFormDataCaja] = useState(initialFormDataCajaInitial());
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    const cargarDatosCajas = () => {
         obtenerCaja(caja).then(response => {
             const { data } = response;
             setFormDataCaja(initialFormDataCaja(data));
         }).catch(e => {
             console.log(e)
         })
-    }, []);
+    }
 
-    console.log(formDataCaja.dineroAcumulado);
+    useEffect(() => {
+        cargarDatosCajas();
+    }, []);
 
     const [movimientosAcumulados, setMovimientosAcumulados] = useState([]);
 
-    useEffect(() => {
+    const cargarDatosMovimientos = () => {
         listarMovimientos(caja).then(response => {
             const { data } = response;
             setMovimientosAcumulados(data);
         }).catch(e => {
             console.log(e)
         })
-    }, []);
+    }
 
-    console.log(movimientosAcumulados);
+    useEffect(() => {
+        cargarDatosMovimientos();
+    }, []);
 
     // Para cancelar el registro
     const cancelarRegistro = () => {

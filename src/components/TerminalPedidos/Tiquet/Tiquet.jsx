@@ -100,7 +100,7 @@ function Tiquet(props) {
         }
     }
 
-    useEffect(() => {
+    const obtenerNumeroTiquet = () => {
         try {
             obtenUltimoNoTiquet().then(response => {
                 const { data } = response;
@@ -112,6 +112,10 @@ function Tiquet(props) {
         } catch (e) {
             console.log(e.response)
         }
+    }
+
+    useEffect(() => {
+        obtenerNumeroTiquet();
     }, []);
 
     const handleRegistraVenta = () => {
@@ -199,14 +203,18 @@ function Tiquet(props) {
     }
     const [fechayHora, setFechayHora] = useState("");
 
-    useEffect(() => {
+    const cargarFecha = () => {
         const hoy = new Date();
         const hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         // const fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + " " + hora;
         const fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + " " + hora;
         // console.log(fecha)
         // console.log("Fecha actual ", hoy)
-        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
+        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'));
+    }
+
+    useEffect(() => {
+        cargarFecha();
     }, []);
 
     const Encabezado = ({ logo, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {

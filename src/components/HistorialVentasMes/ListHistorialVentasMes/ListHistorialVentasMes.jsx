@@ -104,12 +104,16 @@ function ListHistorialVentasMes(props) {
     const [pending, setPending] = useState(true);
     const [rows, setRows] = useState([]);
 
-    useEffect(() => {
+    const cargarImagen = () => {
         const timeout = setTimeout(() => {
             setRows(listDetallesMes);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
+    }
+
+    useEffect(() => {
+        cargarImagen();
     }, []);
 
     const paginationComponentOptions = {
