@@ -100,9 +100,10 @@ function Tiquet(props) {
             obtenUltimoNoTiquet().then(response => {
                 const { data } = response;
                 // console.log(data)
-                setNumeroTiquet(data.noTiquet)
+                setNumeroTiquet(data.noTiquet === "0" ? "1" : parseInt(data.noTiquet) + 1)
             }).catch(e => {
                 console.log(e)
+                setNumeroTiquet("1")
             })
         } catch (e) {
             console.log(e.response)
