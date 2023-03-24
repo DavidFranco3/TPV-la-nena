@@ -317,6 +317,7 @@ function formatModelVentas(ventas) {
                         id: venta._id,
                         numeroTiquet: venta.numeroTiquet,
                         cliente: venta.cliente,
+                        usuario: venta.usuario,
                         productosVendidos: venta.productos.length,
                         articulosVendidos: venta.productos,
                         detalles: venta.detalles,

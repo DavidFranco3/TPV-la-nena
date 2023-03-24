@@ -16,8 +16,9 @@ import { obtenerUltimaCajaCajero } from "../../../api/cajas";
 function RegistroMovimientosCajasVentas(props) {
     const { setShowModal, navigate, datosVentas } = props;
 
+    const { usuario } = datosVentas
+
     const [formData, setFormData] = useState(initialFormValue(datosVentas));
-    const [formDataCaja, setFormDataCaja] = useState(initialFormDataCajaInitial());
     const [loading, setLoading] = useState(false);
 
     const [idCajero, setIdCajero] = useState("");
@@ -25,7 +26,7 @@ function RegistroMovimientosCajasVentas(props) {
 
     const obtenerDatosUsuario = () => {
         try {
-            obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
+            obtenerUsuario(usuario).then(response => {
                 const { data } = response;
                 const { _id, nombre } = data;
                 //console.log(data)
@@ -49,7 +50,7 @@ function RegistroMovimientosCajasVentas(props) {
 
     const cargarDatosCajas = () => {
         try {
-            obtenerUltimaCajaCajero(idCajero).then(response => {
+            obtenerUltimaCajaCajero(usuario).then(response => {
                 const { data } = response;
                 const { _id } = data[0];
                 console.log(_id)
@@ -84,7 +85,7 @@ function RegistroMovimientosCajasVentas(props) {
 
                 const dataTemp = {
                     idCaja: caja,
-                    idCajero: idCajero,
+                    idCajero: usuario,
                     cajero: cajero,
                     movimiento: formData.movimiento,
                     pago: formData.pago,
