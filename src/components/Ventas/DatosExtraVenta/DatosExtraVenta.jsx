@@ -79,23 +79,6 @@ function DatosExtraVenta(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridEstado">
                             <Form.Label>
-                                Tipo Pedido
-                            </Form.Label>
-
-                            <Form.Control as="select"
-                                defaultValue={formData.tipoPedido}
-                                name="tipoPedido"
-                            >
-                                <option>Elige una opción</option>
-                                <option value="para llevar">Para llevar</option>
-                                <option value="para comer aquí">Para comer aquí</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Row>
-
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridEstado">
-                            <Form.Label>
                                 Hacer Pedido
                             </Form.Label>
 
@@ -112,17 +95,42 @@ function DatosExtraVenta(props) {
                     </Row>
 
                     <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridNombre">
+                        <Form.Group as={Col} controlId="formGridEstado">
                             <Form.Label>
-                                Nombre del cliente
+                                Tipo Pedido
                             </Form.Label>
-                            <Form.Control type="text"
-                                name="nombre"
-                                placeholder="Escribe el nombre"
-                                defaultValue={formData.nombre}
-                            />
+
+                            <Form.Control as="select"
+                                defaultValue={formData.tipoPedido}
+                                name="tipoPedido"
+                            >
+                                <option>Elige una opción</option>
+                                <option value="para llevar">Para llevar</option>
+                                <option value="para comer aquí">Para comer aquí</option>
+                            </Form.Control>
                         </Form.Group>
                     </Row>
+
+                    {
+                        formData.tipoPedido === "para comer aquí" &&
+                        (
+                            <>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formGridNombre">
+                                        <Form.Label>
+                                            Número de mesa
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="nombre"
+                                            placeholder="Escribe el numero de la mesa"
+                                            defaultValue={formData.nombre}
+                                        />
+                                    </Form.Group>
+                                </Row>
+                            </>
+                        )
+                    }
 
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridObsrevaciones">

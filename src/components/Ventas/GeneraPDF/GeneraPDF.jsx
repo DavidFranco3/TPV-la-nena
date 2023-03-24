@@ -45,7 +45,14 @@ function GeneraPdf(props) {
                     <p className="cafe__number">Teléfono para pedidos</p>
                     <p className="cafe__number">442-714-09-79</p>
                     <p className="cafe__number">Ticket #{numeroTiquet}</p>
-                    <p className="invoice__cliente">Cliente {nombreCliente}</p>
+                    {
+                        nombreCliente !== "" &&
+                        (
+                            <>
+                    <p className="invoice__cliente">Mesa {nombreCliente}</p>
+                    </>
+                        )
+                    }
                     <p className="invoice__cliente">Pedido {tipoPedido}</p>
                     <p className="invoice__cliente">Hecho {hacerPedido}</p>
                     <p className="cafe__number">
