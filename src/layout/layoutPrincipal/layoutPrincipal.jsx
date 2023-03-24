@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
-import LogoLANENA from "../../assets/jpg/logo-la-nena-2.jpg";
+import LogoLANENA from "../../assets/png/logo-layout.png";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
 import "../../scss/styles.scss";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
@@ -37,19 +37,6 @@ function LayoutPrincipal(props) {
     }, []);
 
     const cierreAutomatico = () => {
-        LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
-        logoutApi();
-        setRefreshCheckLogin(true);
-        toast.success("Sesión cerrada");
-    }
-
-    //Para cerrar la sesion
-    const cerrarSesion = () => {
-        cierreAutomatico();
-    }
-
-    // Cerrado de sesión automatico
-    useEffect(() => {
         if (getTokenApi()) {
             if (isExpiredToken(getTokenApi())) {
                 LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
@@ -59,6 +46,19 @@ function LayoutPrincipal(props) {
                 toast.success("Sesión cerrada por seguridad");
             }
         }
+    }
+
+    //Para cerrar la sesion
+    const cerrarSesion = () => {
+        LogsInformativosLogout("Sesión finalizada", datosUsuario, setRefreshCheckLogin);
+        logoutApi();
+        setRefreshCheckLogin(true);
+        toast.success("Sesión cerrada");
+    }
+
+    // Cerrado de sesión automatico
+    useEffect(() => {
+        cierreAutomatico();
     }, []);
     // Termina cerrado de sesión automatico
 
@@ -79,7 +79,7 @@ function LayoutPrincipal(props) {
                                         <div className="flex-shrink-0">
                                             <Image
                                                 src={LogoLANENA}
-                                                width="125px"
+                                                width="65px"
                                                 alt="Workflow"
                                                 title="Volver al menu principal"
                                                 className="logoPrincipal"
@@ -103,7 +103,7 @@ function LayoutPrincipal(props) {
                                                 <div>
                                                     <Menu.Button title="Desplegar el boton de cierre de sesión" className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                         <span className="sr-only">Open user menu</span>
-                                                        <Image className="h-8 w-8 rounded-full" src={ImagenPerfil} alt="" />
+                                                        <Image className="h-8 w-8 rounded-full" src={ImagenPerfil} alt="Imagen de perfil" />
                                                     </Menu.Button>
                                                 </div>
                                                 <Transition

@@ -32,7 +32,7 @@ export function exportCSVFile(headers, items, fileTitle) {
   if (navigator.msSaveBlob) {
     navigator.msSaveBlob(blob, exportedFilenmae);
   } else {
-    var link = document.createElement("a");
+    let link = document.createElement("a");
     if (link.download !== undefined) {
       const url = URL.createObjectURL(blob);
       link.setAttribute("href", url);

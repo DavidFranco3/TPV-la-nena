@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
-import { Col, Button, Row, Image } from "react-bootstrap";
+import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
@@ -219,7 +219,7 @@ function Tiquet(props) {
     const Cuerpo = ({ products, onClick }) => {
         return (
             <div className="ticket__table">
-                <table>
+                <Table>
                     <thead>
                         <tr>
                             <th className="items__numeracion">#</th>
@@ -246,7 +246,7 @@ function Tiquet(props) {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }

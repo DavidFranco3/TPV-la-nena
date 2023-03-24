@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import { toast } from "react-toastify";
@@ -58,7 +58,7 @@ function GeneraPdf(props) {
                         </div>
                     </div>
                     <div className="ticket__table">
-                        <table>
+                        <Table>
                             <thead>
                                 <tr>
                                     <th className="items__numeracion">#</th>
@@ -81,7 +81,7 @@ function GeneraPdf(props) {
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
 
                     <div className="subtotal">

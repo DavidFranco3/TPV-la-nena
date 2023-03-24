@@ -1,4 +1,4 @@
-import { Col, Row, Image, Button } from "react-bootstrap";
+import { Col, Row, Image, Button, Table } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import { toast } from "react-toastify";
@@ -59,7 +59,7 @@ function GeneraPdf(props) {
     const Cuerpo = ({ products }) => {
         return (
             <div className="ticket__table">
-                <table>
+                <Table>
                     <thead>
                         <tr>
                             <th className="items__numeracion">#</th>
@@ -84,7 +84,7 @@ function GeneraPdf(props) {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }
