@@ -78,7 +78,7 @@ function DetallesVenta(props) {
     return (
         <>
             <Container fluid>
-                Cliente: {cliente}
+                Mesa: {cliente}
                 <DataTable
                     columns={columns}
                     data={articulosVendidos}

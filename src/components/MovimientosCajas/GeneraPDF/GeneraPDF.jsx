@@ -3,6 +3,7 @@ import { Col, Row, Table } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import { toast } from "react-toastify";
+import { map } from "lodash"
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -36,8 +37,33 @@ function GeneraPdf(props) {
             tiquetGenerado.close();
         }, 2500);
         return () => clearTimeout(timer);
-
     }
+
+    const [totalTarjeta, setTotalTarjeta] = useState(0);
+
+    let cantidadTotalTarjeta = 0;
+
+    const [totalTransferencia, setTotalTransferencia] = useState(0);
+
+    let cantidadTotalTransferencia = 0;
+
+    const obtenerTotales = () => {
+        map(movimientosTotales, (item, index) => {
+            const { monto, pago } = item
+            if (pago == "Tarjeta") {
+                cantidadTotalTarjeta += parseFloat(monto);
+            } else if (pago == "Transferencia") {
+                cantidadTotalTransferencia += parseFloat(monto);
+            }
+            setTotalTarjeta(cantidadTotalTarjeta);
+            setTotalTransferencia(cantidadTotalTransferencia);
+        })
+    }
+
+
+    useEffect(() => {
+        obtenerTotales();
+    }, []);
 
     return (
         <>
@@ -63,6 +89,7 @@ function GeneraPdf(props) {
                                 <tr>
                                     <th className="items__numeracion">#</th>
                                     <th className="items__description">Movimiento</th>
+                                    <th className="items__description">Datelles</th>
                                     <th className="items__price">Monto</th>
                                 </tr>
                             </thead>
@@ -71,6 +98,7 @@ function GeneraPdf(props) {
                                     <tr key={index}>
                                         <td>{index + 1}.- </td>
                                         <td className="items__description">{item.movimiento}</td>
+                                        <td className="items__description">{item.pago == "" ? item.concepto == "" ? "No disponibles" : item.concepto : item.pago}</td>
                                         <td>
                                             ${''}
                                             {new Intl.NumberFormat('es-MX', {
@@ -93,6 +121,20 @@ function GeneraPdf(props) {
                                 </p>
                             </Col>
                             <Col>
+                                <div className="subtotal__price">
+                                    Total de tarjeta ${''}
+                                    {new Intl.NumberFormat('es-MX', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    }).format(totalTarjeta)} MXN
+                                </div>
+                                <div className="subtotal__price">
+                                    Total de transferencia ${''}
+                                    {new Intl.NumberFormat('es-MX', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    }).format(totalTransferencia)} MXN
+                                </div>
                                 <div className="subtotal__price">
                                     Total de efectivo ${''}
                                     {new Intl.NumberFormat('es-MX', {

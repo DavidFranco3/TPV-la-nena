@@ -65,6 +65,7 @@ function RegistroMovimientosCajas(props) {
                     cajero: formDataCaja.cajero,
                     movimiento: formData.movimiento,
                     pago: formData.pago,
+                    concepto: formData.concepto,
                     monto: formData.monto,
                     movimientosAcumulados: movimientosAcumulados,
                     dineroAcumulado: formDataCaja.dineroAcumulado,
@@ -157,6 +158,18 @@ function RegistroMovimientosCajas(props) {
                             formData.movimiento === "Retiro" &&
                             (
                                 <>
+                                    <Form.Group as={Col} controlId="formGridNombre">
+                                        <Form.Label>
+                                            Concepto
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="concepto"
+                                            placeholder="Escribe el concepto"
+                                            defaultValue={formData.concepto}
+                                        />
+                                    </Form.Group>
+
                                     <Form.Group as={Col} controlId="formGridNombre">
                                         <Form.Label>
                                             Monto del movimiento
@@ -290,7 +303,8 @@ function initialFormValue() {
         movimiento: "",
         monto: "",
         pago: "",
-        observaciones: ""
+        observaciones: "",
+        concepto: ""
     }
 }
 
