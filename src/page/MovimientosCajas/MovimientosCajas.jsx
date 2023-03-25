@@ -241,6 +241,7 @@ function formatModelMovimientosCajas(movimientos) {
             idCaja: movimiento.idCaja,
             idCajero: movimiento.idCajero,
             cajero: movimiento.cajero,
+            concepto: movimiento.concepto,
             movimiento: movimiento.movimiento,
             monto: movimiento.monto,
             pago: movimiento.pago,

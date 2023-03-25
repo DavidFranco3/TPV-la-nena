@@ -126,14 +126,14 @@ function GeneraPdf(props) {
                                     {new Intl.NumberFormat('es-MX', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
-                                    }).format(totalTarjeta)} MXN
+                                    }).format(totalTarjeta/2)} MXN
                                 </div>
                                 <div className="subtotal__price">
                                     Total de transferencia ${''}
                                     {new Intl.NumberFormat('es-MX', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
-                                    }).format(totalTransferencia)} MXN
+                                    }).format(totalTransferencia/2)} MXN
                                 </div>
                                 <div className="subtotal__price">
                                     Total de efectivo ${''}
