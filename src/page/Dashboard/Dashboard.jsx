@@ -25,16 +25,18 @@ function Dashboard(props) {
 
   const [estadoUsuario, setEstadoUsuario] = useState(null);
   const [tipoUsuario, setTipoUsuario] = useState(null);
+  const [rolUsuario, setRolUsuario] = useState(null);
   const [datosUsuario, setDatosUsuario] = useState(null);
 
   const obtenerDatosUsuario = () => {
     try {
       obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
         const { data } = response;
-        const { admin, tipo } = data;
+        const { admin, tipo, rol } = data;
         //console.log(data)
         setTipoUsuario(tipo);
         setEstadoUsuario(admin);
+        setRolUsuario(rol);
         setDatosUsuario(data);
       }).catch((e) => {
         if (e.message === 'Network Error') {
@@ -146,7 +148,7 @@ function Dashboard(props) {
       }
       {/*Vista del Dashboard para un usuario cajero*/}
       {
-        estadoUsuario === "false" && tipoUsuario === "interno" &&
+        estadoUsuario === "false" && rolUsuario === "vendedor" && tipoUsuario === "interno" &&
         (
           <>
             <div className="grid grid-cols-5 gap-5">
@@ -174,6 +176,21 @@ function Dashboard(props) {
                 path={'/PedidosClientes'}
                 logo={LogoPedidos}
                 title={'Pedidos en línea'}
+              />
+            </div>
+          </>
+        )
+      }
+       {/*Vista del Dashboard para un usuario mesero*/}
+       {
+        estadoUsuario === "false" && rolUsuario === "mesero" && tipoUsuario === "interno" &&
+        (
+          <>
+            <div className="grid grid-cols-1 gap-1">
+              <ItemCard
+                path={'/TerminalPV'}
+                logo={LogoVentas}
+                title={'Ventas'}
               />
             </div>
           </>

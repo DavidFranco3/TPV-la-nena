@@ -120,8 +120,9 @@ function CancelarUsuarios(props) {
                                 disabled
                             >
                                 <option>Elige una opción</option>
-                                <option value="true" selected={admin === "true"}>Administrador</option>
-                                <option value="false" selected={admin === "false"}>Cajero</option>
+                                <option value="administrador" selected={admin === "administrador"}>Administrador</option>
+                                <option value="vendedor" selected={admin === "vendedor"}>Cajero</option>
+                                <option value="mesero" selected={admin === "mesero"}>Mesero</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>

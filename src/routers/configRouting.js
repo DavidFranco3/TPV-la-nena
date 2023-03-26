@@ -67,7 +67,7 @@ const configRouting = [
     {
         path: "/TerminalPV",
         page: TerminalPV,
-        roles: ["administrador", "vendedor"]
+        roles: ["administrador", "vendedor", "mesero"]
     },
     {
         path: "/Usuarios",
@@ -92,13 +92,13 @@ const configRouting = [
     {
         path: "*",
         page: Error404,
-        roles: ["administrador", "vendedor", "cliente"]
+        roles: ["administrador", "vendedor", "cliente", "mesero"]
     },
     {
         path: "/",
         page: Dashboard,
         default: true,
-        roles: ["administrador", "vendedor", "cliente"]
+        roles: ["administrador", "vendedor", "cliente", "mesero"]
     }
 ]
 

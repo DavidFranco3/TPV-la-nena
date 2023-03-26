@@ -15,10 +15,14 @@ const clientRoutes = configRouting.filter((route) =>
     route.roles.includes("cliente")
 );
 
+const waitersRoutes = configRouting.filter((route) =>
+    route.roles.includes("mesero")
+);
+
 const Routing = ({ setRefreshCheckLogin, userRole }) => (
     <Router>
         <Routes>
-            {map(userRole === "administrador" ? adminRoutes : userRole === "vendedor" ? sellerRoutes : clientRoutes, (route, index) => (
+            {map(userRole === "administrador" ? adminRoutes : userRole === "vendedor" ? sellerRoutes : userRole === "mesero" ? waitersRoutes : clientRoutes, (route, index) => (
                 <Route key={index} path={route.path} element={
                     <LayoutPrincipal
                         setRefreshCheckLogin={setRefreshCheckLogin}

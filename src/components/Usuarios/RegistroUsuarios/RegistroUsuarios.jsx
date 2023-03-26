@@ -31,10 +31,10 @@ function RegistroUsuarios(props) {
                 const dataTemp = {
                     nombre: formData.nombre,
                     usuario: formData.usuario,
-                    admin: formData.admin,
+                    admin: formData.admin == "administrador" ? "true" : "false",
                     password: formData.password,
                     tipo: "interno",
-                    rol: formData.admin === "true" ? "administrador" : "vendedor",
+                    rol: formData.admin,
                     estadoUsuario: "true"
                 }
                 registraUsuarios(dataTemp).then(response => {
@@ -113,8 +113,9 @@ function RegistroUsuarios(props) {
                                 defaultValue={formData.admin}
                             >
                                 <option>Elige una opción</option>
-                                <option value="true">Administrador</option>
-                                <option value="false">Cajero</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="vendedor">Cajero</option>
+                                <option value="mesero">Mesero</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>

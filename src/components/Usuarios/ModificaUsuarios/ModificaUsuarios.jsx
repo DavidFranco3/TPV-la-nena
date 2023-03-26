@@ -36,9 +36,9 @@ function ModificaUsuarios(props) {
                 const dataTemp = {
                     nombre: formData.nombre,
                     usuario: formData.usuario,
-                    admin: formData.admin,
+                    admin: formData.admin == "administrador" ? "true" : "false",
                     password: formData.password,
-                    rol: formData.admin === "true" ? "administrador" : "vendedor",
+                    rol: formData.admin,
                 }
                 actualizaUsuario(id, dataTemp).then(response => {
                     const { data } = response;
@@ -116,8 +116,9 @@ function ModificaUsuarios(props) {
                                 defaultValue={formData.admin}
                             >
                                 <option>Elige una opción</option>
-                                <option value="true" selected={formData.admin=="true"}>Administrador</option>
-                                <option value="false" selected={formData.admin=="false"}>Cajero</option>
+                                <option value="administrador" selected={formData.admin=="administrador"}>Administrador</option>
+                                <option value="vendedor" selected={formData.admin=="vendedor"}>Cajero</option>
+                                <option value="mesero" selected={formData.admin=="mesero"}>Mesero</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>
