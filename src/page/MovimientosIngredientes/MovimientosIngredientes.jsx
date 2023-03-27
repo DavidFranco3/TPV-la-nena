@@ -1,30 +1,32 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionIngredientesActivos, totalIngredientesActivos, listarPaginacionIngredientesCancelados, totalIngredientesCancelados } from "../../api/ingredientes";
+import { listarMovimientosIngredientesPaginacion, totalMovimientosIngredientes } from "../../api/ingredientes";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import BasicModal from "../../components/Modal/BasicModal";
-import ListIngredientes from "../../components/Ingredientes/ListIngredientes";
+import ListMovimientosIngredientes from "../../components/MovimientosIngredientes/ListMovimientosIngredientes";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
 import { Spinner, Button, Col, Row, Alert } from "react-bootstrap";
-import RegistroIngredientes from "../../components/Ingredientes/RegistroIngredientes";
+import RegistroMovimientiosIngredientes from "../../components/MovimientosIngredientes/RegistroMovimientosIngredientes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
-import { Switch } from '@headlessui/react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function Ingredientes(props) {
+function MovimientosIngredientes(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
+
+    const parametros = useParams();
+    const { id } = parametros;
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
 
     const rutaRegreso = () => {
-        enrutamiento("/")
+        enrutamiento("/Ingredientes")
     }
 
     // Para definir el estado del switch
@@ -76,7 +78,7 @@ function Ingredientes(props) {
 
     // Para la lista de abonos
     const registroIngredientes = (content) => {
-        setTitulosModal("Registrar un ingrediente");
+        setTitulosModal("Registrar un movimiento");
         setContentModal(content);
         setShowModal(true);
     }
@@ -91,82 +93,41 @@ function Ingredientes(props) {
     const cargarDatos = () => {
         //console.log("Estado del switch ", estadoSwitch)
         try {
-            if (estadoSwitch) {
-                // Lista los productos activos
-                totalIngredientesActivos().then(response => {
+            // Lista los productos activos
+            totalMovimientosIngredientes(id).then(response => {
+                const { data } = response;
+                setNoTotalIngredientes(data)
+            }).catch(e => {
+                console.log(e)
+            })
+
+            if (page === 0) {
+                setPage(1)
+
+                listarMovimientosIngredientesPaginacion(page, rowsPerPage, id).then(response => {
                     const { data } = response;
-                    setNoTotalIngredientes(data)
+                    if (!listIngredientes && data) {
+                        setListIngredientes(formatModelMovimientosIngredientes(data));
+                    } else {
+                        const datosIngredientes = formatModelMovimientosIngredientes(data);
+                        setListIngredientes(datosIngredientes)
+                    }
                 }).catch(e => {
                     console.log(e)
                 })
-
-                if (page === 0) {
-                    setPage(1)
-
-                    listarPaginacionIngredientesActivos(page, rowsPerPage).then(response => {
-                        const { data } = response;
-                        if (!listIngredientes && data) {
-                            setListIngredientes(formatModelIngredientes(data));
-                        } else {
-                            const datosIngredientes = formatModelIngredientes(data);
-                            setListIngredientes(datosIngredientes)
-                        }
-                    }).catch(e => {
-                        console.log(e)
-                    })
-                } else {
-                    listarPaginacionIngredientesActivos(page, rowsPerPage).then(response => {
-                        const { data } = response;
-                        //console.log(data)
-                        if (!listIngredientes && data) {
-                            setListIngredientes(formatModelIngredientes(data));
-                        } else {
-                            const datosIngredientes = formatModelIngredientes(data);
-                            setListIngredientes(datosIngredientes)
-                        }
-                    }).catch(e => {
-                        console.log(e)
-                    })
-                }
             } else {
-                // Lista los productos obsoletos
-                totalIngredientesCancelados().then(response => {
+                listarMovimientosIngredientesPaginacion(page, rowsPerPage, id).then(response => {
                     const { data } = response;
-                    setNoTotalIngredientes(data)
+                    if (!listIngredientes && data) {
+                        setListIngredientes(formatModelMovimientosIngredientes(data));
+                    } else {
+                        const datosIngredientes = formatModelMovimientosIngredientes(data);
+                        setListIngredientes(datosIngredientes)
+                    }
                 }).catch(e => {
                     console.log(e)
                 })
-
-                if (page === 0) {
-                    setPage(1)
-
-                    listarPaginacionIngredientesCancelados(page, rowsPerPage).then(response => {
-                        const { data } = response;
-                        if (!listIngredientes && data) {
-                            setListIngredientes(formatModelIngredientes(data));
-                        } else {
-                            const datosIngredientes = formatModelIngredientes(data);
-                            setListIngredientes(datosIngredientes)
-                        }
-                    }).catch(e => {
-                        console.log(e)
-                    })
-                } else {
-                    listarPaginacionIngredientesCancelados(page, rowsPerPage).then(response => {
-                        const { data } = response;
-                        //console.log(data)
-                        if (!listIngredientes && data) {
-                            setListIngredientes(formatModelIngredientes(data));
-                        } else {
-                            const datosIngredientes = formatModelIngredientes(data);
-                            setListIngredientes(datosIngredientes)
-                        }
-                    }).catch(e => {
-                        console.log(e)
-                    })
-                }
             }
-
         } catch (e) {
             console.log(e)
         }
@@ -174,7 +135,7 @@ function Ingredientes(props) {
 
     useEffect(() => {
         cargarDatos();
-    }, [location, estadoSwitch, page, rowsPerPage]);
+    }, [location, page, rowsPerPage]);
 
 
     return (
@@ -182,7 +143,7 @@ function Ingredientes(props) {
             <Alert className="fondoPrincipalAlert">
                 <Row>
                     <Col xs={12} md={4} className="titulo">
-                        <h1 className="font-bold">Ingredientes</h1>
+                        <h1 className="font-bold">Movimientos de ingredientes</h1>
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
@@ -192,10 +153,11 @@ function Ingredientes(props) {
                                 style={{ marginRight: '10px' }}
                                 onClick={() => {
                                     registroIngredientes(
-                                        <RegistroIngredientes
+                                        <RegistroMovimientiosIngredientes
                                             setShowModal={setShowModal}
                                             location={location}
                                             navigate={navigate}
+                                            id={id}
                                         />
                                     )
                                 }}
@@ -217,34 +179,12 @@ function Ingredientes(props) {
                 </Row>
             </Alert>
 
-            <Row>
-                <Col xs={12} md={8}>
-                    <h3 className="tituloSwitch">Estado de los ingredientes</h3>
-                </Col>
-                <Col xs={6} md={4}>
-                    <Switch
-                        title={estadoSwitch === true ? "Ver ingredientes cancelados" : "Ver ingredientes activos"}
-                        checked={estadoSwitch}
-                        onChange={setEstadoSwitch}
-                        className={`${estadoSwitch ? 'bg-teal-900' : 'bg-red-600'}
-          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                    >
-                        <span className="sr-only">Use setting</span>
-                        <span
-                            aria-hidden="true"
-                            className={`${estadoSwitch ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
-                        />
-                    </Switch>
-                </Col>
-            </Row>
-
             {
                 listIngredientes ?
                     (
                         <>
                             <Suspense fallback={< Spinner />}>
-                                <ListIngredientes
+                                <ListMovimientosIngredientes
                                     setRefreshCheckLogin={setRefreshCheckLogin}
                                     listIngredientes={listIngredientes}
                                     location={location}
@@ -272,27 +212,18 @@ function Ingredientes(props) {
     );
 }
 
-function formatModelIngredientes(ingredientes) {
+function formatModelMovimientosIngredientes(ingredientes) {
     const tempIngredientes = []
     ingredientes.forEach((ingrediente) => {
         tempIngredientes.push({
-            id: ingrediente._id,
             nombre: ingrediente.nombre,
-            umPrimaria: ingrediente.umPrimaria,
-            costoAdquisicion: parseFloat(ingrediente.costoAdquisicion),
-            umAdquisicion: ingrediente.umAdquisicion,
-            umProduccion: ingrediente.umProduccion,
-            costoProduccion: parseFloat(ingrediente.costoProduccion),
-            cantidadPiezas: ingrediente.cantidadPiezas,
-            negocio: ingrediente.negocio,
+            tipo: ingrediente.tipo,
             cantidad: ingrediente.cantidad,
-            imagen: ingrediente.imagen,
-            estado: ingrediente.estado,
-            fechaCreacion: ingrediente.createdAt,
-            fechaActualizacion: ingrediente.updatedAt
+            um: ingrediente.um,
+            fecha: ingrediente.fecha,
         });
     });
     return tempIngredientes;
 }
 
-export default withRouter(Ingredientes);
+export default withRouter(MovimientosIngredientes);

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Routing from "./routers/Routing";
 import Login from "./page/Login";
 import { AuthContext } from "./utils/contexts";
-import { } from "./api/auth";
 import { ToastContainer } from "react-toastify";
 import './App.scss';
 import { isUserLogedApi, getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "./api/auth";
@@ -43,6 +42,8 @@ function App() {
     useEffect(() => {
         obtenerDatosUsuario();
     }, []);
+
+    console.log(userRole);
 
     if (!LoadUser) return null;
 

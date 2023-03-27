@@ -13,6 +13,7 @@ import MovimientosCajas from "../page/MovimientosCajas";
 import PedidosClientes from "../page/PedidosClientes";
 import TerminalPedidos from "../page/TerminalPedidos";
 import Clientes from "../page/Clientes";
+import MovimientosIngredientes from "../page/MovimientosIngredientes";
 
 // Importaciones de productos
 import RegistraProductos from "../components/Productos/RegistraProductos";
@@ -82,6 +83,11 @@ const configRouting = [
     {
         path: "/Ingredientes",
         page: Ingredientes,
+        roles: ["administrador"]
+    },
+    {
+        path: "/MovimientosIngredientes/:id",
+        page: MovimientosIngredientes,
         roles: ["administrador"]
     },
     {

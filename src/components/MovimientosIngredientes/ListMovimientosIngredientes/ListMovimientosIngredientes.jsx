@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
-import { Badge, Container, Button, Col } from "react-bootstrap";
+import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
@@ -9,53 +9,9 @@ import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { LogRegistroSalida } from "../../MovimientosIngredientes/Gestion/GestionMovimientos";
-import { map } from "lodash";
 
-function ListIngredientesConsumidosDia(props) {
-    const { listIngredientesConsumidos, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalIngredientes } = props;
-
-    const listIngredientesSinDuplicados = listIngredientesConsumidos.reduce((acumulador, valorActual) => {
-        const elementoYaExiste = acumulador.find(elemento => elemento.id === valorActual.id);
-        if (elementoYaExiste) {
-            return acumulador.map((elemento) => {
-                if (elemento.id === valorActual.id) {
-                    return {
-                        ...elemento,
-                        cantidad: parseFloat(elemento.cantidad) + parseFloat(valorActual.cantidad)
-                    }
-                }
-
-                return elemento;
-            });
-        }
-
-        return [...acumulador, valorActual];
-    }, []);
-
-    const registrarSalida = () => {
-        map(listIngredientesSinDuplicados, (ingrediente, index) => {
-            const { id, cantidad, um } = ingrediente
-            LogRegistroSalida(id, cantidad, um);
-        })
-    }
-
-    const subHeaderComponent = () => {
-
-        return (
-            <>
-                <Col>
-                    <Button
-                        title="Limpiar la busqueda"
-                        onClick={registrarSalida()}
-                    >
-                        Registrar los movimientos del dia
-                    </Button>
-                </Col>
-            </>
-        );
-    };
-
+function ListMovimientosIngredientes(props) {
+    const { listIngredientes, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalIngredientes } = props;
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -114,12 +70,26 @@ function ListIngredientesConsumidosDia(props) {
             reorder: false
         },
         {
+            name: "Tipo",
+            selector: row => row.tipo,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
             name: "Cantidad",
             selector: row => row.cantidad + " " + row.um,
             sortable: false,
             center: true,
             reorder: false
-        }
+        },
+        {
+            name: "Fecha",
+            selector: row => dayjs(row.fecha).format('dddd, LL hh:mm A'),
+            sortable: false,
+            center: true,
+            reorder: false
+        },
     ];
 
     // Definiendo estilos para data table
@@ -129,7 +99,7 @@ function ListIngredientesConsumidosDia(props) {
 
     const cargarDatos = () => {
         const timeout = setTimeout(() => {
-            setRows(listIngredientesConsumidos);
+            setRows(listIngredientes);
             setPending(false);
         }, 0);
         return () => clearTimeout(timeout);
@@ -149,26 +119,20 @@ function ListIngredientesConsumidosDia(props) {
     return (
         <>
             <Container fluid>
-                <Col>
-                    <Button
-                        title="Limpiar la busqueda"
-                        onClick={() => {
-                            registrarSalida();
-                        }}
-                    >
-                        Registrar los movimientos del dia
-                    </Button>
-                </Col>
                 <DataTable
                     columns={columns}
                     noDataComponent="No hay registros para mostrar"
-                    data={listIngredientesSinDuplicados}
+                    data={listIngredientes}
                     progressPending={pending}
                     paginationComponentOptions={paginationComponentOptions}
                     paginationResetDefaultPage={resetPaginationToogle}
                     customStyles={estilos}
                     sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
                     pagination
+                    paginationServer
+                    paginationTotalRows={noTotalIngredientes}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    onChangePage={handleChangePage}
                 />
             </Container>
 
@@ -179,4 +143,4 @@ function ListIngredientesConsumidosDia(props) {
     );
 }
 
-export default ListIngredientesConsumidosDia;
+export default ListMovimientosIngredientes;

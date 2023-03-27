@@ -4,7 +4,6 @@ import { faPenToSquare, faTrashCan, faArrowDownLong, faEye } from "@fortawesome/
 import BasicModal from "../../Modal/BasicModal";
 import EliminaProductos from "../EliminaProductos";
 import { Badge, Container } from "react-bootstrap";
-import ModificaProductos from "../ModificaProductos";
 import CancelarProductos from '../CancelarProductos';
 import ListIngredientesProductos from '../ListIngredientesProductos';
 import "../../../scss/styles.scss";

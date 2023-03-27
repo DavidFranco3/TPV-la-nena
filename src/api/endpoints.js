@@ -119,10 +119,14 @@ export const ENDPOINTListarPaginandoIngredientesActivos = "/ingredientes/listarP
 export const ENDPOINTTotalIngredientesActivos = "/ingredientes/totalIngredientesActivos";
 export const ENDPOINTListarPaginandoIngredientesCancelados = "/ingredientes/listarPaginandoCancelados";
 export const ENDPOINTTotalIngredientesCancelados = "/ingredientes/totalIngredientesCancelados";
-export const ENDPOINTObtenerIngredientes = "/ingredientess/obtener";
+export const ENDPOINTObtenerIngredientes = "/ingredientes/obtener";
 export const ENDPOINTEliminarIngredientes = "/ingredientes/eliminar";
 export const ENDPOINTActualizarIngredientes = "/ingredientes/actualizar";
 export const ENDPOINTCancelarIngredientes = "/ingredientes/cancelar";
+export const ENDPOINTRegitsrarMovimiento = "/ingredientes/registraMovimientos";
+export const ENDPOINTListarMovimientosPaginacion = "/ingredientes/listarMovimientosIngredientesPaginacion";
+export const ENDPOINTTotalMovimientos = "/ingredientes/totalMovimientosIngrediente";
+export const ENDPOINTListarMovimientos = "/ingredientes/listarMovimientosIngredientes";
 
 // Cajas
 export const ENDPOINTRegistroCajas = "/cajas/registro";

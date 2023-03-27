@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "../../../scss/styles.scss";
 import { Badge, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan, faArrowDownLong, faEye } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../Modal/BasicModal";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
@@ -12,9 +12,17 @@ import ModificaIngredientes from '../ModificaIngredientes';
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { useNavigate } from "react-router-dom"
 
 function ListIngredientes(props) {
     const { listIngredientes, location, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalIngredientes } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
+
+    const rutaMovimientos = (id) => {
+        enrutamiento(`/MovimientosIngredientes/${id}`)
+    }
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -105,6 +113,13 @@ function ListIngredientes(props) {
             reorder: false
         },
         {
+            name: "Cantidad",
+            selector: row => row.cantidad + " " + row.umProduccion,
+            sortable: false,
+            center: true,
+            reorder: false
+        },
+        {
             name: "Estado",
             selector: row => (
                 <>
@@ -175,9 +190,19 @@ function ListIngredientes(props) {
                 <>
                     <div className="flex justify-end items-center space-x-4">
                         <Badge
+                            title="Ver movimientos de ingredientes"
+                            bg="primary"
+                            className="eliminar"
+                            onClick={() => {
+                                rutaMovimientos(row.id);
+                            }}>
+                            <FontAwesomeIcon icon={faEye} className="text-lg" />
+                        </Badge>
+
+                        <Badge
                             title="Modificar ingrediente"
                             bg="success"
-                            className="editar"
+                            className="eliminar"
                             onClick={() => {
                                 modificaIngredientes(
                                     <ModificaIngredientes

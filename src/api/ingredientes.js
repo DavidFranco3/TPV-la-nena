@@ -10,6 +10,10 @@ import {
     ENDPOINTEliminarIngredientes,
     ENDPOINTActualizarIngredientes,
     ENDPOINTCancelarIngredientes,
+    ENDPOINTRegitsrarMovimiento,
+    ENDPOINTListarMovimientosPaginacion,
+    ENDPOINTTotalMovimientos,
+    ENDPOINTListarMovimientos,
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -51,6 +55,41 @@ export async function listarIngredientes() {
     return await axios.get(API_HOST + ENDPOINTListarIngredientes, config);
 }
 
+// Para listar todas las categorias
+export async function listarMovimientosIngredientes(id) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarMovimientos + `/${id}`, config);
+}
+
+// Listar las categorias activas paginandolas
+export async function listarMovimientosIngredientesPaginacion(pagina, limite, id) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarMovimientosPaginacion + `/?pagina=${pagina}&&limite=${limite}&&id=${id}`, config);
+}
+
+export async function totalMovimientosIngredientes(id) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalMovimientos + `/?id=${id}`, config);
+}
+
 // Listar las categorias activas paginandolas
 export async function listarPaginacionIngredientesActivos(pagina, limite) {
     const config = {
@@ -85,6 +124,19 @@ export async function eliminaIngrediente(id) {
         }
     };
     return await axios.delete(API_HOST + ENDPOINTEliminarIngredientes + `/${id}`, config);
+}
+
+// Modifica datos de la categoria
+export async function registraMovimientosIngrediente(id, data) {
+
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.put(API_HOST + ENDPOINTRegitsrarMovimiento + `/${id}`, data, config);
 }
 
 // Modifica datos de la categoria
