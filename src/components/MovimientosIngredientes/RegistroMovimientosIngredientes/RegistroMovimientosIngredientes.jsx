@@ -162,6 +162,17 @@ function RegistroMovimientosIngredientes(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridNombre">
+                            <Form.Label>UM</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="umIngrediente"
+                                placeholder="Escribe la cantidad"
+                                value={umIngrediente}
+                                disabled
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Cantidad</Form.Label>
                             <Form.Control
                                 type="number"
