@@ -472,6 +472,14 @@ function Tiquet(props) {
                                 setHacerPedido={setHacerPedido}
                                 setNombreCliente={setNombreCliente}
                                 setObservaciones={setObservaciones}
+
+                                tipoPago={tipoPago}
+                                dineroIngresado={dineroIngresado}
+                                tipoPedido={tipoPedido}
+                                hacerPedido={hacerPedido}
+                                nombreCliente={nombreCliente}
+                                observaciones={observaciones}
+
                                 setShowModal={setShowModal}
                             />
                         )

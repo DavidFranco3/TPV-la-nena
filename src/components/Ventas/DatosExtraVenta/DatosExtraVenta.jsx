@@ -5,8 +5,20 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function DatosExtraVenta(props) {
-    const { setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
-    const [formData, setFormData] = useState(initialFormValue());
+    const { observaciones, dineroIngresado, tipoPago, tipoPedido, hacerPedido, nombreCliente, setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
+
+    const dataTemp = {
+        tipoPago: tipoPago,
+        dinero: dineroIngresado,
+        tipoPedido: tipoPedido,
+        hacerPedido: hacerPedido,
+        nombre: nombreCliente,
+        observaciones: observaciones
+    }
+
+
+
+    const [formData, setFormData] = useState(initialFormValue(dataTemp));
     const [loading, setLoading] = useState(false);
 
     const onSubmit = e => {
@@ -90,6 +102,8 @@ function DatosExtraVenta(props) {
                                 <option value="por WhatsApp">WhatsApp</option>
                                 <option value="por llamada">Llamada</option>
                                 <option value="de forma presencial">Presencial</option>
+                                <option value="por Rappi">Rappi</option>
+                                <option value="por Uber">Uber</option>
                             </Form.Control>
                         </Form.Group>
                     </Row>
@@ -178,14 +192,14 @@ function DatosExtraVenta(props) {
     );
 }
 
-function initialFormValue() {
+function initialFormValue(data) {
     return {
-        tipoPago: "",
-        dinero: "",
-        tipoPedido: "",
-        hacerPedido: "",
-        nombre: "",
-        observaciones: ""
+        tipoPago: data.tipoPago,
+        dinero: data.dinero,
+        tipoPedido: data.tipoPedido,
+        hacerPedido: data.hacerPedido,
+        nombre: data.nombre,
+        observaciones: data.observaciones
     }
 }
 
