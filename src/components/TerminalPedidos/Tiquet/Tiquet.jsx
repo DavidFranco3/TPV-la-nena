@@ -7,6 +7,7 @@ import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraPedidos } from "../../../api/pedidosClientes";
 import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../PedidosClientes/DatosExtraPedido";
+import Slider from '../../PedidosClientes/Slider';
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
@@ -201,6 +202,13 @@ function Tiquet(props) {
         setContentModal(content);
         setShowModal(true);
     }
+
+    const ayuda = (content) => {
+        setTitulosModal("Ayuda");
+        setContentModal(content);
+        setShowModal(true);
+    }
+
     const [fechayHora, setFechayHora] = useState("");
 
     const cargarFecha = () => {
@@ -497,6 +505,18 @@ function Tiquet(props) {
                         )
                     }>
                     <FontAwesomeIcon icon={icon} />
+                </Button>
+
+                <Button
+                    title="Añadir detalles del pedido"
+                    onClick={() =>
+                        ayuda(
+                            <Slider
+                                setShowModal={setShowModal}
+                            />
+                        )
+                    }>
+                    ❓
                 </Button>
 
                 {/*<Button href="whatsapp://send?text=Hola Mundo&phone=+524531527363">Enviar mensaje</Button>*/}
