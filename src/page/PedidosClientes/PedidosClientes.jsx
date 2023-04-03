@@ -13,10 +13,23 @@ import AnimacionLoading from "../../assets/json/loading.json";
 import { Switch } from '@headlessui/react';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faArrowCircleLeft, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import Slider from '../../components/PedidosClientes/Slider';
+import BasicModal from '../../components/Modal/BasicModal';
 
 function PedidosClientes(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
+
+        //Para el modal
+        const [showModal, setShowModal] = useState(false);
+        const [contentModal, setContentModal] = useState(null);
+        const [titulosModal, setTitulosModal] = useState(null);
+
+        const ayuda = (content) => {
+                setTitulosModal("Ayuda");
+                setContentModal(content);
+                setShowModal(true);
+        }
 
         // Para definir el enrutamiento
         const enrutamiento = useNavigate();
@@ -210,6 +223,17 @@ function PedidosClientes(props) {
                                                         >
                                                                 <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
                                                         </Button>
+                                                        <Button
+                                                                title="Ver ayuda"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() =>
+                                                                        ayuda(
+                                                                                <Slider />
+                                                                        )
+                                                                }>
+                                                                <FontAwesomeIcon icon={faQuestion} /> Ayuda
+                                                        </Button>
                                                 </div>
                                         </Col>
                                 </Row>
@@ -242,6 +266,9 @@ function PedidosClientes(props) {
                                                 </>
                                         )
                         }
+                        <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
+                                {contentModal}
+                        </BasicModal>
                 </>
         );
 }
