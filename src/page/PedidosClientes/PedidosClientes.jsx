@@ -195,7 +195,7 @@ function PedidosClientes(props) {
                                                                         rutaRegistroVenta();
                                                                 }}
                                                         >
-                                                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                                                <FontAwesomeIcon icon={faCirclePlus} /> Nuevo pedido
                                                         </Button>
                                                         {/*</>
                                                                 )
