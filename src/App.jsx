@@ -41,9 +41,7 @@ function App() {
 
     useEffect(() => {
         obtenerDatosUsuario();
-    }, []);
-
-    console.log(userRole);
+    }, [refreshCheckLogin]);
 
     if (!LoadUser) return null;
 
