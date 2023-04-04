@@ -213,6 +213,17 @@ function PedidosClientes(props) {
                                                         >
                                                                 <FontAwesomeIcon icon={faCirclePlus} /> Nuevo pedido
                                                         </Button>
+                                                        <Button
+                                                                title="Ver ayuda"
+                                                                className="btnRegistro"
+                                                                style={{ marginRight: '10px' }}
+                                                                onClick={() =>
+                                                                        ayuda(
+                                                                                <Slider />
+                                                                        )
+                                                                }>
+                                                                <FontAwesomeIcon icon={faQuestion} /> Ayuda
+                                                        </Button>
                                                         </>
                                                                 )
                                                         }
@@ -225,17 +236,6 @@ function PedidosClientes(props) {
                                                                 }}
                                                         >
                                                                 <FontAwesomeIcon icon={faArrowCircleLeft} /> Regresar
-                                                        </Button>
-                                                        <Button
-                                                                title="Ver ayuda"
-                                                                className="btnRegistro"
-                                                                style={{ marginRight: '10px' }}
-                                                                onClick={() =>
-                                                                        ayuda(
-                                                                                <Slider />
-                                                                        )
-                                                                }>
-                                                                <FontAwesomeIcon icon={faQuestion} /> Ayuda
                                                         </Button>
                                                 </div>
                                         </Col>
