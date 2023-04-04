@@ -233,13 +233,6 @@
     height: 100vh;
     display: flex;
   }
-
-  @media only screen and (max-width: 768px) {
-    /* Modificar los estilos para pantallas de 768px o menos */
-    width: 100%;
-    height: auto;
-    margin: 10px 0;
-  }
 }
 
 @media print {
@@ -484,13 +477,6 @@
   margin: 20px 0 0 10px;
   border-radius: 10px;
 
-  @media only screen and (max-width: 768px) {
-    /* Modificar los estilos para pantallas de 768px o menos */
-    width: 100%;
-    height: auto;
-    margin: 10px 0;
-  }
-
   .logotipo {
     width: 91px !important;
     margin: 0 auto;
@@ -577,24 +563,6 @@
           cursor: pointer;
         }
       }
-
-      /* estilos para dispositivos móviles */
-      @media only screen and (max-width: 600px) {
-        table {
-          font-size: 12px;
-        }
-
-        .items__description {
-          display: block;
-          text-align: center;
-        }
-
-        .remove-icon {
-          display: block;
-          text-align: center;
-          margin-top: 10px;
-        }
-      }
     }
 
     .subtotal {
@@ -634,22 +602,10 @@
 
         .observaciones__tiquet {
           margin-top: 10px;
-
-          @media only screen and (max-width: 768px) {
-            /* Modificar los estilos para pantallas de 768px o menos */
-            height: auto;
-            margin: 10px 0;
-          }
         }
 
         .subtotal__price {
           margin: 5px 0;
-
-          @media only screen and (max-width: 768px) {
-            /* Modificar los estilos para pantallas de 768px o menos */
-            height: auto;
-            margin: 10px 0;
-          }
         }
       }
     }
@@ -665,26 +621,12 @@
     justify-content: space-between;
     align-items: center;
 
-    @media only screen and (max-width: 768px) {
-      /* Modificar los estilos para pantallas de 768px o menos */
-      width: 100%;
-      height: auto;
-      margin: 10px 0;
-    }
-
     Button {
       cursor: pointer;
       border: none;
       background-color: transparent;
       font-size: 1.5rem;
       color: $primary-dark;
-
-      @media only screen and (max-width: 768px) {
-        /* Modificar los estilos para pantallas de 768px o menos */
-        width: 100%;
-        height: auto;
-        margin: 10px 0;
-      }
     }
   }
 
@@ -818,24 +760,6 @@
         .remove-icon {
           text-align: center;
           cursor: pointer;
-        }
-      }
-
-      /* estilos para dispositivos móviles */
-      @media only screen and (max-width: 600px) {
-        table {
-          font-size: 12px;
-        }
-
-        .items__description {
-          display: block;
-          text-align: center;
-        }
-
-        .remove-icon {
-          display: block;
-          text-align: center;
-          margin-top: 10px;
         }
       }
     }
@@ -1305,14 +1229,6 @@ body {
           }
         }
       }
-    }
-  }
-
-  //Estilos para el footer
-  /* START FOOTER PINNING CODE */
-  @media only screen and (max-width: 980px) {
-    .footer--pin {
-      display: none !important;
     }
   }
 
