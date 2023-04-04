@@ -53,7 +53,7 @@ function ListClientes(props) {
         const timeout = setTimeout(() => {
             setRows(listClientes);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

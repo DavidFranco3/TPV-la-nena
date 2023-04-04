@@ -101,7 +101,7 @@ function ListMovimientosIngredientes(props) {
         const timeout = setTimeout(() => {
             setRows(listIngredientes);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

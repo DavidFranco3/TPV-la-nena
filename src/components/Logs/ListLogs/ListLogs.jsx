@@ -73,7 +73,7 @@ function ListLogs(props) {
         const timeout = setTimeout(() => {
             setRows(listLogs);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

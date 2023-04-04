@@ -131,7 +131,7 @@ function ListIngredientesConsumidosDia(props) {
         const timeout = setTimeout(() => {
             setRows(listIngredientesConsumidos);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

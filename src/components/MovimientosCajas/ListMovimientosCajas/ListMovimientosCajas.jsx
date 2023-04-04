@@ -198,7 +198,7 @@ function ListMovimientosCajas(props) {
         const timeout = setTimeout(() => {
             setRows(listMovimientos);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

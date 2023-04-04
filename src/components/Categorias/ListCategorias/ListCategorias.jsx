@@ -194,7 +194,7 @@ function ListCategorias(props) {
         const timeout = setTimeout(() => {
             setRows(listCategorias);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

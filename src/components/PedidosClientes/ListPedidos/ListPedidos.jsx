@@ -276,7 +276,7 @@ function ListPedidos(props) {
         const timeout = setTimeout(() => {
             setRows(listPedidos);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

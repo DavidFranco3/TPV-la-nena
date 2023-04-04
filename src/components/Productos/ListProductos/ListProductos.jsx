@@ -283,7 +283,7 @@ function ListProductos(props) {
         const timeout = setTimeout(() => {
             setRows(listProductos);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 

@@ -107,7 +107,7 @@ function ListHistorialVentasDia(props) {
         const timeout = setTimeout(() => {
             setRows(listDetallesDia);
             setPending(false);
-        }, 0);
+        }, 2000);
         return () => clearTimeout(timeout);
     }
 
