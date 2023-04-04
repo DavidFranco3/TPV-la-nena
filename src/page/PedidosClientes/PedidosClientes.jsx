@@ -49,6 +49,8 @@ function PedidosClientes(props) {
 
         const [tipoUsuario, setTipoUsuario] = useState("");
 
+        const [estadoUsuario, setEstadoUsuario] = useState(null);
+
         const [idUsuario, setIdUsuario] = useState("");
 
         const obtenerDatosUsuario = () => {
@@ -58,6 +60,7 @@ function PedidosClientes(props) {
                                 //console.log(data)
                                 const { tipo, admin, _id } = data;
                                 setTipoUsuario(tipo);
+                                setEstadoUsuario(admin);
                                 setDatosUsuario(data);
                                 setIdUsuario(_id);
                         }).catch((e) => {
@@ -196,10 +199,10 @@ function PedidosClientes(props) {
                                         </Col>
                                         <Col xs={6} md={8}>
                                                 <div style={{ float: 'right' }}>
-                                                        {/*{
-                                                                tipoUsuario === "externo" &&
+                                                        {
+                                                                estadoUsuario === "false" && tipoUsuario === "externo" &&
                                                                 (
-                                                                <>*/}
+                                                                <>
                                                         <Button
                                                                 title="Ir a la terminal de pedidos"
                                                                 className="btnRegistro"
@@ -210,9 +213,9 @@ function PedidosClientes(props) {
                                                         >
                                                                 <FontAwesomeIcon icon={faCirclePlus} /> Nuevo pedido
                                                         </Button>
-                                                        {/*</>
+                                                        </>
                                                                 )
-                                                        }*/}
+                                                        }
                                                         <Button
                                                                 title="Regresar a la pagina anterior"
                                                                 className="btnRegistro"
