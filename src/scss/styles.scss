@@ -665,6 +665,31 @@
     justify-content: space-between;
     align-items: center;
 
+    @media (max-width: 768px) {
+      .ticket__actions {
+        flex-direction: column;
+        /* Cambia a una disposición en columna */
+        height: auto;
+        /* Altura automática para ajustarse al contenido */
+        padding: 10px;
+        /* Agrega un espaciado interno */
+      }
+
+      Button {
+        margin-top: 5px;
+        /* Agrega un margen superior para separar los botones */
+        width: 100%;
+        /* Ancho completo para que los botones ocupen todo el ancho del contenedor */
+      }
+    }
+
+    @media (max-width: 576px) {
+      Button {
+        font-size: 1rem;
+        /* Reduzca el tamaño de fuente de los botones para pantallas más pequeñas */
+      }
+    }
+
     Button {
       cursor: pointer;
       border: none;
