@@ -449,19 +449,20 @@ function Tiquet(props) {
     const Opciones = ({ icon }) => {
         return (
             <div className="ticket__actions">
-                <button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</button>
+                <Button className="button__options" title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</Button>
 
-                <button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</button>
+                <Button className="button__options" title="Imprimir ticket único" onClick={() => handlePrint()}>📄</Button>
 
-                <button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</button>
+                <Button className="button__options" title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</Button>
 
-                <button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</button>
+                <Button className="button__options" title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</Button>
 
-                <button title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</button>
+                <Button className="button__options" title="Aplicar IVA" onClick={() => handleIVAApply()}>🧾</Button>
 
-                <button title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</button>
+                <Button className="button__options" title="Cancelar IVA" onClick={() => handleIVACancel()}>🚫️</Button>
 
-                <button
+                <Button
+                    className="button__options"
                     title="Añadir detalles de la venta"
                     onClick={() =>
                         datosExtraVenta(
@@ -485,7 +486,7 @@ function Tiquet(props) {
                         )
                     }>
                     <FontAwesomeIcon icon={icon} />
-                </button>
+                </Button>
 
                 {/*<Button href="whatsapp://send?text=Hola Mundo&phone=+524531527363">Enviar mensaje</Button>*/}
 

@@ -621,7 +621,7 @@
     justify-content: space-between;
     align-items: center;
 
-    Button {
+    .button__options {
       cursor: pointer;
       border: none;
       background-color: transparent;
@@ -630,7 +630,7 @@
     }
   }
 
-  Button:hover {
+  .button__options:hover {
     -webkit-transform: scale(1.25);
     -moz-transform: scale(1.25);
     -ms-transform: scale(1.25);
