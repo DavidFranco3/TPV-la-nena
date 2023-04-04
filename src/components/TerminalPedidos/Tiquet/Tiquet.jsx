@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraPedidos } from "../../../api/pedidosClientes";
+import { obtenerProductos } from "../../../api/productos";
 import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../PedidosClientes/DatosExtraPedido";
-import Slider from '../../PedidosClientes/Slider';
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
@@ -28,7 +28,27 @@ function Tiquet(props) {
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 
-    const total = products.reduce((amount, item) => (amount + parseFloat(item.precio)), 0);
+    const [costoEnvio, setCostoEnvio] = useState("0.16");
+
+    const obtenerCostoEnvio = () => {
+        try {
+            obtenerProductos("6387b912fa40f22f916a56f4").then(response => {
+                const { data } = response;
+                // console.log(data)
+                setCostoEnvio(parseFloat(data.precio))
+            }).catch(e => {
+                console.log(e)
+            })
+        } catch (e) {
+            console.log(e.response)
+        }
+    }
+
+    useEffect(() => {
+        obtenerCostoEnvio();
+    }, []);
+
+    const total = products.reduce((amount, item) => (amount + parseFloat(item.precio)), 0) + parseFloat(costoEnvio);
 
     const [determinaBusquedaTiquet, setDeterminaBusquedaTiquet] = useState(false);
     const [numeroTiquet, setNumeroTiquet] = useState("");
@@ -50,56 +70,6 @@ function Tiquet(props) {
     }
 
     const [IVA, setIVA] = useState("0.16");
-
-    const handleIVACancel = () => {
-        setIVA("0");
-    }
-
-    const handleIVAApply = () => {
-        setIVA("0.16");
-    }
-
-    const handlePrint = () => {
-        if (products.length === 0) {
-            toast.warning("Debe cargar articulos al pedido")
-        } else {
-            const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
-            tiquetGenerado.document.write('<html><head>');
-            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-            tiquetGenerado.document.write('</head><body>');
-            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-            tiquetGenerado.document.write('</body></html>');
-
-            tiquetGenerado.document.close();
-            tiquetGenerado.focus();
-            tiquetGenerado.print();
-            tiquetGenerado.close();
-        }
-    }
-
-    const handlePrintDouble = () => {
-        if (products.length === 0) {
-            toast.warning("Debe cargar articulos al pedido")
-        } else {
-            const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
-            tiquetGenerado.document.write('<html><head>');
-            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-            tiquetGenerado.document.write('</head><body>');
-            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-            tiquetGenerado.document.write('</body></html>');
-
-            tiquetGenerado.document.write('<html><head>');
-            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-            tiquetGenerado.document.write('</head><body>');
-            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-            tiquetGenerado.document.write('</body></html>');
-
-            tiquetGenerado.document.close();
-            tiquetGenerado.focus();
-            tiquetGenerado.print();
-            tiquetGenerado.close();
-        }
-    }
 
     const obtenerNumeroTiquet = () => {
         try {
@@ -277,7 +247,7 @@ function Tiquet(props) {
         )
     }
 
-    const Pie = ({ observaciones, tipoPago, total, IVA, dineroIngresado, domicilio }) => {
+    const Pie = ({ observaciones, tipoPago, total, IVA, dineroIngresado, domicilio, costoEnvio }) => {
         return (
             <div className="subtotal">
                 <hr />
@@ -530,6 +500,7 @@ function Tiquet(props) {
                         observaciones={observaciones}
                         domicilio={domicilio}
                         tipoPago={tipoPago}
+                        costoEnvio={costoEnvio}
                         total={total}
                         IVA={IVA}
                         dineroIngresado={dineroIngresado}
