@@ -50,47 +50,6 @@ function DatosExtraVenta(props) {
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridEstado">
                             <Form.Label>
-                                Método de pago
-                            </Form.Label>
-
-                            <Form.Control as="select"
-                                defaultValue={formData.tipoPago}
-                                name="tipoPago"
-                            >
-                                <option>Elige una opción</option>
-                                <option value="Efectivo">Efectivo</option>
-                                <option value="Tarjeta">Tarjeta</option>
-                                <option value="Transferencia">Transferencia</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Row>
-
-                    <Row className="mb-3">
-                        {
-                            formData.tipoPago === "Efectivo" &&
-                            (
-                                <>
-                                    <Form.Group as={Col} controlId="formGridNombre">
-                                        <Form.Label>
-                                            ¿Con cuanto dinero paga?
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            name="dinero"
-                                            placeholder="Escribe la cantidad recibida"
-                                            step="0.1"
-                                            min="0"
-                                            defaultValue={formData.dinero}
-                                        />
-                                    </Form.Group>
-                                </>
-                            )
-                        }
-                    </Row>
-
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridEstado">
-                            <Form.Label>
                                 Hacer Pedido
                             </Form.Label>
 
@@ -123,6 +82,54 @@ function DatosExtraVenta(props) {
                                 <option value="para comer aquí">Para comer aquí</option>
                             </Form.Control>
                         </Form.Group>
+                    </Row>
+
+                    {
+                        formData.tipoPedido === "para llevar" &&
+                        (
+                            <>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formGridEstado">
+                                        <Form.Label>
+                                            Método de pago
+                                        </Form.Label>
+
+                                        <Form.Control as="select"
+                                            defaultValue={formData.tipoPago}
+                                            name="tipoPago"
+                                        >
+                                            <option>Elige una opción</option>
+                                            <option value="Efectivo">Efectivo</option>
+                                            <option value="Tarjeta">Tarjeta</option>
+                                            <option value="Transferencia">Transferencia</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Row>
+                            </>
+                        )
+                    }
+
+                    <Row className="mb-3">
+                        {
+                            formData.tipoPago === "Efectivo" &&
+                            (
+                                <>
+                                    <Form.Group as={Col} controlId="formGridNombre">
+                                        <Form.Label>
+                                            ¿Con cuanto dinero paga?
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="dinero"
+                                            placeholder="Escribe la cantidad recibida"
+                                            step="0.1"
+                                            min="0"
+                                            defaultValue={formData.dinero}
+                                        />
+                                    </Form.Group>
+                                </>
+                            )
+                        }
                     </Row>
 
                     {

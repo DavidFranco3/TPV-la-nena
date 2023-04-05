@@ -93,7 +93,7 @@ const configRouting = [
     {
         path: "/Historiales",
         page: Historiales,
-        roles: ["administrador", "vendedor"]
+        roles: ["administrador", "vendedor", "mesero"]
     },
     {
         path: "*",

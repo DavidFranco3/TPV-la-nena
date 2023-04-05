@@ -192,6 +192,11 @@ function Dashboard(props) {
                 logo={LogoVentas}
                 title={'Ventas'}
               />
+              <ItemCard
+                path={'/Historiales'}
+                logo={LogoHistorial}
+                title={'Historiales'}
+              />
             </div>
           </>
         )
