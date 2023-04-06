@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { registraMovimientos } from "../../../api/movimientosCajas";
+import { actualizaVenta, obtenerVentas } from "../../../api/ventas";
 import { obtenerCaja } from "../../../api/cajas";
 import "../../../scss/styles.scss";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
@@ -12,13 +13,15 @@ import { LogCajaActualizacion } from "../../Cajas/Gestion/GestionCajas";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../../api/auth";
 import { obtenerUsuario } from "../../../api/usuarios";
 import { obtenerUltimaCajaCajero } from "../../../api/cajas";
+import { LogVentaActualizacion } from "../../Ventas/Gestion/GestionVentas"
 
 function RegistroMovimientosCajasVentas(props) {
-    const { setShowModal, navigate, datosVentas } = props;
+    const { setShowModal, navigate, location, datosVentas } = props;
 
-    const { usuario } = datosVentas
+    const { id, numeroTiquet, usuario } = datosVentas
 
     const [formData, setFormData] = useState(initialFormValue(datosVentas));
+    const [formDataMovimiento, setFormDataMovimiento] = useState(initialFormValueMovimiento());
     const [loading, setLoading] = useState(false);
 
     const [idCajero, setIdCajero] = useState("");
@@ -94,13 +97,34 @@ function RegistroMovimientosCajasVentas(props) {
                 }
                 registraMovimientos(dataTemp).then(response => {
                     const { data } = response;
+                    //LogVentaActualizacion(id, numeroTiquet, formDataMovimiento.tipoPago, formDataMovimiento.efectivo, formDataMovimiento.iva, formData.monto, navigate)
+                    LogCajaActualizacion(caja, formData.movimiento == "Fondo de caja" ? formData.monto : formData.movimiento == "Venta" && formData.pago == "Transferencia" ? 0 : formData.movimiento == "Venta" && formData.pago == "Tarjeta" ? 0 : formData.movimiento == "Venta" && formData.pago == "Efectivo" ? formData.monto : formData.movimiento == "Retiro" ? parseFloat(formData.monto) * -1 : formData.movimiento == "Aumento" ? formData.monto : 0);
+                    LogsInformativos("Se ha registrado el movimiento del cajero " + dataTemp.cajero, data.datos);
+                    toast.success(data.mensaje);
+                }).catch(e => {
+                    console.log(e)
+                })
+
+                const dataTemp2 = {
+
+                    tipoPago: formDataMovimiento.tipoPago,
+                    efectivo: formDataMovimiento.efectivo,
+                    cambio:formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? (parseFloat(formDataMovimiento.efectivo) - (formData.monto + formData.monto * parseFloat("0.16"))).toFixed(2) : (formDataMovimiento.efectivo - formData.monto).toFixed(2),
+                    total: formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "no" ? formData.monto + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Transferencia" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formData.monto,
+                    pagado: "true",
+                    iva: formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : "0",
+                    comision: formDataMovimiento.tipoPago == "Tarjeta"? formData.monto + formData.monto * parseFloat("0.03") : "0"
+                }
+                actualizaVenta(id, dataTemp2).then(response => {
+                    const { data } = response;
                     navigate({
                         search: queryString.stringify(""),
                     });
-                    LogsInformativos("Se ha registrado el movimiento del cajero " + dataTemp.cajero, data.datos);
-                    LogCajaActualizacion(caja, formData.movimiento == "Fondo de caja" ? formData.monto : formData.movimiento == "Venta" && formData.pago == "Transferencia" ? 0 : formData.movimiento == "Venta" && formData.pago == "Tarjeta" ? 0 : formData.movimiento == "Venta" && formData.pago == "Efectivo" ? formData.monto : formData.movimiento == "Retiro" ? parseFloat(formData.monto) * -1 : formData.movimiento == "Aumento" ? formData.monto : 0);
-                    toast.success(data.mensaje);
+                    LogsInformativos("Se actualizo la venta " + numeroTiquet, dataTemp2);
                     cancelarRegistro();
+                    // console.log("Actualización de saldo personal")
+                }).catch(e => {
+                    console.log(e)
                 })
             } catch (e) {
                 console.log(e)
@@ -110,6 +134,7 @@ function RegistroMovimientosCajasVentas(props) {
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormDataMovimiento({ ...formDataMovimiento, [e.target.name]: e.target.value });
     };
 
     return (
@@ -149,107 +174,94 @@ function RegistroMovimientosCajasVentas(props) {
                     </Row>
 
                     <Row className="mb-3">
+                        <Form.Group as={Col} controlId="formGridEstado">
+                            <Form.Label>
+                                Método de pago
+                            </Form.Label>
+
+                            <Form.Control
+                                as="select"
+                                defaultValue={formDataMovimiento.tipoPago}
+                                name="tipoPago"
+                            >
+                                <option>Elige una opción</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                                <option value="Transferencia">Transferencia</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridEstado">
+                            <Form.Label>
+                                IVA
+                            </Form.Label>
+
+                            <Form.Control
+                                as="select"
+                                defaultValue={formDataMovimiento.iva}
+                                name="iva"
+                            >
+                                <option>Elige una opción</option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Row>
+
+                    <Row className="mb-3">
                         {
-                            formData.movimiento === "Fondo de caja" &&
+                            formDataMovimiento.tipoPago == "Efectivo" &&
                             (
                                 <>
                                     <Form.Group as={Col} controlId="formGridNombre">
                                         <Form.Label>
-                                            Monto del movimiento
+                                            Efectivo
                                         </Form.Label>
                                         <Form.Control
                                             type="number"
-                                            name="monto"
-                                            placeholder="Escribe la cantidad"
+                                            name="efectivo"
+                                            placeholder="Escribe la cantidad de dinero ingresado"
                                             step="0.1"
                                             min="0"
-                                            defaultValue={formData.monto}
-                                            disabled
+                                            defaultValue={formDataMovimiento.efectivo}
                                         />
                                     </Form.Group>
                                 </>
                             )
                         }
 
+                        <Form.Group as={Col} controlId="formGridNombre">
+                            <Form.Label>
+                                Monto del movimiento
+                            </Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="monto"
+                                placeholder="Escribe la cantidad"
+                                step="0.1"
+                                min="0"
+                                value={formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "no" ? formData.monto + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Transferencia" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formData.monto}
+                                disabled
+                            />
+                        </Form.Group>
+
                         {
-                            formData.movimiento === "Retiro" &&
+                            formDataMovimiento.tipoPago == "Efectivo" &&
                             (
                                 <>
                                     <Form.Group as={Col} controlId="formGridNombre">
                                         <Form.Label>
-                                            Monto del movimiento
+                                            Cambio
                                         </Form.Label>
                                         <Form.Control
                                             type="number"
-                                            name="monto"
-                                            placeholder="Escribe la cantidad"
+                                            name="efectivo"
+                                            placeholder="Escribe la cantidad de dinero ingresado"
                                             step="0.1"
                                             min="0"
-                                            defaultValue={formData.monto}
                                             disabled
+                                            value={formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? (parseFloat(formDataMovimiento.efectivo) - (formData.monto + formData.monto * parseFloat("0.16"))).toFixed(2) : (formDataMovimiento.efectivo - formData.monto).toFixed(2)}
                                         />
-                                    </Form.Group>
-                                </>
-                            )
-                        }
-
-                        {
-                            formData.movimiento === "Aumento" &&
-                            (
-                                <>
-                                    <Form.Group as={Col} controlId="formGridNombre">
-                                        <Form.Label>
-                                            Monto del movimiento
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            name="monto"
-                                            placeholder="Escribe la cantidad"
-                                            step="0.1"
-                                            min="0"
-                                            defaultValue={formData.monto}
-                                            disabled
-                                        />
-                                    </Form.Group>
-                                </>
-                            )
-                        }
-
-                        {
-                            formData.movimiento === "Venta" &&
-                            (
-                                <>
-                                    <Form.Group as={Col} controlId="formGridNombre">
-                                        <Form.Label>
-                                            Monto del movimiento
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            name="monto"
-                                            placeholder="Escribe la cantidad"
-                                            step="0.1"
-                                            min="0"
-                                            defaultValue={formData.monto}
-                                            disabled
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} controlId="formGridEstado">
-                                        <Form.Label>
-                                            Método de pago
-                                        </Form.Label>
-
-                                        <Form.Control
-                                            as="select"
-                                            defaultValue={formData.pago}
-                                            name="pago"
-                                            disabled
-                                        >
-                                            <option>Elige una opción</option>
-                                            <option value="Efectivo">Efectivo</option>
-                                            <option value="Tarjeta">Tarjeta</option>
-                                            <option value="Transferencia">Transferencia</option>
-                                        </Form.Control>
                                     </Form.Group>
                                 </>
                             )
@@ -292,7 +304,16 @@ function initialFormValue(data) {
     return {
         movimiento: "Venta",
         monto: data.total,
-        pago: data.tipoPago
+        pago: data.tipoPago,
+    }
+}
+
+function initialFormValueMovimiento() {
+    return {
+        tipoPago: "",
+        efectivo: "",
+        iva: "",
+        comision: "",
     }
 }
 

@@ -26,12 +26,13 @@ function RegistroIngredientes(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!imagenIngrediente || !formData.nombre || !formData.umPrimaria || !formData.costoAdquisicion) {
+        if (!formData.nombre || !formData.umPrimaria || !formData.costoAdquisicion) {
             toast.warning("Completa el formulario");
         } else {
             try {
                 setLoading(true);
                 // Sube a cloudinary la imagen principal del producto
+                if(imagenIngrediente) {
                 subeArchivosCloudinary(imagenIngrediente, "ingrediente").then(response => {
                     const { data } = response;
 
@@ -62,6 +63,32 @@ function RegistroIngredientes(props) {
                 }).then(e => {
                     console.log(e)
                 })
+            } else {
+                const precio = formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umAdquisicion === "Decá" ? parseFloat(formData.costoAdquisicion) / 100 : formData.umAdquisicion === "Hectó" ? parseFloat(formData.costoAdquisicion) / 10 : formData.umAdquisicion === "Kiló" ? parseFloat(formData.costoAdquisicion) / 1000 : formData.umAdquisicion === "Decí" ? parseFloat(formData.costoAdquisicion) * 10 : formData.umAdquisicion === "Centí" ? parseFloat(formData.costoAdquisicion) * 100 : formData.umAdquisicion === "Milí" ? parseFloat(formData.costoAdquisicion) * 1000 : formData.umAdquisicion == formData.umPrimaria ? formData.costoAdquisicion : "";
+
+                    const dataTemp = {
+                        nombre: formData.nombre,
+                        umPrimaria: formData.umPrimaria,
+                        costoAdquisicion: formData.costoAdquisicion,
+                        umAdquisicion: formData.umPrimaria === "Paquete" ? "Paquete" : formData.umAdquisicion,
+                        umProduccion: formData.umPrimaria === "Paquete" ? "Piezas" : formData.umProduccion,
+                        cantidadPiezas: formData.cantidadPiezas,
+                        cantidad: "0",
+                        costoProduccion: formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umProduccion === "Decá" ? parseFloat(precio) * 100 : formData.umProduccion === "Hectó" ? parseFloat(formData.umAdquisicion) * 10 : formData.umProduccion === "Kiló" ? parseFloat(precio) * 1000 : formData.umProduccion === "Decí" ? parseFloat(precio) / 10 : formData.umProduccion === "Centí" ? parseFloat(precio) / 100 : formData.umProduccion === "Milí" ? parseFloat(precio) / 1000 : formData.umProduccion == formData.umPrimaria ? precio : "",
+                        negocio: "LA NENA",
+                        imagen: "",
+                        estado: "true"
+                    }
+                    registraIngredientes(dataTemp).then(response => {
+                        const { data } = response;
+                        navigate({
+                            search: queryString.stringify(""),
+                        });
+                        LogsInformativos("Se ha registrado el ingrediente " + formData.nombre, data.datos);
+                        toast.success(data.mensaje);
+                        cancelarRegistro();
+                    })
+            }
             } catch (e) {
                 console.log(e)
             }

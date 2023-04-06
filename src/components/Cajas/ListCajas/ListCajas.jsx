@@ -98,7 +98,7 @@ function ListCajas(props) {
         },
         {
             name: "Fecha",
-            selector: row => dayjs(row.fechCreacion).format('dddd, LL'),
+            selector: row => dayjs(row.fechaCreacion).format('dddd, LL'),
             sortable: false,
             center: true,
             reorder: false

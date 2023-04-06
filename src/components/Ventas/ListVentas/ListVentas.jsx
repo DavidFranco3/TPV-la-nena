@@ -84,28 +84,45 @@ function ListVentas(props) {
             selector: row => (
                 <>
                     {
-                        row.estado === "true" ?
-                            (
-                                <>
-                                    <Badge
-                                        bg="success"
-                                        className="estado"
-                                    >
-                                        Venta completada
-                                    </Badge>
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                    <Badge
-                                        bg="danger"
-                                        className="estado"
-                                    >
-                                        Venta cancelada
-                                    </Badge>
-                                </>
-                            )
+                        row.estado === "true" && row.pagado == "true" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="success"
+                                    className="estado"
+                                >
+                                    Venta completada
+                                </Badge>
+                            </>
+                        )
+                    }
+
+                    {
+                        row.estado === "true" && row.pagado == "false" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="warning"
+                                    className="estado"
+                                >
+                                    Pedido
+                                </Badge>
+                            </>
+                        )
+                    }
+
+                    {
+                        row.estado === "false" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="danger"
+                                    className="estado"
+                                >
+                                    Venta cancelada
+                                </Badge>
+                            </>
+                        )
                     }
                 </>
             ),
@@ -117,33 +134,60 @@ function ListVentas(props) {
         {
             name: "Movimiento en caja",
             selector: row => (
-                row.estado === "true" ?
-                    (
-                        <>
-                            <Badge
-                                bg="primary"
-                                title="Generar un movimiento en caja"
-                                className="indicadorDetallesVenta"
-                                onClick={() => {
-                                    recuperarVenta(
-                                        <RegistroMovimientosCajasVentas
-                                            datosVentas={row}
-                                            location={location}
-                                            navigate={navigate}
-                                            setShowModal={setShowModal}
-                                        />
-                                    )
-                                }}
-                            >
-                                Generar
-                            </Badge>
-                        </>
-                    )
-                    :
-                    (
-                        "No disponible"
-                    )
+                <>
+                    {
+                        row.estado === "true" && row.pagado == "false" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="primary"
+                                    title="Generar un movimiento en caja"
+                                    className="indicadorDetallesVenta"
+                                    onClick={() => {
+                                        recuperarVenta(
+                                            <RegistroMovimientosCajasVentas
+                                                datosVentas={row}
+                                                location={location}
+                                                navigate={navigate}
+                                                setShowModal={setShowModal}
+                                            />
+                                        )
+                                    }}
+                                >
+                                    Pagar
+                                </Badge>
+                            </>
+                        )
+                    }
+                    {
+                        row.estado === "true" && row.pagado == "true" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="success"
+                                    className="estado"
+                                >
+                                    Pagado
+                                </Badge>
+                            </>
+                        )
+                    }
+                    {
+                        row.estado === "false" &&
+                        (
+                            <>
+                                <Badge
+                                    bg="danger"
+                                    className="estado"
+                                >
+                                    No disponible
+                                </Badge>
+                            </>
+                        )
+                    }
+                </>
             ),
+
             sortable: false,
             center: true,
             reorder: false

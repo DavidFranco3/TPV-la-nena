@@ -328,6 +328,7 @@ function formatModelVentas(ventas) {
                         subtotal: parseFloat(venta.subtotal),
                         iva: parseFloat(venta.iva),
                         comision: parseFloat(venta.comision),
+                        pagado: venta.pagado,
                         hacerPedido: venta.hacerPedido,
                         tipoPedido: venta.tipoPedido,
                         estado: venta.estado,

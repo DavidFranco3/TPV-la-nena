@@ -32,15 +32,41 @@ function ModificaIngredientes(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!imagenFile || !formData.nombre || !formData.umPrimaria || !formData.costoAdquisicion) {
+        if (!formData.nombre || !formData.umPrimaria || !formData.costoAdquisicion) {
             toast.warning("Completa el formulario");
         } else {
             try {
                 setLoading(true);
                 // Sube a cloudinary la imagen principal del producto
-                subeArchivosCloudinary(imagenFile, "ingrediente").then(response => {
-                    const { data } = response;
+                if (imagenFile) {
+                    subeArchivosCloudinary(imagenFile, "ingrediente").then(response => {
+                        const { data } = response;
 
+                        const precio = formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umAdquisicion === "Decá" ? parseFloat(formData.costoAdquisicion) / 100 : formData.umAdquisicion === "Hectó" ? parseFloat(formData.costoAdquisicion) / 10 : formData.umAdquisicion === "Kiló" ? parseFloat(formData.costoAdquisicion) / 1000 : formData.umAdquisicion === "Decí" ? parseFloat(formData.costoAdquisicion) * 10 : formData.umAdquisicion === "Centí" ? parseFloat(formData.costoAdquisicion) * 100 : formData.umAdquisicion === "Milí" ? parseFloat(formData.costoAdquisicion) * 1000 : formData.umAdquisicion == formData.umPrimaria ? formData.costoAdquisicion : "";
+
+                        const dataTemp = {
+                            nombre: formData.nombre,
+                            umPrimaria: formData.umPrimaria,
+                            costoAdquisicion: formData.costoAdquisicion,
+                            umAdquisicion: formData.umPrimaria === "Paquete" ? "Paquete" : formData.umAdquisicion,
+                            umProduccion: formData.umPrimaria === "Paquete" ? "Piezas" : formData.umProduccion,
+                            cantidadPiezas: formData.cantidadPiezas,
+                            costoProduccion: formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umProduccion === "Decá" ? parseFloat(precio) * 100 : formData.umProduccion === "Hectó" ? parseFloat(formData.umAdquisicion) * 10 : formData.umProduccion === "Kiló" ? parseFloat(precio) * 1000 : formData.umProduccion === "Decí" ? parseFloat(precio) / 10 : formData.umProduccion === "Centí" ? parseFloat(precio) / 100 : formData.umProduccion === "Milí" ? parseFloat(precio) / 1000 : formData.umProduccion == formData.umPrimaria ? precio : "",
+                            imagen: data.secure_url,
+                        }
+                        actualizaIngrediente(id, dataTemp).then(response => {
+                            const { data } = response;
+                            navigate({
+                                search: queryString.stringify(""),
+                            });
+                            LogsInformativos("Se ha modificado el ingrediente " + datosIngredientes.nombre, datosIngredientes);
+                            toast.success(data.mensaje);
+                            cancelarRegistro();
+                        })
+                    }).then(e => {
+                        console.log(e)
+                    })
+                } else {
                     const precio = formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umAdquisicion === "Decá" ? parseFloat(formData.costoAdquisicion) / 100 : formData.umAdquisicion === "Hectó" ? parseFloat(formData.costoAdquisicion) / 10 : formData.umAdquisicion === "Kiló" ? parseFloat(formData.costoAdquisicion) / 1000 : formData.umAdquisicion === "Decí" ? parseFloat(formData.costoAdquisicion) * 10 : formData.umAdquisicion === "Centí" ? parseFloat(formData.costoAdquisicion) * 100 : formData.umAdquisicion === "Milí" ? parseFloat(formData.costoAdquisicion) * 1000 : formData.umAdquisicion == formData.umPrimaria ? formData.costoAdquisicion : "";
 
                     const dataTemp = {
@@ -51,7 +77,7 @@ function ModificaIngredientes(props) {
                         umProduccion: formData.umPrimaria === "Paquete" ? "Piezas" : formData.umProduccion,
                         cantidadPiezas: formData.cantidadPiezas,
                         costoProduccion: formData.umPrimaria === "Paquete" ? parseFloat(formData.costoAdquisicion) / formData.cantidadPiezas : formData.umProduccion === "Decá" ? parseFloat(precio) * 100 : formData.umProduccion === "Hectó" ? parseFloat(formData.umAdquisicion) * 10 : formData.umProduccion === "Kiló" ? parseFloat(precio) * 1000 : formData.umProduccion === "Decí" ? parseFloat(precio) / 10 : formData.umProduccion === "Centí" ? parseFloat(precio) / 100 : formData.umProduccion === "Milí" ? parseFloat(precio) / 1000 : formData.umProduccion == formData.umPrimaria ? precio : "",
-                        imagen: data.secure_url,
+                        imagen: "",
                     }
                     actualizaIngrediente(id, dataTemp).then(response => {
                         const { data } = response;
@@ -62,9 +88,7 @@ function ModificaIngredientes(props) {
                         toast.success(data.mensaje);
                         cancelarRegistro();
                     })
-                }).then(e => {
-                    console.log(e)
-                })
+                }
             } catch (e) {
                 console.log(e)
             }
@@ -127,7 +151,7 @@ function ModificaIngredientes(props) {
                     </Row>
 
                     <Row className="mb-3">
-                       
+
                         {
                             formData.umPrimaria === "Paquete" &&
                             (
@@ -145,7 +169,7 @@ function ModificaIngredientes(props) {
                             )
                         }
 
-{
+                        {
                             formData.umPrimaria === "Paquete" &&
                             (
                                 <>
@@ -187,7 +211,7 @@ function ModificaIngredientes(props) {
                             )
                         }
 
-{
+                        {
                             formData.umPrimaria !== "" && formData.umPrimaria !== "Paquete" &&
                             (
                                 <>
