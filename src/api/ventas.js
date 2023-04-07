@@ -27,7 +27,11 @@ import {
     ENDPOINTTotalVentasCajerosActivas,
     ENDPOINTListarPaginandoVentasCajerosCanceladas,
     ENDPOINTTotalVentasCajerosCanceladas,
-    ENDPOINTTotalIngredientesConsumidosDiarios
+    ENDPOINTTotalIngredientesConsumidosDiarios,
+    ENDPOINTListarPaginandoVentasActivasTicket,
+    ENDPOINTTotalVentasActivasTicket,
+    ENDPOINTListarPaginandoVentasCanceladasTicket,
+    ENDPOINTTotalVentasCanceladasTicket
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -213,6 +217,54 @@ export async function totalVentasUsuariosCanceladas(usuario) {
     return await axios.get(API_HOST + ENDPOINTTotalVentasCajerosCanceladas + `/?usuario=${usuario}`, config);
 }
 
+// Listar las ventas activas paginandolas
+export async function listarPaginacionVentasTicketActivas(pagina, limite, ticket) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasActivasTicket + `/?pagina=${pagina}&&limite=${limite}&&numeroTiquet=${ticket}`, config);
+}
+
+// Listar las ventas canceladas paginandolas
+export async function listarPaginacionVentasTicketCanceladas(pagina, limite, ticket) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasCanceladasTicket + `/?pagina=${pagina}&&limite=${limite}&&numeroTiquet=${ticket}`, config);
+}
+
+// Para obtener el total de ventas registradas
+export async function totalVentasTicketActivas(ticket) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasActivasTicket + `/?numeroTiquet=${ticket}`, config);
+}
+
+// Para listar todas las ventas canceladas
+export async function totalVentasTicketCanceladas(ticket) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTTotalVentasCanceladasTicket + `/?numeroTiquet=${ticket}`, config);
+}
+
 // Listar las ventas de un dia especifico paginandolas
 export async function listarPaginacionVentasDia(pagina, limite, dia) {
     const config = {
@@ -293,7 +345,7 @@ export async function listarConsumoIngredientesDiario(dia) {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${getTokenApi()}`
         }
-    }; 
+    };
     return await axios.get(API_HOST + ENDPOINTTotalIngredientesConsumidosDiarios + `?dia=${dia}`, config);
 }
 

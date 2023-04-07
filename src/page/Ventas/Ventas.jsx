@@ -4,14 +4,14 @@ import {
         totalVentasActivas,
         listarPaginacionVentasCanceladas,
         totalVentasCanceladas,
-        listarPaginacionVentasUsuariosActivas,
-        totalVentasUsuariosActivas,
-        listarPaginacionVentasUsuariosCanceladas,
-        totalVentasUsuariosCanceladas
+        listarPaginacionVentasTicketActivas,
+        totalVentasTicketActivas,
+        listarPaginacionVentasTicketCanceladas,
+        totalVentasTicketCanceladas,
 } from "../../api/ventas";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
-import { Alert, Col, Row, Button, Spinner } from "react-bootstrap";
+import { Alert, Col, Row, Button, Spinner, Form } from "react-bootstrap";
 import ListVentas from "../../components/Ventas/ListVentas";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "../../api/auth";
 import { obtenerUsuario } from "../../api/usuarios";
@@ -23,6 +23,8 @@ import { Switch } from '@headlessui/react';
 
 function Ventas(props) {
         const { setRefreshCheckLogin, location, navigate } = props;
+
+        const [numeroTiquet, setNumeroTiquet] = useState("");
 
         // Para definir el estado del switch
         const [estadoSwitch, setEstadoSwitch] = useState(true);
@@ -86,8 +88,7 @@ function Ventas(props) {
                 //console.log("Estado del switch ", estadoSwitch)
                 try {
                         if (estadoSwitch) {
-
-                                if (estadoUsuario === "true") {
+                                if (!numeroTiquet) {
                                         // Lista los productos activos
                                         totalVentasActivas().then(response => {
                                                 const { data } = response;
@@ -127,7 +128,7 @@ function Ventas(props) {
                                         }
                                 } else {
                                         // Lista los productos activos
-                                        totalVentasUsuariosActivas(idUsuario).then(response => {
+                                        totalVentasTicketActivas(numeroTiquet.toString()).then(response => {
                                                 const { data } = response;
                                                 setNoTotalVentas(data);
                                         }).catch(e => {
@@ -137,7 +138,7 @@ function Ventas(props) {
                                         if (page === 0) {
                                                 setPage(1)
 
-                                                listarPaginacionVentasUsuariosActivas(page, rowsPerPage, idUsuario).then(response => {
+                                                listarPaginacionVentasTicketActivas(page, rowsPerPage, numeroTiquet.toString()).then(response => {
                                                         const { data } = response;
                                                         if (!listVentas && data) {
                                                                 setListVentas(formatModelVentas(data));
@@ -149,7 +150,7 @@ function Ventas(props) {
                                                         console.log(e)
                                                 })
                                         } else {
-                                                listarPaginacionVentasUsuariosActivas(page, rowsPerPage, idUsuario).then(response => {
+                                                listarPaginacionVentasTicketActivas(page, rowsPerPage, numeroTiquet.toString()).then(response => {
                                                         const { data } = response;
                                                         //console.log(data)
 
@@ -165,9 +166,8 @@ function Ventas(props) {
                                         }
                                 }
                         } else {
-
-                                if (estadoUsuario === "true") {
-                                        // Lista los productos activos
+                                if (!numeroTiquet) {
+                                        // Lista los productos activos 
                                         totalVentasCanceladas().then(response => {
                                                 const { data } = response;
                                                 setNoTotalVentas(data);
@@ -205,8 +205,8 @@ function Ventas(props) {
                                                 })
                                         }
                                 } else {
-                                        // Lista los productos activos
-                                        totalVentasUsuariosCanceladas(idUsuario).then(response => {
+                                        // Lista los productos activos 
+                                        totalVentasTicketCanceladas(numeroTiquet.toString()).then(response => {
                                                 const { data } = response;
                                                 setNoTotalVentas(data);
                                         }).catch(e => {
@@ -216,7 +216,7 @@ function Ventas(props) {
                                         if (page === 0) {
                                                 setPage(1)
 
-                                                listarPaginacionVentasUsuariosCanceladas(page, rowsPerPage, idUsuario).then(response => {
+                                                listarPaginacionVentasTicketCanceladas(page, rowsPerPage, numeroTiquet.toString()).then(response => {
                                                         const { data } = response;
                                                         if (!listVentas && data) {
                                                                 setListVentas(formatModelVentas(data));
@@ -228,7 +228,7 @@ function Ventas(props) {
                                                         console.log(e)
                                                 })
                                         } else {
-                                                listarPaginacionVentasUsuariosCanceladas(page, rowsPerPage, idUsuario).then(response => {
+                                                listarPaginacionVentasTicketCanceladas(page, rowsPerPage, numeroTiquet.toString()).then(response => {
                                                         const { data } = response;
                                                         //console.log(data)
 
@@ -253,7 +253,7 @@ function Ventas(props) {
         // Para listar las ventas
         useEffect(() => {
                 cargarDatos();
-        }, [location, estadoSwitch, estadoUsuario, page, rowsPerPage]);
+        }, [location, estadoSwitch, page, numeroTiquet, rowsPerPage]);
 
         return (
                 <>
@@ -277,6 +277,21 @@ function Ventas(props) {
                                                 />
                                         </Switch>
                                 </Col>
+                        </Row>
+
+                        <Row>
+                                <Col></Col>
+                                <Col>
+                                        <Form.Control
+                                                id="search"
+                                                type="number"
+                                                placeholder="Busqueda por numero de ticket"
+                                                aria-label="Search Input"
+                                                value={numeroTiquet}
+                                                onChange={e => setNumeroTiquet(e.target.value)}
+                                        />
+                                </Col>
+                                <Col></Col>
                         </Row>
 
                         {
