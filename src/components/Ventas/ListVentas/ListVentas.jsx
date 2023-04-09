@@ -200,6 +200,13 @@ function ListVentas(props) {
             selector: row => row.productosVendidos,
         },
         {
+            name: "Mesa",
+            sortable: false,
+            center: true,
+            reorder: false,
+            selector: row => row.tipoPedido == "para comer aquí" ? row.cliente : "No disponible",
+        },
+        {
             name: "Total",
             sortable: false,
             center: true,
