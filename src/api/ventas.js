@@ -31,7 +31,8 @@ import {
     ENDPOINTListarPaginandoVentasActivasTicket,
     ENDPOINTTotalVentasActivasTicket,
     ENDPOINTListarPaginandoVentasCanceladasTicket,
-    ENDPOINTTotalVentasCanceladasTicket
+    ENDPOINTTotalVentasCanceladasTicket,
+    ENDPOINTObtenerVentaAsociada
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -59,6 +60,18 @@ export async function obtenerVentas(params) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTObtenerVentas + `/${params}`, config);
+}
+
+// Para obtener una venta
+export async function obtenerVentaAsociada(params) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTObtenerVentaAsociada + `/${params}`, config);
 }
 
 // Para listar todas las ventas

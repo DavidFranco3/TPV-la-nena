@@ -186,7 +186,7 @@ function Dashboard(props) {
         estadoUsuario === "false" && rolUsuario === "mesero" && tipoUsuario === "interno" &&
         (
           <>
-            <div className="grid grid-cols-1 gap-1">
+            <div className="grid grid-cols-2 gap-2">
               <ItemCard
                 path={'/TerminalPV'}
                 logo={LogoVentas}

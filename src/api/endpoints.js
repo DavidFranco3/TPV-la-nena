@@ -62,6 +62,7 @@ export const ENDPOINTListarPaginandoVentasCanceladasTicket = "/ventas/listarPagi
 export const ENDPOINTTotalVentasCanceladasTicket = "/ventas/totalVentasCanceladasTicket";
 export const ENDPOINTListarPaginandoVentasDia = "/ventas/listarPaginandoDia";
 export const ENDPOINTListarPaginandoVentasMes = "/ventas/listarPaginandoMes";
+export const ENDPOINTObtenerVentaAsociada = "/ventas/obtenerVentaAsociada";
 export const ENDPOINTObtenerVentas = "/ventas/obtener";
 export const ENDPOINTEliminarVentas = "/ventas/eliminar";
 export const ENDPOINTActualizarVentas = "/ventas/actualizar";

@@ -5,9 +5,10 @@ import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function DatosExtraVenta(props) {
-    const { observaciones, dineroIngresado, tipoPago, tipoPedido, hacerPedido, nombreCliente, setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
+    const { observaciones, mesa, dineroIngresado, tipoPago, tipoPedido, hacerPedido, nombreCliente, setMesa, setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
 
     const dataTemp = {
+        mesa: mesa,
         tipoPago: tipoPago,
         dinero: dineroIngresado,
         tipoPedido: tipoPedido,
@@ -29,6 +30,7 @@ function DatosExtraVenta(props) {
         setTipoPedido(formData.tipoPedido);
         setHacerPedido(formData.hacerPedido);
         setNombreCliente(formData.nombre);
+        setMesa(formData.mesa);
         setObservaciones(formData.observaciones);
         cancelarRegistro();
     }
@@ -47,6 +49,21 @@ function DatosExtraVenta(props) {
             <Form onSubmit={onSubmit} onChange={onChange}>
 
                 <div className="metodoDePago">
+                    <Row className="mb-3">
+                        <Form.Group as={Col} controlId="formGridNombre">
+                            <Form.Label>
+                                Nombre del cliente
+                            </Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="nombre"
+                                placeholder="Escribe el nombre del cliente"
+                                defaultValue={formData.nombre}
+                            />
+                        </Form.Group>
+                    </Row>
+
+
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridEstado">
                             <Form.Label>
@@ -143,9 +160,9 @@ function DatosExtraVenta(props) {
                                         </Form.Label>
                                         <Form.Control
                                             type="number"
-                                            name="nombre"
+                                            name="mesa"
                                             placeholder="Escribe el numero de la mesa"
-                                            defaultValue={formData.nombre}
+                                            defaultValue={formData.mesa}
                                         />
                                     </Form.Group>
                                 </Row>
@@ -201,6 +218,7 @@ function DatosExtraVenta(props) {
 
 function initialFormValue(data) {
     return {
+        mesa: data.mesa,
         tipoPago: data.tipoPago,
         dinero: data.dinero,
         tipoPedido: data.tipoPedido,

@@ -5,16 +5,20 @@ import BasicModal from "../../Modal/BasicModal";
 import DetallesVenta from "../DetallesVenta";
 import CancelarVenta from "../CancelarVenta";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faX, faRotateLeft, faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faX, faRotateLeft, faArrowDownLong, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import RegistroMovimientosCajasVentas from '../../MovimientosCajas/RegistroMovimientosCajasVentas';
+import { useNavigate } from "react-router-dom";
 
 function ListVentas(props) {
     const { estadoUsuario, listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
+
+    // Para definir el enrutamiento
+    const enrutamiento = useNavigate();
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -63,6 +67,11 @@ function ListVentas(props) {
         //setRowsPerPage(parseInt(event.target.value, 10));
         setPage(1);
     };
+
+     //Para la modificacion de productos
+     const modificaVenta = (id) => {
+        enrutamiento(`/ModificarTerminalPV/${id}`);
+    }
 
     const columns = [
         {
@@ -204,7 +213,7 @@ function ListVentas(props) {
             sortable: false,
             center: true,
             reorder: false,
-            selector: row => row.tipoPedido == "para comer aquí" ? row.cliente : "No disponible",
+            selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : "No disponible",
         },
         {
             name: "Total",
@@ -244,6 +253,17 @@ function ListVentas(props) {
                             }}
                         >
                             <FontAwesomeIcon icon={faEye} className="text-lg" />
+                        </Badge>
+
+                        <Badge
+                            bg="success"
+                            title="Modificar venta"
+                            className="editar"
+                            onClick={() => {
+                                modificaVenta(row.id);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
                         </Badge>
 
                         {

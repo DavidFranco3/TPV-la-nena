@@ -1,3 +1,4 @@
+import {useState, useEffect } from "react"
 import { Col, Row, Image, Button, Table } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
@@ -5,11 +6,14 @@ import { toast } from "react-toastify";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { obtenerVentaAsociada } from '../../../api/ventas'
 
-function GeneraPdf(props) {
+function GeneraPdfProductosAdicionales(props) {
     const { datos } = props;
 
-    const { numeroTiquet, mesa, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+    const { numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+
+
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -33,7 +37,7 @@ function GeneraPdf(props) {
         return () => clearTimeout(timer);
     }
 
-    const Encabezado = ({ logo, mesa, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
+    const Encabezado = ({ logo, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
         return (
             <div className="cafe">
                 {/**/}
@@ -45,13 +49,12 @@ function GeneraPdf(props) {
                     <p className="cafe__number">Teléfono para pedidos</p>
                     <p className="cafe__number">442-714-09-79</p>
                     <p className="cafe__number">Ticket #{numeroTiquet}</p>
-                    <p className="cafe__number">Cliente {nombreCliente}</p>
                     {
                         nombreCliente !== "" &&
                         (
                             <>
-                    <p className="invoice__cliente">Mesa {mesa}</p>
-                    </>
+                                <p className="invoice__cliente">Mesa {nombreCliente}</p>
+                            </>
                         )
                     }
                     <p className="invoice__cliente">Pedido {tipoPedido}</p>
@@ -184,16 +187,16 @@ function GeneraPdf(props) {
 
     const Imprimir = ({ onClick }) => {
         return (
-                <Row>
-                    <Col sm={8}></Col>
-                    <Col sm={4}>
-                        <button
-                            className="btnImprimirdeNuevo"
-                            title="Imprimir ticket"
-                            onClick={onClick}
-                        > 🖨︎</button>
-                    </Col>
-                </Row>
+            <Row>
+                <Col sm={8}></Col>
+                <Col sm={4}>
+                    <button
+                        className="btnImprimirdeNuevo"
+                        title="Imprimir ticket"
+                        onClick={onClick}
+                    > 🖨︎</button>
+                </Col>
+            </Row>
         )
     }
 
@@ -205,7 +208,6 @@ function GeneraPdf(props) {
                         logo={logoTiquetGris}
                         numeroTiquet={numeroTiquet}
                         nombreCliente={cliente}
-                        mesa={mesa}
                         tipoPedido={tipoPedido}
                         hacerPedido={hacerPedido}
                         fechayHora={dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
@@ -234,4 +236,4 @@ function GeneraPdf(props) {
     );
 }
 
-export default GeneraPdf;
+export default GeneraPdfProductosAdicionales;

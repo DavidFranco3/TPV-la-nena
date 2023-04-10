@@ -4,6 +4,7 @@ import Productos from "../page/Productos";
 import Categorias from "../page/Categorias";
 import Error404 from "../page/Error404";
 import TerminalPV from "../page/TerminalPV";
+import ModificarTerminalPV from "../page/ModificarTerminalPV";
 import Usuarios from "../page/Usuarios";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
@@ -68,6 +69,11 @@ const configRouting = [
     {
         path: "/TerminalPV",
         page: TerminalPV,
+        roles: ["administrador", "vendedor", "mesero"]
+    },
+    {
+        path: "/ModificarTerminalPV/:id",
+        page: ModificarTerminalPV,
         roles: ["administrador", "vendedor", "mesero"]
     },
     {

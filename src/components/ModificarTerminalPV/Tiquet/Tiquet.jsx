@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import BasicModal from "../../Modal/BasicModal";
-import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
+import { obtenUltimoNoTiquet, registraVentas, obtenerVentas } from "../../../api/ventas";
 import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
@@ -12,9 +12,21 @@ import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Tiquet(props) {
     const { idUsuario, products, empty, remove } = props;
+
+    const parametros = useParams();
+    const { id } = parametros;
+
+    const enrutamiento = useNavigate();
+
+    const rutaRegreso = () => {
+        enrutamiento("/Historiales")
+    }
+
+    console.log(id);
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -110,6 +122,8 @@ function Tiquet(props) {
         }
     }, [determinaBusquedaTiquet]);
 
+    console.log(numeroTiquet)
+
     const handleRegistraVenta = () => {
         let iva = "0";
         let comision = "0";
@@ -131,8 +145,8 @@ function Tiquet(props) {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
                     cliente: nombreCliente,
-                    mesa: mesa,
                     usuario: idUsuario,
+                    tiquetVenta: numeroTiquetAsociado,
                     estado: "true",
                     detalles: observaciones,
                     tipoPago: tipoPago,
@@ -154,6 +168,7 @@ function Tiquet(props) {
                     setDeterminaBusquedaTiquet(true)
                     LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                     toast.success(data.mensaje)
+                    rutaRegreso();
                     handleEmptyTicket()
                 })
             } catch (e) {
@@ -166,10 +181,12 @@ function Tiquet(props) {
         remove(item);
     }
 
+
+    const [numeroTiquetAsociado, setNumeroTiquetAsociado] = useState("");
+    // Para almacenar el nombre de mesa
+    const [mesa, setMesa] = useState("");
     // Para almacenar el nombre del cliente
     const [nombreCliente, setNombreCliente] = useState("");
-    // Para almacenar el numero de mesa
-    const [mesa, setMesa] = useState("");
     // Para alamcenar el dinero ingresado
     const [dineroIngresado, setDineroIngresado] = useState("");
     // Para almacenar el tipo de pago
@@ -180,6 +197,32 @@ function Tiquet(props) {
     const [hacerPedido, setHacerPedido] = useState("");
     // Para almacenar las observaciones
     const [observaciones, setObservaciones] = useState("");
+
+    const cargarDatos = () => {
+        try {
+            obtenerVentas(id).then(response => {
+                const { data } = response;
+                // console.log(data)
+                setNombreCliente(data.cliente);
+                setMesa(data.mesa);
+                setNumeroTiquetAsociado(data.numeroTiquet);
+                setDineroIngresado(data.subtotal);
+                setTipoPago(data.tipoPago);
+                setTipoPedido(data.tipoPedido);
+                setHacerPedido(data.hacerPedido);
+                setObservaciones(data.detalles);
+            }).catch(e => {
+                console.log(e)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        cargarDatos();
+    }, []);
+
     // Para el modal de las observaciones
     const datosExtraVenta = (content) => {
         setTitulosModal("Datos extra de la venta");
@@ -198,7 +241,7 @@ function Tiquet(props) {
         setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
     }, []);
 
-    const Encabezado = ({ logo, numeroTiquet, mesa, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
+    const Encabezado = ({ logo, mesa, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
         return (
             <div className="cafe">
                 {/**/}
@@ -508,8 +551,8 @@ function Tiquet(props) {
                     <Encabezado
                         logo={logoTiquetGris}
                         numeroTiquet={numeroTiquet}
-                        nombreCliente={nombreCliente}
                         mesa={mesa}
+                        nombreCliente={nombreCliente}
                         tipoPedido={tipoPedido}
                         hacerPedido={hacerPedido}
                         fechayHora={fechayHora}
