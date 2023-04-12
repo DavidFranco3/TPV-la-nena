@@ -6,13 +6,13 @@ import { toast } from "react-toastify";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { obtenerVentaAsociada } from '../../../api/ventas';
+import { obtenerVentaAsociada, obtenerVentas } from '../../../api/ventas';
 import { map } from "lodash";
 
-function GeneraPdfProductosAdicionales(props) {
+function GeneraPdfFinal(props) {
     const { datos } = props;
 
-    const { numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
+    const { id, numeroTiquet, articulosVendidos, cliente, detalles, tipoPago, efectivo, cambio, subtotal, tipoPedido, hacerPedido, total, iva, comision, fechaCreacion } = datos;
 
     const [datosProductos, setDatosProductos] = useState([]);
 
@@ -29,32 +29,52 @@ function GeneraPdfProductosAdicionales(props) {
         }
     }
 
-    console.log(datosProductos);
-
     useEffect(() => {
         cargarDatos();
     }, []);
 
-    const comisionTotal = datosProductos.reduce((amount, item) => (amount + parseInt(item.comision)), 0);
+    const [datosInicial, setDatosInicial] = useState([]);
 
-    const ivaTotal = datosProductos.reduce((amount, item) => (amount + parseInt(item.iva)), 0);
+    const cargarDatosInicial = () => {
+        try {
+            obtenerVentas(id).then(response => {
+                const { data } = response;
+                setDatosInicial(data);
+            }).catch(e => {
+                console.log(e)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
-    const totalFinal = datosProductos.reduce((amount, item) => (amount + parseInt(item.total)), 0);
+    useEffect(() => {
+        cargarDatosInicial();
+    }, []);
 
-    const efectivoTotal = datosProductos.reduce((amount, item) => (amount + parseInt(item.efectivo)), 0);
+    console.log(datosInicial);
+
+    const dataFinal = datosProductos.concat(datosInicial).reverse();
+
+    console.log(dataFinal);
+
+    const comisionTotal = dataFinal.reduce((amount, item) => (amount + parseInt(item.comision)), 0);
+
+    const ivaTotal = dataFinal.reduce((amount, item) => (amount + parseInt(item.iva)), 0);
+
+    const totalFinal = dataFinal.reduce((amount, item) => (amount + parseInt(item.total)), 0);
+
+    const efectivoTotal = dataFinal.reduce((amount, item) => (amount + parseInt(item.efectivo)), 0);
     
-    const cambioTotal = datosProductos.reduce((amount, item) => (amount + parseInt(item.cambio)), 0);
+    const cambioTotal = dataFinal.reduce((amount, item) => (amount + parseInt(item.cambio)), 0);
 
-    const subtotalFinal = datosProductos.reduce((amount, item) => (amount + parseInt(item.subtotal)), 0);
-
-
-    console.log(comisionTotal)
+    const subtotalFinal = dataFinal.reduce((amount, item) => (amount + parseInt(item.subtotal)), 0);
 
     const [productosAdicionales, setProductosAdicionales] = useState();
 
     const cargarListaProductosAdicionales = () => {
         let auxProductos = [];
-        map(datosProductos, (item, index) => {
+        map(dataFinal, (item, index) => {
             const { productos } = item
             map(productos, (item2, indexSecundario) => {
                 const { nombre, precio } = item2;
@@ -291,4 +311,4 @@ function GeneraPdfProductosAdicionales(props) {
     );
 }
 
-export default GeneraPdfProductosAdicionales;
+export default GeneraPdfFinal;

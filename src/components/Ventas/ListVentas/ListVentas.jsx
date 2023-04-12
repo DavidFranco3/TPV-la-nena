@@ -68,8 +68,8 @@ function ListVentas(props) {
         setPage(1);
     };
 
-     //Para la modificacion de productos
-     const modificaVenta = (id) => {
+    //Para la modificacion de productos
+    const modificaVenta = (id) => {
         enrutamiento(`/ModificarTerminalPV/${id}`);
     }
 
@@ -216,6 +216,13 @@ function ListVentas(props) {
             selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : "No disponible",
         },
         {
+            name: "Tipo",
+            sortable: false,
+            center: true,
+            reorder: false,
+            selector: row => row.tipo,
+        },
+        {
             name: "Total",
             sortable: false,
             center: true,
@@ -255,16 +262,23 @@ function ListVentas(props) {
                             <FontAwesomeIcon icon={faEye} className="text-lg" />
                         </Badge>
 
-                        <Badge
-                            bg="success"
-                            title="Modificar venta"
-                            className="editar"
-                            onClick={() => {
-                                modificaVenta(row.id);
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
-                        </Badge>
+                        {
+                            row.tipo === "Pedido inicial" &&
+                            (
+                                <>
+                                    <Badge
+                                        bg="success"
+                                        title="Modificar venta"
+                                        className="editar"
+                                        onClick={() => {
+                                            modificaVenta(row.id);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPenToSquare} className="text-lg" />
+                                    </Badge>
+                                </>
+                            )
+                        }
 
                         {
                             estadoUsuario === "true" &&

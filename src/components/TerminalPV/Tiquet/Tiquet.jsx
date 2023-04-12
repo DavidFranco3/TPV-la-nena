@@ -131,6 +131,7 @@ function Tiquet(props) {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
                     cliente: nombreCliente,
+                    tipo: "Pedido inicial",
                     mesa: mesa,
                     usuario: idUsuario,
                     estado: "true",

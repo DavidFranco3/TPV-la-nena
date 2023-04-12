@@ -333,6 +333,7 @@ function formatModelVentas(ventas) {
                         numeroTiquet: venta.numeroTiquet,
                         cliente: venta.cliente,
                         mesa: venta.mesa,
+                        tipo: venta.tipo ? venta.tipo : "No disponible",
                         usuario: venta.usuario,
                         productosVendidos: venta.productos.length,
                         articulosVendidos: venta.productos,

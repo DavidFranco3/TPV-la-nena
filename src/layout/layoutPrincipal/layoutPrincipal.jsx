@@ -1,8 +1,8 @@
 import { useState, useEffect, Fragment } from 'react';
-import {Image, Button} from 'react-bootstrap'
+import { Image, Button } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import LogoLANENA from "../../assets/png/logo-layout.png";
 import ImagenPerfil from "../../assets/png/user-avatar.png";
@@ -10,9 +10,23 @@ import "../../scss/styles.scss";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from "../../components/Logs/LogsSistema/LogsSistema";
+import Notificationes from '../../components/Notificaciones';
+import BasicModal from '../../components/Modal/BasicModal';
 
 function LayoutPrincipal(props) {
     const { setRefreshCheckLogin, children } = props;
+
+    //Para el modal
+    const [showModal, setShowModal] = useState(false);
+    const [contentModal, setContentModal] = useState(null);
+    const [titulosModal, setTitulosModal] = useState(null);
+
+    // Para cancelar la venta
+    const notificaciones = (content) => {
+        setTitulosModal("Notificaciones");
+        setContentModal(content);
+        setShowModal(true);
+    }
 
     const redirecciona = useNavigate();
 
@@ -96,7 +110,19 @@ function LayoutPrincipal(props) {
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-4 flex items-center md:ml-6">
-                                            
+                                            <Button
+                                                //type="button"
+                                                className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                            >
+                                                <span className="sr-only">View notifications</span>
+                                                <BellIcon className="h-6 w-6" aria-hidden="true"
+                                                    onClick={() => {
+                                                        notificaciones(
+                                                            <Notificationes />
+                                                        )
+                                                    }}
+                                                />
+                                            </Button>
 
                                             {/* Profile dropdown */}
                                             <Menu as="div" className="ml-3 relative">
@@ -139,7 +165,7 @@ function LayoutPrincipal(props) {
                                             {open ? (
                                                 <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                                             ) : (
-                                                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                                                <BellIcon className="block h-6 w-6" aria-hidden="true" />
                                             )}
                                         </Disclosure.Button>
                                     </div>
@@ -171,6 +197,10 @@ function LayoutPrincipal(props) {
                                     </div>
                                 </div>
                             </Disclosure.Panel>
+
+                            <BasicModal show={showModal} setShow={setShowModal} title={titulosModal}>
+                                {contentModal}
+                            </BasicModal>
                         </>
                     )}
                 </Disclosure>

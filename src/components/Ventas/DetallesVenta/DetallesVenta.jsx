@@ -3,6 +3,8 @@ import "../../../scss/styles.scss";
 import { Badge, Col, Row, Container, Button } from "react-bootstrap";
 import BasicModal from "../../Modal/BasicModal";
 import GeneraPDF from "../GeneraPDF";
+import GeneraPdfProductosAdicionales from '../GeneraPDFProductosAdicionales';
+import GeneraPdfFinal from '../GeneraPDFFinal';
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +23,20 @@ function DetallesVenta(props) {
     // Para cancelar la venta
     const handlePrint = (content) => {
         setTitulosModal("Detalles del ticket No. " + numeroTiquet.toString());
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const handlePrintAdicionales = (content) => {
+        setTitulosModal("Productos adicionales del tiquet. " + numeroTiquet.toString());
+        setContentModal(content);
+        setShowModal(true);
+    }
+
+    // Para cancelar la venta
+    const handlePrintFinal = (content) => {
+        setTitulosModal("Productos finales del tiquet. " + numeroTiquet.toString());
         setContentModal(content);
         setShowModal(true);
     }
@@ -92,7 +108,6 @@ function DetallesVenta(props) {
                 <br />
                 <br />
                 <Row>
-                    <Col sm={8}></Col>
                     <Col sm={4}>
                         <button
                             className="btnImprimirdeNuevo"
@@ -103,6 +118,31 @@ function DetallesVenta(props) {
                                 />
                             )}
                         > 🖨︎</button>
+                        <h4 align="center">Pedido Inicial</h4>
+                    </Col>
+                    <Col sm={4}>
+                        <button
+                            className="btnImprimirdeNuevo"
+                            title="Ver ticket"
+                            onClick={() => handlePrintAdicionales(
+                                <GeneraPdfProductosAdicionales
+                                    datos={datos}
+                                />
+                            )}
+                        > 🖨︎</button>
+                        <h4 align="center">Productos adicionales</h4>
+                    </Col>
+                    <Col sm={4}>
+                        <button
+                            className="btnImprimirdeNuevo"
+                            title="Ver ticket"
+                            onClick={() => handlePrintFinal(
+                                <GeneraPdfFinal
+                                    datos={datos}
+                                />
+                            )}
+                        > 🖨︎</button>
+                        <h4 align="center">Ticket final</h4>
                     </Col>
                 </Row>
             </Container>

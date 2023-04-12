@@ -144,6 +144,8 @@ function Tiquet(props) {
             try {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
+                    mesa: mesa,
+                    tipo: "Productos adicionales",
                     cliente: nombreCliente,
                     usuario: idUsuario,
                     tiquetVenta: numeroTiquetAsociado,
