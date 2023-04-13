@@ -5,17 +5,42 @@ import BasicModal from "../../Modal/BasicModal";
 import DetallesVenta from "../DetallesVenta";
 import CancelarVenta from "../CancelarVenta";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faX, faRotateLeft, faArrowDownLong, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faX, faRotateLeft, faArrowDownLong, faPenToSquare, faCheck } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
+import { atenderVenta } from "../../../api/ventas"
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import RegistroMovimientosCajasVentas from '../../MovimientosCajas/RegistroMovimientosCajasVentas';
 import { useNavigate } from "react-router-dom";
+import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
+import { toast } from "react-toastify";
+import queryString from "query-string";
 
 function ListVentas(props) {
     const { estadoUsuario, listVentas, location, setRefreshCheckLogin, navigate, rowsPerPage, setRowsPerPage, page, setPage, noTotalVentas } = props;
+
+    const conditionalRowStyles = [
+        {
+            when: row => row.atendido == "false" && row.estado == "true",
+            style: {
+                backgroundColor: 'rgba(138,221, 45, 0.2)',
+                '&:hover': {
+                    backgroundColor: 'rgba(138, 221, 45, 0.2)',
+                },
+            },
+        },
+        {
+            when: row => row.estado == "false",
+            style: {
+                backgroundColor: 'rgba(255,0,0,0.2)',
+                '&:hover': {
+                    backgroundColor: 'rgba(255,0,0,0.2)',
+                },
+            },
+        },
+    ];
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
@@ -216,13 +241,6 @@ function ListVentas(props) {
             selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : "No disponible",
         },
         {
-            name: "Tipo",
-            sortable: false,
-            center: true,
-            reorder: false,
-            selector: row => row.tipo,
-        },
-        {
             name: "Total",
             sortable: false,
             center: true,
@@ -245,6 +263,41 @@ function ListVentas(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
+                        {
+                            row.atendido === "false" && row.estado === "true" &&
+                            (
+                                <>
+                                    <Badge
+                                        bg="warning"
+                                        title="Cambiar status"
+                                        className="editar"
+                                        onClick={() => {
+                                            const dataTemp = {
+                                                    atendido: row.atendido === "false" ? "true" : "false",
+                                            }
+                                            //console.log(dataTemp)
+
+                                            try {
+                                                atenderVenta(row.id, dataTemp).then(response => {
+                                                    const { data } = response;
+                                                    // console.log(data)
+                                                    toast.success(data.mensaje);
+                                                    LogsInformativos("La venta " + row.numeroTiquet + "fue atendida", dataTemp);
+                                                    navigate({
+                                                        search: queryString.stringify(""),
+                                                    });
+                                                })
+                                            } catch (e) {
+                                                console.log(e)
+                                            }
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faCheck} className="text-lg" />
+                                    </Badge>
+                                </>
+                            )
+                        }
+
                         <Badge
                             title="Ver productos vendidos"
                             bg="primary"
@@ -378,6 +431,7 @@ function ListVentas(props) {
                     paginationResetDefaultPage={resetPaginationToogle}
                     customStyles={estilos}
                     sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
+                    conditionalRowStyles={conditionalRowStyles}
                     pagination
                     paginationServer
                     paginationTotalRows={noTotalVentas}

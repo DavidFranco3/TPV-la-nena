@@ -146,6 +146,7 @@ function Tiquet(props) {
                     iva: parseFloat(total) * parseFloat(iva),
                     comision: parseFloat(total) * parseFloat(comision),
                     subtotal: total,
+                    atendido: "false",
                     total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
                     agrupar: grupo
                 }

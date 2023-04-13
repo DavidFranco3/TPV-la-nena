@@ -67,6 +67,7 @@ export const ENDPOINTObtenerVentas = "/ventas/obtener";
 export const ENDPOINTEliminarVentas = "/ventas/eliminar";
 export const ENDPOINTActualizarVentas = "/ventas/actualizar";
 export const ENDPOINTCancelarVentas = "/ventas/cancelar";
+export const ENDPOINTAtenderVentas = "/ventas/cambiarIdentificador";
 export const ENDPOINTObtenerNumeroVenta = "/ventas/obtenNoTiquet";
 export const ENDPOINTListarVentasPorDia = "/ventas/listarTotalVentasDia";
 export const ENDPOINTListarVentasPorMes = "/ventas/listarTotalVentasMes";

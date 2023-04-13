@@ -32,7 +32,8 @@ import {
     ENDPOINTTotalVentasActivasTicket,
     ENDPOINTListarPaginandoVentasCanceladasTicket,
     ENDPOINTTotalVentasCanceladasTicket,
-    ENDPOINTObtenerVentaAsociada
+    ENDPOINTObtenerVentaAsociada,
+    ENDPOINTAtenderVentas
 } from "./endpoints";
 import axios from 'axios';
 import { getTokenApi } from "./auth";
@@ -423,6 +424,19 @@ export async function cancelarVenta(id, data) {
     };
 
     return await axios.put(API_HOST + ENDPOINTCancelarVentas + `/${id}`, data, config);
+}
+
+// Cambiar estado de las ventas
+export async function atenderVenta(id, data) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+
+    return await axios.put(API_HOST + ENDPOINTAtenderVentas + `/${id}`, data, config);
 }
 
 // Obtener el numero del ultimo tiquet
