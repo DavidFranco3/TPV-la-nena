@@ -76,17 +76,6 @@ function CancelarIngredientes(props) {
                     )
                 }
                 <Form onSubmit={onSubmit}>
-                    <div className="imagenPrincipal">
-                        <h4 className="textoImagenPrincipal">Imagen del ingrediente</h4>
-                        <div className="imagenProducto">
-                            <div className="vistaPreviaImagen">
-                                <Image
-                                    src={imagen}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
                             <Form.Label>Nombre</Form.Label>

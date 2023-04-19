@@ -104,15 +104,6 @@ function RegistroIngredientes(props) {
     return (
         <>
             <Form onSubmit={onSubmit} onChange={onChange}>
-                <div className="imagenPrincipal">
-                    <h4 className="textoImagenPrincipal">Sube tu imagen</h4>
-                    <div title="Seleccionar imagen del ingrediente" className="imagenProducto">
-                        <Dropzone
-                            setImagenFile={setImagenIngrediente}
-                        />
-                    </div>
-                </div>
-
                 <div className="datosDelProducto">
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridNombre">
