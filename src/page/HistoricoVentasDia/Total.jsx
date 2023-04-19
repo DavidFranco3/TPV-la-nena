@@ -21,6 +21,12 @@ function Total(props) {
     // Para almacenar el total de bebidas y postres vendidos
     const [totalBebidas, setTotalBebidas] = useState(0);
 
+    // Para almacenar el total de hamburguesas y papas fritas vendidas
+    const [totalHamburguesas, setTotalHamburguesas] = useState(0);
+
+    // Para almacenar el total de productos de cafeteria vendidos
+    const [totalCafeteria, setTotalCafeteria] = useState(0);
+
     // Para almacenar el total de extras vendidos
     const [totalExtras, setTotalExtras] = useState(0);
 
@@ -37,13 +43,15 @@ function Total(props) {
         try {
             listarVentasPorDia(dia).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
+                const { efectivo, tarjeta, transferencia, tortasVendidas, hamburguesasVendidas, cafeteriaVendida, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 // console.log(data)
                 setTotalEfectivo(efectivo);
                 setTotalTarjeta(tarjeta);
                 setTotalTransferencia(transferencia);
                 setTotalTortas(tortasVendidas);
                 setTotalBebidas(bebidasVendidas);
+                setTotalHamburguesas(hamburguesasVendidas);
+                setTotalCafeteria(cafeteriaVendida);
                 setTotalExtras(extrasVendidos);
                 setTotalSandwiches(sandwichesVendidos);
                 setTotalDesayunos(desayunosVendidos);
@@ -145,6 +153,22 @@ function Total(props) {
             </Row>
             <Row align="center">
                 <Col>
+                    Hamburguesas y papas fritas
+                </Col>
+                <Col>
+                    <Badge bg="success">{totalHamburguesas} piezas</Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
+                    Productos de cafeteria
+                </Col>
+                <Col>
+                    <Badge bg="success">{totalCafeteria} piezas</Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
                     Desayunos
                 </Col>
                 <Col>
@@ -156,7 +180,7 @@ function Total(props) {
                     Total
                 </Col>
                 <Col>
-                    <Badge bg="success">{totalTortas + totalBebidas + totalExtras + totalSandwiches + totalDesayunos} piezas</Badge>
+                    <Badge bg="success">{totalTortas + totalHamburguesas + totalCafeteria + totalBebidas + totalExtras + totalSandwiches + totalDesayunos} piezas</Badge>
                 </Col>
             </Row>
             <Row align="center">

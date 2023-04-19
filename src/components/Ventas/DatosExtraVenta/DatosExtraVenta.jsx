@@ -44,6 +44,8 @@ function DatosExtraVenta(props) {
         setShowModal(false)
     }
 
+    console.log(formData.hacerPedido)
+
     return (
         <>
             <Form onSubmit={onSubmit} onChange={onChange}>
@@ -97,12 +99,20 @@ function DatosExtraVenta(props) {
                                 <option>Elige una opción</option>
                                 <option value="para llevar">Para llevar</option>
                                 <option value="para comer aquí">Para comer aquí</option>
+                                {
+                                    formData.hacerPedido !== "de forma presencial" && formData.hacerPedido !== "" &&
+                                    (
+                                        <>
+                                            <option value="recoger en tienda">Recoger en tienda</option>
+                                        </>
+                                    )
+                                }
                             </Form.Control>
                         </Form.Group>
                     </Row>
 
                     {
-                        formData.tipoPedido === "para llevar" &&
+                        (formData.tipoPedido === "para llevar" || formData.tipoPedido === "recoger en tienda") &&
                         (
                             <>
                                 <Row className="mb-3">
