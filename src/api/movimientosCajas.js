@@ -5,6 +5,7 @@ import {
     ENDPOINTListarPaginandoMovimientosCajas,
     ENDPOINTTotalMovimientosCajas,
     ENDPOINTListarPaginandoMovimientosCajasActivas,
+    ENDPOINTObtenerUltimoMovimientoCajas,
     ENDPOINTObtenerMovimientosCajas,
     ENDPOINTEliminarMovimientosCajas,
     ENDPOINTActualizarMovimientosCajas,
@@ -65,6 +66,18 @@ export async function listarMovimientos(idCaja) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarMovimientosCajas + `/?idCaja=${idCaja}`, config);
+}
+
+// Para listar todas las categorias
+export async function obtenerUltimoMovimiento() {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTObtenerUltimoMovimientoCajas, config);
 }
 
 // Listar las categorias activas paginandolas

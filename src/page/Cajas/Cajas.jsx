@@ -1,5 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { listarPaginacionCajas, totalCajas } from "../../api/cajas";
+import { obtenerUltimoMovimiento } from "../../api/movimientosCajas";
 import { listarUsuariosCajeros } from "../../api/usuarios";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
@@ -33,12 +34,25 @@ function Cajas(props) {
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
+    const [datosUltimoMovimiento, setDatosUltimoMovimiento] = useState("");
+
     const obtenerDatosUsuario = () => {
         try {
             obtenerUsuario(obtenidusuarioLogueado(getTokenApi())).then(response => {
                 const { data } = response;
                 //console.log(data)
                 setDatosUsuario(data);
+            }).catch((e) => {
+                if (e.message === 'Network Error') {
+                    //console.log("No hay internet")
+                    toast.error("Conexión al servidor no disponible");
+                }
+            })
+
+            obtenerUltimoMovimiento().then(response => {
+                const { data } = response;
+                //console.log(data)
+                setDatosUltimoMovimiento(data);
             }).catch((e) => {
                 if (e.message === 'Network Error') {
                     //console.log("No hay internet")
@@ -53,6 +67,8 @@ function Cajas(props) {
     useEffect(() => {
         obtenerDatosUsuario();
     }, []);
+
+    console.log(datosUltimoMovimiento);
 
     const cierreSesion = () => {
         if (getTokenApi()) {
@@ -165,23 +181,30 @@ function Cajas(props) {
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
-                            <Button
-                                title="Registrar una nueva cajaa"
-                                className="btnRegistro"
-                                style={{ marginRight: '10px' }}
-                                onClick={() => {
-                                    registroCajas(
-                                        <RegistroCajas
-                                            setShowModal={setShowModal}
-                                            listUsuarios={listUsuarios}
-                                            location={location}
-                                            navigate={navigate}
-                                        />
-                                    )
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
-                            </Button>
+                            {
+                                datosUltimoMovimiento.movimiento == "Cierre" &&
+                                (
+                                    <>
+                                        <Button
+                                            title="Registrar una nueva cajaa"
+                                            className="btnRegistro"
+                                            style={{ marginRight: '10px' }}
+                                            onClick={() => {
+                                                registroCajas(
+                                                    <RegistroCajas
+                                                        setShowModal={setShowModal}
+                                                        listUsuarios={listUsuarios}
+                                                        location={location}
+                                                        navigate={navigate}
+                                                    />
+                                                )
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                                        </Button>
+                                    </>
+                                )
+                            }
                             <Button
                                 title="Regresar a la pagina anterior"
                                 className="btnRegistro"

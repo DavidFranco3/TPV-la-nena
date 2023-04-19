@@ -152,6 +152,7 @@ export const ENDPOINTObtenerUltimaCajaCajero = "/cajas/obtenerUltimaCajaCajero";
 // Movimientos cajas
 export const ENDPOINTRegistroMovimientosCajas = "/movimientosCajas/registro";
 export const ENDPOINTListarMovimientosCajas = "/movimientosCajas/listar";
+export const ENDPOINTObtenerUltimoMovimientoCajas = "/movimientosCajas/ObtenerUltimo";
 export const ENDPOINTListarPaginandoMovimientosCajas = "/movimientosCajas/listarPaginando";
 export const ENDPOINTTotalMovimientosCajas = "/movimientosCajas/totalMovimientos";
 export const ENDPOINTListarPaginandoMovimientosCajasActivas = "/movimientosCajas/listarPaginandoActivas";
