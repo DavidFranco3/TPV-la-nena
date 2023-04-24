@@ -234,11 +234,11 @@ function ListVentas(props) {
             selector: row => row.productosVendidos,
         },
         {
-            name: "Mesa",
+            name: "Mesa/Cliente",
             sortable: false,
             center: true,
             reorder: false,
-            selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : "No disponible",
+            selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : row.cliente,
         },
         {
             name: "Total",
