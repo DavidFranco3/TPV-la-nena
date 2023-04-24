@@ -155,7 +155,65 @@ function Tiquet(props) {
                     const { data } = response;
                     setDeterminaBusquedaTiquet(true)
                     LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
+                    handlePrint();
                     toast.success(data.mensaje)
+                    
+                    handleEmptyTicket()
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
+    const handleRegistraVentaDoble = () => {
+        let iva = "0";
+        let comision = "0";
+
+        if (IVA === "0.16") {
+            iva = "0.16"
+        }
+
+        if (tipoPago === "Tarjeta") {
+            comision = "0.03"
+        }
+
+        if (products.length === 0) {
+            toast.warning("Debe cargar articulos a la venta")
+        } else {
+            const hoy = new Date();
+            const grupo = (hoy.getMonth() + 1);
+            try {
+                const dataTemp = {
+                    numeroTiquet: numeroTiquet,
+                    cliente: nombreCliente,
+                    tipo: "Pedido inicial",
+                    mesa: mesa,
+                    usuario: idUsuario,
+                    estado: "true",
+                    detalles: observaciones,
+                    tipoPago: tipoPago,
+                    tipoPedido: tipoPedido,
+                    hacerPedido: hacerPedido,
+                    efectivo: dineroIngresado,
+                    pagado: tipoPedido == "para comer aquí" ? "false" : "true",
+                    cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
+                    productos: products,
+                    iva: parseFloat(total) * parseFloat(iva),
+                    comision: parseFloat(total) * parseFloat(comision),
+                    subtotal: total,
+                    atendido: "false",
+                    total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
+                    agrupar: grupo
+                }
+
+                registraVentas(dataTemp).then(response => {
+                    const { data } = response;
+                    setDeterminaBusquedaTiquet(true)
+                    LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
+                    handlePrintDouble();
+                    toast.success(data.mensaje)
+                    
                     handleEmptyTicket()
                 })
             } catch (e) {
@@ -458,9 +516,7 @@ function Tiquet(props) {
             <div className="ticket__actions">
                 <button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</button>
 
-                <button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</button>
-
-                <button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</button>
+                <button title="Imprimir doble ticket" onClick={() => handleRegistraVentaDoble()}> 2️⃣</button>
 
                 <button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</button>
 
