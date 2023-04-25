@@ -3,6 +3,7 @@ import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import "../../../scss/styles.scss";
 import { faX, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
 
 function DatosExtraVenta(props) {
     const { observaciones, mesa, dineroIngresado, tipoPago, tipoPedido, hacerPedido, nombreCliente, setMesa, setObservaciones, setDineroIngresado, setTipoPago, setTipoPedido, setHacerPedido, setNombreCliente, setShowModal } = props;
@@ -24,15 +25,20 @@ function DatosExtraVenta(props) {
 
     const onSubmit = e => {
         e.preventDefault();
-        setLoading(true);
-        setTipoPago(formData.tipoPago);
-        setDineroIngresado(formData.dinero);
-        setTipoPedido(formData.tipoPedido);
-        setHacerPedido(formData.hacerPedido);
-        setNombreCliente(formData.nombre);
-        setMesa(formData.mesa);
-        setObservaciones(formData.observaciones);
-        cancelarRegistro();
+
+        if (formData.tipoPedido == "para llevar" && !formData.tipoPago) {
+            toast.warning("Selecciona el tipo de pago")
+        } else {
+            setLoading(true);
+            setTipoPago(formData.tipoPago);
+            setDineroIngresado(formData.dinero);
+            setTipoPedido(formData.tipoPedido);
+            setHacerPedido(formData.hacerPedido);
+            setNombreCliente(formData.nombre);
+            setMesa(formData.mesa);
+            setObservaciones(formData.observaciones);
+            cancelarRegistro();
+        }
     }
 
     const onChange = e => {

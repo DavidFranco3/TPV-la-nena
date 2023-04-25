@@ -68,32 +68,6 @@ function Tiquet(props) {
         }
     }
 
-    const handlePrintDouble = () => {
-        if (products.length === 0) {
-            toast.warning("Debe cargar articulos a la venta")
-        } else {
-            const tiquetGenerado = window.open('Tiquet', 'PRINT', 'height=800,width=1200');
-            tiquetGenerado.document.write('<html><head>');
-            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-            tiquetGenerado.document.write('</head><body>');
-            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-            tiquetGenerado.document.write('</body></html>');
-
-            tiquetGenerado.document.write('<div style="page-break-after: always;"></div>');
-
-            tiquetGenerado.document.write('<html><head>');
-            tiquetGenerado.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:30px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;} p {margin-top: -10px !important;} .cafe__number {margin-top: -10px !important;} .logotipo {width: 91px !important; margin: 0 auto;} img {width: 91px !important; margin: 0 auto;} .detallesTitulo {margin-top: 10px !important;} .ticket__actions {display: none !important;} .remove-icon {display: none !important;} .remove-icono {display: none !important;} .items__price {color: #000000 !important;} </style>');
-            tiquetGenerado.document.write('</head><body>');
-            tiquetGenerado.document.write(document.getElementById('ticketGenerado').innerHTML);
-            tiquetGenerado.document.write('</body></html>');
-
-            tiquetGenerado.document.close();
-            tiquetGenerado.focus();
-            tiquetGenerado.print();
-            tiquetGenerado.close();
-        }
-    }
-
     useEffect(() => {
         setDeterminaBusquedaTiquet(false)
         try {
@@ -156,62 +130,7 @@ function Tiquet(props) {
                     setDeterminaBusquedaTiquet(true)
                     LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                     handlePrint();
-                    toast.success(data.mensaje)
-                    
-                    handleEmptyTicket()
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-    }
-
-    const handleRegistraVentaDoble = () => {
-        let iva = "0";
-        let comision = "0";
-
-        if (IVA === "0.16") {
-            iva = "0.16"
-        }
-
-        if (tipoPago === "Tarjeta") {
-            comision = "0.03"
-        }
-
-        if (products.length === 0) {
-            toast.warning("Debe cargar articulos a la venta")
-        } else {
-            const hoy = new Date();
-            const grupo = (hoy.getMonth() + 1);
-            try {
-                const dataTemp = {
-                    numeroTiquet: numeroTiquet,
-                    cliente: nombreCliente,
-                    tipo: "Pedido inicial",
-                    mesa: mesa,
-                    usuario: idUsuario,
-                    estado: "true",
-                    detalles: observaciones,
-                    tipoPago: tipoPago,
-                    tipoPedido: tipoPedido,
-                    hacerPedido: hacerPedido,
-                    efectivo: dineroIngresado,
-                    pagado: tipoPedido == "para comer aquí" ? "false" : "true",
-                    cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
-                    productos: products,
-                    iva: parseFloat(total) * parseFloat(iva),
-                    comision: parseFloat(total) * parseFloat(comision),
-                    subtotal: total,
-                    atendido: "false",
-                    total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
-                    agrupar: grupo
-                }
-
-                registraVentas(dataTemp).then(response => {
-                    const { data } = response;
-                    setDeterminaBusquedaTiquet(true)
-                    LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
-                    handlePrintDouble();
+                    handlePrint();
                     toast.success(data.mensaje)
                     
                     handleEmptyTicket()
@@ -515,8 +434,6 @@ function Tiquet(props) {
         return (
             <div className="ticket__actions">
                 <button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</button>
-
-                <button title="Imprimir doble ticket" onClick={() => handleRegistraVentaDoble()}> 2️⃣</button>
 
                 <button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</button>
 
