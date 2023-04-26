@@ -178,7 +178,7 @@ function ListVentas(props) {
                                     title="Generar un movimiento en caja"
                                     className="indicadorDetallesVenta"
                                     onClick={() => {
-                                        recuperarVenta(
+                                        registrarMovimiento(
                                             <RegistroMovimientosCajasVentas
                                                 datosVentas={row}
                                                 location={location}

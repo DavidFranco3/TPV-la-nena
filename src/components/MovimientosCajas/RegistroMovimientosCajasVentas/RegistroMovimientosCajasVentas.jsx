@@ -80,7 +80,7 @@ function RegistroMovimientosCajasVentas(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!formData.movimiento) {
+        if (!formData.movimiento || !formDataMovimiento.tipoPago) {
             toast.warning("Completa el formulario");
         } else {
             try {
