@@ -171,6 +171,7 @@ function formatModelVentas(ventas) {
             tipoPedido: venta.tipoPedido,
             estado: venta.estado,
             agrupar: venta.agrupar,
+            año: venta.año,
             fechaCreacion: venta.createdAt,
             fechaActualizacion: venta.updatedAt
         });

@@ -101,7 +101,7 @@ function Tiquet(props) {
         } else {
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
-            const año = hoy.getFullYear()
+            const añoVenta = hoy.getFullYear();
 
             if (tipoPedido == "para llevar" && !tipoPago) {
                 toast.warning("Debes seleccionar el tipo de pago");
@@ -129,7 +129,7 @@ function Tiquet(props) {
                         atendido: "false",
                         total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
                         agrupar: grupo,
-                        año: año
+                        año: añoVenta
                     }
 
                     registraVentas(dataTemp).then(response => {

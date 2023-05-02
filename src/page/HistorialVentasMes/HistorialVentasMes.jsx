@@ -14,7 +14,9 @@ import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
 function HistorialVentasMes(props) {
-    const { mes, setRefreshCheckLogin, location, history } = props;
+    const { mes, año, setRefreshCheckLogin, location, history } = props;
+
+    console.log(año)
 
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
@@ -68,7 +70,7 @@ function HistorialVentasMes(props) {
 
     const cargarDatos = () => {
         try {
-            listarDetallesVentasPorMes(mes).then(response => {
+            listarDetallesVentasPorMes(mes, año).then(response => {
                 const { data } = response;
                 setNoTotalVentas(data)
             }).catch(e => {
@@ -78,7 +80,7 @@ function HistorialVentasMes(props) {
             if (page === 0) {
                 setPage(1)
 
-                listarPaginacionVentasMes(page, rowsPerPage, mes).then(response => {
+                listarPaginacionVentasMes(page, rowsPerPage, mes, año).then(response => {
                     const { data } = response;
                     if (!listDetallesMes && data) {
                         setListDetallesMes(formatModelVentas(data));
@@ -90,7 +92,7 @@ function HistorialVentasMes(props) {
                     console.log(e)
                 })
             } else {
-                listarPaginacionVentasMes(page, rowsPerPage, mes).then(response => {
+                listarPaginacionVentasMes(page, rowsPerPage, mes, año).then(response => {
                     const { data } = response;
                     //console.log(data)
 
@@ -170,6 +172,7 @@ function formatModelVentas(ventas) {
             hacerPedido: venta.hacerPedido,
             tipoPedido: venta.tipoPedido,
             estado: venta.estado,
+            año: venta.año,
             fechaCreacion: venta.createdAt,
             fechaActualizacion: venta.updatedAt
         });

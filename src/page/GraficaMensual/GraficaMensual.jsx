@@ -15,7 +15,7 @@ import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 
 function GraficaMensual(props) {
-    const { mes, setRefreshCheckLogin, location } = props;
+    const { mes, año, setRefreshCheckLogin, location } = props;
 
     const [tab, setTab] = useState('dinero');
 
@@ -68,7 +68,7 @@ function GraficaMensual(props) {
 
     const cargarDatos = () => {
         try {
-            listarVentasMes(mes).then(response => {
+            listarVentasMes(mes, año).then(response => {
                 const { data } = response;
 
                 //console.log(data);

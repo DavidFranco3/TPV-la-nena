@@ -4,7 +4,7 @@ import { listarVentasPorMes } from "../../api/ventas";
 import "../../scss/styles.scss";
 
 function Total(props) {
-    const { mes } = props;
+    const { mes, año } = props;
 
     // Para almacenar total vendido en efectivo
     const [totalEfectivo, setTotalEfectivo] = useState(0);
@@ -41,7 +41,7 @@ function Total(props) {
 
     useEffect(() => {
         try {
-            listarVentasPorMes(mes).then(response => {
+            listarVentasPorMes(mes, año).then(response => {
                 const { data } = response;
                 const { efectivo, tarjeta, transferencia, hamburguesasVendidas, cafeteriaVendida, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 // console.log(data)

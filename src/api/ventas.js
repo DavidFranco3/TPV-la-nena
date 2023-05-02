@@ -136,7 +136,7 @@ export async function listarVentasPorDia(dia) {
 }
 
 // Listar ventas por dia
-export async function listarVentasPorMes(mes) {
+export async function listarVentasPorMes(mes, año) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -144,7 +144,7 @@ export async function listarVentasPorMes(mes) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?mes=${mes}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?mes=${mes}&&año=${año}`, config);
 }
 
 // Listar las ventas activas paginandolas
@@ -304,7 +304,7 @@ export async function listarVentasDia(dia) {
 }
 
 // Listar las ventas de un dia especifico paginandolas
-export async function listarVentasMes(mes) {
+export async function listarVentasMes(mes, año) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -312,11 +312,11 @@ export async function listarVentasMes(mes) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarVentasMes + `/?mes=${mes}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarVentasMes + `/?mes=${mes}&&año=${año}`, config);
 }
 
 // Listar las ventas de un mes especifico paginandolas
-export async function listarPaginacionVentasMes(pagina, limite, mes) {
+export async function listarPaginacionVentasMes(pagina, limite, mes, año) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -324,11 +324,11 @@ export async function listarPaginacionVentasMes(pagina, limite, mes) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasMes + `/?pagina=${pagina}&&limite=${limite}&&mes=${mes}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasMes + `/?pagina=${pagina}&&limite=${limite}&&mes=${mes}&&año=${año}`, config);
 }
 
 // Listar los detalles de las ventas del dia
-export async function listarDetallesVentasPorMes(dia) {
+export async function listarDetallesVentasPorMes(dia, año) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -336,7 +336,7 @@ export async function listarDetallesVentasPorMes(dia) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarDetallesVentasMes + `?dia=${dia}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarDetallesVentasMes + `?dia=${dia}&&año=${año}`, config);
 }
 
 // Listar los detalles de las ventas del dia
@@ -376,7 +376,7 @@ export async function listarDetallesProductosVentasPorDia(dia) {
 }
 
 // Listar solo los productos que se vendieron en el día solicitado
-export async function listarDetallesProductosVentasPorMes(mes) {
+export async function listarDetallesProductosVentasPorMes(mes, año) {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -384,7 +384,7 @@ export async function listarDetallesProductosVentasPorMes(mes) {
             Authorization: `Bearer ${getTokenApi()}`
         }
     };
-    return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosMes + `?mes=${mes}`, config);
+    return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosMes + `?mes=${mes}&&año=${año}`, config);
 }
 
 // Elimina ventas

@@ -29,6 +29,7 @@ function ListHistoricoVentasMes(props) {
     const [titulosModal, setTitulosModal] = useState(null);
 
     const [listaDias, setListaDias] = useState([]);
+    const [listaAños, setListaAños] = useState([]);
 
     const filtrarLista = () => {
         let listaFechasTemp = []
@@ -45,8 +46,24 @@ function ListHistoricoVentasMes(props) {
         //console.log(listaDias);
     }
 
+    const filtrarListaAños = () => {
+        let listaFechasTemp = []
+        map(listVentas, (ventas, index) => {
+            const tempFecha = ventas.año.split("T");
+            //console.log(tempFecha)
+            listaFechasTemp.push(tempFecha[0]);
+        })
+        //console.log(listaFechasTemp)
+        let listaDias = listaFechasTemp.filter((item, index) => {
+            return listaFechasTemp.indexOf(item) === index;
+        })
+        setListaAños(listaDias)
+        //console.log(listaDias);
+    }
+
     useEffect(() => {
         filtrarLista();
+        filtrarListaAños();
     }, [listVentas]);
 
     //Para ver detalles
@@ -89,6 +106,7 @@ function ListHistoricoVentasMes(props) {
                 <>
                     <Total
                         mes={row}
+                        año={listaAños[0]}
                     />
                 </>
             ),
@@ -109,6 +127,7 @@ function ListHistoricoVentasMes(props) {
                                     <GraficaMensual
                                         setRefreshCheckLogin={setRefreshCheckLogin}
                                         mes={row}
+                                        año={listaAños[0]}
                                         setShowModal={setShowModal}
                                     />
                                 )
@@ -130,6 +149,7 @@ function ListHistoricoVentasMes(props) {
                                     <HistorialVentasMes
                                         setRefreshCheckLogin={setRefreshCheckLogin}
                                         mes={row}
+                                        año={listaAños[0]}
                                         setShowModal={setShowModal}
                                     />
                                 )
@@ -141,7 +161,7 @@ function ListHistoricoVentasMes(props) {
                             />
                         </Badge>
 
-                        <ProcesamientoCSV dia={row} />
+                        <ProcesamientoCSV dia={row} año={listaAños[0]} />
 
                     </div>
                 </>
