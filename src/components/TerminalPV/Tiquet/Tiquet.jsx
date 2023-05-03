@@ -103,6 +103,14 @@ function Tiquet(props) {
             const grupo = (hoy.getMonth() + 1);
             const añoVenta = hoy.getFullYear();
 
+            // Configurar el objeto Date para que tome en cuenta el inicio de semana según tu localidad
+            hoy.setHours(0, 0, 0);
+            hoy.setDate(hoy.getDate() + 4 - (hoy.getDay() || 7));
+
+            // Calcular el número de la semana
+            const yearStart = new Date(hoy.getFullYear(), 0, 1);
+            const weekNumber = Math.ceil(((hoy - yearStart) / 86400000 + 1) / 7);
+
             if (tipoPedido == "para llevar" && !tipoPago) {
                 toast.warning("Debes seleccionar el tipo de pago");
             } else {
@@ -129,7 +137,8 @@ function Tiquet(props) {
                         atendido: "false",
                         total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
                         agrupar: grupo,
-                        año: añoVenta
+                        año: añoVenta,
+                        semana: weekNumber
                     }
 
                     registraVentas(dataTemp).then(response => {

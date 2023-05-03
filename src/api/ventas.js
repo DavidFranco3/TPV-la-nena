@@ -4,10 +4,12 @@ import {
     ENDPOINTListarVentas,
     ENDPOINTListarVentasDia,
     ENDPOINTListarVentasMes,
+    ENDPOINTListarVentasSemana,
     ENDPOINTListarPaginandoVentasActivas,
     ENDPOINTListarPaginandoVentas,
     ENDPOINTListarPaginandoVentasDia,
     ENDPOINTListarPaginandoVentasMes,
+    ENDPOINTListarPaginandoVentasSemana,
     ENDPOINTObtenerVentas,
     ENDPOINTEliminarVentas,
     ENDPOINTActualizarVentas,
@@ -15,10 +17,13 @@ import {
     ENDPOINTObtenerNumeroVenta,
     ENDPOINTListarVentasPorDia,
     ENDPOINTListarVentasPorMes,
+    ENDPOINTListarVentasPorSemana,
     ENDPOINTListarDetallesVentasDia,
     ENDPOINTListarDetallesVentasMes,
+    ENDPOINTListarDetallesVentasSemana,
     ENDPOINTListarDetallesProductosVendidosDia,
     ENDPOINTListarDetallesProductosVendidosMes,
+    ENDPOINTListarDetallesProductosVendidosSemana,
     ENDPOINTTotalVentas,
     ENDPOINTTotalVentasActivas,
     ENDPOINTTotalVentasCanceladas,
@@ -145,6 +150,18 @@ export async function listarVentasPorMes(mes, año) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarVentasPorMes + `?mes=${mes}&&año=${año}`, config);
+}
+
+// Listar ventas por dia
+export async function listarVentasPorSemana(semana, año) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarVentasPorSemana + `?semana=${semana}&&año=${año}`, config);
 }
 
 // Listar las ventas activas paginandolas
@@ -315,6 +332,18 @@ export async function listarVentasMes(mes, año) {
     return await axios.get(API_HOST + ENDPOINTListarVentasMes + `/?mes=${mes}&&año=${año}`, config);
 }
 
+// Listar las ventas de un dia especifico paginandolas
+export async function listarVentasSemana(semana, año) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarVentasSemana + `/?semana=${semana}&&año=${año}`, config);
+}
+
 // Listar las ventas de un mes especifico paginandolas
 export async function listarPaginacionVentasMes(pagina, limite, mes, año) {
     const config = {
@@ -327,6 +356,18 @@ export async function listarPaginacionVentasMes(pagina, limite, mes, año) {
     return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasMes + `/?pagina=${pagina}&&limite=${limite}&&mes=${mes}&&año=${año}`, config);
 }
 
+// Listar las ventas de un mes especifico paginandolas
+export async function listarPaginacionVentasSemana(pagina, limite, semana, año) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarPaginandoVentasSemana + `/?pagina=${pagina}&&limite=${limite}&&semana=${semana}&&año=${año}`, config);
+}
+
 // Listar los detalles de las ventas del dia
 export async function listarDetallesVentasPorMes(dia, año) {
     const config = {
@@ -337,6 +378,18 @@ export async function listarDetallesVentasPorMes(dia, año) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarDetallesVentasMes + `?dia=${dia}&&año=${año}`, config);
+}
+
+// Listar los detalles de las ventas del dia
+export async function listarDetallesVentasPorSemana(semana, año) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarDetallesVentasSemana + `?semana=${semana}&&año=${año}`, config);
 }
 
 // Listar los detalles de las ventas del dia
@@ -385,6 +438,18 @@ export async function listarDetallesProductosVentasPorMes(mes, año) {
         }
     };
     return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosMes + `?mes=${mes}&&año=${año}`, config);
+}
+
+// Listar solo los productos que se vendieron en el día solicitado
+export async function listarDetallesProductosVentasPorSemana(semana, año) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenApi()}`
+        }
+    };
+    return await axios.get(API_HOST + ENDPOINTListarDetallesProductosVendidosSemana + `?semana=${semana}&&año=${año}`, config);
 }
 
 // Elimina ventas

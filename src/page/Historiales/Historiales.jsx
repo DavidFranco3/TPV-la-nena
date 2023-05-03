@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Ventas from '../Ventas';
 import HistoricoVentasDia from '../HistoricoVentasDia';
 import HistoricoVentasMes from '../HistoricoVentasMes';
+import HistoricoVentasSemana from '../HistoricoVentasSemana';
 
 function Historiales(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
@@ -125,6 +126,19 @@ function Historiales(props) {
                 </Tab>
                 <Tab
                     key={2}
+                    tabClassName="font-semibold text-lg"
+                    eventKey="semana"
+                    title="Por semana"
+                >
+                    <br />
+                    <Suspense fallback={< Spinner />}>
+                        <HistoricoVentasSemana
+                            setRefreshCheckLogin={setRefreshCheckLogin}
+                        />
+                    </Suspense>
+                </Tab>
+                <Tab
+                    key={3}
                     tabClassName="font-semibold text-lg"
                     eventKey="mes"
                     title="Por mes"
