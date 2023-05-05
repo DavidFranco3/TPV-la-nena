@@ -240,7 +240,7 @@ function RegistroMovimientosCajasVentas(props) {
                                 placeholder="Escribe la cantidad"
                                 step="0.1"
                                 min="0"
-                                value={formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "no" ? formData.monto + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Transferencia" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formData.monto}
+                                value={formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? (formData.monto + formData.monto * parseFloat("0.16")).toFixed(2) : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "si" ? (formData.monto + formData.monto * parseFloat("0.16") + formData.monto * parseFloat("0.03")).toFixed(2) : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "no" ? (formData.monto + formData.monto * parseFloat("0.03")).toFixed(2) : formDataMovimiento.tipoPago == "Transferencia" && formDataMovimiento.iva == "si" ? (formData.monto + formData.monto * parseFloat("0.16")).toFixed(2) : formData.monto.toFixed(2)}
                                 disabled
                             />
                         </Form.Group>
