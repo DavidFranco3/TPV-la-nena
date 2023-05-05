@@ -26,8 +26,8 @@ function DatosExtraVenta(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (formData.tipoPedido == "para llevar" && !formData.tipoPago) {
-            toast.warning("Selecciona el tipo de pago")
+        if (!formData.tipoPedido || !formData.tipoPago || !formData.hacerPedido || !formData.nombre || !formData.observaciones ) {
+            toast.warning("Completa el formulario")
         } else {
             setLoading(true);
             setTipoPago(formData.tipoPago);
