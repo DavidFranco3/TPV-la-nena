@@ -112,7 +112,7 @@ function RegistroMovimientosCajasVentas(props) {
                     cambio:formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? (parseFloat(formDataMovimiento.efectivo) - (formData.monto + formData.monto * parseFloat("0.16"))).toFixed(2) : (formDataMovimiento.efectivo - formData.monto).toFixed(2),
                     total: formDataMovimiento.tipoPago == "Efectivo" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Tarjeta" && formDataMovimiento.iva == "no" ? formData.monto + formData.monto * parseFloat("0.03") : formDataMovimiento.tipoPago == "Transferencia" && formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : formData.monto,
                     pagado: "true",
-                    iva: formDataMovimiento.iva == "si" ? formData.monto + formData.monto * parseFloat("0.16") : "0",
+                    iva: formDataMovimiento.iva == "si" ? (formData.monto * parseFloat("0.16")).toFixed(2) : "0",
                     comision: formDataMovimiento.tipoPago == "Tarjeta"? formData.monto + formData.monto * parseFloat("0.03") : "0"
                 }
                 actualizaVenta(id, dataTemp2).then(response => {
