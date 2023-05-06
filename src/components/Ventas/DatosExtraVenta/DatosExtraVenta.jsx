@@ -26,7 +26,7 @@ function DatosExtraVenta(props) {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!formData.tipoPedido || !formData.tipoPago || !formData.hacerPedido || !formData.nombre || !formData.observaciones ) {
+        if (!formData.tipoPedido || !formData.hacerPedido || !formData.nombre || !formData.observaciones ) {
             toast.warning("Completa el formulario")
         } else {
             setLoading(true);
