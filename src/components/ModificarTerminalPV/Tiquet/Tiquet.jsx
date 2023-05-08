@@ -122,8 +122,6 @@ function Tiquet(props) {
         }
     }, [determinaBusquedaTiquet]);
 
-    console.log(numeroTiquet)
-
     const handleRegistraVenta = () => {
         let iva = "0";
         let comision = "0";
@@ -141,6 +139,17 @@ function Tiquet(props) {
         } else {
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
+
+            const añoVenta = hoy.getFullYear();
+
+            // Configurar el objeto Date para que tome en cuenta el inicio de semana según tu localidad
+            hoy.setHours(0, 0, 0);
+            hoy.setDate(hoy.getDate() + 4 - (hoy.getDay() || 7));
+
+            // Calcular el número de la semana
+            const yearStart = new Date(hoy.getFullYear(), 0, 1);
+            const weekNumber = Math.ceil(((hoy - yearStart) / 86400000 + 1) / 7);
+
             try {
                 const dataTemp = {
                     numeroTiquet: numeroTiquet,
@@ -162,7 +171,9 @@ function Tiquet(props) {
                     comision: parseFloat(total) * parseFloat(comision),
                     subtotal: total,
                     total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
-                    agrupar: grupo
+                    agrupar: grupo,
+                    año: añoVenta,
+                    semana: weekNumber
                 }
 
                 registraVentas(dataTemp).then(response => {
@@ -170,6 +181,8 @@ function Tiquet(props) {
                     setDeterminaBusquedaTiquet(true)
                     LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                     toast.success(data.mensaje)
+                    handlePrint();
+                    handlePrint();
                     rutaRegreso();
                     handleEmptyTicket()
                 })
@@ -500,10 +513,6 @@ function Tiquet(props) {
         return (
             <div className="ticket__actions">
                 <button title="Registrar venta" onClick={() => handleRegistraVenta()}>✅</button>
-
-                <button title="Imprimir ticket único" onClick={() => handlePrint()}>📄</button>
-
-                <button title="Imprimir doble ticket" onClick={() => handlePrintDouble()}> 2️⃣</button>
 
                 <button title="Limpiar el ticket" onClick={() => handleEmptyTicket()}>🗑️</button>
 
