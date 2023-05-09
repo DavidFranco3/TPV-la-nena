@@ -219,7 +219,7 @@ function formatModelVentas(ventas) {
             productosVendidos: venta.productos.length,
             articulosVendidos: venta.productos,
             detalles: venta.detalles,
-            tipoPago: venta.tipoPago,
+            tipoPago: venta.tipoPago == "" ? "Pendiente" : venta.tipoPago,
             efectivo: venta.efectivo,
             cambio: venta.cambio,
             total: parseInt(venta.total),

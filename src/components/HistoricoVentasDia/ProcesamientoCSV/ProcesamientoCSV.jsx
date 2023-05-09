@@ -41,12 +41,13 @@ function ProcesamientoCsv(props) {
 
             listarVentasPorDia(dia).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
+                const { efectivo, tarjeta, transferencia, pendiente, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 //console.log(data)
                 const dataTitulos = [{
                     efectivo: "Total efectivo",
                     tarjeta: "Total tarjeta",
                     transferencia: "Total transferencia",
+                    pendiente: "Total pendiente",
                     total: "Total final",
                     tortasVendidas: "Total de tortas vendidas",
                     bebidasVendidas: "Total de bebidas vendidas",
@@ -60,7 +61,8 @@ function ProcesamientoCsv(props) {
                     efectivo: efectivo,
                     tarjeta: tarjeta,
                     transferencia: transferencia,
-                    total: efectivo + transferencia + tarjeta,
+                    pendiente: pendiente,
+                    total: efectivo + transferencia + tarjeta + pendiente,
                     tortasVendidas: tortasVendidas,
                     bebidasVendidas: bebidasVendidas,
                     extrasVendidos: extrasVendidos,
