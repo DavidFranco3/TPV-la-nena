@@ -122,7 +122,7 @@ function HistorialVentasSemana(props) {
                         <>
                             <Suspense fallback={< Spinner />}>
                                 <div className="diaHistorial">
-                                  semana: {semana}
+                                    semana: {semana}
                                 </div>
                                 <ListHistorialVentasSemana
                                     listDetallesSemana={listDetallesSemana}
@@ -170,8 +170,8 @@ function formatModelVentas(ventas) {
             hacerPedido: venta.hacerPedido,
             tipoPedido: venta.tipoPedido,
             estado: venta.estado,
-            semana: venta.semana,
-            año: venta.año,
+            año: !venta.año ? "2023" : !venta.año,
+            semana: !venta.semana ? "0" : !venta.semana,
             fechaCreacion: venta.createdAt,
             fechaActualizacion: venta.updatedAt
         });

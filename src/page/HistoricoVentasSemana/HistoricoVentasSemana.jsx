@@ -170,8 +170,8 @@ function formatModelVentas(ventas) {
             tipoPedido: venta.tipoPedido,
             estado: venta.estado,
             agrupar: venta.agrupar,
-            año: venta.año,
-            semana: venta.semana,
+            año: !venta.año ? "2023" : !venta.año,
+            semana: !venta.semana ? "0" : !venta.semana,
             fechaCreacion: venta.createdAt,
             fechaActualizacion: venta.updatedAt
         });

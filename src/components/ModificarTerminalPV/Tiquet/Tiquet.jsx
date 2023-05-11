@@ -139,7 +139,6 @@ function Tiquet(props) {
         } else {
             const hoy = new Date();
             const grupo = (hoy.getMonth() + 1);
-
             const añoVenta = hoy.getFullYear();
 
             // Configurar el objeto Date para que tome en cuenta el inicio de semana según tu localidad

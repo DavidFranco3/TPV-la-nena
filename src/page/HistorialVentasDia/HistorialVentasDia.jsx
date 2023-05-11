@@ -229,6 +229,8 @@ function formatModelVentas(ventas) {
             hacerPedido: venta.hacerPedido,
             tipoPedido: venta.tipoPedido,
             estado: venta.estado,
+            año: !venta.año ? "2023" : !venta.año,
+            semana: !venta.semana ? "0" : !venta.semana,
             fechaCreacion: venta.createdAt,
             fechaActualizacion: venta.updatedAt
         });
