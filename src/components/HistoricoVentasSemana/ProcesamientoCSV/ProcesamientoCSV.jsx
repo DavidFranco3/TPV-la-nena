@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
-import { listarDetallesProductosVentasPorMes, listarVentasPorMes } from "../../../api/ventas";
+import { listarDetallesProductosVentasPorSemana, listarVentasPorSemana } from "../../../api/ventas";
 import { Badge, Image } from "react-bootstrap";
 import LogoExcel from "../../../assets/png/excel.png";
 import { exportCSVFile } from "../../../utils/exportCSV";
@@ -32,7 +32,7 @@ function ProcesamientoCsv(props) {
     const cargarDatosCSV = () => {
         try {
             // Inicia listado de detalles de los articulos vendidos
-            listarDetallesProductosVentasPorMes(dia, año).then(response => {
+            listarDetallesProductosVentasPorSemana(dia, año).then(response => {
                 const { data } = response;
                 // console.log(data)
                 setListDetallesMes(data)
@@ -41,7 +41,7 @@ function ProcesamientoCsv(props) {
             })
             // Termina listado de detalles de los artículos vendidos
 
-            listarVentasPorMes(dia, año).then(response => {
+            listarVentasPorSemana(dia, año).then(response => {
                 const { data } = response;
                 const { efectivo, tarjeta, transferencia, pendiente, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
                 //console.log(data)
