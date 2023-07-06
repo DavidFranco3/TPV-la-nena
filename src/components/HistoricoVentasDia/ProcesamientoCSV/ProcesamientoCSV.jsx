@@ -24,7 +24,9 @@ function ProcesamientoCsv(props) {
         nombre: "Nombre del producto",
         precio: "Precio",
         tipoPago: "Tipo de pago",
-        totalVenta: "Total de venta en el tiquet"
+        tipoPedido: "Tipo de pedido",
+        hacerPedido: "Por donde se hizo el pedido",
+        totalVenta: "Total de venta en el tiquet",
     };
 
     const cargarDatosCSV = () => {
@@ -32,7 +34,7 @@ function ProcesamientoCsv(props) {
             // Inicia listado de detalles de los articulos vendidos
             listarDetallesProductosVentasPorDia(dia).then(response => {
                 const { data } = response;
-                // console.log(data)
+                console.log(data)
                 setListDetallesDia(data)
             }).catch(e => {
                 console.log(e)

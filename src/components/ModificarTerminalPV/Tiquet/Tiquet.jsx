@@ -181,7 +181,6 @@ function Tiquet(props) {
                     LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                     toast.success(data.mensaje)
                     handlePrint();
-                    handlePrint();
                     rutaRegreso();
                     handleEmptyTicket()
                 })

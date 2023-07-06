@@ -26,6 +26,8 @@ function ProcesamientoCsv(props) {
         nombre: "Nombre del producto",
         precio: "Precio",
         tipoPago: "Tipo de pago",
+        tipoPedido: "Tipo de pedido",
+        hacerPedido: "Por donde se hizo el pedido",
         totalVenta: "Total de venta en el tiquet"
     };
 
