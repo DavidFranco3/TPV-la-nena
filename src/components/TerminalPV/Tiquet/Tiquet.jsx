@@ -7,6 +7,7 @@ import BasicModal from "../../Modal/BasicModal";
 import { obtenUltimoNoTiquet, registraVentas } from "../../../api/ventas";
 import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
+import Descuento from '../../Ventas/Descuento';
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
@@ -131,6 +132,8 @@ function Tiquet(props) {
                         pagado: tipoPedido == "para comer aquí" ? "false" : "true",
                         cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
                         productos: products,
+                        tipoDescuento: tipoDescuento,
+                        descuento: parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total,
                         iva: parseFloat(total) * parseFloat(iva),
                         comision: parseFloat(total) * parseFloat(comision),
                         subtotal: total,
@@ -163,6 +166,12 @@ function Tiquet(props) {
     }
 
     // Para almacenar el nombre del cliente
+    const [tipoDescuento, setTipoDescuento] = useState("");
+    // Para almacenar el nombre del cliente
+    const [dineroDescontado, setDineroDescontado] = useState("0");
+    // Para almacenar el nombre del cliente
+    const [porcentajeDescontado, setPorcentajeDescontado] = useState("0");
+    // Para almacenar el nombre del cliente
     const [nombreCliente, setNombreCliente] = useState("");
     // Para almacenar el numero de mesa
     const [mesa, setMesa] = useState("");
@@ -182,6 +191,12 @@ function Tiquet(props) {
         setContentModal(content);
         setShowModal(true);
     }
+    //Para el modal de descuentos
+    const descuento = (content) => {
+        setTitulosModal("Descuento");
+        setContentModal(content);
+        setShowModal(true);
+    }
     const [fechayHora, setFechayHora] = useState("");
 
     useEffect(() => {
@@ -193,6 +208,13 @@ function Tiquet(props) {
         // console.log("Fecha actual ", hoy)
         setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
     }, []);
+
+    const [totalFinal, setTotalFinal] = useState(0);
+
+    useEffect(() => {
+        setTotalFinal(parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total)
+    }, [total, porcentajeDescontado, dineroDescontado]);
+
 
     const Encabezado = ({ logo, logoRappi, numeroTiquet, mesa, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
         return (
@@ -275,6 +297,10 @@ function Tiquet(props) {
                             Pago realizado con {tipoPago}
                         </div>
 
+                        <div className="subtotal__cambio">
+                            Descuento {parseFloat(porcentajeDescontado) > 0 ? parseFloat(porcentajeDescontado) * 100 + "%" : parseFloat(dineroDescontado) > 0 ? "$" + parseFloat(dineroDescontado) : "0"}
+                        </div>
+
                         <div className="subtotal__IVA">
 
                         </div>
@@ -284,7 +310,7 @@ function Tiquet(props) {
                             {new Intl.NumberFormat('es-MX', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
-                            }).format(total)} MXN
+                            }).format(parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total)} MXN
                         </div>
 
                         {
@@ -461,6 +487,25 @@ function Tiquet(props) {
                 <button
                     title="Añadir detalles de la venta"
                     onClick={() =>
+                        descuento(
+                            <Descuento
+                                tipoDescuento={tipoDescuento}
+                                setTipoDescuento={setTipoDescuento}
+                                dineroDescontado={dineroDescontado}
+                                setDineroDescontado={setDineroDescontado}
+                                porcentajeDescontado={porcentajeDescontado}
+                                setPorcentajeDescontado={setPorcentajeDescontado}
+
+                                setShowModal={setShowModal}
+                            />
+                        )
+                    }>
+                    📉
+                </button>
+
+                <button
+                    title="Añadir detalles de la venta"
+                    onClick={() =>
                         datosExtraVenta(
                             <DatosExtraVenta
                                 setTipoPago={setTipoPago}
@@ -488,7 +533,7 @@ function Tiquet(props) {
 
                 {/*<Button href="whatsapp://send?text=Hola Mundo&phone=+524531527363">Enviar mensaje</Button>*/}
 
-            </div>
+            </div >
         )
     }
 
@@ -517,7 +562,7 @@ function Tiquet(props) {
                     <Pie
                         observaciones={observaciones}
                         tipoPago={tipoPago}
-                        total={total}
+                        total={totalFinal}
                         IVA={IVA}
                         dineroIngresado={dineroIngresado}
                     />
