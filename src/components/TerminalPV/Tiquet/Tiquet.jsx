@@ -93,10 +93,6 @@ function Tiquet(props) {
             iva = "0.16"
         }
 
-        if (tipoPago === "Tarjeta") {
-            comision = "0.03"
-        }
-
         if (products.length === 0) {
             toast.warning("Debe cargar articulos a la venta")
         } else {
@@ -313,21 +309,6 @@ function Tiquet(props) {
                             }).format(parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total)} MXN
                         </div>
 
-                        {
-                            tipoPago === "Tarjeta" &&
-                            (
-                                <>
-                                    <div className="subtotal__cambio">
-                                        Comisión ${''}
-                                        {new Intl.NumberFormat('es-MX', {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2,
-                                        }).format(parseFloat(total) * parseFloat("0.03") ? parseFloat(total) * parseFloat("0.03") : "0")} MXN
-                                    </div>
-                                </>
-                            )
-                        }
-
 
                         {
                             tipoPago === "Efectivo" && IVA === "0.16" &&
@@ -384,7 +365,7 @@ function Tiquet(props) {
                                         {new Intl.NumberFormat('es-MX', {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2,
-                                        }).format((parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) ? (parseFloat(total) + parseFloat(total) * parseFloat("0.03")) + (parseFloat(total) * parseFloat(IVA)) : "0")} MXN
+                                        }).format((parseFloat(total)) + (parseFloat(total) * parseFloat(IVA)) ? (parseFloat(total)) + (parseFloat(total) * parseFloat(IVA)) : "0")} MXN
                                     </div>
                                 </>
                             )
@@ -401,7 +382,7 @@ function Tiquet(props) {
                                         {new Intl.NumberFormat('es-MX', {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2,
-                                        }).format(parseFloat(total) + parseFloat(total) * parseFloat("0.03") ? parseFloat(total) + parseFloat(total) * parseFloat("0.03") : "0")} MXN
+                                        }).format(parseFloat(total) ? parseFloat(total) : "0")} MXN
                                     </div>
                                 </>
                             )

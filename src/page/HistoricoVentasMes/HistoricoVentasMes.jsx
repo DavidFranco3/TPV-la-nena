@@ -162,7 +162,7 @@ function formatModelVentas(ventas) {
             productosVendidos: venta.productos.length,
             articulosVendidos: venta.productos,
             detalles: venta.detalles,
-            tipoPago: venta.tipoPago == "" ? "Pendiente" : venta.tipoPago,
+            tipoPago: !venta.tipoPago ? "Pendiente" : venta.tipoPago,
             total: parseFloat(venta.total),
             subtotal: parseFloat(venta.subtotal),
             iva: parseFloat(venta.iva),

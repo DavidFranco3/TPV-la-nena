@@ -45,7 +45,7 @@ function ProcesamientoCsv(props) {
 
             listarVentasPorMes(dia, año).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, pendiente, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
+                const { efectivo, tarjeta, transferencia, pendiente, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos, tacosVendidos, postresVendidos, promocionesVendidas } = data;
                 //console.log(data)
                 const dataTitulos = [{
                     efectivo: "Total efectivo",
@@ -58,6 +58,9 @@ function ProcesamientoCsv(props) {
                     extrasVendidos: "Total de ingredientes extras vendidos",
                     sandwichesVendidos: "Total de sandwiches vendidos",
                     desayunosVendidos: "Total de desayunos vendidos",
+                    tacosVendidos: "Total de tacos vendidos",
+                    postresVendidos: "Total de postres vedidos",
+                    promocionesVendidas: "Total de promociones vendidas",
                     totalProductosVendidos: "Total de los productos vendidos",
                     enviosVendidos: "Total de envios realizados"
                 }]
@@ -72,7 +75,10 @@ function ProcesamientoCsv(props) {
                     extrasVendidos: extrasVendidos,
                     sandwichesVendidos: sandwichesVendidos,
                     desayunosVendidos: desayunosVendidos,
-                    totalProductosVendidos: tortasVendidas + bebidasVendidas + extrasVendidos + sandwichesVendidos + desayunosVendidos,
+                    tacosVendidos: tacosVendidos,
+                    postresVendidos: postresVendidos,
+                    promocionesVendidas: promocionesVendidas,
+                    totalProductosVendidos: tacosVendidos + postresVendidos + promocionesVendidas + tortasVendidas + bebidasVendidas + extrasVendidos + sandwichesVendidos + desayunosVendidos,
                     enviosVendidos: enviosVendidos
                 }
                 //console.log(dataFinal)

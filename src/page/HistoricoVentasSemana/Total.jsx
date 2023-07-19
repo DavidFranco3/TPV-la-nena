@@ -39,11 +39,20 @@ function Total(props) {
     // Para almacenar el total de envios vendidos
     const [totalEnvios, setTotalEnvios] = useState(0);
 
+    // Para almacenar el total de envios vendidos
+    const [totalTacos, setTotalTacos] = useState(0);
+
+    // Para almacenar el total de envios vendidos
+    const [totalPostres, setTotalPostres] = useState(0);
+
+    // Para almacenar el total de envios vendidos
+    const [totalPromociones, setTotalPromociones] = useState(0);
+
     useEffect(() => {
         try {
             listarVentasPorSemana(semana, año).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, hamburguesasVendidas, cafeteriaVendida, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos } = data;
+                const { efectivo, tarjeta, transferencia, hamburguesasVendidas, cafeteriaVendida, tortasVendidas, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos, tacosVendidos, postresVendidos, promocionesVendidas } = data;
                 // console.log(data)
                 setTotalEfectivo(efectivo);
                 setTotalTarjeta(tarjeta);
@@ -56,6 +65,9 @@ function Total(props) {
                 setTotalSandwiches(sandwichesVendidos);
                 setTotalDesayunos(desayunosVendidos);
                 setTotalEnvios(enviosVendidos);
+                setTotalTacos(tacosVendidos);
+                setTotalPostres(postresVendidos);
+                setTotalPromociones(promocionesVendidas);
             });
         } catch (e) {
             console.log(e);
@@ -145,7 +157,7 @@ function Total(props) {
             </Row>
             <Row align="center">
                 <Col>
-                    Sandwiches y ensaladas
+                    Ensaladas
                 </Col>
                 <Col>
                     <Badge bg="success">{totalSandwiches} piezas</Badge>
@@ -177,10 +189,34 @@ function Total(props) {
             </Row>
             <Row align="center">
                 <Col>
+                    Promociones
+                </Col>
+                <Col>
+                    <Badge bg="success">{totalPromociones} promociones</Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
+                    Tacos
+                </Col>
+                <Col>
+                    <Badge bg="success">{totalTacos} piezas</Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
+                    Postres
+                </Col>
+                <Col>
+                    <Badge bg="success">{totalPostres} piezas</Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
                     Total
                 </Col>
                 <Col>
-                    <Badge bg="success">{totalTortas + totalHamburguesas + totalCafeteria + totalBebidas + totalExtras + totalSandwiches + totalDesayunos} piezas</Badge>
+                    <Badge bg="success">{totalPostres + totalPromociones + totalTacos + totalTortas + totalHamburguesas + totalCafeteria + totalBebidas + totalExtras + totalSandwiches + totalDesayunos} piezas</Badge>
                 </Col>
             </Row>
             <Row align="center">
