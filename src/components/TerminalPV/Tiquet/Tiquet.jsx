@@ -145,7 +145,6 @@ function Tiquet(props) {
                         setDeterminaBusquedaTiquet(true)
                         LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
                         handlePrint();
-                        handlePrint();
                         toast.success(data.mensaje)
 
                         handleEmptyTicket()

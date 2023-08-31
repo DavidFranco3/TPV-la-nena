@@ -159,31 +159,25 @@ function MovimientosCajas(props) {
                     </Col>
                     <Col xs={6} md={8}>
                         <div style={{ float: 'right' }}>
-                            {
-                                estadoCaja === "true" &&
-                                (
-                                    <>
-                                        <Button
-                                            title="Registrar un nuevo movimiento en la caja"
-                                            className="btnRegistro"
-                                            style={{ marginRight: '10px' }}
-                                            onClick={() => {
-                                                registroMovimientos(
-                                                    <RegistroMovimientosCajas
-                                                        caja={caja}
-                                                        setEstadoCaja={setEstadoCaja}
-                                                        setShowModal={setShowModal}
-                                                        location={location}
-                                                        navigate={navigate}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faCirclePlus} /> Registrar
-                                        </Button>
-                                    </>
-                                )
-                            }
+
+                            <Button
+                                title="Registrar un nuevo movimiento en la caja"
+                                className="btnRegistro"
+                                style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    registroMovimientos(
+                                        <RegistroMovimientosCajas
+                                            caja={caja}
+                                            setEstadoCaja={setEstadoCaja}
+                                            setShowModal={setShowModal}
+                                            location={location}
+                                            navigate={navigate}
+                                        />
+                                    )
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faCirclePlus} /> Registrar
+                            </Button>
 
                             <Button
                                 title="Regresar a la pagina anterior"

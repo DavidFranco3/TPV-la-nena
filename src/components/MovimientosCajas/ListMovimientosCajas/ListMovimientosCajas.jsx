@@ -154,34 +154,27 @@ function ListMovimientosCajas(props) {
         {
             name: "Acciones",
             selector: row => (
-                row.movimiento === "Cierre" || row.movimiento === "Corte de caja" ?
-                    (
-                        <>
-                            <div className="flex justify-end items-center space-x-4">
-                                <Badge
-                                    title="Movimientos"
-                                    bg="primary"
-                                    className="editar"
-                                    onClick={() => {
-                                        movimientos(
-                                            <GeneraPDF
-                                                datos={row}
-                                                location={location}
-                                                navigate={navigate}
-                                                setShowModal={setShowModal}
-                                            />
-                                        )
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faEye} className="text-lg" />
-                                </Badge>
-                            </div>
-                        </>
-                    )
-                    :
-                    (
-                        "No disponibles"
-                    )
+                <>
+                    <div className="flex justify-end items-center space-x-4">
+                        <Badge
+                            title="Movimientos"
+                            bg="primary"
+                            className="editar"
+                            onClick={() => {
+                                movimientos(
+                                    <GeneraPDF
+                                        datos={row}
+                                        location={location}
+                                        navigate={navigate}
+                                        setShowModal={setShowModal}
+                                    />
+                                )
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faEye} className="text-lg" />
+                        </Badge>
+                    </div>
+                </>
             ),
             sortable: false,
             center: true,
