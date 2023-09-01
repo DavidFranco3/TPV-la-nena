@@ -133,7 +133,7 @@ function Tiquet(props) {
                     tipoPedido: tipoPedido,
                     hacerPedido: hacerPedido,
                     efectivo: dineroIngresado,
-                    pagado: tipoPedido == "para comer aquí" ? "false" : "true",
+                    pagado: hacerPedido == "por WhatsApp" || hacerPedido == "por llamada" ? "false" : tipoPedido == "para comer aquí" ? "false" : "true",
                     cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
                     productos: products,
                     iva: parseFloat(total) * parseFloat(iva),
