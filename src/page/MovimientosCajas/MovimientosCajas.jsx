@@ -119,6 +119,7 @@ function MovimientosCajas(props) {
                 setPage(1)
                 listarPaginacionMovimientos(page, rowsPerPage, caja).then(response => {
                     const { data } = response;
+                    console.log(data);
                     if (!listMovimientos && data) {
                         setListMovimientos(formatModelMovimientosCajas(data));
                     } else {
@@ -131,6 +132,7 @@ function MovimientosCajas(props) {
             } else {
                 listarPaginacionMovimientos(page, rowsPerPage, caja).then(response => {
                     const { data } = response;
+                    console.log(data);
                     if (!listMovimientos && data) {
                         setListMovimientos(formatModelMovimientosCajas(data));
                     } else {

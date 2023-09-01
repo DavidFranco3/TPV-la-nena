@@ -14,7 +14,7 @@ function GeneraPdf(props) {
     const { datos } = props;
 
     const { idCaja, movimientosAcumulados, dineroAcumulado, observaciones, fechaCreacion } = datos;
-
+console.log(datos);
     const movimientosTotales = movimientosAcumulados.concat(datos);
 
     dayjs.locale('es');
