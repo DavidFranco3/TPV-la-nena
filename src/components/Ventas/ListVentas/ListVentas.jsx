@@ -238,7 +238,7 @@ function ListVentas(props) {
             sortable: false,
             center: true,
             reorder: false,
-            selector: row => row.tipoPedido == "para comer aquí" ? row.mesa : row.cliente,
+            selector: row => !row.mesa ? row.cliente : row.mesa,
         },
         {
             name: "Total",

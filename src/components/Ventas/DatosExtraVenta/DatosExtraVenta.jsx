@@ -18,21 +18,19 @@ function DatosExtraVenta(props) {
         observaciones: observaciones
     }
 
-
-
     const [formData, setFormData] = useState(initialFormValue(dataTemp));
     const [loading, setLoading] = useState(false);
 
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!formData.tipoPedido || !formData.hacerPedido || !formData.nombre || !formData.observaciones ) {
+        if (!formData.hacerPedido || !formData.nombre || !formData.observaciones) {
             toast.warning("Completa el formulario")
         } else {
             setLoading(true);
             setTipoPago(formData.tipoPago);
             setDineroIngresado(formData.dinero);
-            setTipoPedido(formData.tipoPedido);
+            setTipoPedido(formData.hacerPedido == "por WhatsApp" || formData.hacerPedido == "por llamada" ? "para llevar" : formData.tipoPedido);
             setHacerPedido(formData.hacerPedido);
             setNombreCliente(formData.nombre);
             setMesa(formData.mesa);
@@ -49,8 +47,6 @@ function DatosExtraVenta(props) {
     const cancelarRegistro = () => {
         setShowModal(false)
     }
-
-    console.log(formData.hacerPedido)
 
     return (
         <>
@@ -92,30 +88,37 @@ function DatosExtraVenta(props) {
                         </Form.Group>
                     </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridEstado">
-                            <Form.Label>
-                                Tipo Pedido
-                            </Form.Label>
+                    {
+                        (formData.hacerPedido == "de forma presencial" || formData.hacerPedido == "por Rappi" || formData.hacerPedido == "por Uber") &&
+                        (
+                            <>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formGridEstado">
+                                        <Form.Label>
+                                            Tipo Pedido
+                                        </Form.Label>
 
-                            <Form.Control as="select"
-                                defaultValue={formData.tipoPedido}
-                                name="tipoPedido"
-                            >
-                                <option>Elige una opción</option>
-                                <option value="para llevar">Para llevar</option>
-                                <option value="para comer aquí">Para comer aquí</option>
-                                {
-                                    formData.hacerPedido !== "de forma presencial" && formData.hacerPedido !== "" &&
-                                    (
-                                        <>
-                                            <option value="recoger en tienda">Recoger en tienda</option>
-                                        </>
-                                    )
-                                }
-                            </Form.Control>
-                        </Form.Group>
-                    </Row>
+                                        <Form.Control as="select"
+                                            defaultValue={formData.tipoPedido}
+                                            name="tipoPedido"
+                                        >
+                                            <option>Elige una opción</option>
+                                            <option value="para llevar">Para llevar</option>
+                                            <option value="para comer aquí">Para comer aquí</option>
+                                            {
+                                                formData.hacerPedido !== "de forma presencial" && formData.hacerPedido !== "" &&
+                                                (
+                                                    <>
+                                                        <option value="recoger en tienda">Recoger en tienda</option>
+                                                    </>
+                                                )
+                                            }
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Row>
+                            </>
+                        )
+                    }
 
                     {
                         (formData.tipoPedido === "para llevar" || formData.tipoPedido === "recoger en tienda") &&
@@ -166,7 +169,7 @@ function DatosExtraVenta(props) {
                     </Row>
 
                     {
-                        formData.tipoPedido === "para comer aquí" &&
+                        (formData.tipoPedido === "para comer aquí" && (formData.hacerPedido != "por WhatsApp" || formData.hacerPedido != "por llamada")) &&
                         (
                             <>
                                 <Row className="mb-3">
@@ -227,7 +230,7 @@ function DatosExtraVenta(props) {
                         </Button>
                     </Col>
                 </Form.Group>
-            </Form>
+            </Form >
         </>
     );
 }

@@ -39,6 +39,7 @@ function Tiquet(props) {
         setNombreCliente("");
         setDineroIngresado("");
         setObservaciones("");
+        setTipoDescuento("");
     }
 
     const [IVA, setIVA] = useState("0");
@@ -108,50 +109,45 @@ function Tiquet(props) {
             const yearStart = new Date(hoy.getFullYear(), 0, 1);
             const weekNumber = Math.ceil(((hoy - yearStart) / 86400000 + 1) / 7);
 
-            if (tipoPedido == "para llevar" && !tipoPago) {
-                toast.warning("Debes seleccionar el tipo de pago");
-            } else {
-
-                try {
-                    const dataTemp = {
-                        numeroTiquet: numeroTiquet,
-                        cliente: nombreCliente,
-                        tipo: "Pedido inicial",
-                        mesa: mesa,
-                        usuario: idUsuario,
-                        estado: "true",
-                        detalles: observaciones,
-                        tipoPago: tipoPago,
-                        tipoPedido: tipoPedido,
-                        hacerPedido: hacerPedido,
-                        efectivo: dineroIngresado,
-                        pagado: tipoPedido == "para comer aquí" ? "false" : "true",
-                        cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
-                        productos: products,
-                        tipoDescuento: tipoDescuento,
-                        descuento: parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total,
-                        iva: parseFloat(total) * parseFloat(iva),
-                        comision: parseFloat(total) * parseFloat(comision),
-                        subtotal: total,
-                        atendido: "false",
-                        total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
-                        agrupar: grupo,
-                        año: añoVenta,
-                        semana: weekNumber
-                    }
-
-                    registraVentas(dataTemp).then(response => {
-                        const { data } = response;
-                        setDeterminaBusquedaTiquet(true)
-                        LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
-                        handlePrint();
-                        toast.success(data.mensaje)
-
-                        handleEmptyTicket()
-                    })
-                } catch (e) {
-                    console.log(e)
+            try {
+                const dataTemp = {
+                    numeroTiquet: numeroTiquet,
+                    cliente: nombreCliente,
+                    tipo: "Pedido inicial",
+                    mesa: mesa,
+                    usuario: idUsuario,
+                    estado: "true",
+                    detalles: observaciones,
+                    tipoPago: tipoPago,
+                    tipoPedido: tipoPedido,
+                    hacerPedido: hacerPedido,
+                    efectivo: dineroIngresado,
+                    pagado: hacerPedido == "por WhatsApp" || hacerPedido == "por llamada" ? "false" : tipoPedido == "para comer aquí" ? "false" : "true",
+                    cambio: parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) ? parseFloat(dineroIngresado) - (parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision))) : "0",
+                    productos: products,
+                    tipoDescuento: tipoDescuento,
+                    descuento: parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total,
+                    iva: parseFloat(total) * parseFloat(iva),
+                    comision: parseFloat(total) * parseFloat(comision),
+                    subtotal: total,
+                    atendido: "false",
+                    total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
+                    agrupar: grupo,
+                    año: añoVenta,
+                    semana: weekNumber
                 }
+
+                registraVentas(dataTemp).then(response => {
+                    const { data } = response;
+                    setDeterminaBusquedaTiquet(true)
+                    LogsInformativos("Se ha registrado la venta " + numeroTiquet, data.datos);
+                    handlePrint();
+                    toast.success(data.mensaje)
+
+                    handleEmptyTicket()
+                })
+            } catch (e) {
+                console.log(e)
             }
         }
     }
