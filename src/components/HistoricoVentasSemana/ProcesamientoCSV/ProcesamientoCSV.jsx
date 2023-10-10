@@ -28,7 +28,8 @@ function ProcesamientoCsv(props) {
         tipoPago: "Tipo de pago",
         tipoPedido: "Tipo de pedido",
         hacerPedido: "Por donde se hizo el pedido",
-        totalVenta: "Total de venta en el tiquet"
+        totalVenta: "Total de venta en el tiquet",
+        fecha: "Fecha en la que se hizo la venta",
     };
 
     const cargarDatosCSV = () => {
