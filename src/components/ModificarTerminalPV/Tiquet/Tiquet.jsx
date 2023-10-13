@@ -238,7 +238,7 @@ function Tiquet(props) {
                     <p className="cafe__number">Ticket #{numeroTiquet}</p>
                     <p className="cafe__number">Cliente {nombreCliente}</p>
                     {
-                        nombreCliente !== "" &&
+                        tipoPago !== "para llevar" &&
                         (
                             <>
                                 <p className="invoice__cliente">Mesa {mesa}</p>
