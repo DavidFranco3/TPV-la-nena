@@ -15,6 +15,9 @@ function Total(props) {
     // Para almacenar total vendido con tarjeta
     const [totalTransferencia, setTotalTransferencia] = useState(0);
 
+    // Para almacenar total vendido pero que esta pendiente de pagar
+    const [totalPendiente, setTotalPendiente] = useState(0);
+
     // Para almacenar el total de articulos vendidos
     const [totalTortas, setTotalTortas] = useState(0);
 
@@ -52,11 +55,12 @@ function Total(props) {
         try {
             listarVentasPorDia(dia).then(response => {
                 const { data } = response;
-                const { efectivo, tarjeta, transferencia, tortasVendidas, hamburguesasVendidas, cafeteriaVendida, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos, tacosVendidos, postresVendidos, promocionesVendidas } = data;
+                const { efectivo, tarjeta, transferencia, pendiente, tortasVendidas, hamburguesasVendidas, cafeteriaVendida, bebidasVendidas, extrasVendidos, sandwichesVendidos, desayunosVendidos, enviosVendidos, tacosVendidos, postresVendidos, promocionesVendidas } = data;
                 // console.log(data)
                 setTotalEfectivo(efectivo);
                 setTotalTarjeta(tarjeta);
                 setTotalTransferencia(transferencia);
+                setTotalPendiente(pendiente);
                 setTotalTortas(tortasVendidas);
                 setTotalBebidas(bebidasVendidas);
                 setTotalHamburguesas(hamburguesasVendidas);
@@ -120,6 +124,20 @@ function Total(props) {
             </Row>
             <Row align="center">
                 <Col>
+                    Pendiente
+                </Col>
+                <Col>
+                    <Badge bg="success">
+                        ${''}
+                        {new Intl.NumberFormat('es-MX', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(totalPendiente)} MXN
+                    </Badge>
+                </Col>
+            </Row>
+            <Row align="center">
+                <Col>
                     Total
                 </Col>
                 <Col>
@@ -128,7 +146,7 @@ function Total(props) {
                         {new Intl.NumberFormat('es-MX', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                        }).format(totalEfectivo + totalTarjeta + totalTransferencia)} MXN</Badge>
+                        }).format(totalEfectivo + totalTarjeta + totalTransferencia + totalPendiente)} MXN</Badge>
                 </Col>
             </Row>
             <Row align="center">

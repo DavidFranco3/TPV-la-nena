@@ -532,7 +532,7 @@ function initialFormValue() {
     return {
         nombreProducto: "",
         categoria: "",
-        precioVenta: ""
+        precioVenta: "",
     }
 }
 

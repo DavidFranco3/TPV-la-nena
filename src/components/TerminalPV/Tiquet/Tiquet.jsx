@@ -134,7 +134,8 @@ function Tiquet(props) {
                     total: parseFloat(total) + (parseFloat(total) * parseFloat(iva)) + (parseFloat(total) * parseFloat(comision)),
                     agrupar: grupo,
                     año: añoVenta,
-                    semana: weekNumber
+                    semana: weekNumber,
+                    createdAt: fechayHoraSinFormato
                 }
 
                 registraVentas(dataTemp).then(response => {
@@ -189,15 +190,21 @@ function Tiquet(props) {
         setShowModal(true);
     }
     const [fechayHora, setFechayHora] = useState("");
+    const [fechayHoraSinFormato, setFechayHoraSinFormato] = useState("");
 
     useEffect(() => {
         const hoy = new Date();
-        const hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+        const hora = (hoy.getHours() - 1) + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         // const fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + " " + hora;
-        const fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + " " + hora;
+        const fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + "T" + hora;
+
+        const hora2 = ((hoy.getHours()-6) < 10 ? "0" + (hoy.getHours()-6) : (hoy.getHours()-6)) + ':' + ((hoy.getMinutes()) < 10 ? "0" + (hoy.getMinutes()) : (hoy.getMinutes()));
+        // const fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + " " + hora;
+        const fecha2 = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + "T" + hora2;
         // console.log(fecha)
         // console.log("Fecha actual ", hoy)
-        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'))
+        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'));
+        setFechayHoraSinFormato(fecha2);
     }, []);
 
     const [totalFinal, setTotalFinal] = useState(0);
@@ -205,7 +212,6 @@ function Tiquet(props) {
     useEffect(() => {
         setTotalFinal(parseFloat(porcentajeDescontado) > 0 ? (parseFloat(total) - (parseFloat(total) * (parseFloat(porcentajeDescontado)))) : parseFloat(dineroDescontado) > 0 ? parseFloat(total) - parseFloat(dineroDescontado) : total)
     }, [total, porcentajeDescontado, dineroDescontado]);
-
 
     const Encabezado = ({ logo, logoRappi, numeroTiquet, mesa, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
         return (
