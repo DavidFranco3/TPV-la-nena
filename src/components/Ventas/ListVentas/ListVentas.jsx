@@ -9,9 +9,12 @@ import { faEye, faX, faRotateLeft, faArrowDownLong, faPenToSquare, faCheck } fro
 import DataTable from "react-data-table-component";
 import { estilos } from "../../../utils/tableStyled";
 import { atenderVenta } from "../../../api/ventas"
-import 'dayjs/locale/es';
+
+import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+
 import RegistroMovimientosCajasVentas from '../../MovimientosCajas/RegistroMovimientosCajasVentas';
 import { useNavigate } from "react-router-dom";
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
@@ -45,6 +48,8 @@ function ListVentas(props) {
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
 
+    // Configura la zona horaria en UTC
+    dayjs.extend(utc);
     dayjs.locale('es');
     dayjs.extend(localizedFormat);
 
@@ -108,7 +113,14 @@ function ListVentas(props) {
         },
         {
             name: "Día de la venta",
-            selector: row => dayjs(row.fechaCreacion).format('dddd, LL hh:mm A'),
+            selector: row => {
+                const fechaCreacion = dayjs(row.fechaCreacion);
+                if (fechaCreacion.isAfter('2023-10-20')) {
+                    return fechaCreacion.utc().format('dddd, LL hh:mm A');
+                } else {
+                    return fechaCreacion.format('dddd, LL hh:mm A');
+                }
+            },
             sortable: false,
             center: true,
             reorder: false

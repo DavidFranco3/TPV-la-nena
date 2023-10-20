@@ -285,7 +285,8 @@ function GeneraPdfFinal(props) {
                         nombreCliente={cliente}
                         tipoPedido={tipoPedido}
                         hacerPedido={hacerPedido}
-                        fechayHora={dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
+                        fechayHora={dayjs.utc(fechaCreacion).format('dddd, LL hh:mm A')}
+
                     />
                     <Cuerpo
                         products={articulosVendidos}

@@ -33,36 +33,42 @@ function GeneraPdf(props) {
         return () => clearTimeout(timer);
     }
 
-    const Encabezado = ({ logo, mesa, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
-        return (
-            <div className="cafe">
-                {/**/}
-                <div id="logo" className="logotipo">
-                    <Image src={logo} alt="logo" />
-                </div>
-                {/**/}
-                <div className="detallesTitulo">
-                    <p className="cafe__number">Teléfono para pedidos</p>
-                    <p className="cafe__number">442-714-09-79</p>
-                    <p className="cafe__number">Ticket #{numeroTiquet}</p>
-                    <p className="cafe__number">Cliente {nombreCliente}</p>
-                    {
-                        nombreCliente !== "" &&
-                        (
-                            <>
-                    <p className="invoice__cliente">Mesa {mesa}</p>
-                    </>
-                        )
-                    }
-                    <p className="invoice__cliente">Pedido {tipoPedido}</p>
-                    <p className="invoice__cliente">Hecho {hacerPedido}</p>
-                    <p className="cafe__number">
-                        {fechayHora}
-                    </p>
-                </div>
+const Encabezado = ({ logo, mesa, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
+    return (
+        <div className="cafe">
+            {/** Logo de la cafetería */}
+            <div id="logo" className="logotipo">
+                <Image src={logo} alt="logo" />
             </div>
-        )
-    }
+
+            {/** Detalles del tiquet */}
+            <div className="detallesTitulo">
+                <p className="cafe__number">Teléfono para pedidos</p>
+                <p className="cafe__number">442-714-09-79</p>
+                <p className="cafe__number">Ticket #{numeroTiquet}</p>
+                
+                {/** Mostrar el número de mesa si está disponible */}
+                {nombreCliente !== "" && (
+                    <>
+                        {mesa && !isNaN(mesa) && (
+                            <p className="invoice__cliente">Mesa: {mesa}</p>
+                        )}
+                        {nombreCliente && mesa && !isNaN(mesa) && (
+                            <p className="invoice__cliente">Cliente: {nombreCliente}</p>
+                        )}
+                    </>
+                )}
+
+                <p className="invoice__cliente">Pedido {tipoPedido}</p>
+                <p className="invoice__cliente">Hecho {hacerPedido}</p>
+                <p className="cafe__number">
+                    {fechayHora}
+                </p>
+            </div>
+        </div>
+    );
+}
+
 
     const Cuerpo = ({ products }) => {
         console.log(products)
@@ -208,7 +214,7 @@ function GeneraPdf(props) {
                         mesa={mesa}
                         tipoPedido={tipoPedido}
                         hacerPedido={hacerPedido}
-                        fechayHora={dayjs(fechaCreacion).format('dddd, LL hh:mm A')}
+                        fechayHora={dayjs.utc(fechaCreacion).format('dddd, LL hh:mm A')}
                     />
                     <Cuerpo
                         products={articulosVendidos}
