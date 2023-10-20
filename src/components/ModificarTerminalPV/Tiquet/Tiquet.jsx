@@ -8,9 +8,13 @@ import { obtenUltimoNoTiquet, registraVentas, obtenerVentas } from "../../../api
 import { Col, Button, Row, Image, Table } from "react-bootstrap";
 import DatosExtraVenta from "../../Ventas/DatosExtraVenta";
 import { logoTiquetGris } from "../../../assets/base64/logo-tiquet";
-import 'dayjs/locale/es';
+
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
 import { LogsInformativos } from "../../Logs/LogsSistema/LogsSistema";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -28,8 +32,9 @@ function Tiquet(props) {
 
     console.log(id);
 
-    dayjs.locale('es');
-    dayjs.extend(localizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(localizedFormat);
 
     const total = products.reduce((amount, item) => (amount + parseFloat(item.precio)), 0);
 
@@ -118,6 +123,7 @@ function Tiquet(props) {
             // Calcular el número de la semana
             const yearStart = new Date(hoy.getFullYear(), 0, 1);
             const weekNumber = Math.ceil(((hoy - yearStart) / 86400000 + 1) / 7);
+            const formattedDate = dayjs(fechayHoraSinFormato).tz('America/Mexico_City').format('YYYY-MM-DDTHH:mm:ss.SSS');
 
             try {
                 const dataTemp = {
@@ -143,7 +149,7 @@ function Tiquet(props) {
                     agrupar: grupo,
                     año: añoVenta,
                     semana: weekNumber,
-                    createdAt: fechayHoraSinFormato
+                    createdAt: formattedDate
                 }
 
                 registraVentas(dataTemp).then(response => {
@@ -218,17 +224,10 @@ function Tiquet(props) {
 
     useEffect(() => {
         const hoy = new Date();
-        const hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
-        // const fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + " " + hora;
-        const fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + " " + hora;
-        
-        const hora2 = ((hoy.getHours()-6) < 10 ? "0" + (hoy.getHours()-6) : (hoy.getHours()-6)) + ':' + ((hoy.getMinutes()) < 10 ? "0" + (hoy.getMinutes()) : (hoy.getMinutes()));
-        // const fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + " " + hora;
-        const fecha2 = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + "T" + hora2;
-        // console.log(fecha)
-        // console.log("Fecha actual ", hoy)
-        setFechayHora(dayjs(fecha).format('dddd, LL hh:mm A'));
-        setFechayHoraSinFormato(fecha2);
+        const adjustedDate = dayjs(hoy).utc().utcOffset(-360).format(); // Ajusta la hora a CST (UTC -6)
+
+        setFechayHora(dayjs(adjustedDate).locale('es').format('dddd, LL hh:mm A'));
+        setFechayHoraSinFormato(adjustedDate);
     }, []);
 
     const Encabezado = ({ logo, mesa, numeroTiquet, nombreCliente, tipoPedido, hacerPedido, fechayHora }) => {
