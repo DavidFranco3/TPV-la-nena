@@ -90,6 +90,7 @@ function TerminalPv(props) {
 
     // Para almacenar la lista de productos
     const [listProductos, setListProductos] = useState(null);
+    const [listCategorias, setListCategorias] = useState(null);
 
     // obtener el listado de productos
     const cargarDatosProductos = () => {
@@ -97,18 +98,20 @@ function TerminalPv(props) {
             listarProductosCategoria(categoriaActual).then(response => {
                 const { data } = response;
                 if (!listProductos && data) {
-                    setListProductos(formatModelProductos(data));
+                    const sortedProductos = formatModelProductos(data).sort((a, b) => a.nombre.localeCompare(b.nombre));
+                    setListProductos(sortedProductos);
                 } else {
                     const datosProductos = formatModelProductos(data);
-                    setListProductos(datosProductos)
+                    const sortedProductos = datosProductos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                    setListProductos(sortedProductos);
                 }
             }).catch(e => {
-                console.log(e)
-            })
+                console.log(e);
+            });
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
-    }
+    };
 
     // obtener el listado de productos
     useEffect(() => {
@@ -116,31 +119,33 @@ function TerminalPv(props) {
     }, [categoriaActual]);
 
     // Para guardar el listado de categorias
-    const [listCategorias, setListCategorias] = useState(null);
 
     const cargarDatosCategorias = () => {
         try {
             listarCategorias().then(response => {
                 const { data } = response;
-                //console.log(data)
                 if (!listCategorias && data) {
-                    setListCategorias(formatModelCategorias(data));
+                    const sortedCategorias = formatModelCategorias(data).sort((a, b) => a.nombre.localeCompare(b.nombre));
+                    setListCategorias(sortedCategorias);
                 } else {
                     const datosCategorias = formatModelCategorias(data);
-                    setListCategorias(datosCategorias)
+                    const sortedCategorias = datosCategorias.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                    setListCategorias(sortedCategorias);
                 }
             }).catch(e => {
-                console.log(e)
-            })
+                console.log(e);
+            });
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
-    }
+    };
+
 
     useEffect(() => {
         cargarDatosCategorias();
     }, []);
 
+    
     return (
         <>
             <Alert className="fondoPrincipalAlert">

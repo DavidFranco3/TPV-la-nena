@@ -32,18 +32,23 @@ function Menu(props) {
         setCategoriaActual("")
     }
 
-    const ButtonBack = ({ icon, onClick }) => {
-        return (
-            <div className="regresarCategorias">
-                <FontAwesomeIcon
-                    icon={icon}
-                    className="home"
-                    title="Regresar"
-                    onClick={onClick}
-                />
-            </div>
-        )
-    }
+const ButtonBack = ({ icon, onClick }) => {
+    return (
+        <div className="regresarCategorias" style={{ fontSize: '30px', margin: '20px 0', color: '#007bff', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={onClick}>
+            <FontAwesomeIcon
+                icon={icon}
+                className="home"
+                title="Regresar"
+            />
+            <span style={{ marginLeft: '10px' }}>Regresar</span>
+        </div>
+    )
+}
+
+
+
+
+
 
     const MenuCategorias = ({ index, nombre, onClick, imagen }) => {
         return (
