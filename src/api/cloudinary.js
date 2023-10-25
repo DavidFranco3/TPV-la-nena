@@ -8,7 +8,7 @@ export async function subeArchivosCloudinary(imagen, carpeta) {
     // Crear un nuevo objeto FormData
     const data = new FormData()
 
-    // Agregar la imagen y los parámetros necesarios al objeto FormData
+    // Agregar la imagen y los parámetros necesarios al objeto FormData se cambia a DateNow
     data.append("file", imagen) // Agregar la imagen al FormData
     data.append("upload_preset", "TPV_LA_NENA") // Agregar el preset de carga
     data.append('public_id', `${carpeta}/${Date.now() + "_" + imagen.name}`) // Agregar un ID público único para la imagen
