@@ -85,21 +85,80 @@ dayjs.extend(localizedFormat);
         }
     }
 
-    useEffect(() => {
-        setDeterminaBusquedaTiquet(false)
+    //se agrega esta constante para la formula y que no se generen repetidos
+    const MAX_INTENTOS_GENERACION = 100;
+
+    //esta funcion verifica el numero anterior para establecer un numero y que no se repita el numero de ticket
+    const verificaExistenciaNumeroTiquet = async (numeroTiquet) => {
         try {
-            obtenUltimoNoTiquet().then(response => {
-                const { data } = response;
-                // console.log(data)
-                setNumeroTiquet(data.noTiquet === "0" ? "1" : parseInt(data.noTiquet) + 1)
-            }).catch(e => {
-                console.log(e)
-                setNumeroTiquet("1")
-            })
-        } catch (e) {
-            console.log(e.response)
+            // Obtener el número del último tiquet desde el archivo ventas.js
+            const response = await obtenUltimoNoTiquet();
+            const ultimoNumeroTiquet = parseInt(response.data.noTiquet);
+    
+            // Verificar si el número generado ya existe
+            let intentos = 0;
+            while (intentos < MAX_INTENTOS_GENERACION) {
+                if (ultimoNumeroTiquet === parseInt(numeroTiquet)) {
+                    // Incrementar el número del tiquet y seguir verificando
+                    numeroTiquet++;
+                    intentos++;
+                } else {
+                    // El número generado es único
+                    return false;
+                }
+            }
+    
+            // Si llegamos a este punto, se ha intentado generar un número único varias veces sin éxito
+            console.error("No se pudo generar un número de tiquet único después de varios intentos");
+            return true; // Puedes manejar esto según tus necesidades
+        } catch (error) {
+            console.error("Error al verificar la existencia del número de tiquet:", error);
+            // Puedes manejar este error según tus necesidades
+            throw error; // Puedes elegir lanzar el error nuevamente o manejarlo de otra manera
         }
+    };
+
+    //se modifico para que la funcion siga hasta encontrar un numero que no este registrado
+    useEffect(() => {
+        setDeterminaBusquedaTiquet(false);
+    
+        const obtenerNumeroTiquet = async () => {
+            try {
+                const response = await obtenUltimoNoTiquet();
+                const { data } = response;
+    
+                let nuevoNumeroTiquet;
+                
+                if (data.noTiquet === "0") {
+                    nuevoNumeroTiquet = 1;
+                } else {
+                    // Incrementar el número hasta encontrar uno único
+                    let intentos = 0;
+                    do {
+                        intentos++;
+                        nuevoNumeroTiquet = parseInt(data.noTiquet) + intentos;
+                        const existe = await verificaExistenciaNumeroTiquet(nuevoNumeroTiquet);
+                        if (!existe) {
+                            break; // Salir del bucle si el número es único
+                        }
+                    } while (intentos < MAX_INTENTOS_GENERACION);
+    
+                    if (intentos === MAX_INTENTOS_GENERACION) {
+                        console.error("No se pudo generar un número de ticket único después de varios intentos.");
+                        // Puedes manejar esta situación según tus necesidades
+                    }
+                }
+    
+                setNumeroTiquet(nuevoNumeroTiquet);
+            } catch (error) {
+                console.error("Error al obtener el último número de ticket:", error);
+                setNumeroTiquet("1"); // Establecer a 1 en caso de error
+            }
+        };
+    
+        obtenerNumeroTiquet();
     }, [determinaBusquedaTiquet]);
+   
 
     const handleRegistraVenta = () => {
         let iva = "0";
