@@ -25,7 +25,7 @@ function DatosExtraVenta(props) {
 
         const isParaLlevar = formData.tipoPedido === "para llevar" || formData.tipoPedido === "recoger en tienda";
         const isParaComerAqui = formData.tipoPedido === "para comer aquí";
-        const isTipoPagoEmpty = isParaLlevar && !formData.tipoPago;
+        const isTipoPagoEmpty = (isParaLlevar || formData.hacerPedido === "por Rappi" || formData.hacerPedido === "por Uber") && !formData.tipoPago;
         const isDineroEmpty = formData.tipoPago === "Efectivo" && !formData.dinero;
         const isMesaEmpty = isParaComerAqui && (formData.hacerPedido !== "por WhatsApp" && formData.hacerPedido !== "por llamada") && !formData.mesa;
 
@@ -109,7 +109,7 @@ return (
                     </Row>
                 ) : null}
 
-                {formData.tipoPedido === "para llevar" || formData.tipoPedido === "recoger en tienda" ? (
+                {formData.tipoPedido === "para llevar" || formData.tipoPedido === "recoger en tienda" || formData.hacerPedido === "por Rappi" || formData.hacerPedido === "por Uber" ? (
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridEstado">
                             <Form.Label>
@@ -124,6 +124,7 @@ return (
                         </Form.Group>
                     </Row>
                 ) : null}
+
 
                 {formData.tipoPago === "Efectivo" ? (
                     <Row className="mb-3">
