@@ -128,15 +128,15 @@ dayjs.extend(localizedFormat);
                 const { data } = response;
     
                 let nuevoNumeroTiquet;
-                
+    
                 if (data.noTiquet === "0") {
-                    nuevoNumeroTiquet = 1;
+                    nuevoNumeroTiquet = "1";
                 } else {
                     // Incrementar el número hasta encontrar uno único
                     let intentos = 0;
                     do {
                         intentos++;
-                        nuevoNumeroTiquet = parseInt(data.noTiquet) + intentos;
+                        nuevoNumeroTiquet = (parseInt(data.noTiquet) + intentos).toString();
                         const existe = await verificaExistenciaNumeroTiquet(nuevoNumeroTiquet);
                         if (!existe) {
                             break; // Salir del bucle si el número es único
@@ -147,6 +147,9 @@ dayjs.extend(localizedFormat);
                         console.error("No se pudo generar un número de ticket único después de varios intentos.");
                         // Puedes manejar esta situación según tus necesidades
                     }
+    
+                    // Después de incrementar el número en 1, agregar un guion y cuatro letras aleatorias
+                    nuevoNumeroTiquet += '-' + generarLetrasAleatorias();
                 }
     
                 setNumeroTiquet(nuevoNumeroTiquet);
@@ -156,9 +159,20 @@ dayjs.extend(localizedFormat);
             }
         };
     
+        // Función para generar letras aleatorias
+        const generarLetrasAleatorias = () => {
+            const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let letrasAleatorias = '';
+            for (let i = 0; i < 5; i++) {
+                const indice = Math.floor(Math.random() * letras.length);
+                letrasAleatorias += letras.charAt(indice);
+            }
+            return letrasAleatorias;
+        };
+    
         obtenerNumeroTiquet();
     }, [determinaBusquedaTiquet]);
-   
+       
 
     const handleRegistraVenta = () => {
         let iva = "0";
