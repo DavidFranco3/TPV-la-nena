@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { listarPaginacionVentas, totalVentas } from "../../api/ventas";
+import { listarPaginacionVentas, totalVentas, listarVentas } from "../../api/ventas";
 import { withRouter } from "../../utils/withRouter";
 import "../../scss/styles.scss";
 import ListHistoricoVentas from "../../components/HistoricoVentasDia/ListHistoricoVentasDia";
@@ -7,22 +7,16 @@ import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from "
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from '../../components/Logs/LogsSistema/LogsSistema';
 import { toast } from "react-toastify";
-import { Spinner, Col, Button, Row, Alert } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import Lottie from "react-lottie-player";
 import AnimacionLoading from "../../assets/json/loading.json";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function HistoricoVentasDia(props) {
     const { setRefreshCheckLogin, location, navigate } = props;
 
     // Para definir el enrutamiento
     const enrutamiento = useNavigate();
-
-    const rutaRegreso = () => {
-        enrutamiento("/")
-    }
 
     const [datosUsuario, setDatosUsuario] = useState("");
 
@@ -73,42 +67,20 @@ function HistoricoVentasDia(props) {
 
     const cargarDatos = () => {
         try {
-            totalVentas().then(response => {
+
+            listarVentas(page, rowsPerPage).then(response => {
                 const { data } = response;
-                setNoTotalVentas(data)
+                //console.log(data)
+
+                if (!listVentas && data) {
+                    setListVentas(formatModelVentas(data));
+                } else {
+                    const datosVentas = formatModelVentas(data);
+                    setListVentas(datosVentas)
+                }
             }).catch(e => {
                 console.log(e)
             })
-
-            if (page === 0) {
-                setPage(1)
-
-                listarPaginacionVentas(page, rowsPerPage).then(response => {
-                    const { data } = response;
-                    if (!listVentas && data) {
-                        setListVentas(formatModelVentas(data));
-                    } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListVentas(datosVentas)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            } else {
-                listarPaginacionVentas(page, rowsPerPage).then(response => {
-                    const { data } = response;
-                    //console.log(data)
-
-                    if (!listVentas && data) {
-                        setListVentas(formatModelVentas(data));
-                    } else {
-                        const datosVentas = formatModelVentas(data);
-                        setListVentas(datosVentas)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            }
         } catch (e) {
             console.log(e)
         }
