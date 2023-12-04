@@ -182,8 +182,15 @@ function ListHistoricoVentasDia(props) {
                     noDataComponent="No hay registros para mostrar"
                     data={listaDias}
                     progressPending={pending}
+                    paginationComponentOptions={paginationComponentOptions}
+                    paginationResetDefaultPage={resetPaginationToogle}
                     customStyles={estilos}
                     sortIcon={<FontAwesomeIcon icon={faArrowDownLong} />}
+                    pagination
+                    paginationServer
+                    paginationTotalRows={noTotalVentas}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    onChangePage={handleChangePage}
                 />
             </Container>
 
