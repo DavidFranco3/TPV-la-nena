@@ -284,7 +284,7 @@ function Ventas(props) {
                                 <Col>
                                         <Form.Control
                                                 id="search"
-                                                type="number"
+                                                type="text"
                                                 placeholder="Busqueda por numero de ticket"
                                                 aria-label="Search Input"
                                                 value={numeroTiquet}
