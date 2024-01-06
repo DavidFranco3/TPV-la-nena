@@ -119,7 +119,7 @@ function ListHistoricoVentasMes(props) {
             selector: row => (
                 <>
                     <div className="flex justify-end items-center space-x-4">
-                    <Badge
+                        <Badge
                             bg="light"
                             className="vistaDetalles"
                             onClick={() => {
