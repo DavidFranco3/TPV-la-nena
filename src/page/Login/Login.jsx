@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { login, setTokenApi } from "../../api/auth";
 import { toast } from "react-toastify";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { Spinner, Button, Form, Image, Row, Col } from "react-bootstrap";
 import { obtenerUsuario } from "../../api/usuarios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

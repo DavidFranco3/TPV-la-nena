@@ -1,6 +1,6 @@
 import { API_HOST, TOKEN } from "../utils/constants";
 import { ENDPOINTLoginAdministrador } from "./endpoints";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 
 // Validar inicio de sesion
