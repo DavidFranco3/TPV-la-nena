@@ -10,7 +10,6 @@ import "../../scss/styles.scss";
 import { getTokenApi, isExpiredToken, logoutApi, obtenidusuarioLogueado } from '../../api/auth';
 import { obtenerUsuario } from "../../api/usuarios";
 import { LogsInformativosLogout } from "../../components/Logs/LogsSistema/LogsSistema";
-import Notificationes from '../../components/Notificaciones';
 import BasicModal from '../../components/Modal/BasicModal';
 
 function LayoutPrincipal(props) {

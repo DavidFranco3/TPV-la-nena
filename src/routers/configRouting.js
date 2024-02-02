@@ -9,6 +9,7 @@ import Usuarios from "../page/Usuarios";
 import Logs from "../page/Logs";
 import Ingredientes from "../page/Ingredientes";
 import Historiales from "../page/Historiales";
+import HistorialesNoAdmin from "../page/HistorialesNoAdmin/HistorialesNoAdmin";
 import Cajas from "../page/Cajas";
 import MovimientosCajas from "../page/MovimientosCajas";
 import PedidosClientes from "../page/PedidosClientes";
@@ -100,6 +101,11 @@ const configRouting = [
         path: "/Historiales",
         page: Historiales,
         roles: ["administrador", "vendedor", "mesero"]
+    },
+    {
+        path: "/HistorialesNoAdmin",
+        page: HistorialesNoAdmin,
+        roles: ["vendedor", "mesero"]
     },
     {
         path: "*",

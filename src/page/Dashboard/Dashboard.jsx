@@ -97,11 +97,11 @@ function Dashboard(props) {
                 logo={LogoVentas}
                 title={'Ventas'}
               />
-              <ItemCard
+                <ItemCard
                 path={'/Historiales'}
                 logo={LogoHistorial}
                 title={'Historiales'}
-              />
+              /> 
               <ItemCard
                 path={'/Productos'}
                 logo={LogoProductos}
@@ -158,7 +158,7 @@ function Dashboard(props) {
                 title={'Ventas'}
               />
               <ItemCard
-                path={'/Historiales'}
+                path={'/HistorialesNoAdmin'}
                 logo={LogoHistorial}
                 title={'Historiales'}
               />
@@ -193,7 +193,7 @@ function Dashboard(props) {
                 title={'Ventas'}
               />
               <ItemCard
-                path={'/Historiales'}
+                path={'/HistorialesNoAdmin'}
                 logo={LogoHistorial}
                 title={'Historiales'}
               />
